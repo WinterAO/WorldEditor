@@ -15,7 +15,7 @@ Option Explicit
 
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" ( _
                                     ByRef Destination As Any, _
-                                    ByRef Source As Any, _
+                                    ByRef source As Any, _
                                     ByVal Length As Long)
 
 Private Data() As Byte
@@ -202,8 +202,6 @@ On Error Resume Next
 
     Erase Data()
 End Sub
-
-
 
 
 

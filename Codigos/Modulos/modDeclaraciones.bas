@@ -1,6 +1,7 @@
 Attribute VB_Name = "modDeclaraciones"
 Option Explicit
 
+Public HotKeysAllow As Boolean
 Public prgRun As Boolean
 
 'Map sizes in tiles
@@ -22,6 +23,14 @@ Public PantallaY As Integer
 ' Client Config
 Public ClienteHeight As Integer
 Public ClienteWidth As Integer
+
+'Heading Constants
+Public Enum eDireccion
+    NORTH = 1
+    EAST = 2
+    SOUTH = 3
+    WEST = 4
+End Enum
 
 'apunta a una estructura grhdata y mantiene la animacion
 Public Type Grh
@@ -54,15 +63,11 @@ Public Type GrhData
     Trans As Byte
 End Type
 
-Public GrhData() As GrhData 'Holds all the grh data
-
 'Posicion en un mapa
 Public Type Position
-    X As Long
-    Y As Long
+    X As Integer
+    Y As Integer
 End Type
-
-Public UserPos As Position 'Posicion
 
 'Holds a world position
 Public Type WorldPos
@@ -110,5 +115,83 @@ Public Type MapBlock
     ZonaIndex As Integer
 End Type
 
-Public MapData() As MapBlock 'Holds map data for current map
+'Hold info about each map
+Public Type tMapInfo
+    Music As String
+    name As String
+    MapVersion As Integer
+    PK As Boolean
+    MagiaSinEfecto As Byte
+    InviSinEfecto As Byte
+    ResuSinEfecto As Byte
+    LuzBase As Long
+    Terreno As String
+    Zona As String
+    Restringir As String
+    BackUp As Byte
+    Changed As Byte ' flag for WorldEditor
+    RoboNpcsPermitido As Byte
+    InvocarSinEfecto As Byte
+    OcultarSinEfecto As Byte
+    lvlMinimo As Byte
+    ambient As String
+    NoEncriptarMP As Byte
+End Type
 
+' Lista de Cuerpos body.dat
+Public Type tBodyData
+    Walk(1 To 4) As Grh
+    HeadOffset As Position
+End Type
+
+Public Type tHeadData
+    Head(1 To 4) As Grh
+End Type
+
+'Hold info about a character
+Public Type Char
+    active As Byte
+    Heading As Byte
+    Pos As Position
+
+    Body As tBodyData
+    Head As tHeadData
+    
+    Moving As Byte
+    MoveOffset As Position
+    
+    MoveOffsetX As Single
+    MoveOffsetY As Single
+    
+    scrollDirectionX As Integer
+    scrollDirectionY As Integer
+    
+End Type
+
+'**********Arrays Publicas************
+Public GrhData() As GrhData 'Holds all the grh data
+Public MapData() As MapBlock 'Holds map data for current map
+Public BodyData() As tBodyData
+Public HeadData() As tHeadData
+Public CharList(1 To 10000) As Char 'Holds info about all characters on map
+Public MapZonas() As tMapInfo
+'************************************
+
+Public CantZonas As Integer
+Public UserPos As Position 'Posicion
+Public MapInfo As tMapInfo 'Holds map info for current map
+
+'Variables de estado
+Public AddtoUserPos As Position 'For moving user
+Public UserCharIndex As Integer
+Public WalkMode As Boolean
+Public dLastWalk As Double
+
+'********** OUTSIDE FUNCTIONS ***********
+
+'For KeyInput
+Public Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
+
+Public Declare Function GetTickCount Lib "kernel32" () As Long
+
+Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)

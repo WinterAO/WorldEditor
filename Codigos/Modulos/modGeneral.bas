@@ -21,20 +21,30 @@ Sub Main()
     
     frmCarga.Show
     
-    Call modCarga.leerConfiguracion 'Leemos el resto de la config
     Call GenerateContra
+    Call modCarga.leerConfiguracion 'Leemos el resto de la config
     Call modCarga.IniciarCabecera
     
-    'Tile Engine
+    frmCarga.lblStatus.Caption = "Iniciando motor grafico (1/3)."
+    DoEvents
+    Call mDx8_Engine.Engine_DirectX8_Init
+    
+    frmCarga.lblStatus.Caption = "Iniciando motor grafico (2/3)."
+    DoEvents
     Call InitTileEngine(32, 32, 8, 8)
+    
+    frmCarga.lblStatus.Caption = "Iniciando motor grafico (3/3)."
+    DoEvents
+    Call mDx8_Engine.Engine_DirectX8_Aditional_Init
     
     'Carga de indices
     '------------------------
     frmCarga.lblStatus.Caption = "Cargando Indice de Graficos."
     DoEvents
-    Call LoadGrhData
+    Call modCarga.LoadGrhData
     '------------------------
      
+    Call modMapas.NuevoMapa
     Unload frmCarga
     frmMain.Show
     
@@ -43,7 +53,11 @@ Sub Main()
     Do While prgRun
         
         If frmMain.WindowState <> vbMinimized And frmMain.Visible Then
-            'TODO: La movida de las teclas y el engine aqui.
+            Call ShowNextFrame
+            Call CheckKeys
+            
+            'If CurrentGrh.GrhIndex = 0 Then _
+                InitGrh CurrentGrh, 1
         End If
     
         DoEvents
@@ -66,13 +80,13 @@ Public Sub CloseMapEditor()
 
     'Call GuardarConfiguracion
 
-    'EngineRun = False
+    EngineRun = False
     
     'Stop tile engine
-    'Call Engine_DirectX8_End
+    Call Engine_DirectX8_End
 
     'Destruimos los objetos publicos creados
-    'Set SurfaceDB = Nothing
+    Set SurfaceDB = Nothing
 
     For Each mifrm In Forms
         Unload mifrm
@@ -85,6 +99,99 @@ Public Sub CloseMapEditor()
     
     End
 
+End Sub
+
+Public Sub CheckKeys()
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 01/11/08
+'*************************************************
+
+'If HotKeysAllow = False Then Exit Sub
+        '[Loopzer]
+        'If GetKeyState(vbKeyControl) < 0 Then
+        '    If Seleccionando Then
+        '        If GetKeyState(vbKeyC) < 0 Then CopiarSeleccion
+        '        If GetKeyState(vbKeyX) < 0 Then CortarSeleccion
+        '        If GetKeyState(vbKeyB) < 0 Then BlockearSeleccion
+        '        If GetKeyState(vbKeyD) < 0 Then AccionSeleccion
+        ''    Else
+        '        If GetKeyState(vbKeyS) < 0 Then DePegar ' GS
+        '        If GetKeyState(vbKeyV) < 0 Then PegarSeleccion
+        '    End If
+        'End If
+        '[/Loopzer]
+    
+    If GetKeyState(vbKeyUp) < 0 Then
+        If UserPos.Y < YMinMapSize Then Exit Sub ' 10
+        If LegalPos(UserPos.X, UserPos.Y - 1) And WalkMode = True Then
+            If dLastWalk + 50 > GetTickCount Then Exit Sub
+            UserPos.Y = UserPos.Y - 1
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            dLastWalk = GetTickCount
+        ElseIf WalkMode = False Then
+            UserPos.Y = UserPos.Y - 1
+        End If
+        
+        'Call DibujarMinimapa(True)
+        frmMain.SetFocus
+        Exit Sub
+    End If
+
+    If GetKeyState(vbKeyRight) < 0 Then
+        If UserPos.X > XMaxMapSize Then Exit Sub ' 89
+        If LegalPos(UserPos.X + 1, UserPos.Y) And WalkMode = True Then
+            If dLastWalk + 50 > GetTickCount Then Exit Sub
+            UserPos.X = UserPos.X + 1
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            dLastWalk = GetTickCount
+            
+        ElseIf WalkMode = False Then
+            UserPos.X = UserPos.X + 1
+            
+        End If
+        
+        'Call DibujarMinimapa(True)
+        frmMain.SetFocus
+        Exit Sub
+    End If
+
+    If GetKeyState(vbKeyDown) < 0 Then
+        If UserPos.Y > YMaxMapSize Then Exit Sub ' 92
+        
+        If LegalPos(UserPos.X, UserPos.Y + 1) And WalkMode = True Then
+            If dLastWalk + 50 > GetTickCount Then Exit Sub
+            UserPos.Y = UserPos.Y + 1
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            dLastWalk = GetTickCount
+            
+        ElseIf WalkMode = False Then
+            UserPos.Y = UserPos.Y + 1
+            
+        End If
+        
+        'Call DibujarMinimapa(True)
+        frmMain.SetFocus
+        Exit Sub
+        
+    End If
+
+    If GetKeyState(vbKeyLeft) < 0 Then
+        If UserPos.X < XMinMapSize Then Exit Sub ' 12
+        If LegalPos(UserPos.X - 1, UserPos.Y) And WalkMode = True Then
+            If dLastWalk + 50 > GetTickCount Then Exit Sub
+            UserPos.X = UserPos.X - 1
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            dLastWalk = GetTickCount
+        ElseIf WalkMode = False Then
+            UserPos.X = UserPos.X - 1
+        End If
+
+       ' Call DibujarMinimapa(True)
+        frmMain.SetFocus
+        Exit Sub
+    End If
+    
 End Sub
 
 Sub WriteVar(ByVal File As String, ByVal Main As String, ByVal Var As String, ByVal value As String)

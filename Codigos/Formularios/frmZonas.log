@@ -1,0 +1,63 @@
+Línea 27: la clase WorldEditor.lvButtons_H del control LvBCerrar no era una clase de control cargada.
+Línea 77: la clase WorldEditor.lvButtons_H del control LvBResetear no era una clase de control cargada.
+Línea 102: la clase WorldEditor.lvButtons_H del control LvBZona no era una clase de control cargada.
+Línea 130: la clase WorldEditor.lvButtons_H del control LvBZona no era una clase de control cargada.
+Línea 157: la clase WorldEditor.lvButtons_H del control LvBPintar no era una clase de control cargada.
+Línea 182: la clase WorldEditor.lvButtons_H del control LvBQuitar no era una clase de control cargada.
+Línea 33: el nombre de la propiedad _ExtentX de LvBCerrar no es válido.
+Línea 34: el nombre de la propiedad _ExtentY de LvBCerrar no es válido.
+Línea 35: el nombre de la propiedad Caption de LvBCerrar no es válido.
+Línea 36: el nombre de la propiedad CapAlign de LvBCerrar no es válido.
+Línea 37: el nombre de la propiedad BackStyle de LvBCerrar no es válido.
+Línea 47: el nombre de la propiedad cGradient de LvBCerrar no es válido.
+Línea 48: el nombre de la propiedad Mode de LvBCerrar no es válido.
+Línea 49: el nombre de la propiedad Value de LvBCerrar no es válido.
+Línea 50: el nombre de la propiedad cBack de LvBCerrar no es válido.
+Línea 83: el nombre de la propiedad _ExtentX de LvBResetear no es válido.
+Línea 84: el nombre de la propiedad _ExtentY de LvBResetear no es válido.
+Línea 85: el nombre de la propiedad Caption de LvBResetear no es válido.
+Línea 86: el nombre de la propiedad CapAlign de LvBResetear no es válido.
+Línea 87: el nombre de la propiedad BackStyle de LvBResetear no es válido.
+Línea 97: el nombre de la propiedad cGradient de LvBResetear no es válido.
+Línea 98: el nombre de la propiedad Mode de LvBResetear no es válido.
+Línea 99: el nombre de la propiedad Value de LvBResetear no es válido.
+Línea 100: el nombre de la propiedad cBack de LvBResetear no es válido.
+Línea 109: el nombre de la propiedad _ExtentX de LvBZona no es válido.
+Línea 110: el nombre de la propiedad _ExtentY de LvBZona no es válido.
+Línea 111: el nombre de la propiedad Caption de LvBZona no es válido.
+Línea 112: el nombre de la propiedad CapAlign de LvBZona no es válido.
+Línea 113: el nombre de la propiedad BackStyle de LvBZona no es válido.
+Línea 114: el nombre de la propiedad Shape de LvBZona no es válido.
+Línea 124: el nombre de la propiedad cGradient de LvBZona no es válido.
+Línea 125: el nombre de la propiedad CapStyle de LvBZona no es válido.
+Línea 126: el nombre de la propiedad Mode de LvBZona no es válido.
+Línea 127: el nombre de la propiedad Value de LvBZona no es válido.
+Línea 128: el nombre de la propiedad cBack de LvBZona no es válido.
+Línea 137: el nombre de la propiedad _ExtentX de LvBZona no es válido.
+Línea 138: el nombre de la propiedad _ExtentY de LvBZona no es válido.
+Línea 139: el nombre de la propiedad Caption de LvBZona no es válido.
+Línea 140: el nombre de la propiedad CapAlign de LvBZona no es válido.
+Línea 141: el nombre de la propiedad BackStyle de LvBZona no es válido.
+Línea 142: el nombre de la propiedad Shape de LvBZona no es válido.
+Línea 152: el nombre de la propiedad cGradient de LvBZona no es válido.
+Línea 153: el nombre de la propiedad Mode de LvBZona no es válido.
+Línea 154: el nombre de la propiedad Value de LvBZona no es válido.
+Línea 155: el nombre de la propiedad cBack de LvBZona no es válido.
+Línea 163: el nombre de la propiedad _ExtentX de LvBPintar no es válido.
+Línea 164: el nombre de la propiedad _ExtentY de LvBPintar no es válido.
+Línea 165: el nombre de la propiedad Caption de LvBPintar no es válido.
+Línea 166: el nombre de la propiedad CapAlign de LvBPintar no es válido.
+Línea 167: el nombre de la propiedad BackStyle de LvBPintar no es válido.
+Línea 177: el nombre de la propiedad cGradient de LvBPintar no es válido.
+Línea 178: el nombre de la propiedad Mode de LvBPintar no es válido.
+Línea 179: el nombre de la propiedad Value de LvBPintar no es válido.
+Línea 180: el nombre de la propiedad cBack de LvBPintar no es válido.
+Línea 188: el nombre de la propiedad _ExtentX de LvBQuitar no es válido.
+Línea 189: el nombre de la propiedad _ExtentY de LvBQuitar no es válido.
+Línea 190: el nombre de la propiedad Caption de LvBQuitar no es válido.
+Línea 191: el nombre de la propiedad CapAlign de LvBQuitar no es válido.
+Línea 192: el nombre de la propiedad BackStyle de LvBQuitar no es válido.
+Línea 202: el nombre de la propiedad cGradient de LvBQuitar no es válido.
+Línea 203: el nombre de la propiedad Mode de LvBQuitar no es válido.
+Línea 204: el nombre de la propiedad Value de LvBQuitar no es válido.
+Línea 205: el nombre de la propiedad cBack de LvBQuitar no es válido.

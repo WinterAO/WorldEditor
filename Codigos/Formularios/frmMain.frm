@@ -5,7 +5,7 @@ Begin VB.Form frmMain
    Caption         =   "WinterMapEditor"
    ClientHeight    =   10800
    ClientLeft      =   150
-   ClientTop       =   795
+   ClientTop       =   495
    ClientWidth     =   19200
    BeginProperty Font 
       Name            =   "Tahoma"
@@ -21,7 +21,7 @@ Begin VB.Form frmMain
    ScaleHeight     =   720
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   1280
-   StartUpPosition =   3  'Windows Default
+   StartUpPosition =   1  'CenterOwner
    Begin MSComDlg.CommonDialog Dialog 
       Left            =   18660
       Top             =   0
@@ -72,6 +72,15 @@ Begin VB.Form frmMain
          Caption         =   "&Salir"
       End
    End
+   Begin VB.Menu mnuVentanas 
+      Caption         =   "Ventanas"
+      Begin VB.Menu VentMenu 
+         Caption         =   "-"
+      End
+      Begin VB.Menu mnuZonas 
+         Caption         =   "Zonas"
+      End
+   End
 End
 Attribute VB_Name = "frmMain"
 Attribute VB_GlobalNameSpace = False
@@ -101,6 +110,10 @@ Private Sub mnuSalir_Click()
     Call CloseMapEditor
 End Sub
 
+Private Sub mnuZonas_Click()
+    frmZonas.Show , frmMain
+End Sub
+
 Public Sub ObtenerNombreArchivo(ByVal Guardar As Boolean)
 '*************************************************
 'Author: Unkwown
@@ -112,16 +125,25 @@ On Error Resume Next
         If Guardar Then
                 .DialogTitle = "Guardar"
                 .DefaultExt = ".txt"
-                .FileName = vbNullString
+                .filename = vbNullString
                 .flags = cdlOFNPathMustExist
                 .ShowSave
         Else
             .DialogTitle = "Cargar"
-            .FileName = vbNullString
+            .filename = vbNullString
             .flags = cdlOFNFileMustExist
             .ShowOpen
+            
         End If
     End With
+End Sub
+
+Private Sub Form_Load()
+
+    'Temporal
+    ClientSetup.MapTam = 1
+    Call setMapSize
+
 End Sub
 
 Private Sub Form_Click()
@@ -146,12 +168,12 @@ Private Sub Form_Resize()
     
     End With
     
-    'With MainScreenRect
-    '    .Bottom = frmMain.MainViewPic.ScaleHeight
-    '    .Right = frmMain.MainViewPic.ScaleWidth
-    'End With
+    With MainScreenRect
+        .Bottom = frmMain.MainViewPic.ScaleHeight
+        .Right = frmMain.MainViewPic.ScaleWidth
+    End With
     
-    'Call ChangeView
+    Call ChangeView
     
 End Sub
 
@@ -162,5 +184,16 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 '*************************************************
 
     Call CloseMapEditor
+    
+End Sub
+
+Private Sub Form_KeyPress(KeyAscii As Integer)
+'*************************************************
+'Author: Lorwik
+'Last modified: 26/04/2021
+'*************************************************
+
+    ' HotKeys
+    If HotKeysAllow = False Then Exit Sub
     
 End Sub

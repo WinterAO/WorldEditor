@@ -21,7 +21,7 @@ Begin VB.Form frmCarga
    ScaleHeight     =   3735
    ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
-   StartUpPosition =   3  'Windows Default
+   StartUpPosition =   1  'CenterOwner
    Begin VB.Label lblStatus 
       Alignment       =   2  'Center
       BackStyle       =   0  'Transparent

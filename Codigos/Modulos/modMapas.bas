@@ -112,11 +112,11 @@ Public Sub AbrirMapa(Optional ByVal IntMode As Boolean = False)
     frmMain.Dialog.CancelError = True
     On Error GoTo ErrHandler
     
-    DeseaGuardarMapa frmMain.Dialog.FileName
+    DeseaGuardarMapa frmMain.Dialog.filename
     
     frmMain.ObtenerNombreArchivo False
     
-    If Len(frmMain.Dialog.FileName) < 3 Then Exit Sub
+    If Len(frmMain.Dialog.filename) < 3 Then Exit Sub
     
         'If WalkMode = True Then
         '    Call modGeneral.ToggleWalkMode
@@ -124,7 +124,7 @@ Public Sub AbrirMapa(Optional ByVal IntMode As Boolean = False)
         
         Call modMapas.NuevoMapa
         
-        Call AbrirunMapa(frmMain.Dialog.FileName, IntMode)
+        Call AbrirunMapa(frmMain.Dialog.filename, IntMode)
         
         DoEvents
         'frmMain.mnuReAbrirMapa.Enabled = True
@@ -196,7 +196,7 @@ On Error GoTo ErrHandler
     
     If LenB(Path) = 0 Then
         frmMain.ObtenerNombreArchivo True
-        Path = frmMain.Dialog.FileName
+        Path = frmMain.Dialog.filename
         If LenB(Path) = 0 Then Exit Sub
     End If
     
@@ -281,11 +281,142 @@ Public Sub NuevoMapa()
                 Next i
 
                 InitGrh .Graphic(1), 1
-                
+
             End With
             
         Next X
     Next Y
+    
+    'Borramos todas las luces
+    Call LightRemoveAll
+    
+    If ClientSetup.MeMode = eMeMode.WinterAO Then
+        CantZonas = 0
+        ReDim MapZonas(CantZonas) As tMapInfo
+    
+        frmZonas.LstZona.Clear
+    
+        Call NuevaZona(CantZonas)
+                
+        'Call MapZona_Actualizar(CantZonas)
+        
+        frmZonas.LstZona.ListIndex = 0
+        
+        'Call MapZona_Actualizar(frmZonas.LstZona.ListIndex + 1)
+           
+    Else
+    
+        MapInfo.MapVersion = 0
+        MapInfo.name = "Mapa Desconocido"
+        MapInfo.Music = 0
+        MapInfo.ambient = 0
+        MapInfo.PK = True
+        MapInfo.MagiaSinEfecto = 0
+        MapInfo.InviSinEfecto = 0
+        MapInfo.ResuSinEfecto = 0
+        MapInfo.Terreno = "BOSQUE"
+        MapInfo.Zona = "CAMPO"
+        MapInfo.Restringir = "No"
+        MapInfo.NoEncriptarMP = 0
+        MapInfo.LuzBase = 0
+            
+        'Call MapInfo_Actualizar
+    End If
+    
+    Estado_Actual = Estados(e_estados.MedioDia)
+    Call Actualizar_Estado
+    
+    'Set changed flag
+    MapInfo.Changed = 0
+    frmMain.MousePointer = 0
+    
+End Sub
+
+Public Sub NuevaZona(ByVal id As Integer)
+'*****************************************
+'Autor: Lorwik
+'Fecha: 01/04/2021
+'Descripción: Crea una nueva zona
+'*****************************************
+
+    CantZonas = CantZonas + 1
+    
+    ReDim Preserve MapZonas(CantZonas) As tMapInfo
+
+    Call ResetearZona(id)
+    
+    frmZonas.LstZona.AddItem (CantZonas & "- " & MapZonas(CantZonas).name)
+End Sub
+
+Public Sub ResetearZona(ByVal id As Integer)
+'*****************************************
+'Autor: Lorwik
+'Fecha: 01/04/2021
+'Descripción: Resetea las propiedades de la zona indicada
+'*****************************************
+
+    If id > CantZonas Then
+        MsgBox "Error al resetear la zona. El ID de la zona seleccionada es superior al numero de zonas existentes.", vbCritical
+        Exit Sub
+    End If
+
+    With MapZonas(CantZonas)
+        .MapVersion = 0
+        .name = "Zona Desconocida"
+        .Music = 0
+        .ambient = 0
+        .PK = True
+        .MagiaSinEfecto = 0
+        .InviSinEfecto = 0
+        .ResuSinEfecto = 0
+        .Terreno = "BOSQUE"
+        .Zona = "CAMPO"
+        .Restringir = "No"
+        .NoEncriptarMP = 0
+        .LuzBase = 0
+    End With
+    
+End Sub
+
+Public Sub EliminarZona()
+'*****************************************
+'Autor: Lorwik
+'Fecha: 01/04/2021
+'Descripción: Elimina la ultima zona creada
+'*****************************************
+    
+    If CantZonas = 1 Then
+        MsgBox "El numero de zonas llego al mnimo. No puedes eliminar mas zonas."
+        Exit Sub
+    End If
+    
+    'Primero se resetea la zona
+    Call ResetearZona(CantZonas)
+
+    frmZonas.LstZona.RemoveItem frmZonas.LstZona.ListIndex
+    
+    CantZonas = CantZonas - 1
+    
+    ReDim Preserve MapZonas(CantZonas) As tMapInfo
+    
+End Sub
+
+Public Sub ActualizarZonaList()
+'*****************************************
+'Autor: Lorwik
+'Fecha: 02/04/2021
+'Descripción: Actualiza la lista de zonas
+'*****************************************
+
+    Dim i As Integer
+
+    frmZonas.LstZona.Clear
+        
+    For i = 1 To CantZonas
+        frmZonas.LstZona.AddItem (i & "- " & MapZonas(i).name)
+            
+    Next i
+    
 End Sub
 
 Sub Cargar_CSM(ByVal Map As String)
@@ -385,21 +516,21 @@ Sub Cargar_CSM(ByVal Map As String)
                 Next i
             End If
             
-'            If .NumeroParticulas > 0 Then
-'                ReDim Particulas(1 To .NumeroParticulas)
-'                Get #fh, , Particulas
+            If .NumeroParticulas > 0 Then
+                ReDim Particulas(1 To .NumeroParticulas)
+                Get #fh, , Particulas
 '                For i = 1 To .NumeroParticulas
 '                    MapData(Particulas(i).X, Particulas(i).Y).Particle_Index = Particulas(i).Particula
 '                    Call General_Particle_Create(Particulas(i).Particula, Particulas(i).X, Particulas(i).Y)
 '
 '                    MapData(Particulas(i).X, Particulas(i).Y).Particle_Group_Index = General_Particle_Create(Particulas(i).Particula, Particulas(i).X, Particulas(i).Y)
 '                Next i
-'            End If
+            End If
 '
-'            If .NumeroLuces > 0 Then
-'                ReDim Luces(1 To .NumeroLuces)
-'                Dim p As Byte
-'                Get #fh, , Luces
+            If .NumeroLuces > 0 Then
+                ReDim Luces(1 To .NumeroLuces)
+                Dim p As Byte
+                Get #fh, , Luces
 '                For i = 1 To .NumeroLuces
 '
 '                    With MapData(Luces(i).X, Luces(i).Y)
@@ -415,19 +546,19 @@ Sub Cargar_CSM(ByVal Map As String)
 '                Next i
 '
 '                Call LightRenderAll
-'            End If
+            End If
 '
-'            If .NumeroZonas > 0 Then
-'                ReDim Zonas(1 To .NumeroZonas)
-'                Get #fh, , Zonas
-'                For i = 1 To .NumeroZonas
-'                    MapData(Zonas(i).X, Zonas(i).Y).ZonaIndex = Zonas(i).Zona
-'                Next i
-'            End If
+            If .NumeroZonas > 0 Then
+                ReDim Zonas(1 To .NumeroZonas)
+                Get #fh, , Zonas
+                For i = 1 To .NumeroZonas
+                    MapData(Zonas(i).X, Zonas(i).Y).ZonaIndex = Zonas(i).Zona
+                Next i
+            End If
             
-'            If .NumeroOBJs > 0 Then
-'                ReDim Objetos(1 To .NumeroOBJs)
-'                Get #fh, , Objetos
+            If .NumeroOBJs > 0 Then
+                ReDim Objetos(1 To .NumeroOBJs)
+                Get #fh, , Objetos
 '                For i = 1 To .NumeroOBJs
 '                    MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.ObjIndex = Objetos(i).ObjIndex
 '                    MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.Amount = Objetos(i).ObjAmmount
@@ -437,27 +568,27 @@ Sub Cargar_CSM(ByVal Map As String)
 '                        InitGrh MapData(Objetos(i).X, Objetos(i).Y).ObjGrh, ObjData(MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.ObjIndex).GrhIndex
 '                    End If
 '                Next i
-'            End If
+            End If
                 
-'            If .NumeroNPCs > 0 Then
-'                ReDim NPCs(1 To .NumeroNPCs)
-'                Get #fh, , NPCs
+            If .NumeroNPCs > 0 Then
+                ReDim NPCs(1 To .NumeroNPCs)
+                Get #fh, , NPCs
 '                For i = 1 To .NumeroNPCs
 '                    If NPCs(i).NPCIndex > 0 Then
 '                        MapData(NPCs(i).X, NPCs(i).Y).NPCIndex = NPCs(i).NPCIndex
 '                        Call MakeChar(NextOpenChar(), NpcData(NPCs(i).NPCIndex).Body, NpcData(NPCs(i).NPCIndex).Head, NpcData(NPCs(i).NPCIndex).Heading, NPCs(i).X, NPCs(i).Y)
 '                    End If
 '                Next i
-'            End If
+            End If
     
             If .NumeroTE > 0 Then
                 ReDim TEs(1 To .NumeroTE)
                 Get #fh, , TEs
-                For i = 1 To .NumeroTE
-                    MapData(TEs(i).X, TEs(i).Y).TileExit.Map = TEs(i).DestM
-                    MapData(TEs(i).X, TEs(i).Y).TileExit.X = TEs(i).DestX
-                    MapData(TEs(i).X, TEs(i).Y).TileExit.Y = TEs(i).DestY
-                Next i
+'                For i = 1 To .NumeroTE
+'                    MapData(TEs(i).X, TEs(i).Y).TileExit.Map = TEs(i).DestM
+'                    MapData(TEs(i).X, TEs(i).Y).TileExit.X = TEs(i).DestX
+'                    MapData(TEs(i).X, TEs(i).Y).TileExit.Y = TEs(i).DestY
+'                Next i
             End If
              
         End With
@@ -478,7 +609,7 @@ Sub Cargar_CSM(ByVal Map As String)
 '    Call Pestanas(Map, ".csm")
 '
 '    'Change mouse icon
-'    frmMain.MousePointer = 0
+    frmMain.MousePointer = 0
 '
 '    ' Vacio deshacer
 '    modEdicion.Deshacer_Clear
@@ -493,6 +624,7 @@ Sub Cargar_CSM(ByVal Map As String)
 '    Call DibujarMinimapa ' Radar
 '
 '    Call AddtoRichTextBox(frmMain.StatTxt, "Mapa " & Map & " cargado...", 0, 255, 0)
+
 ErrorHandler:
     If fh <> 0 Then Close fh
     

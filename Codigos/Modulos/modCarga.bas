@@ -30,6 +30,7 @@ Public Type tSetupMods
     byMemory    As Integer
     LimiteFPS As Boolean
     OverrideVertexProcess As Byte
+    TilesBuffer As Byte
     
     'MOSTRAR
     MapTam As Byte
@@ -114,7 +115,8 @@ On Local Error GoTo fileErr:
     
         .byMemory = Lector.GetValue("VIDEO", "DynamicMemory")
         .OverrideVertexProcess = CByte(Lector.GetValue("VIDEO", "VertexProcessingOverride"))
-        .LimiteFPS = CBool(Lector.GetValue("Video", "LimitarFPS"))
+        .LimiteFPS = CBool(Lector.GetValue("VIDEO", "LimitarFPS"))
+        .TilesBuffer = Val(Lector.GetValue("VIDEO", "TilesBuffer"))
         .Preview = CBool(Lector.GetValue("MOSTRAR", "Preview"))
         .MeMode = Lector.GetValue("CONFIGURACION", "MeMode")
         
