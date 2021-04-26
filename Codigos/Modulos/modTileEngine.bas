@@ -58,6 +58,15 @@ Private Const MOVEMENT_SPEED As Single = 1
 Private Declare Function QueryPerformanceFrequency Lib "kernel32" (lpFrequency As Currency) As Long
 Private Declare Function QueryPerformanceCounter Lib "kernel32" (lpPerformanceCount As Currency) As Long
 
+Sub ConvertCPtoTP(ByVal viewPortX As Integer, ByVal viewPortY As Integer, ByRef tX As Integer, ByRef tY As Integer)
+'******************************************
+'Converts where the mouse is in the main window to a tile position. MUST be called eveytime the mouse moves.
+'******************************************
+
+    tX = (UserPos.X + viewPortX \ TilePixelWidth - WindowTileWidth \ 2) + 1
+    tY = (UserPos.Y + viewPortY \ TilePixelHeight - WindowTileHeight \ 2) + 1
+End Sub
+
 Public Sub InitGrh(ByRef Grh As Grh, ByVal GrhIndex As Long, Optional ByVal Started As Byte = 2)
 '*****************************************************************
 'Sets up a grh. MUST be done before rendering
@@ -314,7 +323,7 @@ Public Sub Device_Textured_Render(ByVal X As Single, ByVal Y As Single, _
                                   ByVal Width As Integer, ByVal Height As Integer, _
                                   ByVal sX As Integer, ByVal sY As Integer, _
                                   ByVal tex As Long, _
-                                  ByRef Color() As Long, _
+                                  ByRef color() As Long, _
                                   Optional ByVal Alpha As Boolean = False, _
                                   Optional ByVal angle As Single = 0, _
                                   Optional ByVal ScaleX As Single = 1!, _
@@ -332,9 +341,9 @@ Public Sub Device_Textured_Render(ByVal X As Single, ByVal Y As Single, _
                 Call .SetAlpha(Alpha)
                 
                 If TextureWidth <> 0 And TextureHeight <> 0 Then
-                    Call .Draw(X, Y, Width * ScaleX, Height * ScaleY, Color, sX / TextureWidth, sY / TextureHeight, (sX + Width) / TextureWidth, (sY + Height) / TextureHeight, angle)
+                    Call .Draw(X, Y, Width * ScaleX, Height * ScaleY, color, sX / TextureWidth, sY / TextureHeight, (sX + Width) / TextureWidth, (sY + Height) / TextureHeight, angle)
                 Else
-                    Call .Draw(X, Y, TextureWidth * ScaleX, TextureHeight * ScaleY, Color, , , , , angle)
+                    Call .Draw(X, Y, TextureWidth * ScaleX, TextureHeight * ScaleY, color, , , , , angle)
                 End If
                 
         End With
@@ -392,7 +401,7 @@ On Error GoTo Error
 
     If Grh.GrhIndex > grhCount Or GrhData(Grh.GrhIndex).NumFrames = 0 And GrhData(Grh.GrhIndex).FileNum = 0 Then
         Call InitGrh(Grh, GRH_ERROR) ' 23829
-        'Call AddtoRichTextBox(frmMain.StatTxt, "Error en Grh. Posicion: X:" & X & " Y:" & Y, 255, 0, 0)
+        Call AddtoRichTextBox(frmConsola.StatTxt, "Error en Grh. Posicion: X:" & X & " Y:" & Y, 255, 0, 0)
     End If
 
     If Animate Then
@@ -521,6 +530,8 @@ Sub RenderScreen(ByVal tilex As Integer, _
     Dim ElapsedTime      As Single
     Dim ColorFinal(3)    As Long
     
+    Dim Grh              As Grh                  'Temp Grh for show tile and blocked
+    
     ElapsedTime = Engine_ElapsedTime()
     
     'Figure out Ends and Starts of screen
@@ -576,14 +587,16 @@ Sub RenderScreen(ByVal tilex As Integer, _
             PixelOffsetYTemp = (ScreenY - 1) * TilePixelHeight + PixelOffsetY
             
             'Layer 1 **********************************
-            If MapData(X, Y).Graphic(1).GrhIndex <> 0 Then
-                Call Draw_Grh(MapData(X, Y).Graphic(1), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
+            If VerCapa1 Then
+                If MapData(X, Y).Graphic(1).GrhIndex <> 0 Then _
+                    Call Draw_Grh(MapData(X, Y).Graphic(1), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
             End If
             '******************************************
 
             'Layer 2 **********************************
-            If MapData(X, Y).Graphic(2).GrhIndex <> 0 Then
-                Call Draw_Grh(MapData(X, Y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
+            If VerCapa2 Then
+                If MapData(X, Y).Graphic(2).GrhIndex <> 0 Then _
+                    Call Draw_Grh(MapData(X, Y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
             End If
             '******************************************
             
@@ -620,8 +633,10 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     '*************************************************
 
                     'Layer 3 *****************************************
-                    If .Graphic(3).GrhIndex <> 0 Then _
-                        Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
+                    If VerCapa3 Then
+                        If .Graphic(3).GrhIndex <> 0 Then _
+                            Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
+                    End If
                     '************************************************
                     
 '                    'Particulas
@@ -657,9 +672,43 @@ Sub RenderScreen(ByVal tilex As Integer, _
             PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
             
             'Layer 4
-            If MapData(X, Y).Graphic(4).GrhIndex Then _
-                Call Draw_Grh(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, temp_rgb(), 1)
+            If VerCapa4 Then
+                If MapData(X, Y).Graphic(4).GrhIndex Then _
+                    Call Draw_Grh(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, temp_rgb(), 1)
+            End If
+            
+            If MapData(X, Y).TileExit.Map <> 0 And VerTranslados Then
+                Grh.GrhIndex = 3
+                Grh.FrameCounter = 1
+                Grh.Started = 0
+                Call Draw_Grh(Grh, PixelOffsetXTemp, PixelOffsetYTemp, 1, Normal_RGBList(), 1)
+                        
+            End If
+                
+            'Show blocked tiles
+            If VerBlockeados And MapData(X, Y).Blocked = 1 Then
+                Grh.GrhIndex = 4
+                Grh.FrameCounter = 1
+                Grh.Started = 0
+                    
+                Call Draw_Grh(Grh, PixelOffsetXTemp, PixelOffsetYTemp, 1, Normal_RGBList(), 1)
+                        
+            End If
+                
+            If VerGrilla Then
+                Grh.GrhIndex = 2
+                Grh.FrameCounter = 1
+                Grh.Started = 0
+                    
+                Call Draw_Grh(Grh, PixelOffsetXTemp, PixelOffsetYTemp, 1, Normal_RGBList(), 0)
+                        
+            End If
 
+            If VerTriggers Then '4978
+                If MapData(X, Y).Trigger > 0 Then _
+                    Call DrawText(PixelOffsetXTemp + 5, PixelOffsetYTemp - 13, MapData(X, Y).Trigger, -1, False, 2)
+            End If
+            
             ScreenX = ScreenX + 1
             
         Next X

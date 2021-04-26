@@ -1,8 +1,33 @@
 Attribute VB_Name = "modDeclaraciones"
 Option Explicit
 
+Public Const MSGMod As String = "Este mapa há sido modificado." & vbCrLf & "Si no lo guardas perderas todos los cambios ¿Deseas guardarlo?"
+Public Const MSGDang As String = "CUIDADO! Este comando puede arruinar el mapa." & vbCrLf & "¿Estas seguro que desea continuar?"
+
 Public HotKeysAllow As Boolean
+Public PATH_Save As String
+Public NumMap_Save As Integer
+Public NameMap_Save As String
+Public MapaActual As Integer
+Public MapaCargado As Boolean
+
 Public prgRun As Boolean
+
+'Ver
+Public VerBlockeados As Boolean
+Public VerTriggers As Boolean
+Public VerGrilla As Boolean ' grilla
+Public VerParticulas As Boolean
+Public VerCapa1 As Boolean
+Public VerCapa2 As Boolean
+Public VerCapa3 As Boolean
+Public VerCapa4 As Boolean
+Public VerTranslados As Boolean
+Public VerObjetos As Boolean
+Public VerNpcs As Boolean
+
+Public SobreX As Integer ' Posicion X bajo el Cursor
+Public SobreY As Integer   ' Posicion Y bajo el Cursor
 
 'Map sizes in tiles
 Public XMaxMapSize As Integer
@@ -61,6 +86,8 @@ Public Type GrhData
     speed As Single
     
     Trans As Byte
+    
+    mini_map_color As Long
 End Type
 
 'Posicion en un mapa

@@ -41,9 +41,9 @@ Private Type tDatosZonas
 End Type
 
 Public Type tDatosLuces
-    R As Integer
-    G As Integer
-    B As Integer
+    r As Integer
+    g As Integer
+    b As Integer
     range As Byte
     X As Integer
     Y As Integer
@@ -269,9 +269,9 @@ Public Sub NuevoMapa()
                 .Light.map_x = 0
                 .Light.map_y = 0
                 .Light.RGBCOLOR.a = 0
-                .Light.RGBCOLOR.R = 0
-                .Light.RGBCOLOR.G = 0
-                .Light.RGBCOLOR.B = 0
+                .Light.RGBCOLOR.r = 0
+                .Light.RGBCOLOR.g = 0
+                .Light.RGBCOLOR.b = 0
                 
                 If ClientSetup.MeMode = eMeMode.WinterAO Then _
                     .ZonaIndex = 0
@@ -606,7 +606,7 @@ Sub Cargar_CSM(ByVal Map As String)
 '    'MapInfo_Cargar Map
 '    frmMapInfo.txtMapVersion.Text = MapInfo.MapVersion
 '
-'    Call Pestanas(Map, ".csm")
+    Call Pestanas(Map, ".csm")
 '
 '    'Change mouse icon
     frmMain.MousePointer = 0
@@ -619,18 +619,63 @@ Sub Cargar_CSM(ByVal Map As String)
 '    'Set changed flag
 '    MapInfo.Changed = 0
 '
-'    MapaCargado = True
+    MapaCargado = True
 '
 '    Call DibujarMinimapa ' Radar
 '
-'    Call AddtoRichTextBox(frmMain.StatTxt, "Mapa " & Map & " cargado...", 0, 255, 0)
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Mapa " & Map & " cargado...", 0, 255, 0)
 
 ErrorHandler:
     If fh <> 0 Then Close fh
     
-    'Call AddtoRichTextBox(frmMain.StatTxt, "Error en el Mapa " & Map & ", se ha generado un informe de errores en: " & App.Path & "\Logs.txt", 255, 0, 0)
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Mapa " & Map & ", se ha generado un informe de errores en: " & App.Path & "\Logs.txt", 255, 0, 0)
     
     File = FreeFile
     
     Call RegistrarError(Err.Number, Err.Description, "modMapas.Cargar_CSM", Erl)
+End Sub
+
+''
+' Calcula la orden de Pestanas
+'
+' @param Map Especifica path del mapa
+
+Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".map")
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 28/05/06
+'*************************************************
+On Error Resume Next
+    Dim loopc As Integer
+    
+    For loopc = Len(Map) To 1 Step -1
+        If mid(Map, loopc, 1) = "\" Then
+            PATH_Save = Left(Map, loopc)
+            Exit For
+        End If
+    Next
+    
+    Map = Right(Map, Len(Map) - (Len(PATH_Save)))
+    
+    MapaActual = ReadField(1, Right(Map, Len(Map) - 4), Asc("."))
+    'If frmCopiarBordes.Visible Then Call frmCopiarBordes.Inicializar
+    
+    For loopc = Len(Left(Map, Len(Map) - 4)) To 1 Step -1
+        If IsNumeric(mid(Left(Map, Len(Map) - 4), loopc, 1)) = False Then
+            NumMap_Save = Right(Left(Map, Len(Map) - 4), Len(Left(Map, Len(Map) - 4)) - loopc)
+            NameMap_Save = Left(Map, loopc)
+            Exit For
+        End If
+    Next
+    
+    For loopc = (NumMap_Save - 4) To (NumMap_Save + 8)
+            If FileExist(PATH_Save & NameMap_Save & loopc & MapFormat, vbArchive) = True Then
+                frmMain.MapPest(loopc - NumMap_Save + 4).Visible = True
+                frmMain.MapPest(loopc - NumMap_Save + 4).Enabled = True
+                frmMain.MapPest(loopc - NumMap_Save + 4).Caption = NameMap_Save & loopc
+            Else
+                frmMain.MapPest(loopc - NumMap_Save + 4).Visible = False
+            End If
+    Next
+    
 End Sub

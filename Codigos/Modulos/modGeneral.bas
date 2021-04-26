@@ -42,6 +42,10 @@ Sub Main()
     frmCarga.lblStatus.Caption = "Cargando Indice de Graficos."
     DoEvents
     Call modCarga.LoadGrhData
+    
+    frmCarga.lblStatus.Caption = "Cargando Minimapa."
+    DoEvents
+    'Call modCarga.CargarMinimapa
     '------------------------
      
     Call modMapas.NuevoMapa
@@ -194,6 +198,57 @@ Public Sub CheckKeys()
     
 End Sub
 
+Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
+                    ByVal Text As String, _
+                    Optional ByVal Red As Integer = -1, _
+                    Optional ByVal Green As Integer, _
+                    Optional ByVal Blue As Integer, _
+                    Optional ByVal bold As Boolean = False, _
+                    Optional ByVal italic As Boolean = False, _
+                    Optional ByVal bCrLf As Boolean = True, _
+                    Optional ByVal Alignment As Byte = rtfLeft)
+    
+'****************************************************
+'Adds text to a Richtext box at the bottom.
+'Automatically scrolls to new text.
+'Text box MUST be multiline and have a 3D apperance!
+'****************************************************
+'Pablo (ToxicWaste) 01/26/2007 : Now the list refeshes properly.
+'Juan Martin Sotuyo Dodero (Maraxus) 03/29/2007 : Replaced ToxicWaste's code for extra performance.
+'Jopi 17/08/2019 : Consola transparente.
+'Jopi 17/08/2019 : Ahora podes especificar el alineamiento del texto.
+'****************************************************
+    With RichTextBox
+        
+        If Len(.Text) > 1000 Then
+            'Get rid of first line
+            .SelStart = InStr(1, .Text, vbCrLf) + 1
+            .SelLength = Len(.Text) - .SelStart + 2
+            .TextRTF = .SelRTF
+        End If
+        
+        .SelStart = Len(.Text)
+        .SelLength = 0
+        .SelBold = bold
+        .SelItalic = italic
+        
+        ' 0 = Left
+        ' 1 = Center
+        ' 2 = Right
+        .SelAlignment = Alignment
+
+        If Not Red = -1 Then .SelColor = RGB(Red, Green, Blue)
+        
+        If bCrLf And Len(.Text) > 0 Then Text = vbCrLf & Text
+        
+        .SelText = Text
+
+        ' Esto arregla el bug de las letras superponiendose la consola del frmMain
+        If Not RichTextBox = frmConsola.StatTxt Then RichTextBox.Refresh
+
+    End With
+End Sub
+
 Sub WriteVar(ByVal File As String, ByVal Main As String, ByVal Var As String, ByVal value As String)
 '*****************************************************************
 'Escribe en un archivo de texto plano
@@ -223,6 +278,40 @@ Function FileExist(ByVal File As String, ByVal FileType As VbFileAttribute) As B
 '*****************************************************************
 
     FileExist = (Dir$(File, FileType) <> "")
+End Function
+
+Public Function ReadField(Pos As Integer, Text As String, SepASCII As Integer) As String
+'*************************************************
+'Author: Unkwown
+'Last modified: 20/05/06
+'*************************************************
+    Dim i As Integer
+    Dim lastPos As Integer
+    Dim CurChar As String * 1
+    Dim FieldNum As Integer
+    Dim Seperator As String
+    
+    Seperator = Chr(SepASCII)
+    lastPos = 0
+    FieldNum = 0
+    
+    For i = 1 To Len(Text)
+        CurChar = mid(Text, i, 1)
+        If CurChar = Seperator Then
+            FieldNum = FieldNum + 1
+            If FieldNum = Pos Then
+                ReadField = mid(Text, lastPos + 1, (InStr(lastPos + 1, Text, Seperator, vbTextCompare) - 1) - (lastPos))
+                Exit Function
+            End If
+            lastPos = i
+        End If
+    Next i
+    FieldNum = FieldNum + 1
+    
+    If FieldNum = Pos Then
+        ReadField = mid(Text, lastPos + 1)
+    End If
+
 End Function
 
 Function Buscar_Carpeta(Optional Titulo As String, _
@@ -263,4 +352,3 @@ errFunction:
     Call RegistrarError(Err.Number, Err.Description, "Buscar_Carpeta", Erl)
   
 End Function
-

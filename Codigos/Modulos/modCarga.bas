@@ -223,6 +223,29 @@ On Local Error GoTo fileErr:
         If ClienteHeight <= 0 Then ClienteHeight = 13
         If ClienteWidth <= 0 Then ClienteWidth = 17
         
+        ' Menu Mostrar
+        VerCapa1 = Val(Lector.GetValue("MOSTRAR", "Capa1"))
+        VerCapa2 = Val(Lector.GetValue("MOSTRAR", "Capa2"))
+        VerCapa3 = Val(Lector.GetValue("MOSTRAR", "Capa3"))
+        VerCapa4 = Val(Lector.GetValue("MOSTRAR", "Capa4"))
+        VerTranslados = Val(Lector.GetValue("MOSTRAR", "Translados"))
+        VerObjetos = Val(Lector.GetValue("MOSTRAR", "Objetos"))
+        VerNpcs = Val(Lector.GetValue("MOSTRAR", "NPCs"))
+        VerTriggers = Val(Lector.GetValue("MOSTRAR", "Triggers"))
+        VerGrilla = Val(Lector.GetValue("MOSTRAR", "Grilla")) ' Grilla
+        VerParticulas = Val(Lector.GetValue("MOSTRAR", "Particulas"))
+        VerBlockeados = Val(Lector.GetValue("MOSTRAR", "Bloqueos"))
+        
+        frmMain.Minimap_capa1.Checked = Val(Lector.GetValue("MINIMAP", "Capa1"))
+        frmMain.Minimap_capa2.Checked = Val(Lector.GetValue("MINIMAP", "Capa2"))
+        frmMain.Minimap_capa3.Checked = Val(Lector.GetValue("MINIMAP", "Capa3"))
+        frmMain.Minimap_capa4.Checked = Val(Lector.GetValue("MINIMAP", "Capa4"))
+        frmMain.Minimap_objetos.Checked = Val(Lector.GetValue("MINIMAP", "Obj"))
+        frmMain.Minimap_npcs.Checked = Val(Lector.GetValue("MINIMAP", "NPC"))
+        frmMain.Minimap_particulas.Checked = Val(Lector.GetValue("MINIMAP", "Particulas"))
+        frmMain.Minimap_ndemapa.Checked = Val(Lector.GetValue("MINIMAP", "Nombre"))
+        frmMain.Minimap_bloqueos.Checked = Val(Lector.GetValue("MINIMAP", "Bloqueos"))
+        
     End With
 
     Set Lector = Nothing
@@ -365,3 +388,49 @@ ErrorHandler:
     End If
     
 End Sub
+
+Public Sub CargarMinimapa()
+'************************************
+'Autor: Lorwik
+'Fecha: ???
+'************************************
+
+    Dim fileBuff    As clsByteBuffer
+    Dim InfoHead    As INFOHEADER
+    Dim buffer()    As Byte
+    Dim i           As Long
+    
+    InfoHead = File_Find(DirRecursos & "Scripts" & Formato, LCase$("minimap.ind"))
+    
+    If InfoHead.lngFileSize <> 0 Then
+    
+        Extract_File_Memory Scripts, LCase$("minimap.ind"), buffer()
+        
+        Set fileBuff = New clsByteBuffer
+        
+        fileBuff.initializeReader buffer
+        
+        For i = 1 To grhCount
+            If Grh_Check(i) Then
+                GrhData(i).mini_map_color = fileBuff.getLong
+            End If
+        Next i
+        
+        Erase buffer
+    End If
+    
+    Set fileBuff = Nothing
+    
+End Sub
+
+Private Function Grh_Check(ByVal grh_index As Long) As Boolean
+'**************************************************************
+'Author: Aaron Perkins - Modified by Juan Martín Sotuyo Dodero
+'Last Modify Date: 1/04/2003
+'
+'**************************************************************
+    'check grh_index
+    If grh_index > 0 And grh_index <= grhCount Then
+        Grh_Check = GrhData(grh_index).NumFrames
+    End If
+End Function
