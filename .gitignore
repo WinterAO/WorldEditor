@@ -1,0 +1,21 @@
+# Client Files.
+Errores.log
+Codigo/*.log
+*.vbw
+*.oca
+*.csi
+*.lvw
+*.OBJ
+*.log
+Config.ini
+INIT/*
+Graficos/*
+WinterMapEditor.exe
+
+# System Files.
+.DS_Store
+Thumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+*.stackdump
