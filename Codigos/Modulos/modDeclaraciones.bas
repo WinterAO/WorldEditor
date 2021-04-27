@@ -93,14 +93,14 @@ End Type
 'Posicion en un mapa
 Public Type Position
     X As Integer
-    Y As Integer
+    y As Integer
 End Type
 
 'Holds a world position
 Public Type WorldPos
     Map As Integer
     X As Integer
-    Y As Integer
+    y As Integer
 End Type
 
 'Holds info about a object
@@ -126,7 +126,7 @@ Public Type MapBlock
     NPCIndex As Integer
     OBJInfo As Obj
     TileExit As WorldPos
-    Blocked As Byte
+    bLocked As Byte
     
     Trigger As Integer
     
@@ -195,6 +195,15 @@ Public Type Char
     
 End Type
 
+Type SupData
+    name As String
+    Grh As Long
+    Width As Byte
+    Height As Byte
+    Block As Boolean
+    Capa As Byte
+End Type
+
 '**********Arrays Publicas************
 Public GrhData() As GrhData 'Holds all the grh data
 Public MapData() As MapBlock 'Holds map data for current map
@@ -202,11 +211,13 @@ Public BodyData() As tBodyData
 Public HeadData() As tHeadData
 Public CharList(1 To 10000) As Char 'Holds info about all characters on map
 Public MapZonas() As tMapInfo
+Public SupData() As SupData
 '************************************
 
 Public CantZonas As Integer
 Public UserPos As Position 'Posicion
 Public MapInfo As tMapInfo 'Holds map info for current map
+Public CurrentGrh As Grh
 
 'Variables de estado
 Public AddtoUserPos As Position 'For moving user

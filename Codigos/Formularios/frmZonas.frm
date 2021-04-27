@@ -1,12 +1,12 @@
 VERSION 5.00
 Begin VB.Form frmZonas 
-   BackColor       =   &H00FFFFFF&
+   BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Configuración de Zonas"
-   ClientHeight    =   3390
+   ClientHeight    =   3270
    ClientLeft      =   10215
    ClientTop       =   6885
-   ClientWidth     =   2310
+   ClientWidth     =   2415
    ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
@@ -20,15 +20,15 @@ Begin VB.Form frmZonas
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   226
+   ScaleHeight     =   218
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   154
+   ScaleWidth      =   161
    ShowInTaskbar   =   0   'False
    Begin WinterMapEditor.lvButtons_H LvBCerrar 
       Height          =   405
-      Left            =   180
+      Left            =   270
       TabIndex        =   7
-      Top             =   2880
+      Top             =   2820
       Width           =   1965
       _ExtentX        =   3466
       _ExtentY        =   714
@@ -50,19 +50,20 @@ Begin VB.Form frmZonas
       cBack           =   -2147483633
    End
    Begin VB.Frame FraAreas 
-      BackColor       =   &H00FFFFFF&
+      BackColor       =   &H00535353&
       Caption         =   "Zonas"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   700
+         Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00FFFFFF&
       Height          =   2775
-      Left            =   0
+      Left            =   60
       TabIndex        =   0
       Top             =   0
       Width           =   2295

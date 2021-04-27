@@ -1,5 +1,6 @@
 VERSION 5.00
 Begin VB.Form frmModo 
+   BackColor       =   &H00424242&
    BorderStyle     =   0  'None
    Caption         =   "Form1"
    ClientHeight    =   3270
@@ -24,23 +25,27 @@ Begin VB.Form frmModo
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
    Begin VB.Frame FraConfiguraciónDe 
+      BackColor       =   &H00535353&
       Caption         =   "Configuración de video"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   700
+         Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00FFFFFF&
       Height          =   1335
       Left            =   120
       TabIndex        =   3
       Top             =   1800
       Width           =   5175
       Begin VB.CheckBox chkvSync 
+         BackColor       =   &H00535353&
          Caption         =   "Activar sincronización vertical"
+         ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   240
          TabIndex        =   6
@@ -61,6 +66,7 @@ Begin VB.Form frmModo
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
          Caption         =   "Modo de procesado:"
+         ForeColor       =   &H00FFFFFF&
          Height          =   195
          Left            =   240
          TabIndex        =   4
@@ -69,16 +75,18 @@ Begin VB.Form frmModo
       End
    End
    Begin VB.Frame FraModo 
+      BackColor       =   &H00535353&
       Caption         =   "¿En que modo quieres iniciar el WorldEditor?"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   700
+         Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00FFFFFF&
       Height          =   1575
       Left            =   120
       TabIndex        =   0
@@ -139,7 +147,9 @@ Begin VB.Form frmModo
          cBack           =   -2147483633
       End
       Begin VB.OptionButton OptModo 
+         BackColor       =   &H00535353&
          Caption         =   "Modo Winter"
+         ForeColor       =   &H00FFFFFF&
          Height          =   195
          Index           =   0
          Left            =   600
@@ -148,7 +158,9 @@ Begin VB.Form frmModo
          Width           =   1455
       End
       Begin VB.OptionButton OptModo 
+         BackColor       =   &H00535353&
          Caption         =   "Modo Imperium Classic"
+         ForeColor       =   &H00FFFFFF&
          Height          =   195
          Index           =   1
          Left            =   2520

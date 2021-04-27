@@ -52,6 +52,6 @@ Option Explicit
 
 Private Sub Form_Load()
     Me.Caption = Form_Caption
-    Me.Picture = LoadPicture(App.Path & INITDIR & "WorldEditor.jpg")
+    Me.Picture = LoadPicture(IniPath & INITDIR & "WorldEditor.jpg")
 
 End Sub

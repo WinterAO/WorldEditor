@@ -11,6 +11,9 @@ End Function
 
 Sub Main()
 
+    'Ruta principal
+    IniPath = App.Path & "\"
+
     Call modCarga.pre_leerConfiguracion 'Leemos la config basica para elegir un modo
     
     frmModo.Show
@@ -46,6 +49,11 @@ Sub Main()
     frmCarga.lblStatus.Caption = "Cargando Minimapa."
     DoEvents
     'Call modCarga.CargarMinimapa
+    
+    '------------------------
+    frmCarga.lblStatus.Caption = "Cargando Indice de Superficies."
+    DoEvents
+    Call modCarga.CargarIndicesSuperficie
     '------------------------
      
     Call modMapas.NuevoMapa
@@ -60,7 +68,7 @@ Sub Main()
             Call ShowNextFrame
             Call CheckKeys
             
-            'If CurrentGrh.GrhIndex = 0 Then _
+            If CurrentGrh.GrhIndex = 0 Then _
                 InitGrh CurrentGrh, 1
         End If
     
@@ -127,14 +135,14 @@ Public Sub CheckKeys()
         '[/Loopzer]
     
     If GetKeyState(vbKeyUp) < 0 Then
-        If UserPos.Y < YMinMapSize Then Exit Sub ' 10
-        If LegalPos(UserPos.X, UserPos.Y - 1) And WalkMode = True Then
+        If UserPos.y < YMinMapSize Then Exit Sub ' 10
+        If LegalPos(UserPos.X, UserPos.y - 1) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.Y = UserPos.Y - 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            UserPos.y = UserPos.y - 1
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
             dLastWalk = GetTickCount
         ElseIf WalkMode = False Then
-            UserPos.Y = UserPos.Y - 1
+            UserPos.y = UserPos.y - 1
         End If
         
         'Call DibujarMinimapa(True)
@@ -144,10 +152,10 @@ Public Sub CheckKeys()
 
     If GetKeyState(vbKeyRight) < 0 Then
         If UserPos.X > XMaxMapSize Then Exit Sub ' 89
-        If LegalPos(UserPos.X + 1, UserPos.Y) And WalkMode = True Then
+        If LegalPos(UserPos.X + 1, UserPos.y) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
             UserPos.X = UserPos.X + 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
             dLastWalk = GetTickCount
             
         ElseIf WalkMode = False Then
@@ -161,16 +169,16 @@ Public Sub CheckKeys()
     End If
 
     If GetKeyState(vbKeyDown) < 0 Then
-        If UserPos.Y > YMaxMapSize Then Exit Sub ' 92
+        If UserPos.y > YMaxMapSize Then Exit Sub ' 92
         
-        If LegalPos(UserPos.X, UserPos.Y + 1) And WalkMode = True Then
+        If LegalPos(UserPos.X, UserPos.y + 1) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.Y = UserPos.Y + 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            UserPos.y = UserPos.y + 1
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
             dLastWalk = GetTickCount
             
         ElseIf WalkMode = False Then
-            UserPos.Y = UserPos.Y + 1
+            UserPos.y = UserPos.y + 1
             
         End If
         
@@ -182,10 +190,10 @@ Public Sub CheckKeys()
 
     If GetKeyState(vbKeyLeft) < 0 Then
         If UserPos.X < XMinMapSize Then Exit Sub ' 12
-        If LegalPos(UserPos.X - 1, UserPos.Y) And WalkMode = True Then
+        If LegalPos(UserPos.X - 1, UserPos.y) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
             UserPos.X = UserPos.X - 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
             dLastWalk = GetTickCount
         ElseIf WalkMode = False Then
             UserPos.X = UserPos.X - 1
@@ -285,7 +293,7 @@ Public Function ReadField(Pos As Integer, Text As String, SepASCII As Integer) A
 'Author: Unkwown
 'Last modified: 20/05/06
 '*************************************************
-    Dim i As Integer
+    Dim I As Integer
     Dim lastPos As Integer
     Dim CurChar As String * 1
     Dim FieldNum As Integer
@@ -295,17 +303,17 @@ Public Function ReadField(Pos As Integer, Text As String, SepASCII As Integer) A
     lastPos = 0
     FieldNum = 0
     
-    For i = 1 To Len(Text)
-        CurChar = mid(Text, i, 1)
+    For I = 1 To Len(Text)
+        CurChar = mid(Text, I, 1)
         If CurChar = Seperator Then
             FieldNum = FieldNum + 1
             If FieldNum = Pos Then
                 ReadField = mid(Text, lastPos + 1, (InStr(lastPos + 1, Text, Seperator, vbTextCompare) - 1) - (lastPos))
                 Exit Function
             End If
-            lastPos = i
+            lastPos = I
         End If
-    Next i
+    Next I
     FieldNum = FieldNum + 1
     
     If FieldNum = Pos Then

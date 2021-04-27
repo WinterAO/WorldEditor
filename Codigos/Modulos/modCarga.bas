@@ -52,12 +52,13 @@ Public DirDats As String
 
 'Recuento de indices
 Public grhCount    As Long
+Public MaxSup      As Integer
 
 'Constantes
-Public Const INITDIR As String = "\Init\"
+Public Const INITDIR As String = "Init\"
 
 Public Function configFile() As String
-    configFile = App.Path & INITDIR & "configuracion.ini"
+    configFile = IniPath & INITDIR & "configuracion.ini"
 End Function
 
 Private Function autoCompletaPath(ByVal Path As String) As String
@@ -283,17 +284,17 @@ On Error GoTo ErrorHandler:
     Dim LaCabecera  As tCabecera
     Dim fileBuff    As clsByteBuffer
     Dim InfoHead    As INFOHEADER
-    Dim buffer()    As Byte
+    Dim Buffer()    As Byte
     
     InfoHead = File_Find(DirRecursos & "Scripts.WAO", LCase$("Graficos.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
-        Extract_File_Memory Scripts, LCase$("Graficos.ind"), buffer()
+        Extract_File_Memory Scripts, LCase$("Graficos.ind"), Buffer()
         
         Set fileBuff = New clsByteBuffer
         
-        fileBuff.initializeReader buffer
+        fileBuff.initializeReader Buffer
         
         LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
         LaCabecera.CRC = fileBuff.getLong
@@ -369,7 +370,7 @@ On Error GoTo ErrorHandler:
             
         Wend
         
-        Erase buffer
+        Erase Buffer
     End If
     
     Set fileBuff = Nothing
@@ -397,18 +398,18 @@ Public Sub CargarMinimapa()
 
     Dim fileBuff    As clsByteBuffer
     Dim InfoHead    As INFOHEADER
-    Dim buffer()    As Byte
+    Dim Buffer()    As Byte
     Dim i           As Long
     
     InfoHead = File_Find(DirRecursos & "Scripts" & Formato, LCase$("minimap.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
-        Extract_File_Memory Scripts, LCase$("minimap.ind"), buffer()
+        Extract_File_Memory Scripts, LCase$("minimap.ind"), Buffer()
         
         Set fileBuff = New clsByteBuffer
         
-        fileBuff.initializeReader buffer
+        fileBuff.initializeReader Buffer
         
         For i = 1 To grhCount
             If Grh_Check(i) Then
@@ -416,7 +417,7 @@ Public Sub CargarMinimapa()
             End If
         Next i
         
-        Erase buffer
+        Erase Buffer
     End If
     
     Set fileBuff = Nothing
@@ -434,3 +435,62 @@ Private Function Grh_Check(ByVal grh_index As Long) As Boolean
         Grh_Check = GrhData(grh_index).NumFrames
     End If
 End Function
+
+''
+' Carga los indices de Superficie
+'
+
+Public Sub CargarIndicesSuperficie()
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 29/05/06
+'*************************************************
+
+On Error GoTo Fallo
+    Dim Leer As New clsIniManager
+    Dim i As Integer
+    Dim K As Long
+    
+    If FileExist(IniPath & INITDIR & "indices.ini", vbArchive) = False Then
+        MsgBox "Falta el archivo 'indices.ini'", vbCritical
+        End
+    End If
+    
+    Leer.Initialize IniPath & INITDIR & "indices.ini"
+    MaxSup = Leer.GetValue("INIT", "Referencias")
+    
+    ReDim SupData(MaxSup) As SupData
+    'frmMain.lListado(0).Clear
+    
+    frmSuperficies.LynxSuperficies.Clear
+    frmSuperficies.LynxSuperficies.Redraw = False
+    frmSuperficies.LynxSuperficies.Visible = False
+
+    frmSuperficies.LynxSuperficies.AddColumn "Grh", 0
+    frmSuperficies.LynxSuperficies.AddColumn "Nombre", 3
+    
+    For i = 0 To MaxSup
+        SupData(i).name = Leer.GetValue("REFERENCIA" & i, "Nombre")
+        SupData(i).Grh = Val(Leer.GetValue("REFERENCIA" & i, "GrhIndice"))
+        SupData(i).Width = Val(Leer.GetValue("REFERENCIA" & i, "Ancho"))
+        SupData(i).Height = Val(Leer.GetValue("REFERENCIA" & i, "Alto"))
+        SupData(i).Block = IIf(Val(Leer.GetValue("REFERENCIA" & i, "Bloquear")) = 1, True, False)
+        SupData(i).Capa = Val(Leer.GetValue("REFERENCIA" & i, "Capa"))
+
+        frmSuperficies.LynxSuperficies.AddItem SupData(i).Grh
+        K = frmSuperficies.LynxSuperficies.Rows - 1
+        frmSuperficies.LynxSuperficies.CellText(K, 1) = SupData(i).name
+    Next
+    
+    frmSuperficies.LynxSuperficies.Visible = True
+    frmSuperficies.LynxSuperficies.Redraw = True
+    frmSuperficies.LynxSuperficies.ColForceFit
+    
+    DoEvents
+    
+    Set Leer = Nothing
+    
+    Exit Sub
+Fallo:
+    MsgBox "Error al intentar cargar el indice " & i & " de \indices.ini" & vbCrLf & "Err: " & Err.Number & " - " & Err.Description, vbCritical + vbOKOnly
+End Sub

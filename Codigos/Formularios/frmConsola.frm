@@ -4,8 +4,8 @@ Begin VB.Form frmConsola
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Consola"
    ClientHeight    =   4005
-   ClientLeft      =   9195
-   ClientTop       =   12315
+   ClientLeft      =   23820
+   ClientTop       =   11865
    ClientWidth     =   4785
    ClipControls    =   0   'False
    BeginProperty Font 
@@ -37,6 +37,7 @@ Begin VB.Form frmConsola
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
