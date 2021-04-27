@@ -37,8 +37,9 @@ Begin VB.Form frmPreview
       ForeColor       =   &H80000008&
       Height          =   3540
       Left            =   0
-      ScaleHeight     =   3510
-      ScaleWidth      =   4425
+      ScaleHeight     =   234
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   295
       TabIndex        =   0
       TabStop         =   0   'False
       Top             =   0

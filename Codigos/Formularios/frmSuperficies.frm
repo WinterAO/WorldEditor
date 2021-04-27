@@ -7,6 +7,7 @@ Begin VB.Form frmSuperficies
    ClientLeft      =   9420
    ClientTop       =   6465
    ClientWidth     =   4455
+   ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -16,6 +17,7 @@ Begin VB.Form frmSuperficies
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -44,7 +46,7 @@ Begin VB.Form frmSuperficies
          Strikethrough   =   0   'False
       EndProperty
       cGradient       =   0
-      Mode            =   0
+      Mode            =   1
       Value           =   0   'False
       cBack           =   -2147483633
    End
@@ -69,7 +71,7 @@ Begin VB.Form frmSuperficies
          Strikethrough   =   0   'False
       EndProperty
       cGradient       =   0
-      Mode            =   0
+      Mode            =   1
       Value           =   0   'False
       cBack           =   -2147483633
    End
@@ -94,7 +96,7 @@ Begin VB.Form frmSuperficies
          Strikethrough   =   0   'False
       EndProperty
       cGradient       =   0
-      Mode            =   0
+      Mode            =   1
       Value           =   0   'False
       cBack           =   -2147483633
    End
@@ -235,43 +237,32 @@ Private Sub Form_Click()
 End Sub
 
 Private Sub LynxSuperficies_Click()
-'*************************************************
-'Author: Lorwik
-'Last modified: 27/04/2021
-'*************************************************
-    
-    'Obtiene el numero del Grh
-    cGrh.Text = LynxSuperficies.CellText(, 0)
-    
-    'TODO: Faltan movidas aqui
-    If SupData(LynxSuperficies.Row + 1).Capa <> 0 Then
-        If (LynxSuperficies.Row + 1) = 0 Then cCapas.Tag = cCapas.Text
-        cCapas.Text = SupData(LynxSuperficies.Row + 1).Capa
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 27/04/2021
+    '*************************************************
         
-    Else
-        If LenB(cCapas.Tag) <> 0 Then
-            cCapas.Text = cCapas.Tag
-            cCapas.Tag = vbNullString
-            
-        End If
-        
-    End If
-    
-    'Manda a renderizar la superficie seleccionada
-    If frmPreview.Visible Then
-        Call frmPreview.fPreviewGrh(cGrh.Text)
-        Call RenderPreview
-    End If
+    Call CargarInfo
     
 End Sub
 
-Private Sub cFiltro_GotFocus()
+Private Sub LynxSuperficies_LostFocus()
 '*************************************************
 'Author: Lorwik
 'Last modified: 27/04/2021
 '*************************************************
 
-    HotKeysAllow = False
+    HotKeysAllow = True
+End Sub
+
+Private Sub LynxSuperficies_KeyDown(KeyCode As Integer, Shift As Integer)
+'*************************************************
+'Author: Lorwik
+'Last modified: 27/04/2021
+'*************************************************
+On Error Resume Next
+    
+    Call CargarInfo
 End Sub
 
 Private Sub cFiltro_KeyPress(KeyAscii As Integer)
@@ -292,6 +283,40 @@ Private Sub cFiltro_LostFocus()
 '*************************************************
 
     HotKeysAllow = True
+End Sub
+
+Private Sub CargarInfo()
+'*************************************************
+'Author: Lorwik
+'Last modified: 27/04/2021
+'*************************************************
+
+    HotKeysAllow = False
+        
+    'Obtiene el numero del Grh
+    cGrh.Text = LynxSuperficies.CellText(, 0)
+        
+    'TODO: Faltan movidas aqui
+    If SupData(LynxSuperficies.Row + 1).Capa <> 0 Then
+        If (LynxSuperficies.Row + 1) = 0 Then cCapas.Tag = cCapas.Text
+        cCapas.Text = SupData(LynxSuperficies.Row + 1).Capa
+            
+    Else
+
+        If LenB(cCapas.Tag) <> 0 Then
+            cCapas.Text = cCapas.Tag
+            cCapas.Tag = vbNullString
+                
+        End If
+            
+    End If
+        
+    'Manda a renderizar la superficie seleccionada
+    If frmPreview.Visible Then
+        Call frmPreview.fPreviewGrh(cGrh.Text)
+        Call RenderPreview
+
+    End If
 End Sub
 
 Private Sub Filtrar()

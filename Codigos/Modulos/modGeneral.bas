@@ -119,7 +119,7 @@ Public Sub CheckKeys()
 'Last modified: 01/11/08
 '*************************************************
 
-'If HotKeysAllow = False Then Exit Sub
+    If HotKeysAllow = False Then Exit Sub
         '[Loopzer]
         'If GetKeyState(vbKeyControl) < 0 Then
         '    If Seleccionando Then
@@ -146,7 +146,7 @@ Public Sub CheckKeys()
         End If
         
         'Call DibujarMinimapa(True)
-        frmMain.SetFocus
+        'frmMain.SetFocus
         Exit Sub
     End If
 
@@ -164,7 +164,7 @@ Public Sub CheckKeys()
         End If
         
         'Call DibujarMinimapa(True)
-        frmMain.SetFocus
+        'frmMain.SetFocus
         Exit Sub
     End If
 
@@ -183,7 +183,7 @@ Public Sub CheckKeys()
         End If
         
         'Call DibujarMinimapa(True)
-        frmMain.SetFocus
+        'frmMain.SetFocus
         Exit Sub
         
     End If
@@ -200,7 +200,7 @@ Public Sub CheckKeys()
         End If
 
        ' Call DibujarMinimapa(True)
-        frmMain.SetFocus
+        'frmMain.SetFocus
         Exit Sub
     End If
     
@@ -293,7 +293,7 @@ Public Function ReadField(Pos As Integer, Text As String, SepASCII As Integer) A
 'Author: Unkwown
 'Last modified: 20/05/06
 '*************************************************
-    Dim I As Integer
+    Dim i As Integer
     Dim lastPos As Integer
     Dim CurChar As String * 1
     Dim FieldNum As Integer
@@ -303,17 +303,17 @@ Public Function ReadField(Pos As Integer, Text As String, SepASCII As Integer) A
     lastPos = 0
     FieldNum = 0
     
-    For I = 1 To Len(Text)
-        CurChar = mid(Text, I, 1)
+    For i = 1 To Len(Text)
+        CurChar = mid(Text, i, 1)
         If CurChar = Seperator Then
             FieldNum = FieldNum + 1
             If FieldNum = Pos Then
                 ReadField = mid(Text, lastPos + 1, (InStr(lastPos + 1, Text, Seperator, vbTextCompare) - 1) - (lastPos))
                 Exit Function
             End If
-            lastPos = I
+            lastPos = i
         End If
-    Next I
+    Next i
     FieldNum = FieldNum + 1
     
     If FieldNum = Pos Then

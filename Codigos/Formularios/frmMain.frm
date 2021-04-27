@@ -17,7 +17,9 @@ Begin VB.Form frmMain
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   ForeColor       =   &H00FFFFFF&
    Icon            =   "frmMain.frx":0000
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    ScaleHeight     =   720
    ScaleMode       =   3  'Pixel
@@ -39,7 +41,7 @@ Begin VB.Form frmMain
       Height          =   660
       Left            =   4980
       TabIndex        =   23
-      Top             =   60
+      Top             =   30
       Width           =   3675
       Begin WinterMapEditor.lvButtons_H LvBEdit 
          Height          =   375
@@ -1016,6 +1018,15 @@ Begin VB.Form frmMain
          Caption         =   "Guardar todos los Minimapas"
       End
    End
+   Begin VB.Menu mnuEdicion 
+      Caption         =   "Edición"
+      Begin VB.Menu mnuLineEdicion4 
+         Caption         =   "-"
+      End
+      Begin VB.Menu mnuAutoCompletarSuperficies 
+         Caption         =   "Auto-Completar &Superficies"
+      End
+   End
 End
 Attribute VB_Name = "frmMain"
 Attribute VB_GlobalNameSpace = False
@@ -1081,11 +1092,18 @@ Private Sub LvBEdit_Click(Index As Integer)
                 frmSuperficies.Show , frmMain
             
             Else
-                Unload frmSuperficies
+                frmSuperficies.Visible = False
                 
             End If
             
         Case 1 ' Traslados
+            If LvBEdit(1).value Then
+                frmTraslados.Show , frmMain
+            
+            Else
+                frmTraslados.Visible = False
+                
+            End If
         
         Case 2 ' Bloqueos
         
@@ -1182,6 +1200,14 @@ Private Sub mnuAbrirMapa_Click(Index As Integer)
             
     End Select
     
+End Sub
+
+Private Sub mnuAutoCompletarSuperficies_Click()
+'*************************************************
+'Author: Lorwik
+'Last modified: 27/04/2021
+'*************************************************
+    mnuAutoCompletarSuperficies.Checked = (mnuAutoCompletarSuperficies.Checked = False)
 End Sub
 
 Private Sub mnuSalir_Click()
@@ -1415,6 +1441,30 @@ On Error Resume Next
     End With
 End Sub
 
+Private Sub MainViewPic_MouseMove(Button As Integer, _
+                                  Shift As Integer, _
+                                  X As Single, _
+                                  y As Single)
+'*************************************************
+'Author: Lorwik
+'Last modified: 27/04/2021
+'*************************************************
+
+    Call Form_MouseMove(Button, Shift, X, y)
+End Sub
+
+Private Sub MainViewPic_MouseDown(Button As Integer, _
+                                Shift As Integer, _
+                                X As Single, _
+                                y As Single)
+'*************************************************
+'Author: Lorwik
+'Last modified: 27/04/2021
+'*************************************************
+
+    Call Form_MouseDown(Button, Shift, X, y)
+End Sub
+
 Private Sub MainViewPic_DblClick()
 '*************************************************
 'Author: Lorwik
@@ -1442,6 +1492,7 @@ Private Sub Form_Click()
 'Author: Lorwik
 'Last modified: 26/04/2021
 '*************************************************
+
     Me.SetFocus
 
 End Sub
@@ -1485,9 +1536,14 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
 'Author: Lorwik
 'Last modified: 26/04/2021
 '*************************************************
-
     ' HotKeys
     If HotKeysAllow = False Then Exit Sub
+    
+    Select Case UCase(Chr(KeyAscii))
+        Case "S" 'Superficies
+            Call LvBEdit_Click(0)
+            
+    End Select
     
 End Sub
 
@@ -1518,6 +1574,18 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y A
     If Not MapaCargado Then Exit Sub
     
     Call ConvertCPtoTP(X, y, tX, tY)
+    
+    If Shift = 1 And Button = 1 Then
+        Seleccionando = True
+        SeleccionIX = tX '+ UserPos.X
+        SeleccionIY = tY '+ UserPos.Y
+        'DX1.Text = tX
+        'DY1.Text = tY
+        
+    Else
+        Call modEdit.ClickEdit(Button, tX, tY)
+        
+    End If
 
 End Sub
 
@@ -1534,5 +1602,19 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y A
     HotKeysAllow = True
 
     Call ConvertCPtoTP(X, y, tX, tY)
+    
+    MousePos = "X: " & tX & " - Y: " & tY
+    
+     If Shift = 1 And Button = 1 Then
+        Seleccionando = True
+        SeleccionFX = tX '+ TileX
+        SeleccionFY = tY '+ TileY
+        'DX2.Text = tX
+        'DY2.Text = tY
+        
+    Else
+        Call modEdit.ClickEdit(Button, tX, tY)
+        
+    End If
 
 End Sub

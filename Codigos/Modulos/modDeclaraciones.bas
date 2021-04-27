@@ -10,10 +10,34 @@ Public NumMap_Save As Integer
 Public NameMap_Save As String
 Public MapaActual As Integer
 Public MapaCargado As Boolean
+Public MousePos As String
+
+' Objeto de Translado
+Public Cfg_TrOBJ As Integer
 
 Public prgRun As Boolean
 
-'Ver
+Public SeleccionIX As Integer
+Public SeleccionFX As Integer
+Public SeleccionIY As Integer
+Public SeleccionFY As Integer
+Public SeleccionAncho As Integer
+Public SeleccionAlto As Integer
+Public Seleccionando As Boolean
+Public SeleccionMap() As MapBlock
+
+Public DeSeleccionOX As Integer
+Public DeSeleccionOY As Integer
+Public DeSeleccionIX As Integer
+Public DeSeleccionFX As Integer
+Public DeSeleccionIY As Integer
+Public DeSeleccionFY As Integer
+Public DeSeleccionAncho As Integer
+Public DeSeleccionAlto As Integer
+Public DeSeleccionando As Boolean
+Public DeSeleccionMap() As MapBlock
+
+'Ver Capas/Npc/Objetos/etc
 Public VerBlockeados As Boolean
 Public VerTriggers As Boolean
 Public VerGrilla As Boolean ' grilla
