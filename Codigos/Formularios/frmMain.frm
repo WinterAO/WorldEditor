@@ -647,17 +647,17 @@ Begin VB.Form frmMain
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   700
+         Weight          =   400
          Underline       =   0   'False
-         Italic          =   0   'False
+         Italic          =   -1  'True
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   195
-      Left            =   18300
+      Left            =   18390
       TabIndex        =   37
       Top             =   0
-      Width           =   810
+      Width           =   675
    End
    Begin VB.Label MapPest 
       Alignment       =   2  'Center
@@ -1177,6 +1177,13 @@ Private Sub LvBEdit_Click(Index As Integer)
             End If
         
         Case 4 ' Objetos
+            If LvBEdit(4).value Then
+                frmObjs.Show , frmMain
+            
+            Else
+                frmObjs.Visible = False
+                
+            End If
         
         Case 5 ' Triggers
         

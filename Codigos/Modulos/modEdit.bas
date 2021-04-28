@@ -370,6 +370,40 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                         Call EraseChar(.CharIndex)
                     End If
                 End If
+                
+                '########################
+                'OBJETOS
+                '########################
+                If frmObjs.cInsertarFunc.value = True Then ' Insertar Objeto
+                    If frmObjs.cNumFunc.Text > 0 Then
+                        ObjIndex = frmObjs.cNumFunc.Text
+                        
+                        If .OBJInfo.ObjIndex <> ObjIndex Or MapData(tX, tY).OBJInfo.Amount <> Val(frmObjs.cCantFunc.Text) Then
+                            MapInfo.Changed = 1 'Set changed flag
+                            InitGrh MapData(tX, tY).ObjGrh, ObjData(ObjIndex).GrhIndex
+                            .OBJInfo.ObjIndex = ObjIndex
+                            .OBJInfo.Amount = Val(frmObjs.cCantFunc.Text)
+                            
+                            Select Case ObjData(ObjIndex).ObjType
+                                Case 4, 8, 10, 22 ' Arboles, Carteles, Foros, Yacimientos
+                                    .Graphic(3) = .ObjGrh
+                            End Select
+                            
+                        End If
+                    End If
+                ElseIf frmObjs.cQuitarFunc.value = True Then ' Quitar Objeto
+                
+                    If .OBJInfo.ObjIndex <> 0 Or .OBJInfo.Amount <> 0 Then
+                        MapInfo.Changed = 1 'Set changed flag
+                        
+                        If .Graphic(3).GrhIndex = .ObjGrh.GrhIndex Then .Graphic(3).GrhIndex = 0
+                        
+                        .ObjGrh.GrhIndex = 0
+                        .OBJInfo.ObjIndex = 0
+                        .OBJInfo.Amount = 0
+                    End If
+                    
+                End If
             
         End Select
         

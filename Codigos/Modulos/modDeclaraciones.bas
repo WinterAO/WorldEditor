@@ -255,6 +255,18 @@ Public Type NpcData
     NpcType As Byte
 End Type
 
+Public Type ObjData
+    name As String 'Nombre del obj
+    ObjType As Integer 'Tipo enum que determina cuales son las caract del obj
+    GrhIndex As Long ' Indice del grafico que representa el obj
+    GrhSecundario As Integer
+    Info As String
+    Ropaje As Integer 'Indice del grafico del ropaje
+    WeaponAnim As Integer ' Apunta a una anim de armas
+    ShieldAnim As Integer ' Apunta a una anim de escudo
+    Texto As String
+End Type
+
 '**********Arrays Publicas************
 Public GrhData() As GrhData 'Holds all the grh data
 Public BodyData() As tBodyData
@@ -264,6 +276,7 @@ Public CharList(1 To 10000) As Char 'Holds info about all characters on map
 Public MapZonas() As tMapInfo
 Public SupData() As SupData
 Public NpcData() As NpcData
+Public ObjData() As ObjData
 '************************************
 
 Public CantZonas As Integer

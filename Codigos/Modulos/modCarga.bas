@@ -54,6 +54,7 @@ Public DirDats As String
 Public grhCount    As Long
 Public MaxSup      As Integer
 Public NumNPCs     As Integer
+Public NumObjs     As Integer
 
 'Constantes
 Public Const INITDIR As String = "Init\"
@@ -641,3 +642,67 @@ Fallo:
 
 End Sub
 
+Public Sub CargarIndicesOBJ()
+'*************************************************
+'Author: Lorwik
+'Last modified: 28/04/2021
+'*************************************************
+
+On Error GoTo Fallo
+
+    Dim Obj As Integer
+    Dim K As Long
+    Dim Leer As New clsIniManager
+
+    If FileExist(DirDats & "\OBJ.dat", vbArchive) = False Then
+        MsgBox "Falta el archivo 'OBJ.dat' en " & DirDats, vbCritical
+        End
+    End If
+
+    Call Leer.Initialize(DirDats & "\OBJ.dat")
+    
+    frmObjs.LynxOBJs.Clear
+    frmObjs.LynxOBJs.Redraw = False
+    frmObjs.LynxOBJs.Visible = False
+    
+    NumObjs = Val(Leer.GetValue("INIT", "NumOBJs"))
+    ReDim ObjData(1 To NumObjs) As ObjData
+    
+    frmObjs.LynxOBJs.AddColumn "Num", 0
+    frmObjs.LynxOBJs.AddColumn "Nombre", 2
+    
+    For Obj = 1 To NumObjs
+        frmCarga.lblStatus.Caption = "Cargando Datos de Objetos..." & Obj & "/" & NumObjs
+        DoEvents
+        
+        With ObjData(Obj)
+
+        .name = Leer.GetValue("OBJ" & Obj, "Name")
+        .GrhIndex = Val(Leer.GetValue("OBJ" & Obj, "GrhIndex"))
+        .ObjType = Val(Leer.GetValue("OBJ" & Obj, "ObjType"))
+        .Ropaje = Val(Leer.GetValue("OBJ" & Obj, "NumRopaje"))
+        .Info = Leer.GetValue("OBJ" & Obj, "Info")
+        .WeaponAnim = Val(Leer.GetValue("OBJ" & Obj, "Anim"))
+        .Texto = Leer.GetValue("OBJ" & Obj, "Texto")
+        .GrhSecundario = Val(Leer.GetValue("OBJ" & Obj, "GrhSec"))
+        
+        frmObjs.LynxOBJs.AddItem Obj
+        K = frmObjs.LynxOBJs.Rows - 1
+        frmObjs.LynxOBJs.CellText(K, 1) = .name
+        
+        End With
+    Next Obj
+    
+    frmObjs.LynxOBJs.Visible = True
+    frmObjs.LynxOBJs.Redraw = True
+    frmObjs.LynxOBJs.ColForceFit
+    
+    DoEvents
+    
+    Set Leer = Nothing
+    Exit Sub
+    
+Fallo:
+    MsgBox "Error al intentar cargar el Objteto " & Obj & " de OBJ.dat en " & DirDats & vbCrLf & "Err: " & Err.Number & " - " & Err.Description, vbCritical + vbOKOnly
+
+End Sub

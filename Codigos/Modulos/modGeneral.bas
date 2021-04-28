@@ -58,6 +58,10 @@ Sub Main()
     DoEvents
     Call modCarga.CargarIndicesNPC
     
+    frmCarga.lblStatus.Caption = "Cargando Indice de Objetos."
+    DoEvents
+    Call modCarga.CargarIndicesOBJ
+    
     '------------------------
     frmCarga.lblStatus.Caption = "Cargando Indice de Superficies."
     DoEvents
@@ -99,6 +103,17 @@ Public Sub CloseMapEditor()
     Dim mifrm As Form
 
     'Call GuardarConfiguracion
+
+    'Eliminamos los Array
+    Erase GrhData
+    Erase BodyData
+    Erase HeadData
+    Erase MapData
+    Erase CharList
+    Erase MapZonas
+    Erase SupData
+    Erase NpcData
+    Erase ObjData
 
     EngineRun = False
     

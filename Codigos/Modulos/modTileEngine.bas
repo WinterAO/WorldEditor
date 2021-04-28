@@ -734,7 +734,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 With MapData(X, Y)
                 
                     'Object Layer ***********************************
-                    ' If .ObjGrh.GrhIndex <> 0 Then _
+                     If .ObjGrh.GrhIndex <> 0 And VerObjetos Then _
                       Call Draw_Grh(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
 
                     'Char layer**************************************

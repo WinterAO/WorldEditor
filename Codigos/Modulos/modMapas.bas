@@ -110,7 +110,7 @@ Private MapDat() As tMapDat
 
 Public Sub AbrirMapa(Optional ByVal IntMode As Boolean = False)
     frmMain.Dialog.CancelError = True
-    On Error GoTo ErrHandler
+    On Error GoTo errhandler
     
     DeseaGuardarMapa frmMain.Dialog.filename
     
@@ -131,7 +131,7 @@ Public Sub AbrirMapa(Optional ByVal IntMode As Boolean = False)
         EngineRun = True
     
     Exit Sub
-ErrHandler:
+errhandler:
 End Sub
 
 Public Sub AbrirunMapa(ByVal Path As String, Optional ByVal Mode As Boolean = False)
@@ -192,7 +192,7 @@ Public Sub GuardarMapa(Optional Path As String)
 '*************************************************
 
     frmMain.Dialog.CancelError = True
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     
     If LenB(Path) = 0 Then
         frmMain.ObtenerNombreArchivo True
@@ -215,7 +215,7 @@ On Error GoTo ErrHandler
         
     End If
 
-ErrHandler:
+errhandler:
 End Sub
 
 Public Sub NuevoMapa()
@@ -559,15 +559,15 @@ Sub Cargar_CSM(ByVal Map As String)
             If .NumeroOBJs > 0 Then
                 ReDim Objetos(1 To .NumeroOBJs)
                 Get #fh, , Objetos
-'                For i = 1 To .NumeroOBJs
-'                    MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.ObjIndex = Objetos(i).ObjIndex
-'                    MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.Amount = Objetos(i).ObjAmmount
-'                    If MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.ObjIndex > numObjs Then
-'                        InitGrh MapData(Objetos(i).X, Objetos(i).Y).ObjGrh, 20299
-'                    Else
-'                        InitGrh MapData(Objetos(i).X, Objetos(i).Y).ObjGrh, ObjData(MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.ObjIndex).GrhIndex
-'                    End If
-'                Next i
+                For i = 1 To .NumeroOBJs
+                    MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.ObjIndex = Objetos(i).ObjIndex
+                    MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.Amount = Objetos(i).ObjAmmount
+                    If MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.ObjIndex > NumObjs Then
+                        InitGrh MapData(Objetos(i).X, Objetos(i).Y).ObjGrh, 20299
+                    Else
+                        InitGrh MapData(Objetos(i).X, Objetos(i).Y).ObjGrh, ObjData(MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.ObjIndex).GrhIndex
+                    End If
+                Next i
             End If
                 
             If .NumeroNPCs > 0 Then

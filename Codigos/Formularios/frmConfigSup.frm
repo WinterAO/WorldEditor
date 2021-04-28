@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin VB.Form frmConfigSup 
-   BackColor       =   &H00FFFFFF&
+   BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Configuración Acanzada de Superficie"
    ClientHeight    =   1110
@@ -27,7 +27,7 @@ Begin VB.Form frmConfigSup
    StartUpPosition =   3  'Windows Default
    Begin VB.CheckBox DespMosaic 
       Appearance      =   0  'Flat
-      BackColor       =   &H00FFFFFF&
+      BackColor       =   &H00424242&
       Caption         =   "Desplz. de Mosaico"
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -38,7 +38,7 @@ Begin VB.Form frmConfigSup
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   210
       Left            =   2280
       TabIndex        =   11
@@ -49,7 +49,7 @@ Begin VB.Form frmConfigSup
    End
    Begin VB.CheckBox MOSAICO 
       Appearance      =   0  'Flat
-      BackColor       =   &H00FFFFFF&
+      BackColor       =   &H00424242&
       Caption         =   "Mosaico"
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -60,7 +60,7 @@ Begin VB.Form frmConfigSup
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   165
       Left            =   2280
       TabIndex        =   10
@@ -209,7 +209,7 @@ Begin VB.Form frmConfigSup
    End
    Begin VB.CheckBox chkActivarPreview 
       Appearance      =   0  'Flat
-      BackColor       =   &H80000005&
+      BackColor       =   &H00424242&
       Caption         =   "Activar Preview"
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -220,7 +220,7 @@ Begin VB.Form frmConfigSup
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H80000008&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Left            =   2280
       TabIndex        =   0
@@ -241,7 +241,7 @@ Begin VB.Form frmConfigSup
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Left            =   1080
       TabIndex        =   13
@@ -262,7 +262,7 @@ Begin VB.Form frmConfigSup
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H00000000&
+      ForeColor       =   &H00FFFFFF&
       Height          =   195
       Index           =   0
       Left            =   1080

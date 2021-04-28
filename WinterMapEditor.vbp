@@ -37,6 +37,7 @@ Form=Codigos\Formularios\frmTraslados.frm
 Form=Codigos\Formularios\frmUnionAdyacente.frm
 Form=Codigos\Formularios\frmBloqueos.frm
 Form=Codigos\Formularios\frmNPCs.frm
+Form=Codigos\Formularios\frmOBJs.frm
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
