@@ -69,7 +69,12 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
 '*************************************************
 
     On Error GoTo ClickEdit_Err
-
+    
+    Dim NPCIndex As Integer
+    Dim ObjIndex As Integer
+    Dim Head As Integer
+    Dim Body As Integer
+    Dim Heading As Byte
     Dim loopc As Integer
 
     If tY < YMinMapSize Or tY > YMaxMapSize Then Exit Sub
@@ -251,7 +256,6 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 '########################
                 'TRASLADOS
                 '########################
-                
                 If frmTraslados.cInsertarTrans.value = True Then
 '                    If Cfg_TrOBJ > 0 And Cfg_TrOBJ <= 0 And frmMain.cInsertarTransOBJ.value = True Then
 '                        If ObjData(Cfg_TrOBJ).ObjType = 19 Then
@@ -330,7 +334,42 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                     End If
                 End If
                 
-            
+                '########################
+                'NPC's
+                '########################
+                If frmNPCs.cInsertarFunc.value = True Then
+                    If frmNPCs.cNumFunc.Text > 0 Then
+                        NPCIndex = frmNPCs.cNumFunc.Text
+                        If NPCIndex <> .NPCIndex Then
+                            MapInfo.Changed = 1 'Set changed flag
+                            Body = NpcData(NPCIndex).Body
+                            Head = NpcData(NPCIndex).Head
+                            Heading = NpcData(NPCIndex).Heading
+                            Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY)
+                            .NPCIndex = NPCIndex
+                        End If
+                    End If
+                    
+                ElseIf frmNPCs.cInsertarFunc.value = True Then
+                    If frmNPCs.cNumFunc.Text > 0 Then
+                        NPCIndex = frmNPCs.cNumFunc.Text
+                        If NPCIndex <> (.NPCIndex) Then
+                            MapInfo.Changed = 1 'Set changed flag
+                            Body = NpcData(NPCIndex).Body
+                            Head = NpcData(NPCIndex).Head
+                            Heading = NpcData(NPCIndex).Heading
+                            Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY)
+                            .NPCIndex = NPCIndex
+                        End If
+                    End If
+                    
+                ElseIf frmNPCs.cQuitarFunc.value = True Then
+                    If .NPCIndex > 0 Then
+                        MapInfo.Changed = 1 'Set changed flag
+                        .NPCIndex = 0
+                        Call EraseChar(.CharIndex)
+                    End If
+                End If
             
         End Select
         

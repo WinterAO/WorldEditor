@@ -53,6 +53,7 @@ Public DirDats As String
 'Recuento de indices
 Public grhCount    As Long
 Public MaxSup      As Integer
+Public NumNPCs     As Integer
 
 'Constantes
 Public Const INITDIR As String = "Init\"
@@ -284,17 +285,17 @@ On Error GoTo ErrorHandler:
     Dim LaCabecera  As tCabecera
     Dim fileBuff    As clsByteBuffer
     Dim InfoHead    As INFOHEADER
-    Dim Buffer()    As Byte
+    Dim buffer()    As Byte
     
     InfoHead = File_Find(DirRecursos & "Scripts.WAO", LCase$("Graficos.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
-        Extract_File_Memory Scripts, LCase$("Graficos.ind"), Buffer()
+        Extract_File_Memory Scripts, LCase$("Graficos.ind"), buffer()
         
         Set fileBuff = New clsByteBuffer
         
-        fileBuff.initializeReader Buffer
+        fileBuff.initializeReader buffer
         
         LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
         LaCabecera.CRC = fileBuff.getLong
@@ -370,7 +371,7 @@ On Error GoTo ErrorHandler:
             
         Wend
         
-        Erase Buffer
+        Erase buffer
     End If
     
     Set fileBuff = Nothing
@@ -398,18 +399,18 @@ Public Sub CargarMinimapa()
 
     Dim fileBuff    As clsByteBuffer
     Dim InfoHead    As INFOHEADER
-    Dim Buffer()    As Byte
+    Dim buffer()    As Byte
     Dim i           As Long
     
     InfoHead = File_Find(DirRecursos & "Scripts" & Formato, LCase$("minimap.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
-        Extract_File_Memory Scripts, LCase$("minimap.ind"), Buffer()
+        Extract_File_Memory Scripts, LCase$("minimap.ind"), buffer()
         
         Set fileBuff = New clsByteBuffer
         
-        fileBuff.initializeReader Buffer
+        fileBuff.initializeReader buffer
         
         For i = 1 To grhCount
             If Grh_Check(i) Then
@@ -417,10 +418,86 @@ Public Sub CargarMinimapa()
             End If
         Next i
         
-        Erase Buffer
+        Erase buffer
     End If
     
     Set fileBuff = Nothing
+    
+End Sub
+
+Sub CargarCuerpos()
+'*************************************
+'Autor: Lorwik
+'Fecha: ???
+'Descripción: Carga el index de Cuerpos
+'*************************************
+On Error GoTo ErrHandler:
+
+    Dim buffer()    As Byte
+    Dim dLen        As Long
+    Dim InfoHead    As INFOHEADER
+    Dim i           As Long
+    Dim NumCuerpos As Integer
+    Dim MisCuerpos() As tIndiceCuerpo
+    Dim LaCabecera As tCabecera
+    Dim fileBuff  As clsByteBuffer
+    
+    InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Personajes.ind"))
+    
+    If InfoHead.lngFileSize <> 0 Then
+    
+        Extract_File_Memory Scripts, LCase$("Personajes.ind"), buffer()
+        
+        Set fileBuff = New clsByteBuffer
+        
+        fileBuff.initializeReader buffer
+        
+        LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
+        LaCabecera.CRC = fileBuff.getLong
+        LaCabecera.MagicWord = fileBuff.getLong
+    
+        'num de cabezas
+        NumCuerpos = fileBuff.getInteger()
+    
+        'Resize array
+        ReDim BodyData(0 To NumCuerpos) As tBodyData
+        ReDim MisCuerpos(0 To NumCuerpos) As tIndiceCuerpo
+        
+    
+        For i = 1 To NumCuerpos
+            MisCuerpos(i).Body(1) = fileBuff.getLong()
+            MisCuerpos(i).Body(2) = fileBuff.getLong()
+            MisCuerpos(i).Body(3) = fileBuff.getLong()
+            MisCuerpos(i).Body(4) = fileBuff.getLong()
+            MisCuerpos(i).HeadOffsetX = fileBuff.getInteger()
+            MisCuerpos(i).HeadOffsetY = fileBuff.getInteger()
+            
+            If MisCuerpos(i).Body(1) Then
+                Call InitGrh(BodyData(i).Walk(1), MisCuerpos(i).Body(1), 0)
+                Call InitGrh(BodyData(i).Walk(2), MisCuerpos(i).Body(2), 0)
+                Call InitGrh(BodyData(i).Walk(3), MisCuerpos(i).Body(3), 0)
+                Call InitGrh(BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0)
+                
+                BodyData(i).HeadOffset.X = MisCuerpos(i).HeadOffsetX
+                BodyData(i).HeadOffset.Y = MisCuerpos(i).HeadOffsetY
+            End If
+        Next i
+    
+        Erase buffer
+    End If
+    
+    Set fileBuff = Nothing
+    
+ErrHandler:
+    
+    If Err.Number <> 0 Then
+        
+        If Err.Number = 53 Then
+            Call MsgBox("El archivo Personajes.ind no existe. ")
+            Call CloseMapEditor
+        End If
+        
+    End If
     
 End Sub
 
@@ -436,14 +513,11 @@ Private Function Grh_Check(ByVal grh_index As Long) As Boolean
     End If
 End Function
 
-''
-' Carga los indices de Superficie
-'
-
 Public Sub CargarIndicesSuperficie()
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 29/05/06
+'Descripcion: Carga los indices de Superficie
 '*************************************************
 
 On Error GoTo Fallo
@@ -493,4 +567,77 @@ On Error GoTo Fallo
     Exit Sub
 Fallo:
     MsgBox "Error al intentar cargar el indice " & i & " de \indices.ini" & vbCrLf & "Err: " & Err.Number & " - " & Err.Description, vbCritical + vbOKOnly
+    
 End Sub
+
+Public Sub CargarIndicesNPC()
+'*************************************************
+'Author: Lorwik
+'Last modified: 28/04/2021
+'Descripcion: Carga los indices de NPCs
+'*************************************************
+On Error Resume Next
+'On Error GoTo Fallo
+
+    If FileExist(DirDats & "NPCs.dat", vbArchive) = False Then
+        MsgBox "Falta el archivo 'NPCs.dat' en " & DirDats, vbCritical
+        Call CloseMapEditor
+    End If
+
+    Dim Trabajando As String
+    Dim NPC As Long
+    Dim Hostil As String
+    Dim Leer As New clsIniManager
+    Dim K As Long
+    
+    Call Leer.Initialize(DirDats & "NPCs.dat")
+    NumNPCs = Val(Leer.GetValue("INIT", "NumNPCs"))
+    
+    ReDim NpcData(NumNPCs) As NpcData
+    Trabajando = "Dats\NPCs.dat"
+    
+    frmNPCs.LynxNPCs.Clear
+    frmNPCs.LynxNPCs.Redraw = False
+    frmNPCs.LynxNPCs.Visible = False
+    
+    frmNPCs.LynxNPCs.AddColumn "Num", 0
+    frmNPCs.LynxNPCs.AddColumn "Nombre", 2
+    frmNPCs.LynxNPCs.AddColumn "Nivel", 0
+    frmNPCs.LynxNPCs.AddColumn "Hostil", 0
+    
+    For NPC = 1 To NumNPCs
+        With NpcData(NPC)
+            .name = CStr(Leer.GetValue("NPC" & NPC, "Name"))
+            .ELV = Val(Leer.GetValue("NPC" & NPC, "ELV"))
+            .Hostile = Val(Leer.GetValue("NPC" & NPC, "Hostile"))
+            .NpcType = Val(Leer.GetValue("NPC" & NPC, "NPCType"))
+            
+            .Body = Val(Leer.GetValue("NPC" & NPC, "Body"))
+            .Head = Val(Leer.GetValue("NPC" & NPC, "Head"))
+            .Heading = Val(Leer.GetValue("NPC" & NPC, "Heading"))
+            
+            frmNPCs.LynxNPCs.AddItem NPC
+            
+            K = frmNPCs.LynxNPCs.Rows - 1
+            frmNPCs.LynxNPCs.CellText(K, 1) = .name
+            frmNPCs.LynxNPCs.CellText(K, 2) = .ELV
+            
+            Hostil = IIf(.Hostile = 1, "SI", "NO")
+            frmNPCs.LynxNPCs.CellText(K, 3) = Hostil
+            
+        End With
+    Next
+    
+    frmNPCs.LynxNPCs.Visible = True
+    frmNPCs.LynxNPCs.Redraw = True
+    frmNPCs.LynxNPCs.ColForceFit
+    
+    DoEvents
+    
+    Set Leer = Nothing
+    Exit Sub
+Fallo:
+    MsgBox "Error al intentar cargar el NPC " & NPC & " de " & Trabajando & " en " & DirDats & vbCrLf & "Err: " & Err.Number & " - " & Err.Description, vbCritical + vbOKOnly
+
+End Sub
+

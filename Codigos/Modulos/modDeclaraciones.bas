@@ -1,6 +1,10 @@
 Attribute VB_Name = "modDeclaraciones"
 Option Explicit
 
+'Totals
+Global NumChars As Integer
+Global LastChar As Integer
+
 Public Const MSGMod As String = "Este mapa há sido modificado." & vbCrLf & "Si no lo guardas perderas todos los cambios ¿Deseas guardarlo?"
 Public Const MSGDang As String = "CUIDADO! Este comando puede arruinar el mapa." & vbCrLf & "¿Estas seguro que desea continuar?"
 
@@ -117,14 +121,37 @@ End Type
 'Posicion en un mapa
 Public Type Position
     X As Integer
-    y As Integer
+    Y As Integer
 End Type
 
 'Holds a world position
 Public Type WorldPos
     Map As Integer
     X As Integer
-    y As Integer
+    Y As Integer
+End Type
+
+' Cuerpos body.dat
+Public Type tIndiceCuerpo
+    Body(1 To 4) As Long
+    HeadOffsetX As Integer
+    HeadOffsetY As Integer
+End Type
+
+' Lista de Cuerpos body.dat
+Public Type tBodyData
+    Walk(1 To 4) As Grh
+    HeadOffset As Position
+End Type
+
+'Lista de cabezas
+Public Type tIndiceCabeza
+    Head(1 To 4) As Long
+End Type
+
+'Heads list
+Public Type tHeadData
+    Head(0 To 4) As Grh
 End Type
 
 'Holds info about a object
@@ -189,16 +216,6 @@ Public Type tMapInfo
     NoEncriptarMP As Byte
 End Type
 
-' Lista de Cuerpos body.dat
-Public Type tBodyData
-    Walk(1 To 4) As Grh
-    HeadOffset As Position
-End Type
-
-Public Type tHeadData
-    Head(1 To 4) As Grh
-End Type
-
 'Hold info about a character
 Public Type Char
     active As Byte
@@ -228,14 +245,25 @@ Type SupData
     Capa As Byte
 End Type
 
+Public Type NpcData
+    name As String
+    ELV As Integer
+    Hostile As Byte
+    Body As Integer
+    Head As Integer
+    Heading As Byte
+    NpcType As Byte
+End Type
+
 '**********Arrays Publicas************
 Public GrhData() As GrhData 'Holds all the grh data
-Public MapData() As MapBlock 'Holds map data for current map
 Public BodyData() As tBodyData
 Public HeadData() As tHeadData
+Public MapData() As MapBlock 'Holds map data for current map
 Public CharList(1 To 10000) As Char 'Holds info about all characters on map
 Public MapZonas() As tMapInfo
 Public SupData() As SupData
+Public NpcData() As NpcData
 '************************************
 
 Public CantZonas As Integer

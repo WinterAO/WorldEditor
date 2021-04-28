@@ -240,7 +240,7 @@ Public Sub NuevoMapa()
                 .Graphic(1).GrhIndex = 1
                 
                 ' Bloqueos
-                .Blocked = 0
+                .bLocked = 0
         
                 ' Capas 2, 3 y 4
                 .Graphic(2).GrhIndex = 0
@@ -480,7 +480,7 @@ Sub Cargar_CSM(ByVal Map As String)
                 ReDim Blqs(1 To .NumeroBloqueados)
                 Get #fh, , Blqs
                 For i = 1 To .NumeroBloqueados
-                    MapData(Blqs(i).X, Blqs(i).Y).Blocked = 1
+                    MapData(Blqs(i).X, Blqs(i).Y).bLocked = 1
                 Next i
             End If
             
@@ -573,12 +573,12 @@ Sub Cargar_CSM(ByVal Map As String)
             If .NumeroNPCs > 0 Then
                 ReDim NPCs(1 To .NumeroNPCs)
                 Get #fh, , NPCs
-'                For i = 1 To .NumeroNPCs
-'                    If NPCs(i).NPCIndex > 0 Then
-'                        MapData(NPCs(i).X, NPCs(i).Y).NPCIndex = NPCs(i).NPCIndex
-'                        Call MakeChar(NextOpenChar(), NpcData(NPCs(i).NPCIndex).Body, NpcData(NPCs(i).NPCIndex).Head, NpcData(NPCs(i).NPCIndex).Heading, NPCs(i).X, NPCs(i).Y)
-'                    End If
-'                Next i
+                For i = 1 To .NumeroNPCs
+                    If NPCs(i).NPCIndex > 0 Then
+                        MapData(NPCs(i).X, NPCs(i).Y).NPCIndex = NPCs(i).NPCIndex
+                        Call MakeChar(NextOpenChar(), NpcData(NPCs(i).NPCIndex).Body, NpcData(NPCs(i).NPCIndex).Head, NpcData(NPCs(i).NPCIndex).Heading, NPCs(i).X, NPCs(i).Y)
+                    End If
+                Next i
             End If
     
             If .NumeroTE > 0 Then

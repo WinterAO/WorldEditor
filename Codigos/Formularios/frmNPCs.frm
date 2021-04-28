@@ -1,11 +1,11 @@
 VERSION 5.00
-Begin VB.Form frmSuperficies 
+Begin VB.Form frmNPCs 
    BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
-   Caption         =   "Superficies"
-   ClientHeight    =   5880
-   ClientLeft      =   9420
-   ClientTop       =   6465
+   Caption         =   "NPC's"
+   ClientHeight    =   5925
+   ClientLeft      =   9600
+   ClientTop       =   6450
    ClientWidth     =   4455
    ControlBox      =   0   'False
    BeginProperty Font 
@@ -17,52 +17,75 @@ Begin VB.Form frmSuperficies
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
-   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   392
+   ScaleHeight     =   395
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   297
    ShowInTaskbar   =   0   'False
-   Begin WinterMapEditor.lvButtons_H cQuitarEnTodasLasCapas 
-      Height          =   375
-      Left            =   150
-      TabIndex        =   9
-      Top             =   5460
-      Width           =   2175
-      _ExtentX        =   3836
-      _ExtentY        =   661
-      Caption         =   "Quitar en Capas 2 y 3"
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
+   Begin VB.ComboBox cCantFunc 
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000012&
+      BeginProperty Font 
+         Name            =   "Arial"
          Size            =   8.25
          Charset         =   0
-         Weight          =   700
+         Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      cFore           =   16777215
-      cFHover         =   16777215
-      cBhover         =   0
-      cGradient       =   0
-      Gradient        =   3
-      Mode            =   1
-      Value           =   0   'False
-      cBack           =   8421631
+      ForeColor       =   &H80000014&
+      Height          =   330
+      ItemData        =   "frmNPCs.frx":0000
+      Left            =   840
+      List            =   "frmNPCs.frx":0002
+      TabIndex        =   6
+      Text            =   "1"
+      Top             =   4560
+      Width           =   1215
    End
-   Begin WinterMapEditor.lvButtons_H cQuitarEnEstaCapa 
+   Begin VB.ComboBox cNumFunc 
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000012&
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000014&
+      Height          =   330
+      ItemData        =   "frmNPCs.frx":0004
+      Left            =   3480
+      List            =   "frmNPCs.frx":0006
+      TabIndex        =   5
+      Text            =   "1"
+      Top             =   4560
+      Width           =   855
+   End
+   Begin VB.ComboBox cFiltro 
+      BackColor       =   &H80000012&
+      ForeColor       =   &H80000014&
+      Height          =   315
+      Left            =   600
+      TabIndex        =   3
+      Top             =   4200
+      Width           =   3765
+   End
+   Begin WinterMapEditor.lvButtons_H cAgregarFuncalAzar 
       Height          =   405
-      Left            =   150
-      TabIndex        =   8
-      Top             =   5040
+      Left            =   180
+      TabIndex        =   2
+      Top             =   5070
       Width           =   2175
       _ExtentX        =   3836
       _ExtentY        =   714
-      Caption         =   "Quitar en esta Capa"
+      Caption         =   "Insertar NPC's al Azar"
       CapAlign        =   2
       BackStyle       =   2
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -79,19 +102,19 @@ Begin VB.Form frmSuperficies
       cBhover         =   0
       cGradient       =   0
       Gradient        =   3
-      Mode            =   1
+      Mode            =   0
       Value           =   0   'False
-      cBack           =   255
+      cBack           =   65535
    End
-   Begin WinterMapEditor.lvButtons_H cSeleccionarSuperficie 
+   Begin WinterMapEditor.lvButtons_H cInsertarFunc 
       Height          =   795
-      Left            =   2490
-      TabIndex        =   7
-      Top             =   5040
+      Left            =   2430
+      TabIndex        =   1
+      Top             =   5070
       Width           =   1875
       _ExtentX        =   3307
       _ExtentY        =   1402
-      Caption         =   "Insertar Superficie"
+      Caption         =   "Insertar NPC's"
       CapAlign        =   2
       BackStyle       =   2
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -112,45 +135,11 @@ Begin VB.Form frmSuperficies
       Value           =   0   'False
       cBack           =   65280
    End
-   Begin VB.ComboBox cCapas 
-      Appearance      =   0  'Flat
-      BackColor       =   &H80000012&
-      ForeColor       =   &H80000014&
-      Height          =   315
-      ItemData        =   "frmSuperficies.frx":0000
-      Left            =   1080
-      List            =   "frmSuperficies.frx":000D
-      TabIndex        =   6
-      TabStop         =   0   'False
-      Text            =   "1"
-      Top             =   4560
-      Width           =   855
-   End
-   Begin VB.ComboBox cFiltro 
-      BackColor       =   &H80000012&
-      ForeColor       =   &H80000014&
-      Height          =   315
-      Left            =   600
-      TabIndex        =   2
-      Top             =   4170
-      Width           =   3765
-   End
-   Begin VB.ComboBox cGrh 
-      Appearance      =   0  'Flat
-      BackColor       =   &H80000012&
-      ForeColor       =   &H80000014&
-      Height          =   315
-      Left            =   3000
-      TabIndex        =   1
-      Text            =   "1"
-      Top             =   4560
-      Width           =   1335
-   End
-   Begin WinterMapEditor.LynxGrid LynxSuperficies 
+   Begin WinterMapEditor.LynxGrid LynxNPCs 
       Height          =   3975
       Left            =   60
       TabIndex        =   0
-      Top             =   60
+      Top             =   90
       Width           =   4305
       _ExtentX        =   7594
       _ExtentY        =   7011
@@ -194,31 +183,79 @@ Begin VB.Form frmSuperficies
       ShowRowNumbersVary=   0   'False
       HotHeaderTracking=   0   'False
    End
-   Begin VB.Label lbGrh 
+   Begin WinterMapEditor.lvButtons_H cQuitarFunc 
+      Height          =   405
+      Left            =   180
+      TabIndex        =   9
+      Top             =   5490
+      Width           =   2175
+      _ExtentX        =   3836
+      _ExtentY        =   714
+      Caption         =   "Quitar NPC's"
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
+      cGradient       =   0
+      Gradient        =   3
+      Mode            =   1
+      Value           =   0   'False
+      cBack           =   255
+   End
+   Begin VB.Label lCantFunc 
+      BackColor       =   &H80000012&
+      BackStyle       =   0  'Transparent
+      Caption         =   "Cantidad:"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000014&
+      Height          =   210
+      Index           =   1
+      Left            =   120
+      TabIndex        =   8
+      Top             =   4635
+      Width           =   675
+   End
+   Begin VB.Label lNumFunc 
       AutoSize        =   -1  'True
       BackColor       =   &H80000012&
       BackStyle       =   0  'Transparent
-      Caption         =   "Sup Actual:"
+      Caption         =   "Numero de NPC:"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H80000014&
-      Height          =   195
-      Left            =   2160
-      TabIndex        =   5
-      Top             =   4620
-      Width           =   825
-   End
-   Begin VB.Label lbCapas 
-      BackColor       =   &H80000012&
-      BackStyle       =   0  'Transparent
-      Caption         =   "Capa Actual:"
-      ForeColor       =   &H80000014&
-      Height          =   195
-      Left            =   120
-      TabIndex        =   4
-      Top             =   4605
-      Width           =   930
+      Height          =   210
+      Index           =   1
+      Left            =   2250
+      TabIndex        =   7
+      Top             =   4635
+      Width           =   1170
    End
    Begin VB.Label lbFiltrar 
-      AutoSize        =   -1  'True
       BackColor       =   &H80000012&
       BackStyle       =   0  'Transparent
       Caption         =   "Filtrar:"
@@ -226,79 +263,17 @@ Begin VB.Form frmSuperficies
       Height          =   195
       Index           =   0
       Left            =   120
-      TabIndex        =   3
+      TabIndex        =   4
       Top             =   4230
-      Width           =   480
+      Width           =   570
    End
 End
-Attribute VB_Name = "frmSuperficies"
+Attribute VB_Name = "frmNPCs"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-
-Private Sub cSeleccionarSuperficie_Click()
-'*************************************************
-'Author: Lorwik
-'Last modified: 28/04/2021
-'*************************************************
-    If cSeleccionarSuperficie.value = True Then
-        cQuitarEnTodasLasCapas.Enabled = False
-        cQuitarEnEstaCapa.Enabled = False
-        
-    Else
-        cQuitarEnTodasLasCapas.Enabled = True
-        cQuitarEnEstaCapa.Enabled = True
-        
-    End If
-End Sub
-
-Private Sub cQuitarEnEstaCapa_Click()
-'*************************************************
-'Author: Lorwik
-'Last modified: 28/04/2021
-'*************************************************
-    If cQuitarEnEstaCapa.value = True Then
-        LynxSuperficies.Enabled = False
-        cFiltro.Enabled = False
-        cGrh.Enabled = False
-        cSeleccionarSuperficie.Enabled = False
-        cQuitarEnTodasLasCapas.Enabled = False
-        
-    Else
-        LynxSuperficies.Enabled = True
-        cFiltro.Enabled = True
-        cGrh.Enabled = True
-        cSeleccionarSuperficie.Enabled = True
-        cQuitarEnTodasLasCapas.Enabled = True
-        
-    End If
-End Sub
-
-Private Sub cQuitarEnTodasLasCapas_Click()
-'*************************************************
-'Author: Lorwik
-'Last modified: 28/04/2021
-'*************************************************
-    If cQuitarEnTodasLasCapas.value = True Then
-        cCapas.Enabled = False
-        LynxSuperficies.Enabled = False
-        cFiltro.Enabled = False
-        cGrh.Enabled = False
-        cSeleccionarSuperficie.Enabled = False
-        cQuitarEnEstaCapa.Enabled = False
-        
-    Else
-        cCapas.Enabled = True
-        LynxSuperficies.Enabled = True
-        cFiltro.Enabled = True
-        cGrh.Enabled = True
-        cSeleccionarSuperficie.Enabled = True
-        cQuitarEnEstaCapa.Enabled = True
-        
-    End If
-End Sub
 
 Private Sub Form_Click()
 '*************************************************
@@ -309,7 +284,7 @@ Private Sub Form_Click()
 
 End Sub
 
-Private Sub LynxSuperficies_Click()
+Private Sub LynxNPCs_Click()
     '*************************************************
     'Author: Lorwik
     'Last modified: 27/04/2021
@@ -319,7 +294,7 @@ Private Sub LynxSuperficies_Click()
     
 End Sub
 
-Private Sub LynxSuperficies_LostFocus()
+Private Sub LynxNPCs_LostFocus()
 '*************************************************
 'Author: Lorwik
 'Last modified: 27/04/2021
@@ -328,7 +303,7 @@ Private Sub LynxSuperficies_LostFocus()
     HotKeysAllow = True
 End Sub
 
-Private Sub LynxSuperficies_KeyDown(KeyCode As Integer, Shift As Integer)
+Private Sub LynxNPCs_KeyDown(KeyCode As Integer, Shift As Integer)
 '*************************************************
 'Author: Lorwik
 'Last modified: 27/04/2021
@@ -358,6 +333,62 @@ Private Sub cFiltro_LostFocus()
     HotKeysAllow = True
 End Sub
 
+Private Sub cInsertarFunc_Click()
+'*************************************************
+'Author: Lorwik
+'Last modified: 28/04/2021
+'*************************************************
+    If cInsertarFunc.value = True Then
+        cQuitarFunc.Enabled = False
+        cAgregarFuncalAzar.Enabled = False
+        cCantFunc.Enabled = False
+    Else
+        cQuitarFunc.Enabled = True
+        cAgregarFuncalAzar.Enabled = True
+        cCantFunc.Enabled = True
+    End If
+End Sub
+
+Private Sub cAgregarFuncalAzar_Click()
+'*************************************************
+'Author: Lorwik
+'Last modified: 28/04/2021
+'*************************************************
+    On Error Resume Next
+    If IsNumeric(cCantFunc.Text) = False Or cCantFunc.Text > 200 Then
+        MsgBox "El Valor de Cantidad introducido no es soportado!" & vbCrLf & "El valor maximo es 200.", vbCritical
+        Exit Sub
+    End If
+    
+    cAgregarFuncalAzar.Enabled = False
+    'Call PonerAlAzar(CInt(cCantFunc.Text))
+    cAgregarFuncalAzar.Enabled = True
+End Sub
+
+Private Sub cQuitarFunc_Click()
+'*************************************************
+'Author: Lorwik
+'Last modified: 28/04/2021
+'*************************************************
+    If cQuitarFunc.value = True Then
+        cInsertarFunc.Enabled = False
+        cAgregarFuncalAzar.Enabled = False
+        cCantFunc.Enabled = False
+        cNumFunc.Enabled = False
+        cFiltro.Enabled = False
+        LynxNPCs.Enabled = False
+        
+    Else
+        cInsertarFunc.Enabled = True
+        cAgregarFuncalAzar.Enabled = True
+        cCantFunc.Enabled = True
+        cNumFunc.Enabled = True
+        cFiltro.Enabled = True
+        LynxNPCs.Enabled = True
+        
+    End If
+End Sub
+
 Private Sub CargarInfo()
 '*************************************************
 'Author: Lorwik
@@ -367,29 +398,8 @@ Private Sub CargarInfo()
     HotKeysAllow = False
         
     'Obtiene el numero del Grh
-    cGrh.Text = LynxSuperficies.CellText(, 0)
-        
-    'TODO: Faltan movidas aqui
-    If SupData(LynxSuperficies.Row + 1).Capa <> 0 Then
-        If (LynxSuperficies.Row + 1) = 0 Then cCapas.Tag = cCapas.Text
-        cCapas.Text = SupData(LynxSuperficies.Row + 1).Capa
-            
-    Else
-
-        If LenB(cCapas.Tag) <> 0 Then
-            cCapas.Text = cCapas.Tag
-            cCapas.Tag = vbNullString
-                
-        End If
-            
-    End If
-        
-    'Manda a renderizar la superficie seleccionada
-    If frmPreview.Visible Then
-        Call frmPreview.fPreviewGrh(cGrh.Text)
-        Call RenderPreview
-
-    End If
+    cNumFunc.Text = LynxNPCs.CellText(, 0)
+ 
 End Sub
 
 Private Sub Filtrar()
@@ -408,29 +418,32 @@ Private Sub Filtrar()
         cFiltro.RemoveItem 0
     
     cFiltro.AddItem cFiltro.Text
-    LynxSuperficies.Clear
-    LynxSuperficies.Redraw = False
-    LynxSuperficies.Visible = False
+    LynxNPCs.Clear
+    LynxNPCs.Redraw = False
+    LynxNPCs.Visible = False
     
-    For i = 0 To MaxSup
-        vDatos = SupData(i).name
+    For i = 0 To NumNPCs
+        vDatos = NpcData(i).name
         NumI = i
         
         For j = 1 To Len(vDatos)
             If UCase$(mid$(vDatos & str(i), j, Len(cFiltro.Text))) = UCase$(cFiltro.Text) Or LenB(cFiltro.Text) = 0 Then
-                LynxSuperficies.AddItem SupData(NumI).Grh
-                K = frmSuperficies.LynxSuperficies.Rows - 1
-                frmSuperficies.LynxSuperficies.CellText(K, 1) = vDatos
+                LynxNPCs.AddItem NumI
+                K = LynxNPCs.Rows - 1
+                LynxNPCs.CellText(K, 1) = vDatos
+                LynxNPCs.CellText(K, 2) = NpcData(NumI).ELV
+                LynxNPCs.CellText(K, 3) = IIf(NpcData(NumI).Hostile = 1, "SI", "NO")
                 Exit For
             End If
         Next
         
     Next i
     
-    LynxSuperficies.Visible = True
-    LynxSuperficies.Redraw = True
-    LynxSuperficies.ColForceFit
+    LynxNPCs.Visible = True
+    LynxNPCs.Redraw = True
+    LynxNPCs.ColForceFit
     
     DoEvents
 
 End Sub
+

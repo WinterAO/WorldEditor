@@ -39,7 +39,7 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   660
-      Left            =   4980
+      Left            =   5310
       TabIndex        =   23
       Top             =   30
       Width           =   3675
@@ -295,7 +295,7 @@ Begin VB.Form frmMain
       Left            =   240
       TabIndex        =   22
       Top             =   30
-      Width           =   4455
+      Width           =   4815
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
          Height          =   375
          Index           =   0
@@ -317,7 +317,7 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          cGradient       =   0
-         Mode            =   0
+         Mode            =   1
          Value           =   0   'False
          Image           =   "frmMain.frx":722C
          cBack           =   -2147483633
@@ -343,17 +343,17 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          cGradient       =   0
-         Mode            =   0
+         Mode            =   1
          Value           =   0   'False
          Image           =   "frmMain.frx":7E7E
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
          Height          =   375
-         Index           =   2
-         Left            =   870
+         Index           =   3
+         Left            =   1260
          TabIndex        =   32
-         Top             =   200
+         Top             =   195
          Width           =   375
          _ExtentX        =   661
          _ExtentY        =   661
@@ -369,17 +369,17 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          cGradient       =   0
-         Mode            =   0
+         Mode            =   1
          Value           =   0   'False
          Image           =   "frmMain.frx":8AD0
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
          Height          =   375
-         Index           =   3
-         Left            =   1260
+         Index           =   4
+         Left            =   1650
          TabIndex        =   31
-         Top             =   200
+         Top             =   195
          Width           =   375
          _ExtentX        =   661
          _ExtentY        =   661
@@ -395,17 +395,17 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          cGradient       =   0
-         Mode            =   0
+         Mode            =   1
          Value           =   0   'False
          Image           =   "frmMain.frx":9722
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
          Height          =   375
-         Index           =   4
-         Left            =   1650
+         Index           =   5
+         Left            =   2040
          TabIndex        =   30
-         Top             =   200
+         Top             =   195
          Width           =   375
          _ExtentX        =   661
          _ExtentY        =   661
@@ -421,17 +421,17 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          cGradient       =   0
-         Mode            =   0
+         Mode            =   1
          Value           =   0   'False
          Image           =   "frmMain.frx":A374
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
          Height          =   375
-         Index           =   5
-         Left            =   2040
+         Index           =   6
+         Left            =   2430
          TabIndex        =   29
-         Top             =   200
+         Top             =   195
          Width           =   375
          _ExtentX        =   661
          _ExtentY        =   661
@@ -448,16 +448,16 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          cGradient       =   0
-         Mode            =   0
+         Mode            =   1
          Value           =   0   'False
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
          Height          =   375
-         Index           =   6
-         Left            =   2430
+         Index           =   7
+         Left            =   2820
          TabIndex        =   28
-         Top             =   200
+         Top             =   195
          Width           =   375
          _ExtentX        =   661
          _ExtentY        =   661
@@ -474,16 +474,16 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          cGradient       =   0
-         Mode            =   0
+         Mode            =   1
          Value           =   0   'False
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
          Height          =   375
-         Index           =   7
-         Left            =   2820
+         Index           =   8
+         Left            =   3210
          TabIndex        =   27
-         Top             =   200
+         Top             =   195
          Width           =   375
          _ExtentX        =   661
          _ExtentY        =   661
@@ -500,16 +500,16 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          cGradient       =   0
-         Mode            =   0
+         Mode            =   1
          Value           =   0   'False
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
          Height          =   375
-         Index           =   8
-         Left            =   3210
+         Index           =   9
+         Left            =   3600
          TabIndex        =   26
-         Top             =   200
+         Top             =   195
          Width           =   375
          _ExtentX        =   661
          _ExtentY        =   661
@@ -526,16 +526,16 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          cGradient       =   0
-         Mode            =   0
+         Mode            =   1
          Value           =   0   'False
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
          Height          =   375
-         Index           =   9
-         Left            =   3600
+         Index           =   10
+         Left            =   3990
          TabIndex        =   25
-         Top             =   200
+         Top             =   195
          Width           =   375
          _ExtentX        =   661
          _ExtentY        =   661
@@ -552,16 +552,16 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          cGradient       =   0
-         Mode            =   0
+         Mode            =   1
          Value           =   0   'False
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
          Height          =   375
-         Index           =   10
-         Left            =   3990
+         Index           =   11
+         Left            =   4350
          TabIndex        =   24
-         Top             =   200
+         Top             =   195
          Width           =   375
          _ExtentX        =   661
          _ExtentY        =   661
@@ -578,8 +578,34 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          cGradient       =   0
-         Mode            =   0
+         Mode            =   1
          Value           =   0   'False
+         cBack           =   -2147483633
+      End
+      Begin WinterMapEditor.lvButtons_H LvBOpcion 
+         Height          =   375
+         Index           =   2
+         Left            =   870
+         TabIndex        =   36
+         Top             =   195
+         Width           =   375
+         _ExtentX        =   661
+         _ExtentY        =   661
+         CapAlign        =   2
+         BackStyle       =   2
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         cGradient       =   0
+         Mode            =   1
+         Value           =   0   'False
+         Image           =   "frmMain.frx":A9F6
          cBack           =   -2147483633
       End
    End
@@ -612,6 +638,26 @@ Begin VB.Form frmMain
       TabStop         =   0   'False
       Top             =   750
       Width           =   19200
+   End
+   Begin VB.Label lblByLorwik 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "by Lorwik"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Left            =   18300
+      TabIndex        =   37
+      Top             =   0
+      Width           =   810
    End
    Begin VB.Label MapPest 
       Alignment       =   2  'Center
@@ -1053,30 +1099,33 @@ Private Sub LvBOpcion_Click(Index As Integer)
             VerTranslados = Not VerTranslados
             
         Case 2
-            VerObjetos = Not VerObjetos
+            VerNpcs = Not VerNpcs
             
         Case 3
-            VerTriggers = Not VerTriggers
+            VerObjetos = Not VerObjetos
             
         Case 4
-            VerParticulas = Not VerParticulas
+            VerTriggers = Not VerTriggers
             
         Case 5
-            VerCapa1 = Not VerCapa1
+            VerParticulas = Not VerParticulas
             
         Case 6
-            VerCapa2 = Not VerCapa2
+            VerCapa1 = Not VerCapa1
             
         Case 7
-            VerCapa3 = Not VerCapa3
+            VerCapa2 = Not VerCapa2
             
         Case 8
-            VerCapa4 = Not VerCapa4
+            VerCapa3 = Not VerCapa3
             
         Case 9
-            VerGrilla = Not VerGrilla
+            VerCapa4 = Not VerCapa4
             
         Case 10
+            VerGrilla = Not VerGrilla
+            
+        Case 11
             'AlphaTecho = Not AlphaTecho
             
     End Select
@@ -1119,6 +1168,13 @@ Private Sub LvBEdit_Click(Index As Integer)
             End If
         
         Case 3 ' NPCs
+            If LvBEdit(3).value Then
+                frmNPCs.Show , frmMain
+            
+            Else
+                frmNPCs.Visible = False
+                
+            End If
         
         Case 4 ' Objetos
         
@@ -1162,7 +1218,7 @@ Private Sub MapPest_Click(Index As Integer)
     If (Index + NumMap_Save - 4) <> NumMap_Save Then
         Dialog.CancelError = True
 
-        On Error GoTo errhandler
+        On Error GoTo ErrHandler
 
         Dialog.filename = PATH_Save & NameMap_Save & (Index + NumMap_Save - 7) & Formato
         
@@ -1193,7 +1249,7 @@ Private Sub MapPest_Click(Index As Integer)
     
         Exit Sub
     
-errhandler:
+ErrHandler:
         Call MsgBox(Err.Description)
 End Sub
 Private Sub mnuAbrirMapa_Click(Index As Integer)
