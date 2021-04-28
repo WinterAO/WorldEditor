@@ -954,14 +954,17 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuVent 
          Caption         =   "Zonas"
          Index           =   0
+         Shortcut        =   ^A
       End
       Begin VB.Menu mnuVent 
          Caption         =   "Consola"
          Index           =   1
+         Shortcut        =   ^L
       End
       Begin VB.Menu mnuVent 
          Caption         =   "Mapa"
          Index           =   2
+         Shortcut        =   ^M
       End
       Begin VB.Menu mnuVent 
          Caption         =   "Preview"
@@ -971,6 +974,7 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuVent 
          Caption         =   "Configuración Avanzada de Superficies"
          Index           =   4
+         Shortcut        =   ^S
       End
    End
    Begin VB.Menu mnuMinimapa 
@@ -1106,6 +1110,13 @@ Private Sub LvBEdit_Click(Index As Integer)
             End If
         
         Case 2 ' Bloqueos
+            If LvBEdit(2).value Then
+                frmBloqueos.Show , frmMain
+            
+            Else
+                frmBloqueos.Visible = False
+                
+            End If
         
         Case 3 ' NPCs
         
@@ -1444,25 +1455,25 @@ End Sub
 Private Sub MainViewPic_MouseMove(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
-                                  y As Single)
+                                  Y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 27/04/2021
 '*************************************************
 
-    Call Form_MouseMove(Button, Shift, X, y)
+    Call Form_MouseMove(Button, Shift, X, Y)
 End Sub
 
 Private Sub MainViewPic_MouseDown(Button As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
-                                y As Single)
+                                Y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 27/04/2021
 '*************************************************
 
-    Call Form_MouseDown(Button, Shift, X, y)
+    Call Form_MouseDown(Button, Shift, X, Y)
 End Sub
 
 Private Sub MainViewPic_DblClick()
@@ -1562,7 +1573,7 @@ Private Sub Form_DblClick()
     End If
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 26/04/2021
@@ -1573,7 +1584,7 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y A
     
     If Not MapaCargado Then Exit Sub
     
-    Call ConvertCPtoTP(X, y, tX, tY)
+    Call ConvertCPtoTP(X, Y, tX, tY)
     
     If Shift = 1 And Button = 1 Then
         Seleccionando = True
@@ -1589,7 +1600,7 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y A
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 26/04/2021
@@ -1601,7 +1612,7 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y A
     If Not MapaCargado Then Exit Sub
     HotKeysAllow = True
 
-    Call ConvertCPtoTP(X, y, tX, tY)
+    Call ConvertCPtoTP(X, Y, tX, tY)
     
     MousePos = "X: " & tX & " - Y: " & tY
     

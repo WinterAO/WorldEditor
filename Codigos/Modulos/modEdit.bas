@@ -41,10 +41,10 @@ Public Sub DobleClick(tX As Integer, tY As Integer)
                 
                 'modMapIO.AbrirunMapa frmMain.Dialog.filename
                 UserPos.X = tTrans.X
-                UserPos.y = tTrans.y
+                UserPos.Y = tTrans.Y
                 
                 If WalkMode = True Then
-                    MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
+                    MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
                     CharList(UserCharIndex).Heading = SOUTH
                 End If
                 
@@ -282,20 +282,20 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                         
                         If tX >= 90 Then ' 21 ' derecha
                             .TileExit.X = 12
-                            .TileExit.y = tY
+                            .TileExit.Y = tY
                             
                         ElseIf tX <= 11 Then ' 9 ' izquierda
                             .TileExit.X = 91
-                            .TileExit.y = tY
+                            .TileExit.Y = tY
                             
                         End If
                         
                         If tY >= 91 Then ' 94 '''' hacia abajo
-                            .TileExit.y = 11
+                            .TileExit.Y = 11
                             .TileExit.X = tX
                             
                         ElseIf tY <= 10 Then ''' hacia arriba
-                            .TileExit.y = 90
+                            .TileExit.Y = 90
                             .TileExit.X = tX
                             
                         End If
@@ -304,15 +304,32 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                         MapInfo.Changed = 1 'Set changed flag
                         .TileExit.Map = Val(frmTraslados.tTMapa.Text)
                         .TileExit.X = Val(frmTraslados.tTX.Text)
-                        .TileExit.y = Val(frmTraslados.tTY.Text)
+                        .TileExit.Y = Val(frmTraslados.tTY.Text)
                     End If
                         
                 ElseIf frmTraslados.cQuitarTrans.value = True Then
                     MapInfo.Changed = 1 'Set changed flag
                     .TileExit.Map = 0
                     .TileExit.X = 0
-                    .TileExit.y = 0
+                    .TileExit.Y = 0
                 End If
+                
+                '########################
+                'BLOQUEOS
+                '########################
+                If frmBloqueos.cInsertarBloqueo.value = True Then
+                    If .bLocked <> 1 Then
+                        MapInfo.Changed = 1 'Set changed flag
+                        .bLocked = 1
+                    End If
+                    
+                ElseIf frmBloqueos.cQuitarBloqueo.value = True Then
+                    If .bLocked <> 0 Then
+                        MapInfo.Changed = 1 'Set changed flag
+                        .bLocked = 0
+                    End If
+                End If
+                
             
             
         End Select
