@@ -747,15 +747,8 @@ Sub RenderScreen(ByVal tilex As Integer, _
 
 
                     'Particulas **************************************
-                    
-                    '                    If .Particle_Group_Index Then
-                    '
-                    '                        'Solo las renderizamos si estan cerca del area de vision.
-                    '                        If EstaDentroDelArea(X, Y) Then
-                    '                            Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
-                    '                        End If
-                    '
-                    '                    End If
+                    If .Particle_Group_Index And VerParticulas Then _
+                        Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
                     
                 End With
                 
@@ -910,12 +903,12 @@ Public Sub RenderPreview()
 'Descripcion: Renderiza la preview de la superficie, objeto, etc seleccionada
 '***********************************************
 
-    Dim DestRect     As RECT
+    Dim destRect     As RECT
     
     Dim i As Integer, j As Integer
     Dim Cont As Integer
     
-    With DestRect
+    With destRect
         .Bottom = frmPreview.PreviewGrh.ScaleHeight
         .Right = frmPreview.PreviewGrh.ScaleWidth
     End With
@@ -943,13 +936,48 @@ Public Sub RenderPreview()
     
     frmPreview.PreviewGrh.AutoRedraw = False
 
-    Call Engine_EndScene(DestRect, frmPreview.PreviewGrh.hWnd)
+    Call Engine_EndScene(destRect, frmPreview.PreviewGrh.hWnd)
 
     Call DrawBuffer.LoadPictureBlt(frmPreview.PreviewGrh.hdc)
 
     frmPreview.PreviewGrh.AutoRedraw = True
 
     Call DrawBuffer.PaintPicture(frmPreview.PreviewGrh.hdc, 0, 0, frmPreview.PreviewGrh.Width, frmPreview.PreviewGrh.Height, 0, 0, vbSrcCopy)
+End Sub
+
+Public Sub RenderParticlePreview()
+'***********************************************
+'Autor: Lorwik
+'Fecha: ????
+'Descripcion: Renderiza la preview de la particula seleccionada
+'***********************************************
+
+    Dim destRect     As RECT
+    
+    Dim i As Integer, j As Integer
+    Dim Cont As Integer
+    
+    With destRect
+        .Bottom = frmParticulas.ParticlePic.ScaleHeight
+        .Right = frmParticulas.ParticlePic.ScaleWidth
+
+    End With
+    
+    'Clear the inventory window
+    Call Engine_BeginScene
+    
+    If ParticlePreview <> 0 Then _
+        Call mDx8_Particulas.Particle_Group_Render(ParticlePreview, frmParticulas.ParticlePic.ScaleWidth / 2, frmParticulas.ParticlePic.ScaleHeight / 2)
+    
+    frmParticulas.ParticlePic.AutoRedraw = False
+
+    Call Engine_EndScene(destRect, frmParticulas.ParticlePic.hWnd)
+
+    Call DrawBuffer.LoadPictureBlt(frmParticulas.ParticlePic.hdc)
+
+    frmParticulas.ParticlePic.AutoRedraw = True
+
+    Call DrawBuffer.PaintPicture(frmParticulas.ParticlePic.hdc, 0, 0, frmParticulas.ParticlePic.Width, frmParticulas.ParticlePic.Height, 0, 0, vbSrcCopy)
 End Sub
 
 Sub MakeChar(CharIndex As Integer, Body As Integer, Head As Integer, Heading As Byte, X As Integer, Y As Integer)

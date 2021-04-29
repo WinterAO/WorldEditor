@@ -201,8 +201,8 @@ Begin VB.Form frmMain
       End
       Begin WinterMapEditor.lvButtons_H LvBEdit 
          Height          =   375
-         Index           =   6
-         Left            =   2430
+         Index           =   8
+         Left            =   3210
          TabIndex        =   6
          Top             =   200
          Width           =   375
@@ -227,8 +227,8 @@ Begin VB.Form frmMain
       End
       Begin WinterMapEditor.lvButtons_H LvBEdit 
          Height          =   375
-         Index           =   7
-         Left            =   2820
+         Index           =   6
+         Left            =   2430
          TabIndex        =   7
          Top             =   200
          Width           =   375
@@ -253,8 +253,8 @@ Begin VB.Form frmMain
       End
       Begin WinterMapEditor.lvButtons_H LvBEdit 
          Height          =   375
-         Index           =   8
-         Left            =   3210
+         Index           =   7
+         Left            =   2820
          TabIndex        =   8
          Top             =   200
          Width           =   375
@@ -976,10 +976,14 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuArchivoLine1 
          Caption         =   "-"
       End
+      Begin VB.Menu mnuNuevoMapa 
+         Caption         =   "&Nuevo Mapa"
+         Shortcut        =   ^N
+      End
       Begin VB.Menu mnuAbrirMapa 
          Caption         =   "&Abrir Mapa"
          Index           =   0
-         Shortcut        =   ^N
+         Shortcut        =   ^A
       End
       Begin VB.Menu mnuAbrirMapa 
          Caption         =   "&Abrir Mapa [Int]"
@@ -1000,7 +1004,7 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuVent 
          Caption         =   "Zonas"
          Index           =   0
-         Shortcut        =   ^A
+         Shortcut        =   ^B
       End
       Begin VB.Menu mnuVent 
          Caption         =   "Consola"
@@ -1194,11 +1198,18 @@ Private Sub LvBEdit_Click(Index As Integer)
                 
             End If
         
-        Case 6 ' Copias
+        Case 6 ' Particulas
+            If LvBEdit(6).value Then
+                frmParticulas.Show , frmMain
+            
+            Else
+                frmParticulas.Visible = False
+                
+            End If
         
-        Case 7 ' Particulas
+        Case 7 ' Luces
         
-        Case 8 ' Luces
+        Case 8 ' Copiar
     
     End Select
 
@@ -1266,6 +1277,7 @@ Private Sub MapPest_Click(Index As Integer)
 errhandler:
         Call MsgBox(Err.Description)
 End Sub
+
 Private Sub mnuAbrirMapa_Click(Index As Integer)
 '*************************************************
 'Author: Lorwik
@@ -1289,10 +1301,38 @@ Private Sub mnuAutoCompletarSuperficies_Click()
 'Last modified: 27/04/2021
 '*************************************************
     mnuAutoCompletarSuperficies.Checked = (mnuAutoCompletarSuperficies.Checked = False)
+    
+End Sub
+
+Private Sub mnuNuevoMapa_Click()
+'*************************************************
+'Author: Lorwik
+'Last modified: 29/04/2021
+'*************************************************
+On Error Resume Next
+    Dim loopc As Integer
+    
+    DeseaGuardarMapa Dialog.filename
+    
+    For loopc = 0 To frmMain.MapPest.Count - 1
+        frmMain.MapPest(loopc).Visible = False
+    Next
+    
+    frmMain.Dialog.filename = Empty
+    
+'    If WalkMode = True Then
+'        Call modGeneral.ToggleWalkMode
+'    End If
+    
+    Call modMapas.NuevoMapa
+    
+    'Call cmdInformacionDelMapa_Click
+
 End Sub
 
 Private Sub mnuSalir_Click()
     Call CloseMapEditor
+    
 End Sub
 
 Private Sub mnuVent_Click(Index As Integer)

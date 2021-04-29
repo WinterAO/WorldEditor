@@ -66,7 +66,10 @@ Sub Main()
     DoEvents
     Call modCarga.CargarIndicesTriggers
     
-    '------------------------
+    frmCarga.lblStatus.Caption = "Cargando Particulas."
+    DoEvents
+    Call mDx8_Particulas.CargarParticulas
+    
     frmCarga.lblStatus.Caption = "Cargando Indice de Superficies."
     DoEvents
     Call modCarga.CargarIndicesSuperficie
@@ -82,6 +85,9 @@ Sub Main()
         
         If frmMain.WindowState <> vbMinimized And frmMain.Visible Then
             Call ShowNextFrame
+            
+            If frmParticulas.Visible Then Call RenderParticlePreview
+            
             Call CheckKeys
             
             If CurrentGrh.GrhIndex = 0 Then _
@@ -386,4 +392,15 @@ errFunction:
     Buscar_Carpeta = vbNullString
     Call RegistrarError(Err.Number, Err.Description, "Buscar_Carpeta", Erl)
   
+End Function
+
+Public Function RandomNumber(ByVal LowerBound As Variant, ByVal UpperBound As Variant) As Single
+'*************************************************
+'Author: Unkwown
+'Last modified: 20/05/06
+'*************************************************
+    Randomize Timer
+    
+    RandomNumber = (UpperBound - LowerBound + 1) * Rnd + LowerBound
+    If RandomNumber > UpperBound Then RandomNumber = UpperBound
 End Function

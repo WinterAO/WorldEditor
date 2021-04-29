@@ -15,6 +15,7 @@ Public NameMap_Save As String
 Public MapaActual As Integer
 Public MapaCargado As Boolean
 Public MousePos As String
+Public ParticlePreview As Long
 
 ' Objeto de Translado
 Public Cfg_TrOBJ As Integer

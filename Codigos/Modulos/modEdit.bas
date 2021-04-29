@@ -423,6 +423,21 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                     End If
                     
                 End If
+                
+                '########################
+                'PARTICULAS
+                '########################
+                If frmParticulas.cmdAdd.value = True Then ' Insertar Particle
+                    MapInfo.Changed = 1
+                    General_Particle_Create CLng(frmParticulas.LynxParticulas.CellText(, 0)), tX, tY, CLng(-1)
+                    .Particle_Index = CLng(frmParticulas.LynxParticulas.CellText(, 0))
+                    
+                ElseIf frmParticulas.cmdDel.value = True Then ' Quitar Particle
+                    MapInfo.Changed = 1 'Set changed flag
+                    .Particle_Index = 0
+                    .Particle_Group_Index = 0
+                    
+                End If
             
         End Select
         

@@ -239,7 +239,7 @@ On Error Resume Next
     'Call DeInit_LightEngine
     
     '   Clean Particles
-    'Call Particle_Group_Remove_All
+    Call Particle_Group_Remove_All
     
     '   Clean Texture
     Call DirectDevice.SetTexture(0, Nothing)
@@ -665,7 +665,7 @@ Public Sub Engine_Get_ARGB(color As Long, Data As D3DCOLORVALUE)
 'Last Modify Date: 18/10/2012
 '**************************************************************
     
-    Dim a As Long, r As Long, g As Long, b As Long
+    Dim a As Long, R As Long, G As Long, B As Long
         
     If color < 0 Then
         a = ((color And (&H7F000000)) / (2 ^ 24)) Or &H80&
@@ -673,15 +673,15 @@ Public Sub Engine_Get_ARGB(color As Long, Data As D3DCOLORVALUE)
         a = color / (2 ^ 24)
     End If
     
-    r = (color And &HFF0000) / (2 ^ 16)
-    g = (color And &HFF00&) / (2 ^ 8)
-    b = (color And &HFF&)
+    R = (color And &HFF0000) / (2 ^ 16)
+    G = (color And &HFF00&) / (2 ^ 8)
+    B = (color And &HFF&)
     
     With Data
         .a = a
-        .r = r
-        .g = g
-        .b = b
+        .R = R
+        .G = G
+        .B = B
     End With
         
 End Sub

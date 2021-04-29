@@ -41,9 +41,9 @@ Private Type tDatosZonas
 End Type
 
 Public Type tDatosLuces
-    r As Integer
-    g As Integer
-    b As Integer
+    R As Integer
+    G As Integer
+    B As Integer
     range As Byte
     X As Integer
     Y As Integer
@@ -173,11 +173,11 @@ Public Sub DeseaGuardarMapa(Optional Path As String)
 'Last modified: 20/05/06
 '*************************************************
 
-'    If MapInfo.Changed = 1 Then
-'        If MsgBox(MSGMod, vbExclamation + vbYesNo) = vbYes Then
-'            GuardarMapa Path
-'        End If
-'    End If
+    If MapInfo.Changed = 1 Then
+        If MsgBox(MSGMod, vbExclamation + vbYesNo) = vbYes Then
+            GuardarMapa Path
+        End If
+    End If
 End Sub
 
 ''
@@ -229,6 +229,8 @@ Public Sub NuevoMapa()
     Dim X As Integer
     Dim i As Byte
     
+    frmMain.MousePointer = 11
+    
     'Volvemos a setear el tamaño del mapa
     Call setMapSize
     
@@ -269,9 +271,9 @@ Public Sub NuevoMapa()
                 .Light.map_x = 0
                 .Light.map_y = 0
                 .Light.RGBCOLOR.a = 0
-                .Light.RGBCOLOR.r = 0
-                .Light.RGBCOLOR.g = 0
-                .Light.RGBCOLOR.b = 0
+                .Light.RGBCOLOR.R = 0
+                .Light.RGBCOLOR.G = 0
+                .Light.RGBCOLOR.B = 0
                 
                 If ClientSetup.MeMode = eMeMode.WinterAO Then _
                     .ZonaIndex = 0
@@ -329,6 +331,9 @@ Public Sub NuevoMapa()
     'Set changed flag
     MapInfo.Changed = 0
     frmMain.MousePointer = 0
+    
+    MapaCargado = True
+    EngineRun = True
     
 End Sub
 
@@ -519,12 +524,10 @@ Sub Cargar_CSM(ByVal Map As String)
             If .NumeroParticulas > 0 Then
                 ReDim Particulas(1 To .NumeroParticulas)
                 Get #fh, , Particulas
-'                For i = 1 To .NumeroParticulas
-'                    MapData(Particulas(i).X, Particulas(i).Y).Particle_Index = Particulas(i).Particula
-'                    Call General_Particle_Create(Particulas(i).Particula, Particulas(i).X, Particulas(i).Y)
-'
-'                    MapData(Particulas(i).X, Particulas(i).Y).Particle_Group_Index = General_Particle_Create(Particulas(i).Particula, Particulas(i).X, Particulas(i).Y)
-'                Next i
+                For i = 1 To .NumeroParticulas
+                    MapData(Particulas(i).X, Particulas(i).Y).Particle_Index = Particulas(i).Particula
+                    Call General_Particle_Create(Particulas(i).Particula, Particulas(i).X, Particulas(i).Y)
+                Next i
             End If
 '
             If .NumeroLuces > 0 Then
@@ -584,11 +587,11 @@ Sub Cargar_CSM(ByVal Map As String)
             If .NumeroTE > 0 Then
                 ReDim TEs(1 To .NumeroTE)
                 Get #fh, , TEs
-'                For i = 1 To .NumeroTE
-'                    MapData(TEs(i).X, TEs(i).Y).TileExit.Map = TEs(i).DestM
-'                    MapData(TEs(i).X, TEs(i).Y).TileExit.X = TEs(i).DestX
-'                    MapData(TEs(i).X, TEs(i).Y).TileExit.Y = TEs(i).DestY
-'                Next i
+                For i = 1 To .NumeroTE
+                    MapData(TEs(i).X, TEs(i).Y).TileExit.Map = TEs(i).DestM
+                    MapData(TEs(i).X, TEs(i).Y).TileExit.X = TEs(i).DestX
+                    MapData(TEs(i).X, TEs(i).Y).TileExit.Y = TEs(i).DestY
+                Next i
             End If
              
         End With
@@ -617,8 +620,8 @@ Sub Cargar_CSM(ByVal Map As String)
 '    Call CSMInfoCargar
 '
 '    'Set changed flag
-'    MapInfo.Changed = 0
-'
+    MapInfo.Changed = 0
+
     MapaCargado = True
 '
 '    Call DibujarMinimapa ' Radar
