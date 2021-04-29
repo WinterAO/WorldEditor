@@ -286,17 +286,17 @@ On Error GoTo ErrorHandler:
     Dim LaCabecera  As tCabecera
     Dim fileBuff    As clsByteBuffer
     Dim InfoHead    As INFOHEADER
-    Dim buffer()    As Byte
+    Dim Buffer()    As Byte
     
     InfoHead = File_Find(DirRecursos & "Scripts.WAO", LCase$("Graficos.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
-        Extract_File_Memory Scripts, LCase$("Graficos.ind"), buffer()
+        Extract_File_Memory Scripts, LCase$("Graficos.ind"), Buffer()
         
         Set fileBuff = New clsByteBuffer
         
-        fileBuff.initializeReader buffer
+        fileBuff.initializeReader Buffer
         
         LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
         LaCabecera.CRC = fileBuff.getLong
@@ -372,7 +372,7 @@ On Error GoTo ErrorHandler:
             
         Wend
         
-        Erase buffer
+        Erase Buffer
     End If
     
     Set fileBuff = Nothing
@@ -400,18 +400,18 @@ Public Sub CargarMinimapa()
 
     Dim fileBuff    As clsByteBuffer
     Dim InfoHead    As INFOHEADER
-    Dim buffer()    As Byte
+    Dim Buffer()    As Byte
     Dim i           As Long
     
     InfoHead = File_Find(DirRecursos & "Scripts" & Formato, LCase$("minimap.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
-        Extract_File_Memory Scripts, LCase$("minimap.ind"), buffer()
+        Extract_File_Memory Scripts, LCase$("minimap.ind"), Buffer()
         
         Set fileBuff = New clsByteBuffer
         
-        fileBuff.initializeReader buffer
+        fileBuff.initializeReader Buffer
         
         For i = 1 To grhCount
             If Grh_Check(i) Then
@@ -419,7 +419,7 @@ Public Sub CargarMinimapa()
             End If
         Next i
         
-        Erase buffer
+        Erase Buffer
     End If
     
     Set fileBuff = Nothing
@@ -432,9 +432,9 @@ Sub CargarCuerpos()
 'Fecha: ???
 'Descripción: Carga el index de Cuerpos
 '*************************************
-On Error GoTo ErrHandler:
+On Error GoTo errhandler:
 
-    Dim buffer()    As Byte
+    Dim Buffer()    As Byte
     Dim dLen        As Long
     Dim InfoHead    As INFOHEADER
     Dim i           As Long
@@ -447,11 +447,11 @@ On Error GoTo ErrHandler:
     
     If InfoHead.lngFileSize <> 0 Then
     
-        Extract_File_Memory Scripts, LCase$("Personajes.ind"), buffer()
+        Extract_File_Memory Scripts, LCase$("Personajes.ind"), Buffer()
         
         Set fileBuff = New clsByteBuffer
         
-        fileBuff.initializeReader buffer
+        fileBuff.initializeReader Buffer
         
         LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
         LaCabecera.CRC = fileBuff.getLong
@@ -484,12 +484,12 @@ On Error GoTo ErrHandler:
             End If
         Next i
     
-        Erase buffer
+        Erase Buffer
     End If
     
     Set fileBuff = Nothing
     
-ErrHandler:
+errhandler:
     
     If Err.Number <> 0 Then
         
@@ -704,5 +704,55 @@ On Error GoTo Fallo
     
 Fallo:
     MsgBox "Error al intentar cargar el Objteto " & Obj & " de OBJ.dat en " & DirDats & vbCrLf & "Err: " & Err.Number & " - " & Err.Description, vbCritical + vbOKOnly
+
+End Sub
+
+Public Sub CargarIndicesTriggers()
+'*************************************************
+'Author: Lorwik
+'Last modified: 29/04/2021
+' Carga los indices de Triggers
+'*************************************************
+
+On Error GoTo Fallo
+
+    Dim K As Long
+
+    If FileExist(IniPath & INITDIR & "Triggers.ini", vbArchive) = False Then
+        MsgBox "Falta el archivo 'Triggers.ini' en " & IniPath & INITDIR & "Triggers.ini", vbCritical
+        End
+    End If
+    
+    Dim NumT As Integer
+    Dim T As Integer
+    Dim Leer As New clsIniManager
+    
+    Call Leer.Initialize(IniPath & INITDIR & "Triggers.ini")
+    
+    frmTriggers.LynxTriggers.Clear
+    frmTriggers.LynxTriggers.Redraw = False
+    frmTriggers.LynxTriggers.Visible = False
+    
+    frmTriggers.LynxTriggers.AddColumn "Num", 0
+    frmTriggers.LynxTriggers.AddColumn "Nombre", 2
+    
+    NumT = Val(Leer.GetValue("INIT", "NumTriggers"))
+    For T = 1 To NumT
+        frmTriggers.LynxTriggers.AddItem T
+        K = frmTriggers.LynxTriggers.Rows - 1
+        frmTriggers.LynxTriggers.CellText(K, 1) = Leer.GetValue("Trig" & T, "Name")
+    Next T
+
+    frmTriggers.LynxTriggers.Visible = True
+    frmTriggers.LynxTriggers.Redraw = True
+    frmTriggers.LynxTriggers.ColForceFit
+    
+    DoEvents
+
+    Set Leer = Nothing
+    Exit Sub
+    
+Fallo:
+    MsgBox "Error al intentar cargar el Trigger " & T & " de Triggers.ini en " & IniPath & INITDIR & "Triggers.ini" & vbCrLf & "Err: " & Err.Number & " - " & Err.Description, vbCritical + vbOKOnly
 
 End Sub

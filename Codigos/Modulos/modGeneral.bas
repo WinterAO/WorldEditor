@@ -62,6 +62,10 @@ Sub Main()
     DoEvents
     Call modCarga.CargarIndicesOBJ
     
+    frmCarga.lblStatus.Caption = "Cargando Triggers."
+    DoEvents
+    Call modCarga.CargarIndicesTriggers
+    
     '------------------------
     frmCarga.lblStatus.Caption = "Cargando Indice de Superficies."
     DoEvents

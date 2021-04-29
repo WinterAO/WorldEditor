@@ -38,6 +38,7 @@ Form=Codigos\Formularios\frmUnionAdyacente.frm
 Form=Codigos\Formularios\frmBloqueos.frm
 Form=Codigos\Formularios\frmNPCs.frm
 Form=Codigos\Formularios\frmOBJs.frm
+Form=Codigos\Formularios\frmTriggers.frm
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""

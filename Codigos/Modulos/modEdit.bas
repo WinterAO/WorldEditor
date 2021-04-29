@@ -380,7 +380,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                         
                         If .OBJInfo.ObjIndex <> ObjIndex Or MapData(tX, tY).OBJInfo.Amount <> Val(frmObjs.cCantFunc.Text) Then
                             MapInfo.Changed = 1 'Set changed flag
-                            InitGrh MapData(tX, tY).ObjGrh, ObjData(ObjIndex).GrhIndex
+                            InitGrh .ObjGrh, ObjData(ObjIndex).GrhIndex
                             .OBJInfo.ObjIndex = ObjIndex
                             .OBJInfo.Amount = Val(frmObjs.cCantFunc.Text)
                             
@@ -401,6 +401,25 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                         .ObjGrh.GrhIndex = 0
                         .OBJInfo.ObjIndex = 0
                         .OBJInfo.Amount = 0
+                    End If
+                    
+                End If
+                
+                '########################
+                'TRIGGERS
+                '########################
+                If frmTriggers.cInsertarTrigger.value = True Then ' Insertar Trigger
+                
+                    If .Trigger <> frmTriggers.LynxTriggers.CellText(, 0) Then
+                        MapInfo.Changed = 1 'Set changed flag
+                        .Trigger = frmTriggers.LynxTriggers.CellText(, 0)
+                    End If
+                    
+                ElseIf frmTriggers.cQuitarTrigger.value = True Then ' Quitar Trigger
+                
+                    If .Trigger <> 0 Then
+                        MapInfo.Changed = 1 'Set changed flag
+                        .Trigger = 0
                     End If
                     
                 End If

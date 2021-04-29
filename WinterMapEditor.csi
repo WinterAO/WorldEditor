@@ -1,4 +1,7 @@
 [History]
-1=#P0#=mb	#P1#=Filtrar	#P2#=WinterMapEditor/frmObjs/Filtrar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210428150513	#P7#=0	#P8#=20	.
-2=#P0#=mb	#P1#=RenderScreen	#P2#=WinterMapEditor/modTileEngine/RenderScreen	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210428150410	#P7#=0	#P8#=209	.
-3=#P0#=mb	#P1#=ClickEdit	#P2#=WinterMapEditor/modEdit/ClickEdit	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210428150231	#P7#=0	#P8#=280	.
+1=#P0#=mb	#P1#=LynxNPCs_Click	#P2#=WinterMapEditor/frmNPCs/LynxNPCs_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210429194722	#P7#=0	#P8#=1	.
+2=#P0#=mb	#P1#=cQuitarTrigger_Click	#P2#=WinterMapEditor/frmTriggers/cQuitarTrigger_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210429194235	#P7#=0	#P8#=15	.
+3=#P0#=mb	#P1#=ClickEdit	#P2#=WinterMapEditor/modEdit/ClickEdit	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210429194930	#P7#=0	#P8#=368	.
+4=#P0#=mb	#P1#=Main	#P2#=WinterMapEditor/modGeneral/Main	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210429192207	#P7#=0	#P8#=46	.
+5=#P0#=mb	#P1#=CargarIndicesTriggers	#P2#=WinterMapEditor/modCarga/CargarIndicesTriggers	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210429192534	#P7#=0	#P8#=32	.
+6=#P0#=mb	#P1#=CargarIndicesOBJ	#P2#=WinterMapEditor/modCarga/CargarIndicesOBJ	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210429192514	#P7#=0	#P8#=47	.

@@ -1186,6 +1186,13 @@ Private Sub LvBEdit_Click(Index As Integer)
             End If
         
         Case 5 ' Triggers
+            If LvBEdit(5).value Then
+                frmTriggers.Show , frmMain
+            
+            Else
+                frmTriggers.Visible = False
+                
+            End If
         
         Case 6 ' Copias
         
@@ -1225,7 +1232,7 @@ Private Sub MapPest_Click(Index As Integer)
     If (Index + NumMap_Save - 4) <> NumMap_Save Then
         Dialog.CancelError = True
 
-        On Error GoTo ErrHandler
+        On Error GoTo errhandler
 
         Dialog.filename = PATH_Save & NameMap_Save & (Index + NumMap_Save - 7) & Formato
         
@@ -1256,7 +1263,7 @@ Private Sub MapPest_Click(Index As Integer)
     
         Exit Sub
     
-ErrHandler:
+errhandler:
         Call MsgBox(Err.Description)
 End Sub
 Private Sub mnuAbrirMapa_Click(Index As Integer)
