@@ -236,7 +236,7 @@ On Error Resume Next
     Dim i As Byte
     
     '   DeInit Lights
-    'Call DeInit_LightEngine
+    Call DeInit_LightEngine
     
     '   Clean Particles
     Call Particle_Group_Remove_All

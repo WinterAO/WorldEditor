@@ -62,20 +62,25 @@ End Sub
 ' @param tY Especifica la posicion Y en el mapa
 
 Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
-'*************************************************
-'Author: Lorwik
-'Last modified: 27/04/2021
-'Basado en el codigo de GS
-'*************************************************
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 27/04/2021
+    'Basado en el codigo de GS
+    '*************************************************
 
     On Error GoTo ClickEdit_Err
     
     Dim NPCIndex As Integer
+
     Dim ObjIndex As Integer
-    Dim Head As Integer
-    Dim Body As Integer
-    Dim Heading As Byte
-    Dim loopc As Integer
+
+    Dim Head     As Integer
+
+    Dim Body     As Integer
+
+    Dim Heading  As Byte
+
+    Dim loopc    As Integer
 
     If tY < YMinMapSize Or tY > YMaxMapSize Then Exit Sub
     If tX < XMinMapSize Or tX > XMaxMapSize Then Exit Sub
@@ -90,7 +95,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
 
         Select Case Button
         
-            'Click Derecho
+                'Click Derecho
             Case vbRightButton
             
                 ' Posicion
@@ -100,45 +105,45 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 If .bLocked = 1 Then Call AddtoRichTextBox(frmConsola.StatTxt, " (BLOQ)", 255, 255, 255, False, False, True)
                 
                 ' NPCs
-'                If .NPCIndex > 0 Then
-'                    If .NPCIndex > 499 Then
-'                        Call AddtoRichTextBox(frmConsola.StatTxt, " (NPC-Hostil: " & .NPCIndex & " - " & NpcData(.NPCIndex).name & ")", 255, 255, 255, False, False, True)
-'
-'                    Else
-'                        Call AddtoRichTextBox(frmConsola.StatTxt, " (NPC: " & .NPCIndex & " - " & NpcData(.NPCIndex).name & ")", 255, 255, 255, False, False, True)
-'
-'                    End If
-'                End If
+                '                If .NPCIndex > 0 Then
+                '                    If .NPCIndex > 499 Then
+                '                        Call AddtoRichTextBox(frmConsola.StatTxt, " (NPC-Hostil: " & .NPCIndex & " - " & NpcData(.NPCIndex).name & ")", 255, 255, 255, False, False, True)
+                '
+                '                    Else
+                '                        Call AddtoRichTextBox(frmConsola.StatTxt, " (NPC: " & .NPCIndex & " - " & NpcData(.NPCIndex).name & ")", 255, 255, 255, False, False, True)
+                '
+                '                    End If
+                '                End If
                 
                 ' OBJs
                 'If .OBJInfo.ObjIndex > 0 Then _
-                    Call AddtoRichTextBox(frmConsola.StatTxt, " (Obj: " & .OBJInfo.ObjIndex & " - " & ObjData(.OBJInfo.ObjIndex).name & " - Cant.:" & .OBJInfo.Amount & ")", 255, 255, 255, False, False, True)
+                 Call AddtoRichTextBox(frmConsola.StatTxt, " (Obj: " & .OBJInfo.ObjIndex & " - " & ObjData(.OBJInfo.ObjIndex).name & " - Cant.:" & .OBJInfo.Amount & ")", 255, 255, 255, False, False, True)
             
                 ' Capas
                 Call AddtoRichTextBox(frmConsola.StatTxt, "Capa1: " & .Graphic(1).GrhIndex & " - Capa2: " & .Graphic(2).GrhIndex & " - Capa3: " & .Graphic(3).GrhIndex & " - Capa4: " & .Graphic(4).GrhIndex, 255, 255, 255, False, False, True)
-'                If frmMain.mnuAutoCapturarSuperficie.Checked = True And frmMain.cSeleccionarSuperficie.value = False Then
-'                    If .Graphic(4).GrhIndex <> 0 Then
-'                        frmMain.cCapas.Text = 4
-'                        frmMain.cGrh.Text = .Graphic(4).GrhIndex
-'
-'                    ElseIf .Graphic(3).GrhIndex <> 0 Then
-'                        frmMain.cCapas.Text = 3
-'                        frmMain.cGrh.Text = .Graphic(3).GrhIndex
-'
-'                    ElseIf .Graphic(2).GrhIndex <> 0 Then
-'                        frmMain.cCapas.Text = 2
-'                        frmMain.cGrh.Text = .Graphic(2).GrhIndex
-'
-'                    ElseIf .Graphic(1).GrhIndex <> 0 Then
-'                        frmMain.cCapas.Text = 1
-'                        frmMain.cGrh.Text = .Graphic(1).GrhIndex
-'
-'                    End If
-'                End If
+                '                If frmMain.mnuAutoCapturarSuperficie.Checked = True And frmMain.cSeleccionarSuperficie.value = False Then
+                '                    If .Graphic(4).GrhIndex <> 0 Then
+                '                        frmMain.cCapas.Text = 4
+                '                        frmMain.cGrh.Text = .Graphic(4).GrhIndex
+                '
+                '                    ElseIf .Graphic(3).GrhIndex <> 0 Then
+                '                        frmMain.cCapas.Text = 3
+                '                        frmMain.cGrh.Text = .Graphic(3).GrhIndex
+                '
+                '                    ElseIf .Graphic(2).GrhIndex <> 0 Then
+                '                        frmMain.cCapas.Text = 2
+                '                        frmMain.cGrh.Text = .Graphic(2).GrhIndex
+                '
+                '                    ElseIf .Graphic(1).GrhIndex <> 0 Then
+                '                        frmMain.cCapas.Text = 1
+                '                        frmMain.cGrh.Text = .Graphic(1).GrhIndex
+                '
+                '                    End If
+                '                End If
                 
                 Exit Sub
             
-            'Click Izquierdo
+                'Click Izquierdo
             Case vbLeftButton
             
                 '########################
@@ -148,11 +153,13 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 'Borrar Capas 2-3
                 If frmSuperficies.cQuitarEnTodasLasCapas.value = True Then
                     MapInfo.Changed = 1 'Set changed flag
+
                     For loopc = 2 To 3
                         .Graphic(loopc).GrhIndex = 0
                     Next loopc
                         
                     Exit Sub
+
                 End If
             
                 'Borrar Capa actual
@@ -162,22 +169,28 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             MapInfo.Changed = 1 'Set changed flag
                             .Graphic(1).GrhIndex = 1
                             Exit Sub
+
                         End If
                         
                     ElseIf .Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex <> 0 Then
                         MapInfo.Changed = 1 'Set changed flag
                         .Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = 0
                         Exit Sub
+
                     End If
+
                 End If
                 
                 'Insertar Superficie
                 If frmSuperficies.cSeleccionarSuperficie.value = True Then
                     
                     If frmConfigSup.MOSAICO.value = vbChecked Then
+
                         Dim aux As Long
-                        Dim dy As Integer
-                        Dim dX As Integer
+
+                        Dim dy  As Integer
+
+                        Dim dX  As Integer
                         
                         If frmConfigSup.DespMosaic.value = vbChecked Then
                             dy = Val(frmConfigSup.DMLargo)
@@ -191,10 +204,9 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             
                         If frmMain.mnuAutoCompletarSuperficies.Checked = False Then
                             MapInfo.Changed = 1 'Set changed flag
-                            aux = Val(frmSuperficies.cGrh.Text) + _
-                            (((tY + dy) Mod frmConfigSup.mLargo.Text) * frmConfigSup.mAncho.Text) + ((tX + dX) Mod frmConfigSup.mAncho.Text)
+                            aux = Val(frmSuperficies.cGrh.Text) + (((tY + dy) Mod frmConfigSup.mLargo.Text) * frmConfigSup.mAncho.Text) + ((tX + dX) Mod frmConfigSup.mAncho.Text)
                             
-                             If .Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex <> aux Or .bLocked <> frmMain.LvBEdit(2).value Then
+                            If .Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex <> aux Or .bLocked <> frmMain.LvBEdit(2).value Then
                                 .Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = aux
                                 InitGrh .Graphic(Val(frmSuperficies.cCapas.Text)), aux
                                 
@@ -216,6 +228,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             
                             For i = 1 To frmConfigSup.mLargo.Text
                                 For j = 1 To frmConfigSup.mAncho.Text
+
                                     If tYY >= YMinMapSize And tYY <= YMaxMapSize Then
                                     
                                         If tXX >= XMinMapSize And tXX <= XMaxMapSize Then
@@ -225,6 +238,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                                             InitGrh MapData(tXX, tYY).Graphic(Val(frmSuperficies.cCapas.Text)), aux
                                             tXX = tXX + 1
                                             desptile = desptile + 1
+
                                         End If
                                         
                                     End If
@@ -257,14 +271,14 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 'TRASLADOS
                 '########################
                 If frmTraslados.cInsertarTrans.value = True Then
-'                    If Cfg_TrOBJ > 0 And Cfg_TrOBJ <= 0 And frmMain.cInsertarTransOBJ.value = True Then
-'                        If ObjData(Cfg_TrOBJ).ObjType = 19 Then
-'                            MapInfo.Changed = 1 'Set changed flag
-'                            InitGrh .ObjGrh, ObjData(Cfg_TrOBJ).GrhIndex
-'                            .OBJInfo.ObjIndex = Cfg_TrOBJ
-'                            .OBJInfo.Amount = 1
-'                        End If
-'                    End If
+                    '                    If Cfg_TrOBJ > 0 And Cfg_TrOBJ <= 0 And frmMain.cInsertarTransOBJ.value = True Then
+                    '                        If ObjData(Cfg_TrOBJ).ObjType = 19 Then
+                    '                            MapInfo.Changed = 1 'Set changed flag
+                    '                            InitGrh .ObjGrh, ObjData(Cfg_TrOBJ).GrhIndex
+                    '                            .OBJInfo.ObjIndex = Cfg_TrOBJ
+                    '                            .OBJInfo.Amount = 1
+                    '                        End If
+                    '                    End If
                     
                     If Val(frmTraslados.tTMapa.Text) < 0 Or Val(frmTraslados.tTMapa.Text) > 9000 Then
                         MsgBox "Valor de Mapa invalido", vbCritical + vbOKOnly
@@ -309,6 +323,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                         .TileExit.Map = Val(frmTraslados.tTMapa.Text)
                         .TileExit.X = Val(frmTraslados.tTX.Text)
                         .TileExit.Y = Val(frmTraslados.tTY.Text)
+
                     End If
                         
                 ElseIf frmTraslados.cQuitarTrans.value = True Then
@@ -316,6 +331,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                     .TileExit.Map = 0
                     .TileExit.X = 0
                     .TileExit.Y = 0
+
                 End If
                 
                 '########################
@@ -325,13 +341,17 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                     If .bLocked <> 1 Then
                         MapInfo.Changed = 1 'Set changed flag
                         .bLocked = 1
+
                     End If
                     
                 ElseIf frmBloqueos.cQuitarBloqueo.value = True Then
+
                     If .bLocked <> 0 Then
                         MapInfo.Changed = 1 'Set changed flag
                         .bLocked = 0
+
                     End If
+
                 End If
                 
                 '########################
@@ -340,6 +360,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 If frmNPCs.cInsertarFunc.value = True Then
                     If frmNPCs.cNumFunc.Text > 0 Then
                         NPCIndex = frmNPCs.cNumFunc.Text
+
                         If NPCIndex <> .NPCIndex Then
                             MapInfo.Changed = 1 'Set changed flag
                             Body = NpcData(NPCIndex).Body
@@ -347,12 +368,16 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             Heading = NpcData(NPCIndex).Heading
                             Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY)
                             .NPCIndex = NPCIndex
+
                         End If
+
                     End If
                     
                 ElseIf frmNPCs.cInsertarFunc.value = True Then
+
                     If frmNPCs.cNumFunc.Text > 0 Then
                         NPCIndex = frmNPCs.cNumFunc.Text
+
                         If NPCIndex <> (.NPCIndex) Then
                             MapInfo.Changed = 1 'Set changed flag
                             Body = NpcData(NPCIndex).Body
@@ -360,15 +385,20 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             Heading = NpcData(NPCIndex).Heading
                             Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY)
                             .NPCIndex = NPCIndex
+
                         End If
+
                     End If
                     
                 ElseIf frmNPCs.cQuitarFunc.value = True Then
+
                     If .NPCIndex > 0 Then
                         MapInfo.Changed = 1 'Set changed flag
                         .NPCIndex = 0
                         Call EraseChar(.CharIndex)
+
                     End If
+
                 End If
                 
                 '########################
@@ -385,12 +415,16 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             .OBJInfo.Amount = Val(frmObjs.cCantFunc.Text)
                             
                             Select Case ObjData(ObjIndex).ObjType
+
                                 Case 4, 8, 10, 22 ' Arboles, Carteles, Foros, Yacimientos
                                     .Graphic(3) = .ObjGrh
+
                             End Select
                             
                         End If
+
                     End If
+
                 ElseIf frmObjs.cQuitarFunc.value = True Then ' Quitar Objeto
                 
                     If .OBJInfo.ObjIndex <> 0 Or .OBJInfo.Amount <> 0 Then
@@ -401,6 +435,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                         .ObjGrh.GrhIndex = 0
                         .OBJInfo.ObjIndex = 0
                         .OBJInfo.Amount = 0
+
                     End If
                     
                 End If
@@ -413,6 +448,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                     If .Trigger <> frmTriggers.LynxTriggers.CellText(, 0) Then
                         MapInfo.Changed = 1 'Set changed flag
                         .Trigger = frmTriggers.LynxTriggers.CellText(, 0)
+
                     End If
                     
                 ElseIf frmTriggers.cQuitarTrigger.value = True Then ' Quitar Trigger
@@ -420,6 +456,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                     If .Trigger <> 0 Then
                         MapInfo.Changed = 1 'Set changed flag
                         .Trigger = 0
+
                     End If
                     
                 End If
@@ -438,6 +475,53 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                     .Particle_Group_Index = 0
                     
                 End If
+                
+                '########################
+                'PARTICULAS
+                '########################
+                If frmLuces.cInsertarLuz.value Then
+                    If Val(frmLuces.cRango = 0) Then Exit Sub
+                    Call mDx8_Luces.Create_Light_To_Map(tX, tY, frmLuces.cRango, Val(frmLuces.R), Val(frmLuces.G), Val(frmLuces.B))
+                    Call mDx8_Luces.LightRenderAll
+                    
+                    With MapData(tX, tY).Light
+                        .active = True
+                        .range = frmLuces.cRango
+                        .RGBCOLOR.a = 255
+                        .RGBCOLOR.R = Val(frmLuces.R)
+                        .RGBCOLOR.G = Val(frmLuces.G)
+                        .RGBCOLOR.B = Val(frmLuces.B)
+                        
+                    End With
+                    
+                    MapInfo.Changed = 1 'Set changed flag
+                    
+                ElseIf frmLuces.cQuitarLuz.value Then
+                
+                    With MapData(tX, tY).Light
+                        .range = 0
+                        .RGBCOLOR.a = 255
+                        .RGBCOLOR.R = Val(frmLuces.R)
+                        .RGBCOLOR.G = Val(frmLuces.G)
+                        .RGBCOLOR.B = Val(frmLuces.B)
+                        
+                    End With
+        
+                    mDx8_Luces.Delete_Light_To_Map tX, tY
+        
+                    MapInfo.Changed = 1 'Set changed flag
+                    
+                End If
+                
+                If frmZonas.LvBPintar.value Then
+                    MapData(tX, tY).ZonaIndex = frmZonas.LstZona.ListIndex + 1
+                    MapInfo.Changed = 1
+                    
+                ElseIf frmZonas.LvBQuitar.value Then
+                    MapData(tX, tY).ZonaIndex = 0
+                    MapInfo.Changed = 1
+                    
+                End If
             
         End Select
         
@@ -447,6 +531,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
 
 ClickEdit_Err:
     Call RegistrarError(Err.Number, Err.Description, "modEdit.ClickEdit", Erl)
+
     Resume Next
 
 End Sub

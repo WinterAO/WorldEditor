@@ -1,13 +1,3 @@
 [History]
-1=#P0#=mb	#P1#=Engine_DirectX8_End	#P2#=WinterMapEditor/mDx8_Engine/Engine_DirectX8_End	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210429220346	#P7#=0	#P8#=8	.
-2=#P0#=mb	#P1#=GuardarMapa	#P2#=WinterMapEditor/modMapas/GuardarMapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210429215957	#P7#=0	#P8#=26	.
-3=#P0#=mb	#P1#=MapPest_Click	#P2#=WinterMapEditor/frmMain/MapPest_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210429215920	#P7#=0	#P8#=33	.
-4=#P0#=mb	#P1#=mnuSalir_Click	#P2#=WinterMapEditor/frmMain/mnuSalir_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210429215811	#P7#=0	#P8#=2	.
-5=#P0#=mb	#P1#=mnuAbrirMapa_Click	#P2#=WinterMapEditor/frmMain/mnuAbrirMapa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210429215855	#P7#=0	#P8#=2	.
-6=#P0#=mb	#P1#=mnuAutoCompletarSuperficies_Click	#P2#=WinterMapEditor/frmMain/mnuAutoCompletarSuperficies_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210429215806	#P7#=0	#P8#=6	.
-7=#P0#=mb	#P1#=ClickEdit	#P2#=WinterMapEditor/modEdit/ClickEdit	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210429215704	#P7#=0	#P8#=369	.
-8=#P0#=mb	#P1#=LvBEdit_Click	#P2#=WinterMapEditor/frmMain/LvBEdit_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210429215456	#P7#=0	#P8#=1	.
-9=#P0#=mb	#P1#=NuevoMapa	#P2#=WinterMapEditor/modMapas/NuevoMapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210429215753	#P7#=0	#P8#=34	.
-10=#P0#=mb	#P1#=Cargar_CSM	#P2#=WinterMapEditor/modMapas/Cargar_CSM	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210429220707	#P7#=0	#P8#=102	.
-11=#P0#=mb	#P1#=DeseaGuardarMapa	#P2#=WinterMapEditor/modMapas/DeseaGuardarMapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210429215216	#P7#=0	#P8#=6	.
-12=#P0#=mb	#P1#=mnuNuevoMapa_Click	#P2#=WinterMapEditor/frmMain/mnuNuevoMapa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210429215843	#P7#=0	#P8#=8	.
+1=#P0#=mb	#P1#=AccionLuces	#P2#=WinterMapEditor/frmLuces/AccionLuces	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210430001004	#P7#=0	#P8#=3	.
+2=#P0#=mb	#P1#=lvButtons_H1_Click	#P2#=WinterMapEditor/frmLuces/lvButtons_H1_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210430001003	#P7#=0	#P8#=5	.

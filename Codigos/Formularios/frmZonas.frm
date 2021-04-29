@@ -52,15 +52,6 @@ Begin VB.Form frmZonas
    Begin VB.Frame FraAreas 
       BackColor       =   &H00535353&
       Caption         =   "Zonas"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   2775
       Left            =   60
@@ -216,7 +207,7 @@ Option Explicit
 
 Private Sub LstZona_Click()
  
-    'Call MapZona_Actualizar(LstZona.ListIndex + 1)
+    Call MapZona_Actualizar(LstZona.ListIndex + 1)
     
 End Sub
 

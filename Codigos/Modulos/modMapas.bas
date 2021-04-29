@@ -205,7 +205,7 @@ On Error GoTo errhandler
         Select Case ClientSetup.MeMode
         
             Case eMeMode.WinterAO
-                'Call Save_CSM(Path)
+                Call Save_CSM(Path)
                 
         End Select
         
@@ -299,12 +299,10 @@ Public Sub NuevoMapa()
         frmZonas.LstZona.Clear
     
         Call NuevaZona(CantZonas)
-                
-        'Call MapZona_Actualizar(CantZonas)
         
         frmZonas.LstZona.ListIndex = 0
         
-        'Call MapZona_Actualizar(frmZonas.LstZona.ListIndex + 1)
+        Call MapZona_Actualizar(frmZonas.LstZona.ListIndex + 1)
            
     Else
     
@@ -322,7 +320,7 @@ Public Sub NuevoMapa()
         MapInfo.NoEncriptarMP = 0
         MapInfo.LuzBase = 0
             
-        'Call MapInfo_Actualizar
+        Call MapInfo_Actualizar
     End If
     
     Estado_Actual = Estados(e_estados.MedioDia)
@@ -335,6 +333,36 @@ Public Sub NuevoMapa()
     MapaCargado = True
     EngineRun = True
     
+End Sub
+
+Public Sub MapInfo_Actualizar()
+'*************************************************
+'Author: Lorwik
+'Last modified: 29/04/2021
+' Actualiza el formulario de MapInfo
+'*************************************************
+
+On Error Resume Next
+
+    With frmMapInfo
+        .txtMapNombre.Text = MapInfo.name
+        .txtMapMusica.Text = MapInfo.Music
+        .txtMapTerreno.Text = MapInfo.Terreno
+        .txtMapZona.Text = MapInfo.Zona
+        .txtMapRestringir.Text = MapInfo.Restringir
+    '   .chkMapBackup.value = MapInfo.BackUp
+        .chkMapPK.value = IIf(MapInfo.PK = True, 1, 0)
+        .TxtAmbient.Text = MapInfo.ambient
+        .TxtlvlMinimo = MapInfo.lvlMinimo
+        .chkMapMagiaSinEfecto.value = MapInfo.MagiaSinEfecto
+        .chkMapInviSinEfecto.value = IIf(MapInfo.InviSinEfecto, vbChecked, vbUnchecked)
+        .chkInvocarSin.value = MapInfo.InvocarSinEfecto
+        .chkOcultarSin.value = MapInfo.OcultarSinEfecto
+        .chkMapResuSinEfecto.value = IIf(MapInfo.ResuSinEfecto, vbChecked, vbUnchecked)
+        .txtMapVersion = MapInfo.MapVersion
+        .ChkMapNpc.value = MapInfo.RoboNpcsPermitido
+    End With
+
 End Sub
 
 Public Sub NuevaZona(ByVal id As Integer)
@@ -423,6 +451,48 @@ Public Sub ActualizarZonaList()
     Next i
     
 End Sub
+
+Public Sub MapZona_Actualizar(ByVal id As Integer)
+    
+    Dim tR As Byte
+    Dim tG As Byte
+    Dim tB As Byte
+    
+    Call ConvertLongToRGB(MapZonas(id).LuzBase, tR, tG, tB)
+
+    With frmMapInfo
+        .txtMapNombre.Text = MapZonas(id).name
+        .txtMapMusica.Text = MapZonas(id).Music
+        .txtMapTerreno.Text = MapZonas(id).Terreno
+        .txtMapZona = MapZonas(id).Zona
+        .txtMapRestringir = MapZonas(id).Restringir
+    '   .chkMapBackup.value = MapZonas(ID).BackUp
+        .chkMapPK.value = IIf(MapZonas(id).PK = True, 1, 0)
+        .TxtAmbient.Text = MapZonas(id).ambient
+        .TxtlvlMinimo = MapZonas(id).lvlMinimo
+        .chkMapMagiaSinEfecto.value = IIf(MapZonas(id).MagiaSinEfecto, vbChecked, vbUnchecked)
+        .chkMapInviSinEfecto.value = IIf(MapZonas(id).InviSinEfecto, vbChecked, vbUnchecked)
+        .chkInvocarSin.value = MapZonas(id).InvocarSinEfecto
+        .chkOcultarSin.value = MapZonas(id).OcultarSinEfecto
+        .chkMapResuSinEfecto.value = IIf(MapZonas(id).ResuSinEfecto, vbChecked, vbUnchecked)
+        .txtMapVersion = MapZonas(id).MapVersion
+        .ChkMapNpc.value = MapZonas(id).RoboNpcsPermitido
+        
+        If MapZonas(id).LuzBase = 0 Then
+            .chkLuzClimatica = vbUnchecked
+        Else
+            .chkLuzClimatica = vbChecked
+        End If
+        
+        .PicColorMap.BackColor = MapZonas(id).LuzBase
+        .LuzMapa.Text = tR & "-" & tG & "-" & tB
+    End With
+    
+End Sub
+
+'#######################################
+'CARGAR DE MAPAS FORMATO WINTER ACTUAL
+'#######################################
 
 Sub Cargar_CSM(ByVal Map As String)
     '***************************************************
@@ -534,21 +604,21 @@ Sub Cargar_CSM(ByVal Map As String)
                 ReDim Luces(1 To .NumeroLuces)
                 Dim p As Byte
                 Get #fh, , Luces
-'                For i = 1 To .NumeroLuces
-'
-'                    With MapData(Luces(i).X, Luces(i).Y)
-'                        .Light.range = Luces(i).range ' Changed by: Project Administrator at: 4/26/2021-20:26:18 on machine: DESKTOP-BR8H09Q
-'                        .Light.RGBCOLOR.a = 255
-'                        .Light.RGBCOLOR.R = Luces(i).R
-'                        .Light.RGBCOLOR.G = Luces(i).G
-'                        .Light.RGBCOLOR.B = Luces(i).B
-'
-'                    End With
-'
-'                    Call Create_Light_To_Map(Luces(i).X, Luces(i).Y, Luces(i).range, Luces(i).R, Luces(i).G, Luces(i).B)
-'                Next i
-'
-'                Call LightRenderAll
+                For i = 1 To .NumeroLuces
+
+                    With MapData(Luces(i).X, Luces(i).Y)
+                        .Light.range = Luces(i).range ' Changed by: Project Administrator at: 4/26/2021-20:26:18 on machine: DESKTOP-BR8H09Q
+                        .Light.RGBCOLOR.a = 255
+                        .Light.RGBCOLOR.R = Luces(i).R
+                        .Light.RGBCOLOR.G = Luces(i).G
+                        .Light.RGBCOLOR.B = Luces(i).B
+
+                    End With
+
+                    Call Create_Light_To_Map(Luces(i).X, Luces(i).Y, Luces(i).range, Luces(i).R, Luces(i).G, Luces(i).B)
+                Next i
+
+                Call LightRenderAll
             End If
 '
             If .NumeroZonas > 0 Then
@@ -606,18 +676,18 @@ Sub Cargar_CSM(ByVal Map As String)
         Next i
     Next j
     
-'    'MapInfo_Cargar Map
-'    frmMapInfo.txtMapVersion.Text = MapInfo.MapVersion
+    'MapInfo_Cargar Map
+   frmMapInfo.txtMapVersion.Text = MapInfo.MapVersion
 '
     Call Pestanas(Map, ".csm")
-'
-'    'Change mouse icon
+
+    'Change mouse icon
     frmMain.MousePointer = 0
 '
-'    ' Vacio deshacer
+    ' Vacio deshacer
 '    modEdicion.Deshacer_Clear
 '
-'    Call CSMInfoCargar
+    Call CSMInfoCargar
 '
 '    'Set changed flag
     MapInfo.Changed = 0
@@ -638,15 +708,464 @@ ErrorHandler:
     Call RegistrarError(Err.Number, Err.Description, "modMapas.Cargar_CSM", Erl)
 End Sub
 
-''
-' Calcula la orden de Pestanas
-'
-' @param Map Especifica path del mapa
+Public Sub CSMInfoCargar()
+'**********************************
+'Autor: Lorwik
+'Fecha: 14/03/2021
+'Descripcion: Cargar la informacion de los mapas de WinterAO.
+'**********************************
+
+    Dim i As Integer
+    Dim tR As Byte
+    Dim tG As Byte
+    Dim tB As Byte
+
+    CantZonas = UBound(MapDat)
+    
+    If CantZonas < 1 Then Exit Sub
+    
+    ReDim MapZonas(CantZonas) As tMapInfo
+    
+    frmZonas.LstZona.Clear
+
+    For i = 1 To CantZonas
+        With MapZonas(i)
+        
+            .name = MapDat(i).map_name
+            .Music = MapDat(i).music_number
+        
+            .MagiaSinEfecto = MapDat(i).MagiaSinEfecto
+            .InviSinEfecto = MapDat(i).InviSinEfecto
+            .ResuSinEfecto = MapDat(i).ResuSinEfecto
+            .RoboNpcsPermitido = MapDat(i).RoboNpcsPermitido
+            .InvocarSinEfecto = MapDat(i).InvocarSinEfecto
+            .OcultarSinEfecto = MapDat(i).OcultarSinEfecto
+            
+            .lvlMinimo = Val(MapDat(i).lvlMinimo)
+            .LuzBase = MapDat(i).LuzBase
+            
+            If MapDat(i).LuzBase <> 0 Then
+                frmMapInfo.chkLuzClimatica = Checked
+                Call ConvertLongToRGB(MapDat(i).LuzBase, tR, tG, tB)
+                
+                Estado_Custom.a = 255
+                Estado_Custom.R = tR
+                Estado_Custom.G = tG
+                Estado_Custom.B = tB
+                
+                Call Actualizar_Estado
+                
+                frmMapInfo.LuzMapa.Text = tR & "-" & tG & "-" & tB
+                frmMapInfo.PicColorMap.BackColor = .LuzBase
+                
+            Else
+                frmMapInfo.chkLuzClimatica = Unchecked
+                
+            End If
+            
+            .MapVersion = MapDat(i).version
+            
+            If MapDat(i).battle_mode = True Then
+                .PK = True
+            Else
+                .PK = False
+            End If
+            
+            .ambient = MapDat(i).ambient
+            
+            .Terreno = MapDat(i).terrain
+            .Zona = MapDat(i).zone
+            .Restringir = MapDat(i).restrict_mode
+            .BackUp = MapDat(i).backup_mode
+        
+            frmZonas.LstZona.AddItem (i & "- " & .name)
+        
+        End With
+
+    Next i
+    
+    Call MapInfo_Actualizar
+End Sub
+
+'#######################################
+'GUARDADO DE MAPAS FORMATO WINTER ACTUAL
+'#######################################
+
+Public Function Save_CSM(ByVal MapRoute As String, Optional ByVal Fusion As Boolean = False) As Boolean
+
+On Error GoTo ErrorHandler
+
+    Dim fh As Integer
+    Dim MH As tMapHeader
+    Dim Blqs() As tDatosBloqueados
+    Dim L1() As Long
+    Dim L2() As tDatosGrh
+    Dim L3() As tDatosGrh
+    Dim L4() As tDatosGrh
+    Dim Triggers() As tDatosTrigger
+    Dim Luces() As tDatosLuces
+    Dim Particulas() As tDatosParticulas
+    Dim Zonas() As tDatosZonas
+    Dim Objetos() As tDatosObjs
+    Dim NPCs() As tDatosNPC
+    Dim TEs() As tDatosTE
+        
+    Dim i As Integer
+    Dim j As Integer
+    
+    If NoSobreescribir = False Then
+        If FileExist(MapRoute, vbNormal) = True Then
+            If MsgBox("¿Desea sobrescribir " & MapRoute & "?", vbCritical + vbYesNo) = vbNo Then
+                Exit Function
+                
+            Else
+                'Kill MapRoute
+                
+            End If
+        End If
+    End If
+    
+    frmMain.MousePointer = 11
+    MapSize.XMax = XMaxMapSize
+    MapSize.XMin = XMinMapSize
+    MapSize.YMax = YMaxMapSize
+    MapSize.YMin = YMinMapSize
+    
+    If Fusion Then
+        MapSize.XMax = 1100
+        MapSize.YMax = 1100
+    End If
+    
+    ReDim L1(MapSize.XMin To MapSize.XMax, MapSize.YMin To MapSize.YMax)
+    
+    For j = MapSize.YMin To MapSize.YMax
+        For i = MapSize.XMin To MapSize.XMax
+            
+            If Fusion Then
+                With SuperMapData(i, j)
+                    If .bLocked Then
+                        MH.NumeroBloqueados = MH.NumeroBloqueados + 1
+                        ReDim Preserve Blqs(1 To MH.NumeroBloqueados)
+                        Blqs(MH.NumeroBloqueados).X = i
+                        Blqs(MH.NumeroBloqueados).Y = j
+                    End If
+                    
+                    L1(i, j) = .Graphic(1).GrhIndex
+                    
+                    If .Graphic(2).GrhIndex > 0 Then
+                        MH.NumeroLayers(2) = MH.NumeroLayers(2) + 1
+                        ReDim Preserve L2(1 To MH.NumeroLayers(2))
+                        L2(MH.NumeroLayers(2)).X = i
+                        L2(MH.NumeroLayers(2)).Y = j
+                        L2(MH.NumeroLayers(2)).GrhIndex = .Graphic(2).GrhIndex
+                    End If
+                    
+                    If .Graphic(3).GrhIndex > 0 Then
+                        MH.NumeroLayers(3) = MH.NumeroLayers(3) + 1
+                        ReDim Preserve L3(1 To MH.NumeroLayers(3))
+                        L3(MH.NumeroLayers(3)).X = i
+                        L3(MH.NumeroLayers(3)).Y = j
+                        L3(MH.NumeroLayers(3)).GrhIndex = .Graphic(3).GrhIndex
+                    End If
+                    
+                    If .Graphic(4).GrhIndex > 0 Then
+                        MH.NumeroLayers(4) = MH.NumeroLayers(4) + 1
+                        ReDim Preserve L4(1 To MH.NumeroLayers(4))
+                        L4(MH.NumeroLayers(4)).X = i
+                        L4(MH.NumeroLayers(4)).Y = j
+                        L4(MH.NumeroLayers(4)).GrhIndex = .Graphic(4).GrhIndex
+                    End If
+                    
+                    If .Trigger > 0 Then
+                        MH.NumeroTriggers = MH.NumeroTriggers + 1
+                        ReDim Preserve Triggers(1 To MH.NumeroTriggers)
+                        Triggers(MH.NumeroTriggers).X = i
+                        Triggers(MH.NumeroTriggers).Y = j
+                        Triggers(MH.NumeroTriggers).Trigger = .Trigger
+                    End If
+                    
+                    If .Particle_Index > 0 Then
+                        MH.NumeroParticulas = MH.NumeroParticulas + 1
+                        ReDim Preserve Particulas(1 To MH.NumeroParticulas)
+                        Particulas(MH.NumeroParticulas).X = i
+                        Particulas(MH.NumeroParticulas).Y = j
+                        Particulas(MH.NumeroParticulas).Particula = .Particle_Index
+    
+                    End If
+                   
+                   '¿Hay luz activa en este punto?
+                    If .Light.range > 0 Then
+                        MH.NumeroLuces = MH.NumeroLuces + 1
+                        ReDim Preserve Luces(1 To MH.NumeroLuces)
+                        
+                        Luces(MH.NumeroLuces).R = .Light.RGBCOLOR.R
+                        Luces(MH.NumeroLuces).G = .Light.RGBCOLOR.G
+                        Luces(MH.NumeroLuces).B = .Light.RGBCOLOR.B
+                        Luces(MH.NumeroLuces).range = .Light.range
+                        Luces(MH.NumeroLuces).X = i
+                        Luces(MH.NumeroLuces).Y = j
+                    End If
+                    
+                    If .ZonaIndex > 0 Then
+                        MH.NumeroZonas = MH.NumeroZonas + 1
+                        ReDim Preserve Zonas(1 To MH.NumeroZonas)
+                        Zonas(MH.NumeroZonas).X = i
+                        Zonas(MH.NumeroZonas).Y = j
+                        Zonas(MH.NumeroZonas).Zona = .ZonaIndex
+                    End If
+                    
+                    If .OBJInfo.ObjIndex > 0 Then
+                        MH.NumeroOBJs = MH.NumeroOBJs + 1
+                        ReDim Preserve Objetos(1 To MH.NumeroOBJs)
+                        Objetos(MH.NumeroOBJs).ObjIndex = .OBJInfo.ObjIndex
+                        Objetos(MH.NumeroOBJs).ObjAmmount = .OBJInfo.Amount
+                        Objetos(MH.NumeroOBJs).X = i
+                        Objetos(MH.NumeroOBJs).Y = j
+                    End If
+                    
+                    If .NPCIndex > 0 Then
+                        MH.NumeroNPCs = MH.NumeroNPCs + 1
+                        ReDim Preserve NPCs(1 To MH.NumeroNPCs)
+                        NPCs(MH.NumeroNPCs).NPCIndex = .NPCIndex
+                        NPCs(MH.NumeroNPCs).X = i
+                        NPCs(MH.NumeroNPCs).Y = j
+                    End If
+                    
+                    If .TileExit.Map > 0 Then
+                        MH.NumeroTE = MH.NumeroTE + 1
+                        ReDim Preserve TEs(1 To MH.NumeroTE)
+                        TEs(MH.NumeroTE).DestM = .TileExit.Map
+                        TEs(MH.NumeroTE).DestX = .TileExit.X
+                        TEs(MH.NumeroTE).DestY = .TileExit.Y
+                        TEs(MH.NumeroTE).X = i
+                        TEs(MH.NumeroTE).Y = j
+                    End If
+                    
+                End With
+                
+            Else
+                With MapData(i, j)
+                    If .bLocked Then
+                        MH.NumeroBloqueados = MH.NumeroBloqueados + 1
+                        ReDim Preserve Blqs(1 To MH.NumeroBloqueados)
+                        Blqs(MH.NumeroBloqueados).X = i
+                        Blqs(MH.NumeroBloqueados).Y = j
+                    End If
+                    
+                    L1(i, j) = .Graphic(1).GrhIndex
+                    
+                    If .Graphic(2).GrhIndex > 0 Then
+                        MH.NumeroLayers(2) = MH.NumeroLayers(2) + 1
+                        ReDim Preserve L2(1 To MH.NumeroLayers(2))
+                        L2(MH.NumeroLayers(2)).X = i
+                        L2(MH.NumeroLayers(2)).Y = j
+                        L2(MH.NumeroLayers(2)).GrhIndex = .Graphic(2).GrhIndex
+                    End If
+                    
+                    If .Graphic(3).GrhIndex > 0 Then
+                        MH.NumeroLayers(3) = MH.NumeroLayers(3) + 1
+                        ReDim Preserve L3(1 To MH.NumeroLayers(3))
+                        L3(MH.NumeroLayers(3)).X = i
+                        L3(MH.NumeroLayers(3)).Y = j
+                        L3(MH.NumeroLayers(3)).GrhIndex = .Graphic(3).GrhIndex
+                    End If
+                    
+                    If .Graphic(4).GrhIndex > 0 Then
+                        MH.NumeroLayers(4) = MH.NumeroLayers(4) + 1
+                        ReDim Preserve L4(1 To MH.NumeroLayers(4))
+                        L4(MH.NumeroLayers(4)).X = i
+                        L4(MH.NumeroLayers(4)).Y = j
+                        L4(MH.NumeroLayers(4)).GrhIndex = .Graphic(4).GrhIndex
+                    End If
+                    
+                    If .Trigger > 0 Then
+                        MH.NumeroTriggers = MH.NumeroTriggers + 1
+                        ReDim Preserve Triggers(1 To MH.NumeroTriggers)
+                        Triggers(MH.NumeroTriggers).X = i
+                        Triggers(MH.NumeroTriggers).Y = j
+                        Triggers(MH.NumeroTriggers).Trigger = .Trigger
+                    End If
+                    
+                    If .Particle_Index > 0 Then
+                        MH.NumeroParticulas = MH.NumeroParticulas + 1
+                        ReDim Preserve Particulas(1 To MH.NumeroParticulas)
+                        Particulas(MH.NumeroParticulas).X = i
+                        Particulas(MH.NumeroParticulas).Y = j
+                        Particulas(MH.NumeroParticulas).Particula = .Particle_Index
+                        Debug.Print .Particle_Index
+    
+                    End If
+                   
+                   '¿Hay luz activa en este punto?
+                    If .Light.range > 0 Then
+                        MH.NumeroLuces = MH.NumeroLuces + 1
+                        ReDim Preserve Luces(1 To MH.NumeroLuces)
+                        
+                        Luces(MH.NumeroLuces).R = .Light.RGBCOLOR.R
+                        Luces(MH.NumeroLuces).G = .Light.RGBCOLOR.G
+                        Luces(MH.NumeroLuces).B = .Light.RGBCOLOR.B
+                        Luces(MH.NumeroLuces).range = .Light.range
+                        Luces(MH.NumeroLuces).X = i
+                        Luces(MH.NumeroLuces).Y = j
+                    End If
+                    
+                    If .ZonaIndex > 0 Then
+                        MH.NumeroZonas = MH.NumeroZonas + 1
+                        ReDim Preserve Zonas(1 To MH.NumeroZonas)
+                        Zonas(MH.NumeroZonas).X = i
+                        Zonas(MH.NumeroZonas).Y = j
+                        Zonas(MH.NumeroZonas).Zona = .ZonaIndex
+                    End If
+                    
+                    If .OBJInfo.ObjIndex > 0 Then
+                        MH.NumeroOBJs = MH.NumeroOBJs + 1
+                        ReDim Preserve Objetos(1 To MH.NumeroOBJs)
+                        Objetos(MH.NumeroOBJs).ObjIndex = .OBJInfo.ObjIndex
+                        Objetos(MH.NumeroOBJs).ObjAmmount = .OBJInfo.Amount
+                        Objetos(MH.NumeroOBJs).X = i
+                        Objetos(MH.NumeroOBJs).Y = j
+                    End If
+                    
+                    If .NPCIndex > 0 Then
+                        MH.NumeroNPCs = MH.NumeroNPCs + 1
+                        ReDim Preserve NPCs(1 To MH.NumeroNPCs)
+                        NPCs(MH.NumeroNPCs).NPCIndex = .NPCIndex
+                        NPCs(MH.NumeroNPCs).X = i
+                        NPCs(MH.NumeroNPCs).Y = j
+                    End If
+                    
+                    If .TileExit.Map > 0 Then
+                        MH.NumeroTE = MH.NumeroTE + 1
+                        ReDim Preserve TEs(1 To MH.NumeroTE)
+                        TEs(MH.NumeroTE).DestM = .TileExit.Map
+                        TEs(MH.NumeroTE).DestX = .TileExit.X
+                        TEs(MH.NumeroTE).DestY = .TileExit.Y
+                        TEs(MH.NumeroTE).X = i
+                        TEs(MH.NumeroTE).Y = j
+                    End If
+                    
+                End With
+            
+            End If
+        Next i
+    Next j
+ 
+    MH.NumeroData = CantZonas
+    
+    Call CSMInfoSave
+              
+    fh = FreeFile
+    Open MapRoute For Binary As fh
+        
+        Put #fh, , MiCabecera
+        
+        Put #fh, , MH
+        Put #fh, , MapSize
+        Put #fh, , MapDat
+        Put #fh, , L1
+    
+        With MH
+            If .NumeroBloqueados > 0 Then _
+                Put #fh, , Blqs
+            If .NumeroLayers(2) > 0 Then _
+                Put #fh, , L2
+            If .NumeroLayers(3) > 0 Then _
+                Put #fh, , L3
+            If .NumeroLayers(4) > 0 Then _
+                Put #fh, , L4
+            If .NumeroTriggers > 0 Then _
+                Put #fh, , Triggers
+            If .NumeroParticulas > 0 Then _
+                Put #fh, , Particulas
+            If .NumeroLuces > 0 Then _
+                Put #fh, , Luces
+            If .NumeroZonas > 0 Then _
+                Put #fh, , Zonas
+            If .NumeroOBJs > 0 Then _
+                Put #fh, , Objetos
+            If .NumeroNPCs > 0 Then _
+                Put #fh, , NPCs
+            If .NumeroTE > 0 Then _
+                Put #fh, , TEs
+        End With
+    
+    Close fh
+    
+    Call Pestanas(MapRoute, ".csm")
+    
+    'Change mouse icon
+    frmMain.MousePointer = 0
+    MapInfo.Changed = 0
+    
+    NoSobreescribir = False
+    
+    Save_CSM = True
+    
+     Call AddtoRichTextBox(frmConsola.StatTxt, "Mapa " & MapRoute & " guardado...", 0, 255, 0)
+    Exit Function
+
+ErrorHandler:
+    If fh <> 0 Then Close fh
+
+End Function
+
+Private Sub CSMInfoSave()
+'**********************************
+'Autor: Lorwik
+'Fecha: 14/03/2021
+'Descripcion: Guarda la informacion de los mapas de WinterAO.
+'**********************************
+
+    Dim i As Integer
+
+    ReDim MapDat(CantZonas) As tMapDat
+
+    For i = 1 To CantZonas
+        With MapZonas(i)
+
+            MapDat(i).map_name = .name
+            MapDat(i).music_number = .Music
+            
+            MapDat(i).MagiaSinEfecto = .MagiaSinEfecto
+            MapDat(i).InviSinEfecto = .InviSinEfecto
+            MapDat(i).ResuSinEfecto = .ResuSinEfecto
+            MapDat(i).LuzBase = .LuzBase
+            MapDat(i).RoboNpcsPermitido = .RoboNpcsPermitido
+            MapDat(i).OcultarSinEfecto = .OcultarSinEfecto
+            MapDat(i).InvocarSinEfecto = .InvocarSinEfecto
+            
+            MapDat(i).lvlMinimo = .lvlMinimo
+            
+            If frmMapInfo.chkLuzClimatica = Checked Then
+                MapDat(i).LuzBase = .LuzBase
+            Else
+                MapDat(i).LuzBase = 0
+            End If
+            
+            MapDat(i).version = .MapVersion
+            
+            If .PK = True Then
+                MapDat(i).battle_mode = True
+            Else
+                MapDat(i).battle_mode = False
+            End If
+            
+            MapDat(i).ambient = .ambient
+            MapDat(i).terrain = .Terreno
+            MapDat(i).zone = .Zona
+            MapDat(i).restrict_mode = .Restringir
+            MapDat(i).backup_mode = .BackUp
+        End With
+        
+    Next i
+    
+End Sub
 
 Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".map")
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 28/05/06
+'Calcula la orden de Pestanas
 '*************************************************
 On Error Resume Next
     Dim loopc As Integer

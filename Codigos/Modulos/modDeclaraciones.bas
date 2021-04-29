@@ -16,6 +16,7 @@ Public MapaActual As Integer
 Public MapaCargado As Boolean
 Public MousePos As String
 Public ParticlePreview As Long
+Public NoSobreescribir As Boolean
 
 ' Objeto de Translado
 Public Cfg_TrOBJ As Integer
@@ -273,6 +274,7 @@ Public GrhData() As GrhData 'Holds all the grh data
 Public BodyData() As tBodyData
 Public HeadData() As tHeadData
 Public MapData() As MapBlock 'Holds map data for current map
+Public SuperMapData() As MapBlock
 Public CharList(1 To 10000) As Char 'Holds info about all characters on map
 Public MapZonas() As tMapInfo
 Public SupData() As SupData

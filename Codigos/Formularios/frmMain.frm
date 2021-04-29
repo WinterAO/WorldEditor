@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "ComDlg32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00424242&
    BorderStyle     =   1  'Fixed Single
@@ -39,10 +39,10 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   660
-      Left            =   5310
+      Left            =   5040
       TabIndex        =   23
       Top             =   30
-      Width           =   3675
+      Width           =   4065
       Begin WinterMapEditor.lvButtons_H LvBEdit 
          Height          =   375
          Index           =   0
@@ -277,6 +277,32 @@ Begin VB.Form frmMain
          Image           =   "frmMain.frx":6D8A
          cBack           =   -2147483633
       End
+      Begin WinterMapEditor.lvButtons_H LvBEdit 
+         Height          =   375
+         Index           =   9
+         Left            =   3600
+         TabIndex        =   38
+         Top             =   200
+         Width           =   375
+         _ExtentX        =   661
+         _ExtentY        =   661
+         CapAlign        =   2
+         BackStyle       =   2
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Tahoma"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         cGradient       =   0
+         Mode            =   1
+         Value           =   0   'False
+         Image           =   "frmMain.frx":722C
+         cBack           =   -2147483633
+      End
    End
    Begin VB.Frame FraVer 
       BackColor       =   &H00535353&
@@ -292,7 +318,7 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   660
-      Left            =   240
+      Left            =   120
       TabIndex        =   22
       Top             =   30
       Width           =   4815
@@ -319,7 +345,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":722C
+         Image           =   "frmMain.frx":7504
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
@@ -345,7 +371,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":7E7E
+         Image           =   "frmMain.frx":8156
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
@@ -371,7 +397,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":8AD0
+         Image           =   "frmMain.frx":8DA8
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
@@ -397,7 +423,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":9722
+         Image           =   "frmMain.frx":99FA
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
@@ -423,7 +449,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":A374
+         Image           =   "frmMain.frx":A64C
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
@@ -559,7 +585,7 @@ Begin VB.Form frmMain
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
          Height          =   375
          Index           =   11
-         Left            =   4350
+         Left            =   4360
          TabIndex        =   24
          Top             =   195
          Width           =   375
@@ -605,7 +631,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":A9F6
+         Image           =   "frmMain.frx":ACCE
          cBack           =   -2147483633
       End
    End
@@ -677,7 +703,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   10
-      Left            =   16830
+      Left            =   16860
       TabIndex        =   11
       Top             =   270
       Visible         =   0   'False
@@ -701,7 +727,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   0
-      Left            =   9180
+      Left            =   9210
       TabIndex        =   21
       Top             =   270
       Visible         =   0   'False
@@ -725,7 +751,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   9
-      Left            =   16065
+      Left            =   16095
       TabIndex        =   12
       Top             =   270
       Visible         =   0   'False
@@ -749,7 +775,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   8
-      Left            =   15300
+      Left            =   15330
       TabIndex        =   13
       Top             =   270
       Visible         =   0   'False
@@ -773,7 +799,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   7
-      Left            =   14535
+      Left            =   14565
       TabIndex        =   14
       Top             =   270
       Visible         =   0   'False
@@ -797,7 +823,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   6
-      Left            =   13770
+      Left            =   13800
       TabIndex        =   15
       Top             =   270
       Visible         =   0   'False
@@ -821,7 +847,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   5
-      Left            =   13005
+      Left            =   13035
       TabIndex        =   16
       Top             =   270
       Visible         =   0   'False
@@ -845,7 +871,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   4
-      Left            =   12210
+      Left            =   12240
       TabIndex        =   17
       Top             =   270
       Visible         =   0   'False
@@ -869,7 +895,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   3
-      Left            =   11475
+      Left            =   11505
       TabIndex        =   18
       Top             =   270
       Visible         =   0   'False
@@ -893,7 +919,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   2
-      Left            =   10710
+      Left            =   10740
       TabIndex        =   19
       Top             =   270
       Visible         =   0   'False
@@ -917,7 +943,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   1
-      Left            =   9945
+      Left            =   9975
       TabIndex        =   20
       Top             =   270
       Visible         =   0   'False
@@ -941,7 +967,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   11
-      Left            =   17595
+      Left            =   17625
       TabIndex        =   10
       Top             =   270
       Visible         =   0   'False
@@ -965,7 +991,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   12
-      Left            =   18360
+      Left            =   18390
       TabIndex        =   9
       Top             =   270
       Visible         =   0   'False
@@ -980,6 +1006,9 @@ Begin VB.Form frmMain
          Caption         =   "&Nuevo Mapa"
          Shortcut        =   ^N
       End
+      Begin VB.Menu mnuArchivoLine2 
+         Caption         =   "-"
+      End
       Begin VB.Menu mnuAbrirMapa 
          Caption         =   "&Abrir Mapa"
          Index           =   0
@@ -989,7 +1018,17 @@ Begin VB.Form frmMain
          Caption         =   "&Abrir Mapa [Int]"
          Index           =   1
       End
-      Begin VB.Menu mnuArchivoLine2 
+      Begin VB.Menu mnuArchivoLine3 
+         Caption         =   "-"
+      End
+      Begin VB.Menu mnuGuardarMapa 
+         Caption         =   "&Guardar Mapa"
+         Shortcut        =   ^G
+      End
+      Begin VB.Menu mnuGuardarMapaComo 
+         Caption         =   "Guardar Mapa &como..."
+      End
+      Begin VB.Menu mnuArchivoLine4 
          Caption         =   "-"
       End
       Begin VB.Menu mnuSalir 
@@ -1208,8 +1247,24 @@ Private Sub LvBEdit_Click(Index As Integer)
             End If
         
         Case 7 ' Luces
+            If LvBEdit(7).value Then
+                frmLuces.Show , frmMain
+            
+            Else
+                frmLuces.Visible = False
+                
+            End If
         
         Case 8 ' Copiar
+        
+        Case 9 ' Informacion
+            If LvBEdit(9).value Then
+                frmMapInfo.Show , frmMain
+            
+            Else
+                frmMapInfo.Visible = False
+                
+            End If
     
     End Select
 
@@ -1326,8 +1381,43 @@ On Error Resume Next
     
     Call modMapas.NuevoMapa
     
-    'Call cmdInformacionDelMapa_Click
+    Call LvBEdit_Click(9)
 
+End Sub
+
+Public Sub mnuGuardarMapa_Click()
+'*************************************************
+'Author: Lorwik
+'Last modified: 29/04/2021
+'*************************************************
+
+    On Error GoTo mnuGuardarMapa_Click_Err
+
+    modMapas.GuardarMapa Dialog.filename
+    
+    Exit Sub
+
+mnuGuardarMapa_Click_Err:
+    Call RegistrarError(Err.Number, Err.Description, "FrmMain.mnuGuardarMapa_Click", Erl)
+    Resume Next
+    
+End Sub
+
+Private Sub mnuGuardarMapaComo_Click()
+'*************************************************
+'Author: Lorwik
+'Last modified: 29/04/2021
+'*************************************************
+    
+    On Error GoTo mnuGuardarMapaComo_Click_Err
+    
+    modMapas.GuardarMapa
+    
+    Exit Sub
+
+mnuGuardarMapaComo_Click_Err:
+    Call RegistrarError(Err.Number, Err.Description, "FrmMain.mnuGuardarMapaComo_Click", Erl)
+    Resume Next
 End Sub
 
 Private Sub mnuSalir_Click()
@@ -1605,6 +1695,18 @@ Private Sub Form_Load()
     'Temporal
     ClientSetup.MapTam = 1
     Call setMapSize
+    
+    LvBOpcion(0).value = VerBlockeados
+    LvBOpcion(1).value = VerTranslados
+    LvBOpcion(2).value = VerNpcs
+    LvBOpcion(3).value = VerObjetos
+    LvBOpcion(4).value = VerTriggers
+    LvBOpcion(5).value = VerParticulas
+    LvBOpcion(6).value = VerCapa1
+    LvBOpcion(7).value = VerCapa2
+    LvBOpcion(8).value = VerCapa3
+    LvBOpcion(9).value = VerCapa4
+    LvBOpcion(10).value = VerGrilla
 
 End Sub
 

@@ -735,7 +735,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 
                     'Object Layer ***********************************
                      If .ObjGrh.GrhIndex <> 0 And VerObjetos Then _
-                      Call Draw_Grh(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
+                        Call Draw_Grh(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
 
                     'Char layer**************************************
                     If .CharIndex <> 0 And VerNpcs Then _
@@ -773,10 +773,8 @@ Sub RenderScreen(ByVal tilex As Integer, _
             PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
             
             'Layer 4
-            If VerCapa4 Then
+            If VerCapa4 Then _
                 If MapData(X, Y).Graphic(4).GrhIndex Then Call Draw_Grh(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
-
-            End If
             
             If MapData(X, Y).TileExit.Map <> 0 And VerTranslados Then
                 Grh.GrhIndex = 3
@@ -805,10 +803,8 @@ Sub RenderScreen(ByVal tilex As Integer, _
                         
             End If
 
-            If VerTriggers Then '4978
+            If VerTriggers Then _
                 If MapData(X, Y).Trigger > 0 Then Call DrawText(PixelOffsetXTemp + 5, PixelOffsetYTemp - 13, MapData(X, Y).Trigger, -1, False, 2)
-
-            End If
             
             ScreenX = ScreenX + 1
             
@@ -903,12 +899,12 @@ Public Sub RenderPreview()
 'Descripcion: Renderiza la preview de la superficie, objeto, etc seleccionada
 '***********************************************
 
-    Dim destRect     As RECT
+    Dim DestRect     As RECT
     
     Dim i As Integer, j As Integer
     Dim Cont As Integer
     
-    With destRect
+    With DestRect
         .Bottom = frmPreview.PreviewGrh.ScaleHeight
         .Right = frmPreview.PreviewGrh.ScaleWidth
     End With
@@ -936,7 +932,7 @@ Public Sub RenderPreview()
     
     frmPreview.PreviewGrh.AutoRedraw = False
 
-    Call Engine_EndScene(destRect, frmPreview.PreviewGrh.hWnd)
+    Call Engine_EndScene(DestRect, frmPreview.PreviewGrh.hWnd)
 
     Call DrawBuffer.LoadPictureBlt(frmPreview.PreviewGrh.hdc)
 
@@ -952,12 +948,12 @@ Public Sub RenderParticlePreview()
 'Descripcion: Renderiza la preview de la particula seleccionada
 '***********************************************
 
-    Dim destRect     As RECT
+    Dim DestRect     As RECT
     
     Dim i As Integer, j As Integer
     Dim Cont As Integer
     
-    With destRect
+    With DestRect
         .Bottom = frmParticulas.ParticlePic.ScaleHeight
         .Right = frmParticulas.ParticlePic.ScaleWidth
 
@@ -971,7 +967,7 @@ Public Sub RenderParticlePreview()
     
     frmParticulas.ParticlePic.AutoRedraw = False
 
-    Call Engine_EndScene(destRect, frmParticulas.ParticlePic.hWnd)
+    Call Engine_EndScene(DestRect, frmParticulas.ParticlePic.hWnd)
 
     Call DrawBuffer.LoadPictureBlt(frmParticulas.ParticlePic.hdc)
 

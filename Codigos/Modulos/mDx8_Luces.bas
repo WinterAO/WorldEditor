@@ -401,10 +401,10 @@ Public Sub Actualizar_Estado()
         Next X
         
     Else
+    
     '******************
     'MODO IMPC
     '******************
-    
         '¿El mapa tiene su propia luz?
         If MapInfo.LuzBase <> 0 Then
         
