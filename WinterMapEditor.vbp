@@ -47,6 +47,7 @@ Reference=*\G{6B263850-900B-11D0-9484-00A0C91110ED}#1.0#0#..\..\..\..\WINDOWS\Sy
 Form=Codigos\Formularios\frmColorPicker.frm
 Form=Codigos\Formularios\frmRellenar.frm
 Form=Codigos\Formularios\frmAcercade.frm
+Form=Codigos\Formularios\frmOptimizar.frm
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
