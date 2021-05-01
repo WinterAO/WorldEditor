@@ -1414,10 +1414,10 @@ Private Sub MapPest_Click(Index As Integer)
                 
             Case 2
                 If ClientSetup.TipoMapaCargado = eTipoMapa.tInt Then
-                    'Call modMapIO.MapaV2_Cargar(Dialog.filename, True)
+                    Call modMapas.Cargar_Map(Dialog.filename, True)
                     
                 Else
-                    'Call modMapIO.MapaV2_Cargar(Dialog.filename)
+                    Call modMapas.Cargar_Map(Dialog.filename)
                     
                 End If
             
@@ -1430,7 +1430,8 @@ Private Sub MapPest_Click(Index As Integer)
         Exit Sub
     
 ErrHandler:
-        Call MsgBox(Err.Description)
+    Call MsgBox(Err.Description)
+    
 End Sub
 
 Private Sub mnuAbrirMapa_Click(Index As Integer)
@@ -1546,6 +1547,7 @@ Private Sub mnuGuardarMapaComo_Click()
 mnuGuardarMapaComo_Click_Err:
     Call RegistrarError(Err.Number, Err.Description, "FrmMain.mnuGuardarMapaComo_Click", Erl)
     Resume Next
+    
 End Sub
 
 Private Sub mnuOptimizar_Click()
@@ -1575,7 +1577,7 @@ Private Sub mnuReAbrirMapa_Click()
     Call modMapas.NuevoMapa
     
     If frmMain.Dialog.FilterIndex = 0 Then
-        'modMapIO.MapaV2_Cargar Dialog.filename
+        modMapas.Cargar_Map Dialog.filename
     Else
         modMapas.Cargar_CSM Dialog.filename
     End If

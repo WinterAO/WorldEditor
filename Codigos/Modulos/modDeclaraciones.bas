@@ -90,6 +90,7 @@ End Enum
 'apunta a una estructura grhdata y mantiene la animacion
 Public Type Grh
     GrhIndex As Long
+    GrhIndexInt As Integer
     FrameCounter As Single
     speed As Single
     Started As Byte
