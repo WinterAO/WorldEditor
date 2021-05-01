@@ -24,6 +24,8 @@ Public Enum srcFileType
     Graphics
     ambient
     Music
+    Midi
+    Wav
     Scripts
     Map
     Fuentes
@@ -59,7 +61,7 @@ Public Sub GenerateContra()
 
 'on error resume next
     Dim Contra As String
-    Dim loopc As Byte
+    Dim LoopC As Byte
     
     Contra = "$FlLrjB3JoliHdAPKA8&YaJR5"
     
@@ -67,9 +69,9 @@ Public Sub GenerateContra()
     
     If LenB(Contra) <> 0 Then
         ReDim PkContra(Len(Contra) - 1)
-        For loopc = 0 To UBound(PkContra)
-            PkContra(loopc) = Asc(mid(Contra, loopc + 1, 1))
-        Next loopc
+        For LoopC = 0 To UBound(PkContra)
+            PkContra(LoopC) = Asc(mid(Contra, LoopC + 1, 1))
+        Next LoopC
     End If
     
 End Sub
@@ -82,15 +84,15 @@ Public Sub Decompress_Data(ByRef Data() As Byte, ByVal OrigSize As Long)
 '*****************************************************************
 
     Dim BufTemp() As Byte
-    Dim loopc As Integer
+    Dim LoopC As Integer
     
     ReDim BufTemp(OrigSize - 1)
     
     'Des-encrypt the first byte of the compressed data
     If UBound(PkContra) <= UBound(Data) And UBound(PkContra) <> 0 Then
-        For loopc = 0 To UBound(PkContra)
-            Data(loopc) = Data(loopc) Xor PkContra(loopc)
-        Next loopc
+        For LoopC = 0 To UBound(PkContra)
+            Data(LoopC) = Data(LoopC) Xor PkContra(LoopC)
+        Next LoopC
     End If
     
     UnCompress BufTemp(0), OrigSize, Data(0), UBound(Data) + 1
@@ -115,15 +117,15 @@ End Sub
 
 Private Sub encryptHeaderInfo(ByRef InfoHead As INFOHEADER)
     Dim EncryptedFileName As String
-    Dim loopc As Long
+    Dim LoopC As Long
     
-    For loopc = 1 To Len(InfoHead.strFileName)
-        If loopc Mod 2 = 0 Then
-            EncryptedFileName = EncryptedFileName & Chr(Asc(mid(InfoHead.strFileName, loopc, 1)) Xor 12)
+    For LoopC = 1 To Len(InfoHead.strFileName)
+        If LoopC Mod 2 = 0 Then
+            EncryptedFileName = EncryptedFileName & Chr(Asc(mid(InfoHead.strFileName, LoopC, 1)) Xor 12)
         Else
-            EncryptedFileName = EncryptedFileName & Chr(Asc(mid(InfoHead.strFileName, loopc, 1)) Xor 23)
+            EncryptedFileName = EncryptedFileName & Chr(Asc(mid(InfoHead.strFileName, LoopC, 1)) Xor 23)
         End If
-    Next loopc
+    Next LoopC
     
     'Each different variable is encrypted with a different key for extra security
     With InfoHead
@@ -172,14 +174,14 @@ Public Function General_Get_Temp_Dir() As String
    General_Get_Temp_Dir = IIf(c > 0, Left$(s, c), "")
 End Function
 
-Public Function extractMusic(ByVal file_name As String, Optional ByVal TempDir As Boolean = False) As Boolean
+Public Function extractMusic(ByVal file_name As String, Optional ByVal Midi As Boolean = False) As Boolean
 '*****************************************************************
 'Author: Juan Martín Dotuyo Dodero
 'Last Modify Date: 10/13/2004
 'Extracts all files from a resource file
 '*****************************************************************
 
-    Dim loopc As Long
+    Dim LoopC As Long
     
     Dim SourceFilePath As String
     Dim OutputFilePath As String
@@ -189,18 +191,30 @@ Public Function extractMusic(ByVal file_name As String, Optional ByVal TempDir A
     Dim handle As Integer
     
 'Set up the error handler
-On Local Error GoTo ErrHandler
-    
-    SourceFilePath = DirRecursos & "Music" & Formato
-    OutputFilePath = App.Path & "\EXTRAIDOS\Musica\"
+On Local Error GoTo errhandler
     
     '¿Queremos descomprimir en la carpeta temporal?
-    If TempDir Then OutputFilePath = Windows_Temp_Dir
+    OutputFilePath = Windows_Temp_Dir
     
-    'Find the Info Head of the desired file
-    InfoHead = File_Find(SourceFilePath, file_name & ".mp3")
+    If Midi = False Then
+        'Find the Info Head of the desired file
+        SourceFilePath = DirRecursos & "Musica" & Formato
+        InfoHead = File_Find(SourceFilePath, file_name & ".mp3")
+    Else
+        'Find the Info Head of the desired file
+        SourceFilePath = DirRecursos & "Midi" & Formato
+        InfoHead = File_Find(SourceFilePath, file_name & ".mid")
+    End If
     
-    If InfoHead.strFileName = "" Or InfoHead.lngFileSize = 0 Then Exit Function
+    If InfoHead.strFileName = "" Or InfoHead.lngFileSize = 0 Then
+        extractMusic = False
+        Exit Function
+    End If
+
+    If InfoHead.strFileName = "" Or InfoHead.lngFileSize = 0 Then
+        extractMusic = False
+        Exit Function
+    End If
 
     'Open the binary file
     handle = FreeFile
@@ -217,6 +231,7 @@ On Local Error GoTo ErrHandler
     If InfoHead.lngFileSizeUncompressed > General_Drive_Get_Free_Bytes(Left$(App.Path, 3)) Then
         Close handle
         MsgBox "There is not enough drive space to extract the compressed file.", , "Error"
+        extractMusic = False
         Exit Function
     End If
     
@@ -248,9 +263,10 @@ On Local Error GoTo ErrHandler
     extractMusic = True
 Exit Function
 
-ErrHandler:
+errhandler:
     Close handle
     Erase SourceData
+    extractMusic = False
     'Display an error message if it didn't work
     'MsgBox "Unable to decode binary file. Reason: " & Err.number & " : " & Err.Description, vbOKOnly, "Error"
 End Function
@@ -262,12 +278,12 @@ Public Function Extract_File_Memory(ByVal File_Type As srcFileType, ByVal file_n
 'Extra archivos en memoria
 '*********************************************
 
-    Dim loopc As Long
+    Dim LoopC As Long
     Dim SourceFilePath As String
     Dim InfoHead As INFOHEADER
     Dim handle As Integer
    
-On Local Error GoTo ErrHandler
+On Local Error GoTo errhandler
    
     Select Case File_Type
     
@@ -275,7 +291,13 @@ On Local Error GoTo ErrHandler
                 SourceFilePath = DirRecursos & "Graficos" & Formato
             
         Case Music
-                SourceFilePath = DirRecursos & "Musics" & Formato
+                SourceFilePath = DirRecursos & "Musica" & Formato
+                
+        Case Midi
+                SourceFilePath = DirRecursos & "Midi" & Formato
+        
+        Case Wav
+                SourceFilePath = DirRecursos & "Sounds" & Formato
 
         Case Scripts
                 SourceFilePath = DirRecursos & "Scripts" & Formato
@@ -319,7 +341,7 @@ On Local Error GoTo ErrHandler
     Extract_File_Memory = True
 Exit Function
  
-ErrHandler:
+errhandler:
     Close handle
     Erase SourceData
 End Function
@@ -411,7 +433,7 @@ Public Function File_Find(ByVal resource_file_path As String, ByVal file_name As
 'Extra archivos en memoria
 '*********************************************
  
-On Error GoTo ErrHandler
+On Error GoTo errhandler
  
     Dim Max As Integer
     Dim Min As Integer
@@ -463,7 +485,7 @@ On Error GoTo ErrHandler
         End If
     Loop
    
-ErrHandler:
+errhandler:
     Close file_handler
     File_Find.strFileName = ""
     File_Find.lngFileSize = 0

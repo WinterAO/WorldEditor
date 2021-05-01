@@ -40,6 +40,14 @@ Sub Main()
     DoEvents
     Call mDx8_Engine.Engine_DirectX8_Aditional_Init
     
+    frmCarga.lblStatus.Caption = "Iniciando motor de Sonido."
+    DoEvents
+    Set Sound = New clsSoundEngine
+    If Not Sound.Initialize_Engine(frmMain.hwnd, DirRecursos, False, (ClientSetup.bSound > 0), (ClientSetup.bMusic <> CONST_DESHABILITADA), ClientSetup.SoundVolume, ClientSetup.MusicVolume, ClientSetup.Invertido) Then
+        MsgBox "¡No se ha logrado iniciar el engine de DirectSound! Reinstale los últimos controladores de DirectX. No habrá soporte de audio en el editor.", vbCritical, "Advertencia"
+        
+    End If
+    
     'Carga de indices
     '------------------------
     frmCarga.lblStatus.Caption = "Cargando Indice de Graficos."
@@ -87,6 +95,8 @@ Sub Main()
             Call ShowNextFrame
             
             If frmParticulas.Visible Then Call RenderParticlePreview
+            
+            Call Sound.Sound_Render
             
             Call CheckKeys
             

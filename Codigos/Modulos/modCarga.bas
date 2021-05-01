@@ -24,6 +24,12 @@ Public Enum eTipoMapa
     tWinter_Old
 End Enum
 
+Public Enum E_SISTEMA_MUSICA
+    CONST_DESHABILITADA = 0
+    CONST_MP3 = 1
+    CONST_MIDI = 2
+End Enum
+
 Public Type tSetupMods
 
     ' VIDEO
@@ -31,6 +37,15 @@ Public Type tSetupMods
     LimiteFPS As Boolean
     OverrideVertexProcess As Byte
     TilesBuffer As Byte
+    
+    ' AUDIO
+    bMusic    As E_SISTEMA_MUSICA
+    bSound    As Byte
+    bAmbient As Byte
+    Invertido As Byte
+    MusicVolume As Long
+    SoundVolume As Long
+    AmbientVol As Long
     
     'MOSTRAR
     MapTam As Byte
@@ -254,6 +269,14 @@ On Local Error GoTo fileErr:
         frmMain.Minimap_ndemapa.Checked = Val(Lector.GetValue("MINIMAP", "Nombre"))
         frmMain.Minimap_bloqueos.Checked = Val(Lector.GetValue("MINIMAP", "Bloqueos"))
         
+        ' AUDIO
+        .bMusic = CByte(Lector.GetValue("AUDIO", "MUSICA"))
+        .bSound = CByte(Lector.GetValue("AUDIO", "SONIDO"))
+        .bAmbient = CByte(Lector.GetValue("AUDIO", "AMBIENT"))
+        .MusicVolume = CLng(Lector.GetValue("AUDIO", "VOLMUSICA"))
+        .SoundVolume = CLng(Lector.GetValue("AUDIO", "VOLAUDIO"))
+        .AmbientVol = CLng(Lector.GetValue("AUDIO", "VOLAMBIENT"))
+        
     End With
 
     Set Lector = Nothing
@@ -293,7 +316,7 @@ On Error GoTo ErrorHandler:
     Dim InfoHead    As INFOHEADER
     Dim buffer()    As Byte
     
-    InfoHead = File_Find(DirRecursos & "Scripts.WAO", LCase$("Graficos.ind"))
+    InfoHead = File_Find(DirRecursos & "Scripts" & Formato, LCase$("Graficos.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     

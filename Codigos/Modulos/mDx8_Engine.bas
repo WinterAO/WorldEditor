@@ -164,7 +164,7 @@ Private Function Engine_Init_DirectDevice(D3DCREATEFLAGS As CONST_D3DCREATEFLAGS
         .BackBufferFormat = DispMode.Format
         .BackBufferWidth = ScreenWidth
         .BackBufferHeight = ScreenHeight
-        .hDeviceWindow = frmMain.MainViewPic.hWnd
+        .hDeviceWindow = frmMain.MainViewPic.hwnd
     End With
     
     If Not DirectDevice Is Nothing Then
@@ -256,6 +256,7 @@ On Error Resume Next
     Set DirectX = Nothing
     Set DirectDevice = Nothing
     Set SpriteBatch = Nothing
+    Set Sound = Nothing
     
 End Sub
 

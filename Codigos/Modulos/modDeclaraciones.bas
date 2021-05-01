@@ -1,6 +1,9 @@
 Attribute VB_Name = "modDeclaraciones"
 Option Explicit
 
+'Objetos publicos
+Public Sound As clsSoundEngine
+
 'Totals
 Global NumChars As Integer
 Global LastChar As Integer

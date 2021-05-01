@@ -213,14 +213,6 @@ Public Sub setMapSize()
     
     ReDim MapData(XMinMapSize To XMaxMapSize, YMinMapSize To YMaxMapSize) As MapBlock
     
-    With MapSize
-        .XMax = XMaxMapSize
-        .XMin = XMinMapSize
-        .YMax = YMaxMapSize
-        .YMin = YMinMapSize
-        
-        ReDim MapData(.XMin To .XMax, .YMin To .YMax)
-    End With
 End Sub
 
 Public Sub ChangeView()
