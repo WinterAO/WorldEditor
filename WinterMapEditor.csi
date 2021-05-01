@@ -1,12 +1,16 @@
 [History]
-1=#P0#=mb	#P1#=mnuVent_Click	#P2#=WinterMapEditor/frmMain/mnuVent_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501142019	#P7#=0	#P8#=-2	.
-2=#P0#=mb	#P1#=mnuSeleccionado_Click	#P2#=WinterMapEditor/frmMain/mnuSeleccionado_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210501142019	#P7#=0	#P8#=14	.
-3=#P0#=mb	#P1#=mnuAutoCompletarSuperficies_Click	#P2#=WinterMapEditor/frmMain/mnuAutoCompletarSuperficies_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501141546	#P7#=0	#P8#=7	.
-4=#P0#=mb	#P1#=mnuNuevoMapa_Click	#P2#=WinterMapEditor/frmMain/mnuNuevoMapa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501141545	#P7#=0	#P8#=0	.
-5=#P0#=mb	#P1#=cFiltro_LostFocus	#P2#=WinterMapEditor/frmSuperficies/cFiltro_LostFocus	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501141116	#P7#=0	#P8#=5	.
-6=#P0#=mb	#P1#=LynxSuperficies_Click	#P2#=WinterMapEditor/frmSuperficies/LynxSuperficies_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501140850	#P7#=0	#P8#=1	.
-7=#P0#=mb	#P1#=CargarIndicesSuperficie	#P2#=WinterMapEditor/modCarga/CargarIndicesSuperficie	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210501140907	#P7#=0	#P8#=37	.
-8=#P0#=mb	#P1#=CargarInfo	#P2#=WinterMapEditor/frmSuperficies/CargarInfo	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210501141004	#P7#=0	#P8#=2	.
-9=#P0#=mb	#P1#=Filtrar	#P2#=WinterMapEditor/frmSuperficies/Filtrar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210501140932	#P7#=0	#P8#=16	.
-10=#P0#=mb	#P1#=cFiltro_KeyPress	#P2#=WinterMapEditor/frmSuperficies/cFiltro_KeyPress	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501135625	#P7#=0	#P8#=1	.
-11=#P0#=mb	#P1#=LvBAreas_Click	#P2#=WinterMapEditor/frmRellenar/LvBAreas_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501135407	#P7#=0	#P8#=17	.
+1=#P0#=mb	#P1#=NuevoMapa	#P2#=WinterMapEditor/modMapas/NuevoMapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210501142602	#P7#=0	#P8#=7	.
+2=#P0#=mb	#P1#=DobleClick	#P2#=WinterMapEditor/modEdit/DobleClick	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210501142510	#P7#=0	#P8#=-5	.
+3=#P0#=mb	#P1#=AbrirMapa	#P2#=WinterMapEditor/modMapas/AbrirMapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210501142507	#P7#=0	#P8#=-1	.
+4=#P0#=mb	#P1#=mnuReAbrirMapa_Click	#P2#=WinterMapEditor/frmMain/mnuReAbrirMapa_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210501142449	#P7#=0	#P8#=11	.
+5=#P0#=mb	#P1#=mnuVent_Click	#P2#=WinterMapEditor/frmMain/mnuVent_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501142019	#P7#=0	#P8#=-2	.
+6=#P0#=mb	#P1#=mnuSeleccionado_Click	#P2#=WinterMapEditor/frmMain/mnuSeleccionado_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210501142019	#P7#=0	#P8#=29	.
+7=#P0#=mb	#P1#=mnuAutoCompletarSuperficies_Click	#P2#=WinterMapEditor/frmMain/mnuAutoCompletarSuperficies_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501141546	#P7#=0	#P8#=7	.
+8=#P0#=mb	#P1#=mnuNuevoMapa_Click	#P2#=WinterMapEditor/frmMain/mnuNuevoMapa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501141545	#P7#=0	#P8#=0	.
+9=#P0#=mb	#P1#=cFiltro_LostFocus	#P2#=WinterMapEditor/frmSuperficies/cFiltro_LostFocus	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501141116	#P7#=0	#P8#=5	.
+10=#P0#=mb	#P1#=LynxSuperficies_Click	#P2#=WinterMapEditor/frmSuperficies/LynxSuperficies_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501140850	#P7#=0	#P8#=1	.
+11=#P0#=mb	#P1#=CargarIndicesSuperficie	#P2#=WinterMapEditor/modCarga/CargarIndicesSuperficie	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210501140907	#P7#=0	#P8#=37	.
+12=#P0#=mb	#P1#=CargarInfo	#P2#=WinterMapEditor/frmSuperficies/CargarInfo	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210501141004	#P7#=0	#P8#=2	.
+13=#P0#=mb	#P1#=Filtrar	#P2#=WinterMapEditor/frmSuperficies/Filtrar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210501140932	#P7#=0	#P8#=16	.
+14=#P0#=mb	#P1#=cFiltro_KeyPress	#P2#=WinterMapEditor/frmSuperficies/cFiltro_KeyPress	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501135625	#P7#=0	#P8#=1	.
+15=#P0#=mb	#P1#=LvBAreas_Click	#P2#=WinterMapEditor/frmRellenar/LvBAreas_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501135407	#P7#=0	#P8#=17	.

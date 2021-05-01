@@ -110,7 +110,7 @@ Private MapDat() As tMapDat
 
 Public Sub AbrirMapa(Optional ByVal IntMode As Boolean = False)
     frmMain.Dialog.CancelError = True
-    On Error GoTo errhandler
+    On Error GoTo ErrHandler
     
     DeseaGuardarMapa frmMain.Dialog.filename
     
@@ -127,11 +127,11 @@ Public Sub AbrirMapa(Optional ByVal IntMode As Boolean = False)
         Call AbrirunMapa(frmMain.Dialog.filename, IntMode)
         
         DoEvents
-        'frmMain.mnuReAbrirMapa.Enabled = True
+        frmMain.mnuReAbrirMapa.Enabled = True
         EngineRun = True
     
     Exit Sub
-errhandler:
+ErrHandler:
 End Sub
 
 Public Sub AbrirunMapa(ByVal Path As String, Optional ByVal Mode As Boolean = False)
@@ -192,7 +192,7 @@ Public Sub GuardarMapa(Optional Path As String)
 '*************************************************
 
     frmMain.Dialog.CancelError = True
-On Error GoTo errhandler
+On Error GoTo ErrHandler
     
     If LenB(Path) = 0 Then
         frmMain.ObtenerNombreArchivo True
@@ -215,7 +215,7 @@ On Error GoTo errhandler
         
     End If
 
-errhandler:
+ErrHandler:
 End Sub
 
 Public Sub NuevoMapa()
@@ -228,6 +228,14 @@ Public Sub NuevoMapa()
     Dim Y As Integer
     Dim X As Integer
     Dim i As Byte
+    
+    frmMain.mnuReAbrirMapa.Enabled = False
+    
+    MapaCargado = False
+    
+    For loopc = 0 To frmMain.MapPest.Count - 1
+        frmMain.MapPest(loopc).Enabled = False
+    Next
     
     frmMain.MousePointer = 11
     

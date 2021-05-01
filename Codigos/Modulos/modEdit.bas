@@ -48,7 +48,7 @@ Public Sub DobleClick(tX As Integer, tY As Integer)
                     CharList(UserCharIndex).Heading = SOUTH
                 End If
                 
-                'frmMain.mnuReAbrirMapa.Enabled = True
+                frmMain.mnuReAbrirMapa.Enabled = True
             End If
         End If
     End If
