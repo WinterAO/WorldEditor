@@ -1063,7 +1063,7 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuVent 
          Caption         =   "Configuración Avanzada de Superficies"
          Index           =   4
-         Shortcut        =   ^S
+         Shortcut        =   ^T
       End
       Begin VB.Menu mnuRellenar 
          Caption         =   "Rellenar en area"
@@ -1116,7 +1116,35 @@ Begin VB.Form frmMain
    End
    Begin VB.Menu mnuEdicion 
       Caption         =   "Edición"
-      Begin VB.Menu mnuLineEdicion4 
+      Begin VB.Menu mnuLineEdicion0 
+         Caption         =   "-"
+      End
+      Begin VB.Menu mnuSeleccionado 
+         Caption         =   "C&ortar Selección"
+         Index           =   0
+         Shortcut        =   ^X
+      End
+      Begin VB.Menu mnuSeleccionado 
+         Caption         =   "&Copiar Selección"
+         Index           =   1
+         Shortcut        =   ^C
+      End
+      Begin VB.Menu mnuSeleccionado 
+         Caption         =   "&Pegar Selección"
+         Index           =   2
+         Shortcut        =   ^V
+      End
+      Begin VB.Menu mnuSeleccionado 
+         Caption         =   "&Realizar Operación en Selección"
+         Index           =   3
+         Shortcut        =   ^D
+      End
+      Begin VB.Menu mnuSeleccionado 
+         Caption         =   "Deshacer P&egado de Selección"
+         Index           =   4
+         Shortcut        =   ^S
+      End
+      Begin VB.Menu mnuLineEdicion1 
          Caption         =   "-"
       End
       Begin VB.Menu mnuAutoCompletarSuperficies 
@@ -1458,6 +1486,41 @@ End Sub
 
 Private Sub mnuSalir_Click()
     Call CloseMapEditor
+    
+End Sub
+
+Private Sub mnuSeleccionado_Click(Index As Integer)
+'*************************************************
+'Author: Lorwik
+'Last modified: 01/05/2021
+'*************************************************
+
+    On Error GoTo mnuSeleccionado_Click_Err
+
+    Select Case Index
+    
+        Case 0 ' Cortar
+            Call CortarSeleccion
+        
+        Case 1 ' Copiar
+            Call CopiarSeleccion
+        
+        Case 2 ' Pegar
+            Call PegarSeleccion
+        
+        Case 3 ' Realizar
+            Call AccionSeleccion
+        
+        Case 4 ' Deshacer
+            Call DePegar
+            
+    End Select
+    
+    Exit Sub
+
+mnuSeleccionado_Click_Err:
+    Call RegistrarError(Err.Number, Err.Description, "FrmMain.mnuSeleccionado_Click", Erl)
+    Resume Next
     
 End Sub
 
