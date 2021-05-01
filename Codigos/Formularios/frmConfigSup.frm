@@ -4,8 +4,8 @@ Begin VB.Form frmConfigSup
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Configuración Acanzada de Superficie"
    ClientHeight    =   1110
-   ClientLeft      =   45
-   ClientTop       =   390
+   ClientLeft      =   13860
+   ClientTop       =   6855
    ClientWidth     =   4320
    ControlBox      =   0   'False
    BeginProperty Font 
@@ -24,7 +24,6 @@ Begin VB.Form frmConfigSup
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   288
    ShowInTaskbar   =   0   'False
-   StartUpPosition =   3  'Windows Default
    Begin VB.CheckBox DespMosaic 
       Appearance      =   0  'Flat
       BackColor       =   &H00424242&
@@ -322,4 +321,14 @@ Private Sub cmdDM_Click(Index As Integer)
 cmdDM_Click_Err:
     Call RegistrarError(Err.Number, Err.Description, "FrmConfigSup.cmdDM_Click", Erl)
     Resume Next
+End Sub
+
+Private Sub Form_Load()
+    If ClientSetup.Preview = True Then
+        frmConfigSup.chkActivarPreview.value = Unchecked
+        
+    Else
+        frmConfigSup.chkActivarPreview.value = Checked
+        
+    End If
 End Sub

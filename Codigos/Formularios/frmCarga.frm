@@ -17,7 +17,6 @@ Begin VB.Form frmCarga
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   Picture         =   "frmCarga.frx":0000
    ScaleHeight     =   3735
    ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
@@ -37,10 +36,10 @@ Begin VB.Form frmCarga
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   195
-      Left            =   1800
+      Left            =   300
       TabIndex        =   0
-      Top             =   2880
-      Width           =   4125
+      Top             =   3420
+      Width           =   6885
    End
 End
 Attribute VB_Name = "frmCarga"

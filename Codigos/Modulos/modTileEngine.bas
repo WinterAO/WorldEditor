@@ -689,20 +689,18 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 PixelOffsetYTemp = (ScreenY - 1) * TilePixelHeight + PixelOffsetY
                 
                 'Layer 1 **********************************
-                If MapData(X, Y).Graphic(1).GrhIndex <> 0 And VerCapa1 Then _
-                    Call Draw_Grh(MapData(X, Y).Graphic(1), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
+                If MapData(X, Y).Graphic(1).GrhIndex <> 0 And VerCapa1 Then Call Draw_Grh(MapData(X, Y).Graphic(1), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
     
                 'Layer 2 **********************************
-                If MapData(X, Y).Graphic(2).GrhIndex <> 0 And VerCapa2 Then _
-                    Call Draw_Grh(MapData(X, Y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
+                If MapData(X, Y).Graphic(2).GrhIndex <> 0 And VerCapa2 Then Call Draw_Grh(MapData(X, Y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
                 
                 If Sobre >= 0 Then
                     If MapData(X, Y).Graphic(bCapa).GrhIndex <> Sobre Then
                         MapData(X, Y).Graphic(bCapa).GrhIndex = Sobre
                         InitGrh MapData(X, Y).Graphic(bCapa), Sobre
                             
-                        If MapData(X, Y).Graphic(bCapa).GrhIndex = GRH_ERROR Then _
-                            MapData(X, Y).Graphic(bCapa).GrhIndex = 0
+                        If MapData(X, Y).Graphic(bCapa).GrhIndex = GRH_ERROR Then MapData(X, Y).Graphic(bCapa).GrhIndex = 0
+
                     End If
                     
                 End If
@@ -734,21 +732,16 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 With MapData(X, Y)
                 
                     'Object Layer ***********************************
-                     If .ObjGrh.GrhIndex <> 0 And VerObjetos Then _
-                        Call Draw_Grh(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
+                    If .ObjGrh.GrhIndex <> 0 And VerObjetos Then Call Draw_Grh(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
 
                     'Char layer**************************************
-                    If .CharIndex <> 0 And VerNpcs Then _
-                        Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
+                    If .CharIndex <> 0 And VerNpcs Then Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
 
                     'Layer 3 *****************************************
-                    If .Graphic(3).GrhIndex <> 0 And VerCapa3 Then _
-                        Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
-
+                    If .Graphic(3).GrhIndex <> 0 And VerCapa3 Then Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
 
                     'Particulas **************************************
-                    If .Particle_Group_Index And VerParticulas Then _
-                        Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
+                    If .Particle_Group_Index And VerParticulas Then Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
                     
                 End With
                 
@@ -773,8 +766,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
             PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
             
             'Layer 4
-            If VerCapa4 Then _
-                If MapData(X, Y).Graphic(4).GrhIndex Then Call Draw_Grh(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
+            If VerCapa4 Then If MapData(X, Y).Graphic(4).GrhIndex Then Call Draw_Grh(MapData(X, Y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
             
             If MapData(X, Y).TileExit.Map <> 0 And VerTranslados Then
                 Grh.GrhIndex = 3
@@ -803,8 +795,34 @@ Sub RenderScreen(ByVal tilex As Integer, _
                         
             End If
 
-            If VerTriggers Then _
-                If MapData(X, Y).Trigger > 0 Then Call DrawText(PixelOffsetXTemp + 5, PixelOffsetYTemp - 13, MapData(X, Y).Trigger, -1, False, 2)
+            If VerTriggers Then If MapData(X, Y).Trigger > 0 Then Call DrawText(PixelOffsetXTemp + 5, PixelOffsetYTemp - 13, MapData(X, Y).Trigger, -1, False, 2)
+                
+            If ClientSetup.MeMode = eMeMode.WinterAO Then
+                If frmMain.mnuVerZonas(0).Checked Then 'Zona actual
+                    If MapData(X, Y).ZonaIndex = frmZonas.LstZona.ListIndex + 1 And MapData(X, Y).ZonaIndex > 0 Then Call DrawText(PixelOffsetXTemp + 7, PixelOffsetYTemp + 7, "z" & MapData(X, Y).ZonaIndex, -1, False, 1)
+                            
+                ElseIf frmMain.mnuVerZonas(1).Checked Then 'Todas las zonas
+
+                    If MapData(X, Y).ZonaIndex > 0 Then Call DrawText(PixelOffsetXTemp + 7, PixelOffsetYTemp + 7, "z" & MapData(X, Y).ZonaIndex, -1, False, 1)
+
+                End If
+
+            End If
+                    
+            If Seleccionando Then
+                If X >= SeleccionIX And Y >= SeleccionIY Then
+                    If X <= SeleccionFX And Y <= SeleccionFY Then
+                        Grh.GrhIndex = 2
+                        Grh.FrameCounter = 1
+                        Grh.Started = 0
+                                
+                        Call Draw_Grh(Grh, PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, Y).Engine_Light(), 1)
+
+                    End If
+
+                End If
+
+            End If
             
             ScreenX = ScreenX + 1
             
@@ -932,13 +950,13 @@ Public Sub RenderPreview()
     
     frmPreview.PreviewGrh.AutoRedraw = False
 
-    Call Engine_EndScene(DestRect, frmPreview.PreviewGrh.hWnd)
+    Call Engine_EndScene(DestRect, frmPreview.PreviewGrh.hwnd)
 
-    Call DrawBuffer.LoadPictureBlt(frmPreview.PreviewGrh.hdc)
+    Call DrawBuffer.LoadPictureBlt(frmPreview.PreviewGrh.hDC)
 
     frmPreview.PreviewGrh.AutoRedraw = True
 
-    Call DrawBuffer.PaintPicture(frmPreview.PreviewGrh.hdc, 0, 0, frmPreview.PreviewGrh.Width, frmPreview.PreviewGrh.Height, 0, 0, vbSrcCopy)
+    Call DrawBuffer.PaintPicture(frmPreview.PreviewGrh.hDC, 0, 0, frmPreview.PreviewGrh.Width, frmPreview.PreviewGrh.Height, 0, 0, vbSrcCopy)
 End Sub
 
 Public Sub RenderParticlePreview()
@@ -967,13 +985,13 @@ Public Sub RenderParticlePreview()
     
     frmParticulas.ParticlePic.AutoRedraw = False
 
-    Call Engine_EndScene(DestRect, frmParticulas.ParticlePic.hWnd)
+    Call Engine_EndScene(DestRect, frmParticulas.ParticlePic.hwnd)
 
-    Call DrawBuffer.LoadPictureBlt(frmParticulas.ParticlePic.hdc)
+    Call DrawBuffer.LoadPictureBlt(frmParticulas.ParticlePic.hDC)
 
     frmParticulas.ParticlePic.AutoRedraw = True
 
-    Call DrawBuffer.PaintPicture(frmParticulas.ParticlePic.hdc, 0, 0, frmParticulas.ParticlePic.Width, frmParticulas.ParticlePic.Height, 0, 0, vbSrcCopy)
+    Call DrawBuffer.PaintPicture(frmParticulas.ParticlePic.hDC, 0, 0, frmParticulas.ParticlePic.Width, frmParticulas.ParticlePic.Height, 0, 0, vbSrcCopy)
 End Sub
 
 Sub MakeChar(CharIndex As Integer, Body As Integer, Head As Integer, Heading As Byte, X As Integer, Y As Integer)

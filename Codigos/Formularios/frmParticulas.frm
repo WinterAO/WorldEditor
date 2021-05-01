@@ -7,6 +7,7 @@ Begin VB.Form frmParticulas
    ClientLeft      =   25035
    ClientTop       =   9270
    ClientWidth     =   5115
+   ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -49,7 +50,7 @@ Begin VB.Form frmParticulas
       cBhover         =   0
       cGradient       =   0
       Gradient        =   3
-      Mode            =   0
+      Mode            =   1
       Value           =   0   'False
       cBack           =   255
    End

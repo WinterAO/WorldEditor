@@ -367,7 +367,7 @@ Private Sub CargarInfo()
     HotKeysAllow = False
         
     'Obtiene el numero del Grh
-    cGrh.Text = LynxSuperficies.CellText(, 0)
+    cGrh.Text = DameGrhIndex(LynxSuperficies.CellText(, 0))
         
     'TODO: Faltan movidas aqui
     If SupData(LynxSuperficies.Row + 1).Capa <> 0 Then
@@ -399,7 +399,6 @@ Private Sub Filtrar()
 '*************************************************
 
     Dim vDatos As String
-    Dim NumI As Integer
     Dim i As Integer
     Dim j As Integer
     Dim K As Long
@@ -408,21 +407,24 @@ Private Sub Filtrar()
         cFiltro.RemoveItem 0
     
     cFiltro.AddItem cFiltro.Text
+    
     LynxSuperficies.Clear
     LynxSuperficies.Redraw = False
     LynxSuperficies.Visible = False
     
     For i = 0 To MaxSup
         vDatos = SupData(i).name
-        NumI = i
         
         For j = 1 To Len(vDatos)
+        
             If UCase$(mid$(vDatos & str(i), j, Len(cFiltro.Text))) = UCase$(cFiltro.Text) Or LenB(cFiltro.Text) = 0 Then
-                LynxSuperficies.AddItem SupData(NumI).Grh
-                K = frmSuperficies.LynxSuperficies.Rows - 1
-                frmSuperficies.LynxSuperficies.CellText(K, 1) = vDatos
+                LynxSuperficies.AddItem i
+                K = LynxSuperficies.Rows - 1
+                LynxSuperficies.CellText(K, 1) = SupData(i).Grh
+                LynxSuperficies.CellText(K, 2) = vDatos
                 Exit For
             End If
+            
         Next
         
     Next i
@@ -434,3 +436,25 @@ Private Sub Filtrar()
     DoEvents
 
 End Sub
+
+Public Function DameGrhIndex(ByVal GrhIn As Long) As Long
+'*************************************************
+'Author: Unkwown
+'Last modified: 20/05/06
+'*************************************************
+
+    DameGrhIndex = SupData(GrhIn).Grh
+    
+    If SupData(GrhIn).Width > 0 Then
+        frmConfigSup.MOSAICO.value = vbChecked
+        frmConfigSup.mAncho.Text = SupData(GrhIn).Width
+        frmConfigSup.mLargo.Text = SupData(GrhIn).Height
+        
+    Else
+        frmConfigSup.MOSAICO.value = vbUnchecked
+        frmConfigSup.mAncho.Text = "0"
+        frmConfigSup.mLargo.Text = "0"
+        
+    End If
+
+End Function

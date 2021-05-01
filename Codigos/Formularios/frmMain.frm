@@ -1065,6 +1065,9 @@ Begin VB.Form frmMain
          Index           =   4
          Shortcut        =   ^S
       End
+      Begin VB.Menu mnuRellenar 
+         Caption         =   "Rellenar en area"
+      End
    End
    Begin VB.Menu mnuMinimapa 
       Caption         =   "Minimapa"
@@ -1118,6 +1121,35 @@ Begin VB.Form frmMain
       End
       Begin VB.Menu mnuAutoCompletarSuperficies 
          Caption         =   "Auto-Completar &Superficies"
+      End
+      Begin VB.Menu mnuAutoCapturarSuperficie 
+         Caption         =   "Auto-C&apturar información de la Superficie"
+      End
+      Begin VB.Menu mnuAutoCapturarTranslados 
+         Caption         =   "Auto-&Capturar información de los Translados"
+         Checked         =   -1  'True
+      End
+      Begin VB.Menu mnuAutoGuardarMapas 
+         Caption         =   "Configuración de Auto-&Guardar Mapas"
+      End
+   End
+   Begin VB.Menu mnuZonas 
+      Caption         =   "Ver Zonas"
+      Begin VB.Menu mnuLineZonas1 
+         Caption         =   "-"
+      End
+      Begin VB.Menu mnuVerZonas 
+         Caption         =   "Zona Actual"
+         Checked         =   -1  'True
+         Index           =   0
+      End
+      Begin VB.Menu mnuVerZonas 
+         Caption         =   "Todas las Zonas"
+         Index           =   1
+      End
+      Begin VB.Menu mnuVerZonas 
+         Caption         =   "Ocultar Zonas"
+         Index           =   2
       End
    End
 End
@@ -1418,6 +1450,10 @@ Private Sub mnuGuardarMapaComo_Click()
 mnuGuardarMapaComo_Click_Err:
     Call RegistrarError(Err.Number, Err.Description, "FrmMain.mnuGuardarMapaComo_Click", Erl)
     Resume Next
+End Sub
+
+Private Sub mnuRellenar_Click()
+    frmRellenar.Show , frmMain
 End Sub
 
 Private Sub mnuSalir_Click()
@@ -1802,8 +1838,8 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y A
         Seleccionando = True
         SeleccionIX = tX '+ UserPos.X
         SeleccionIY = tY '+ UserPos.Y
-        'DX1.Text = tX
-        'DY1.Text = tY
+        frmRellenar.DX1.Text = tX
+        frmRellenar.DY1.Text = tY
         
     Else
         Call modEdit.ClickEdit(Button, tX, tY)
@@ -1832,12 +1868,38 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
         Seleccionando = True
         SeleccionFX = tX '+ TileX
         SeleccionFY = tY '+ TileY
-        'DX2.Text = tX
-        'DY2.Text = tY
+        frmRellenar.DX2.Text = tX
+        frmRellenar.DY2.Text = tY
         
     Else
         Call modEdit.ClickEdit(Button, tX, tY)
         
     End If
+
+End Sub
+
+Private Sub mnuVerZonas_Click(Index As Integer)
+'*************************************************
+'Author: Lorwik
+'Last modified: 01/04/2021
+'*************************************************
+
+    mnuVerZonas(Index).Checked = True
+
+    Select Case Index
+    
+        Case 0
+            mnuVerZonas(1).Checked = False
+            mnuVerZonas(2).Checked = False
+        
+        Case 1
+            mnuVerZonas(0).Checked = False
+            mnuVerZonas(2).Checked = False
+        
+        Case 2
+            mnuVerZonas(0).Checked = False
+            mnuVerZonas(1).Checked = False
+    
+    End Select
 
 End Sub

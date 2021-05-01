@@ -105,41 +105,44 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 If .bLocked = 1 Then Call AddtoRichTextBox(frmConsola.StatTxt, " (BLOQ)", 255, 255, 255, False, False, True)
                 
                 ' NPCs
-                '                If .NPCIndex > 0 Then
-                '                    If .NPCIndex > 499 Then
-                '                        Call AddtoRichTextBox(frmConsola.StatTxt, " (NPC-Hostil: " & .NPCIndex & " - " & NpcData(.NPCIndex).name & ")", 255, 255, 255, False, False, True)
-                '
-                '                    Else
-                '                        Call AddtoRichTextBox(frmConsola.StatTxt, " (NPC: " & .NPCIndex & " - " & NpcData(.NPCIndex).name & ")", 255, 255, 255, False, False, True)
-                '
-                '                    End If
-                '                End If
+                If .NPCIndex > 0 Then
+                    If .NPCIndex > 499 Then
+                        Call AddtoRichTextBox(frmConsola.StatTxt, " (NPC-Hostil: " & .NPCIndex & " - " & NpcData(.NPCIndex).name & ")", 255, 255, 255, False, False, True)
+                
+                    Else
+                        Call AddtoRichTextBox(frmConsola.StatTxt, " (NPC: " & .NPCIndex & " - " & NpcData(.NPCIndex).name & ")", 255, 255, 255, False, False, True)
+                
+                    End If
+
+                End If
                 
                 ' OBJs
-                'If .OBJInfo.ObjIndex > 0 Then _
-                 Call AddtoRichTextBox(frmConsola.StatTxt, " (Obj: " & .OBJInfo.ObjIndex & " - " & ObjData(.OBJInfo.ObjIndex).name & " - Cant.:" & .OBJInfo.Amount & ")", 255, 255, 255, False, False, True)
+
+                If .OBJInfo.ObjIndex > 0 Then Call AddtoRichTextBox(frmConsola.StatTxt, " (Obj: " & .OBJInfo.ObjIndex & " - " & ObjData(.OBJInfo.ObjIndex).name & " - Cant.:" & .OBJInfo.Amount & ")", 255, 255, 255, False, False, True)
             
                 ' Capas
                 Call AddtoRichTextBox(frmConsola.StatTxt, "Capa1: " & .Graphic(1).GrhIndex & " - Capa2: " & .Graphic(2).GrhIndex & " - Capa3: " & .Graphic(3).GrhIndex & " - Capa4: " & .Graphic(4).GrhIndex, 255, 255, 255, False, False, True)
-                '                If frmMain.mnuAutoCapturarSuperficie.Checked = True And frmMain.cSeleccionarSuperficie.value = False Then
-                '                    If .Graphic(4).GrhIndex <> 0 Then
-                '                        frmMain.cCapas.Text = 4
-                '                        frmMain.cGrh.Text = .Graphic(4).GrhIndex
-                '
-                '                    ElseIf .Graphic(3).GrhIndex <> 0 Then
-                '                        frmMain.cCapas.Text = 3
-                '                        frmMain.cGrh.Text = .Graphic(3).GrhIndex
-                '
-                '                    ElseIf .Graphic(2).GrhIndex <> 0 Then
-                '                        frmMain.cCapas.Text = 2
-                '                        frmMain.cGrh.Text = .Graphic(2).GrhIndex
-                '
-                '                    ElseIf .Graphic(1).GrhIndex <> 0 Then
-                '                        frmMain.cCapas.Text = 1
-                '                        frmMain.cGrh.Text = .Graphic(1).GrhIndex
-                '
-                '                    End If
-                '                End If
+
+                If frmMain.mnuAutoCapturarSuperficie.Checked = True And frmSuperficies.cSeleccionarSuperficie.value = False Then
+                    If .Graphic(4).GrhIndex <> 0 Then
+                        frmSuperficies.cCapas.Text = 4
+                        frmSuperficies.cGrh.Text = .Graphic(4).GrhIndex
+                
+                    ElseIf .Graphic(3).GrhIndex <> 0 Then
+                        frmSuperficies.cCapas.Text = 3
+                        frmSuperficies.cGrh.Text = .Graphic(3).GrhIndex
+                
+                    ElseIf .Graphic(2).GrhIndex <> 0 Then
+                        frmSuperficies.cCapas.Text = 2
+                        frmSuperficies.cGrh.Text = .Graphic(2).GrhIndex
+                
+                    ElseIf .Graphic(1).GrhIndex <> 0 Then
+                        frmSuperficies.cCapas.Text = 1
+                        frmSuperficies.cGrh.Text = .Graphic(1).GrhIndex
+                
+                    End If
+
+                End If
                 
                 Exit Sub
             
@@ -181,7 +184,9 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
 
                 End If
                 
-                'Insertar Superficie
+                '########################
+                'SUPERFICIES
+                '########################
                 If frmSuperficies.cSeleccionarSuperficie.value = True Then
                     
                     If frmConfigSup.MOSAICO.value = vbChecked Then
@@ -191,22 +196,21 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                         Dim dy  As Integer
 
                         Dim dX  As Integer
-                        
+
                         If frmConfigSup.DespMosaic.value = vbChecked Then
                             dy = Val(frmConfigSup.DMLargo)
                             dX = Val(frmConfigSup.DMAncho.Text)
-                            
                         Else
                             dy = 0
                             dX = 0
-                            
+
                         End If
                             
                         If frmMain.mnuAutoCompletarSuperficies.Checked = False Then
                             MapInfo.Changed = 1 'Set changed flag
                             aux = Val(frmSuperficies.cGrh.Text) + (((tY + dy) Mod frmConfigSup.mLargo.Text) * frmConfigSup.mAncho.Text) + ((tX + dX) Mod frmConfigSup.mAncho.Text)
                             
-                            If .Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex <> aux Or .bLocked <> frmMain.LvBEdit(2).value Then
+                            If .Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex <> aux Or .bLocked <> frmBloqueos.Visible Then
                                 .Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = aux
                                 InitGrh .Graphic(Val(frmSuperficies.cCapas.Text)), aux
                                 
@@ -229,10 +233,8 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             For i = 1 To frmConfigSup.mLargo.Text
                                 For j = 1 To frmConfigSup.mAncho.Text
 
-                                    If tYY >= YMinMapSize And tYY <= YMaxMapSize Then
-                                    
-                                        If tXX >= XMinMapSize And tXX <= XMaxMapSize Then
-                                        
+                                    If tYY >= 1 And tYY <= 100 Then
+                                        If tXX >= 1 And tXX <= 100 Then
                                             aux = Val(frmSuperficies.cGrh.Text) + desptile
                                             MapData(tXX, tYY).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = aux
                                             InitGrh MapData(tXX, tYY).Graphic(Val(frmSuperficies.cCapas.Text)), aux
@@ -240,14 +242,14 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                                             desptile = desptile + 1
 
                                         End If
-                                        
+
                                     End If
-                                    
+
                                 Next
                                 tXX = tX
                                 tYY = tYY + 1
-                                
                             Next
+                            
                             tYY = tY
                             
                         End If
@@ -255,7 +257,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                     Else
                     
                         'Else Place graphic
-                        If .bLocked <> frmMain.LvBEdit(2).value Or .Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex <> Val(frmSuperficies.cGrh.Text) Then
+                        If .bLocked <> frmBloqueos.Visible Or .Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex <> Val(frmSuperficies.cGrh.Text) Then
                             MapInfo.Changed = 1 'Set changed flag
                             .Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = Val(frmSuperficies.cGrh.Text)
                             'Setup GRH
@@ -271,14 +273,16 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 'TRASLADOS
                 '########################
                 If frmTraslados.cInsertarTrans.value = True Then
-                    '                    If Cfg_TrOBJ > 0 And Cfg_TrOBJ <= 0 And frmMain.cInsertarTransOBJ.value = True Then
-                    '                        If ObjData(Cfg_TrOBJ).ObjType = 19 Then
-                    '                            MapInfo.Changed = 1 'Set changed flag
-                    '                            InitGrh .ObjGrh, ObjData(Cfg_TrOBJ).GrhIndex
-                    '                            .OBJInfo.ObjIndex = Cfg_TrOBJ
-                    '                            .OBJInfo.Amount = 1
-                    '                        End If
-                    '                    End If
+                    If Cfg_TrOBJ > 0 And Cfg_TrOBJ <= 0 And frmTraslados.cInsertarTransOBJ.value = True Then
+                        If ObjData(Cfg_TrOBJ).ObjType = 19 Then
+                            MapInfo.Changed = 1 'Set changed flag
+                            InitGrh .ObjGrh, ObjData(Cfg_TrOBJ).GrhIndex
+                            .OBJInfo.ObjIndex = Cfg_TrOBJ
+                            .OBJInfo.Amount = 1
+
+                        End If
+
+                    End If
                     
                     If Val(frmTraslados.tTMapa.Text) < 0 Or Val(frmTraslados.tTMapa.Text) > 9000 Then
                         MsgBox "Valor de Mapa invalido", vbCritical + vbOKOnly
@@ -408,7 +412,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                     If frmObjs.cNumFunc.Text > 0 Then
                         ObjIndex = frmObjs.cNumFunc.Text
                         
-                        If .OBJInfo.ObjIndex <> ObjIndex Or MapData(tX, tY).OBJInfo.Amount <> Val(frmObjs.cCantFunc.Text) Then
+                        If .OBJInfo.ObjIndex <> ObjIndex Or .OBJInfo.Amount <> Val(frmObjs.cCantFunc.Text) Then
                             MapInfo.Changed = 1 'Set changed flag
                             InitGrh .ObjGrh, ObjData(ObjIndex).GrhIndex
                             .OBJInfo.ObjIndex = ObjIndex
@@ -514,11 +518,11 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 End If
                 
                 If frmZonas.LvBPintar.value Then
-                    MapData(tX, tY).ZonaIndex = frmZonas.LstZona.ListIndex + 1
+                    .ZonaIndex = frmZonas.LstZona.ListIndex + 1
                     MapInfo.Changed = 1
                     
                 ElseIf frmZonas.LvBQuitar.value Then
-                    MapData(tX, tY).ZonaIndex = 0
+                    .ZonaIndex = 0
                     MapInfo.Changed = 1
                     
                 End If
@@ -534,4 +538,185 @@ ClickEdit_Err:
 
     Resume Next
 
+End Sub
+
+Public Function EditWarning() As Boolean
+'*************************************************
+'Author: Lorwik
+'Last modified: 30/04/2021
+'*************************************************
+    If MsgBox(MSGDang, vbExclamation + vbYesNo) = vbNo Then
+        EditWarning = True
+        
+    Else
+        EditWarning = False
+        
+    End If
+End Function
+
+Public Sub DePegar()
+'*************************************************
+'Author: Loopzer
+'Last modified: 21/11/07
+'*************************************************
+    Dim X As Integer
+    Dim Y As Integer
+
+    For X = 0 To DeSeleccionAncho - 1
+        For Y = 0 To DeSeleccionAlto - 1
+             MapData(X + DeSeleccionOX, Y + DeSeleccionOY) = DeSeleccionMap(X, Y)
+        Next
+    Next
+End Sub
+
+Public Sub PegarSeleccion() '(mx As Integer, my As Integer)
+'*************************************************
+'Author: Loopzer
+'Last modified: 21/11/07
+'*************************************************
+    'podria usar copy mem , pero por las dudas no XD
+    Static UltimoX As Integer
+    Static UltimoY As Integer
+    
+    Dim X As Integer
+    Dim Y As Integer
+    
+    If UltimoX = SobreX And UltimoY = SobreY Then Exit Sub
+    
+    UltimoX = SobreX
+    UltimoY = SobreY
+    
+    DeSeleccionAncho = SeleccionAncho
+    DeSeleccionAlto = SeleccionAlto
+    DeSeleccionOX = SobreX
+    DeSeleccionOY = SobreY
+    
+    ReDim DeSeleccionMap(DeSeleccionAncho, DeSeleccionAlto) As MapBlock
+    
+    For X = 0 To DeSeleccionAncho - 1
+        For Y = 0 To DeSeleccionAlto - 1
+            DeSeleccionMap(X, Y) = MapData(X + SobreX, Y + SobreY)
+        Next
+    Next
+    
+    For X = 0 To SeleccionAncho - 1
+        For Y = 0 To SeleccionAlto - 1
+             MapData(X + SobreX, Y + SobreY) = SeleccionMap(X, Y)
+        Next
+    Next
+    Seleccionando = False
+End Sub
+
+Public Sub AccionSeleccion()
+'*************************************************
+'Author: Loopzer
+'Last modified: 21/11/07
+'*************************************************
+    Dim X As Integer
+    Dim Y As Integer
+    
+    SeleccionAncho = Abs(SeleccionIX - SeleccionFX) + 1
+    SeleccionAlto = Abs(SeleccionIY - SeleccionFY) + 1
+    DeSeleccionAncho = SeleccionAncho
+    DeSeleccionAlto = SeleccionAlto
+    DeSeleccionOX = SeleccionIX
+    DeSeleccionOY = SeleccionIY
+    
+    ReDim DeSeleccionMap(DeSeleccionAncho, DeSeleccionAlto) As MapBlock
+    
+    For X = 0 To SeleccionAncho - 1
+        For Y = 0 To SeleccionAlto - 1
+            DeSeleccionMap(X, Y) = MapData(X + SeleccionIX, Y + SeleccionIY)
+        Next
+    Next
+    
+    For X = 0 To SeleccionAncho - 1
+        For Y = 0 To SeleccionAlto - 1
+           ClickEdit vbLeftButton, SeleccionIX + X, SeleccionIY + Y
+        Next
+    Next
+    Seleccionando = False
+End Sub
+
+Public Sub CortarSeleccion()
+'*************************************************
+'Author: Loopzer
+'Last modified: 21/11/07
+'*************************************************
+    CopiarSeleccion
+    
+    Dim X As Integer
+    Dim Y As Integer
+    Dim Vacio As MapBlock
+    
+    DeSeleccionAncho = SeleccionAncho
+    DeSeleccionAlto = SeleccionAlto
+    DeSeleccionOX = SeleccionIX
+    DeSeleccionOY = SeleccionIY
+    
+    ReDim DeSeleccionMap(DeSeleccionAncho, DeSeleccionAlto) As MapBlock
+    
+    For X = 0 To SeleccionAncho - 1
+        For Y = 0 To SeleccionAlto - 1
+            DeSeleccionMap(X, Y) = MapData(X + SeleccionIX, Y + SeleccionIY)
+        Next
+    Next
+    
+    For X = 0 To SeleccionAncho - 1
+        For Y = 0 To SeleccionAlto - 1
+             MapData(X + SeleccionIX, Y + SeleccionIY) = Vacio
+        Next
+    Next
+    Seleccionando = False
+End Sub
+
+Public Sub CopiarSeleccion(Optional ByVal Borde As Boolean = False)
+'*************************************************
+'Author: Loopzer
+'Last modified: 21/11/07
+'*************************************************
+    'podria usar copy mem , pero por las dudas no XD
+    Dim X As Integer
+    Dim Y As Integer
+    Dim i As Byte
+    
+    Seleccionando = False
+    SeleccionAncho = Abs(SeleccionIX - SeleccionFX) + 1
+    SeleccionAlto = Abs(SeleccionIY - SeleccionFY) + 1
+    ReDim SeleccionMap(SeleccionAncho, SeleccionAlto) As MapBlock
+    
+    If Not Borde Then
+        For X = 0 To SeleccionAncho - 1
+            For Y = 0 To SeleccionAlto - 1
+                SeleccionMap(X, Y) = MapData(X + SeleccionIX, Y + SeleccionIY)
+            Next
+        Next
+        
+    Else
+    
+        For X = 0 To SeleccionAncho - 1
+            For Y = 0 To SeleccionAlto - 1
+                With SeleccionMap(X, Y)
+                    .bLocked = MapData(X + SeleccionIX, Y + SeleccionIY).bLocked
+                    .Trigger = MapData(X + SeleccionIX, Y + SeleccionIY).Trigger
+                    .Particle_Index = MapData(X + SeleccionIX, Y + SeleccionIY).Particle_Index
+                    .Particle_Group_Index = MapData(X + SeleccionIX, Y + SeleccionIY).Particle_Group_Index
+                    .OBJInfo = MapData(X + SeleccionIX, Y + SeleccionIY).OBJInfo
+                    .ObjGrh = MapData(X + SeleccionIX, Y + SeleccionIY).ObjGrh
+                    .NPCIndex = MapData(X + SeleccionIX, Y + SeleccionIY).NPCIndex
+                    .Light = MapData(X + SeleccionIX, Y + SeleccionIY).Light
+                    For i = 1 To 4
+                        .Graphic(i) = MapData(X + SeleccionIX, Y + SeleccionIY).Graphic(i)
+                    Next i
+                    .FxIndex = MapData(X + SeleccionIX, Y + SeleccionIY).FxIndex
+                    .fX = MapData(X + SeleccionIX, Y + SeleccionIY).fX
+                    For i = 0 To 3
+                        .Engine_Light(i) = MapData(X + SeleccionIX, Y + SeleccionIY).Engine_Light(i)
+                    Next i
+                    .CharIndex = MapData(X + SeleccionIX, Y + SeleccionIY).CharIndex
+                End With
+            Next
+        Next
+        
+    End If
 End Sub

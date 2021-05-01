@@ -79,7 +79,7 @@ Begin VB.Form frmZonas
             Strikethrough   =   0   'False
          EndProperty
          cGradient       =   0
-         Mode            =   0
+         Mode            =   1
          Value           =   0   'False
          cBack           =   -2147483633
       End
@@ -104,7 +104,7 @@ Begin VB.Form frmZonas
             Strikethrough   =   0   'False
          EndProperty
          cGradient       =   0
-         Mode            =   0
+         Mode            =   1
          Value           =   0   'False
          cBack           =   -2147483633
       End

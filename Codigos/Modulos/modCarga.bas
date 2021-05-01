@@ -286,17 +286,17 @@ On Error GoTo ErrorHandler:
     Dim LaCabecera  As tCabecera
     Dim fileBuff    As clsByteBuffer
     Dim InfoHead    As INFOHEADER
-    Dim Buffer()    As Byte
+    Dim buffer()    As Byte
     
     InfoHead = File_Find(DirRecursos & "Scripts.WAO", LCase$("Graficos.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
-        Extract_File_Memory Scripts, LCase$("Graficos.ind"), Buffer()
+        Extract_File_Memory Scripts, LCase$("Graficos.ind"), buffer()
         
         Set fileBuff = New clsByteBuffer
         
-        fileBuff.initializeReader Buffer
+        fileBuff.initializeReader buffer
         
         LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
         LaCabecera.CRC = fileBuff.getLong
@@ -372,7 +372,7 @@ On Error GoTo ErrorHandler:
             
         Wend
         
-        Erase Buffer
+        Erase buffer
     End If
     
     Set fileBuff = Nothing
@@ -400,18 +400,18 @@ Public Sub CargarMinimapa()
 
     Dim fileBuff    As clsByteBuffer
     Dim InfoHead    As INFOHEADER
-    Dim Buffer()    As Byte
+    Dim buffer()    As Byte
     Dim i           As Long
     
     InfoHead = File_Find(DirRecursos & "Scripts" & Formato, LCase$("minimap.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
-        Extract_File_Memory Scripts, LCase$("minimap.ind"), Buffer()
+        Extract_File_Memory Scripts, LCase$("minimap.ind"), buffer()
         
         Set fileBuff = New clsByteBuffer
         
-        fileBuff.initializeReader Buffer
+        fileBuff.initializeReader buffer
         
         For i = 1 To grhCount
             If Grh_Check(i) Then
@@ -419,7 +419,7 @@ Public Sub CargarMinimapa()
             End If
         Next i
         
-        Erase Buffer
+        Erase buffer
     End If
     
     Set fileBuff = Nothing
@@ -434,7 +434,7 @@ Sub CargarCuerpos()
 '*************************************
 On Error GoTo errhandler:
 
-    Dim Buffer()    As Byte
+    Dim buffer()    As Byte
     Dim dLen        As Long
     Dim InfoHead    As INFOHEADER
     Dim i           As Long
@@ -447,11 +447,11 @@ On Error GoTo errhandler:
     
     If InfoHead.lngFileSize <> 0 Then
     
-        Extract_File_Memory Scripts, LCase$("Personajes.ind"), Buffer()
+        Extract_File_Memory Scripts, LCase$("Personajes.ind"), buffer()
         
         Set fileBuff = New clsByteBuffer
         
-        fileBuff.initializeReader Buffer
+        fileBuff.initializeReader buffer
         
         LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
         LaCabecera.CRC = fileBuff.getLong
@@ -484,7 +484,7 @@ On Error GoTo errhandler:
             End If
         Next i
     
-        Erase Buffer
+        Erase buffer
     End If
     
     Set fileBuff = Nothing
@@ -535,12 +535,12 @@ On Error GoTo Fallo
     MaxSup = Leer.GetValue("INIT", "Referencias")
     
     ReDim SupData(MaxSup) As SupData
-    'frmMain.lListado(0).Clear
     
     frmSuperficies.LynxSuperficies.Clear
     frmSuperficies.LynxSuperficies.Redraw = False
     frmSuperficies.LynxSuperficies.Visible = False
 
+    frmSuperficies.LynxSuperficies.AddColumn "Indice", 0
     frmSuperficies.LynxSuperficies.AddColumn "Grh", 0
     frmSuperficies.LynxSuperficies.AddColumn "Nombre", 3
     
@@ -552,9 +552,10 @@ On Error GoTo Fallo
         SupData(i).Block = IIf(Val(Leer.GetValue("REFERENCIA" & i, "Bloquear")) = 1, True, False)
         SupData(i).Capa = Val(Leer.GetValue("REFERENCIA" & i, "Capa"))
 
-        frmSuperficies.LynxSuperficies.AddItem SupData(i).Grh
+        frmSuperficies.LynxSuperficies.AddItem i
         K = frmSuperficies.LynxSuperficies.Rows - 1
-        frmSuperficies.LynxSuperficies.CellText(K, 1) = SupData(i).name
+        frmSuperficies.LynxSuperficies.CellText(K, 1) = SupData(i).Grh
+        frmSuperficies.LynxSuperficies.CellText(K, 2) = SupData(i).name
     Next
     
     frmSuperficies.LynxSuperficies.Visible = True

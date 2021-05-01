@@ -1,3 +1,8 @@
 [History]
-1=#P0#=mb	#P1#=AccionLuces	#P2#=WinterMapEditor/frmLuces/AccionLuces	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210430001004	#P7#=0	#P8#=3	.
-2=#P0#=mb	#P1#=lvButtons_H1_Click	#P2#=WinterMapEditor/frmLuces/lvButtons_H1_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210430001003	#P7#=0	#P8#=5	.
+1=#P0#=mb	#P1#=cFiltro_LostFocus	#P2#=WinterMapEditor/frmSuperficies/cFiltro_LostFocus	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501141116	#P7#=0	#P8#=0	.
+2=#P0#=mb	#P1#=LynxSuperficies_Click	#P2#=WinterMapEditor/frmSuperficies/LynxSuperficies_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501140850	#P7#=0	#P8#=1	.
+3=#P0#=mb	#P1#=CargarIndicesSuperficie	#P2#=WinterMapEditor/modCarga/CargarIndicesSuperficie	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210501140907	#P7#=0	#P8#=37	.
+4=#P0#=mb	#P1#=CargarInfo	#P2#=WinterMapEditor/frmSuperficies/CargarInfo	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210501141004	#P7#=0	#P8#=2	.
+5=#P0#=mb	#P1#=Filtrar	#P2#=WinterMapEditor/frmSuperficies/Filtrar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210501140932	#P7#=0	#P8#=16	.
+6=#P0#=mb	#P1#=cFiltro_KeyPress	#P2#=WinterMapEditor/frmSuperficies/cFiltro_KeyPress	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501135625	#P7#=0	#P8#=1	.
+7=#P0#=mb	#P1#=LvBAreas_Click	#P2#=WinterMapEditor/frmRellenar/LvBAreas_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210501135407	#P7#=0	#P8#=17	.
