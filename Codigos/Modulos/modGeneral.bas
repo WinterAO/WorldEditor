@@ -147,25 +147,25 @@ Public Sub CloseMapEditor()
 End Sub
 
 Public Sub CheckKeys()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 01/11/08
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 01/11/08
+    '*************************************************
 
     If HotKeysAllow = False Then Exit Sub
-        '[Loopzer]
-        'If GetKeyState(vbKeyControl) < 0 Then
-        '    If Seleccionando Then
-        '        If GetKeyState(vbKeyC) < 0 Then CopiarSeleccion
-        '        If GetKeyState(vbKeyX) < 0 Then CortarSeleccion
-        '        If GetKeyState(vbKeyB) < 0 Then BlockearSeleccion
-        '        If GetKeyState(vbKeyD) < 0 Then AccionSeleccion
-        ''    Else
-        '        If GetKeyState(vbKeyS) < 0 Then DePegar ' GS
-        '        If GetKeyState(vbKeyV) < 0 Then PegarSeleccion
-        '    End If
-        'End If
-        '[/Loopzer]
+    '[Loopzer]
+    'If GetKeyState(vbKeyControl) < 0 Then
+    '    If Seleccionando Then
+    '        If GetKeyState(vbKeyC) < 0 Then CopiarSeleccion
+    '        If GetKeyState(vbKeyX) < 0 Then CortarSeleccion
+    '        If GetKeyState(vbKeyB) < 0 Then BlockearSeleccion
+    '        If GetKeyState(vbKeyD) < 0 Then AccionSeleccion
+    ''    Else
+    '        If GetKeyState(vbKeyS) < 0 Then DePegar ' GS
+    '        If GetKeyState(vbKeyV) < 0 Then PegarSeleccion
+    '    End If
+    'End If
+    '[/Loopzer]
     
     If GetKeyState(vbKeyUp) < 0 Then
         If UserPos.Y < YMinMapSize Then Exit Sub ' 10
@@ -174,13 +174,16 @@ Public Sub CheckKeys()
             UserPos.Y = UserPos.Y - 1
             MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
             dLastWalk = GetTickCount
+            
         ElseIf WalkMode = False Then
             UserPos.Y = UserPos.Y - 1
+
         End If
         
         'Call DibujarMinimapa(True)
         'frmMain.SetFocus
         Exit Sub
+
     End If
 
     If GetKeyState(vbKeyRight) < 0 Then
@@ -199,6 +202,7 @@ Public Sub CheckKeys()
         'Call DibujarMinimapa(True)
         'frmMain.SetFocus
         Exit Sub
+
     End If
 
     If GetKeyState(vbKeyDown) < 0 Then
@@ -230,13 +234,57 @@ Public Sub CheckKeys()
             dLastWalk = GetTickCount
         ElseIf WalkMode = False Then
             UserPos.X = UserPos.X - 1
+
         End If
 
-       ' Call DibujarMinimapa(True)
+        ' Call DibujarMinimapa(True)
         'frmMain.SetFocus
         Exit Sub
+
     End If
     
+End Sub
+
+Public Sub ToggleWalkMode()
+'*************************************************
+'Author: Unkwown
+'Last modified: 28/05/06 - GS
+'*************************************************
+    On Error GoTo ToggleWalkMode_Err
+
+    If WalkMode = False Then
+        WalkMode = True
+        
+    Else
+        frmMain.mnuModoCaminata.Checked = False
+        WalkMode = False
+        
+    End If
+    
+    If Not WalkMode Then
+        'Erase character
+        Call EraseChar(UserCharIndex)
+        MapData(UserPos.X, UserPos.Y).CharIndex = 0
+        
+    Else
+        'MakeCharacter
+        If LegalPos(UserPos.X, UserPos.Y) Then
+            Call MakeChar(NextOpenChar(), 1, 1, SOUTH, UserPos.X, UserPos.Y)
+            UserCharIndex = MapData(UserPos.X, UserPos.Y).CharIndex
+            frmMain.mnuModoCaminata.Checked = True
+            
+        Else
+            MsgBox "ERROR: Ubicacion ilegal."
+            WalkMode = False
+            
+        End If
+    End If
+    
+    Exit Sub
+    
+ToggleWalkMode_Err:
+    Call RegistrarError(Err.Number, Err.Description, "modGeneral.ToggleWalkMode", Erl)
+    Resume Next
 End Sub
 
 Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _

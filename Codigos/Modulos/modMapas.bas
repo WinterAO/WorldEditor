@@ -118,9 +118,9 @@ Public Sub AbrirMapa(Optional ByVal IntMode As Boolean = False)
     
     If Len(frmMain.Dialog.filename) < 3 Then Exit Sub
     
-        'If WalkMode = True Then
-        '    Call modGeneral.ToggleWalkMode
-        'End If
+        If WalkMode = True Then
+            Call modGeneral.ToggleWalkMode
+        End If
         
         Call modMapas.NuevoMapa
         
@@ -225,9 +225,13 @@ Public Sub NuevoMapa()
     'Descripcion: Limpia todo el mapa a uno nuevo
     '***************************************************
     
-    Dim Y As Integer
-    Dim X As Integer
-    Dim i As Byte
+    Dim Y     As Integer
+
+    Dim X     As Integer
+
+    Dim i     As Byte
+
+    Dim loopc As Integer
     
     frmMain.mnuReAbrirMapa.Enabled = False
     
@@ -283,8 +287,7 @@ Public Sub NuevoMapa()
                 .Light.RGBCOLOR.G = 0
                 .Light.RGBCOLOR.B = 0
                 
-                If ClientSetup.MeMode = eMeMode.WinterAO Then _
-                    .ZonaIndex = 0
+                If ClientSetup.MeMode = eMeMode.WinterAO Then .ZonaIndex = 0
                 
                 For i = 0 To 3
                     .Engine_Light(i) = 0
@@ -329,6 +332,7 @@ Public Sub NuevoMapa()
         MapInfo.LuzBase = 0
             
         Call MapInfo_Actualizar
+
     End If
     
     Estado_Actual = Estados(e_estados.MedioDia)
