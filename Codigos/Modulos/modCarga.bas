@@ -191,6 +191,11 @@ On Local Error GoTo fileErr:
             End
         End If
         
+        If FileExist(DirRecursos & "Fuentes" & Formato, vbArchive) = False Then
+            MsgBox "No se encontro el recursos de Fuentes."
+            End
+        End If
+        
         '-------------------
         'Dats
         DirDats = autoCompletaPath(Lector.GetValue("PATH" & .MeMode, "DirDats"))

@@ -220,7 +220,7 @@ Public Sub GuardarMapa(Optional Path As String)
 
     frmMain.Dialog.CancelError = True
 
-    On Error GoTo ErrHandler
+    On Error GoTo errhandler
     
     If LenB(Path) = 0 Then
         frmMain.ObtenerNombreArchivo True
@@ -244,7 +244,7 @@ Public Sub GuardarMapa(Optional Path As String)
         
     End If
 
-ErrHandler:
+errhandler:
 
 End Sub
 
@@ -804,6 +804,8 @@ Sub Cargar_CSM(ByVal Map As String)
     '    Call DibujarMinimapa ' Radar
     '
     Call AddtoRichTextBox(frmConsola.StatTxt, "Mapa " & Map & " cargado...", 0, 255, 0)
+
+    Exit Sub
 
 ErrorHandler:
 
