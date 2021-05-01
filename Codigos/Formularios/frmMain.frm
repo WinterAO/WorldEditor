@@ -1211,6 +1211,9 @@ Begin VB.Form frmMain
          Caption         =   "Modo Caminata"
       End
    End
+   Begin VB.Menu mnuAcerca 
+      Caption         =   "Acerca de..."
+   End
 End
 Attribute VB_Name = "frmMain"
 Attribute VB_GlobalNameSpace = False
@@ -1439,6 +1442,14 @@ Private Sub mnuAbrirMapa_Click(Index As Integer)
             
     End Select
     
+End Sub
+
+Private Sub mnuAcerca_Click()
+'*************************************************
+'Author: Lorwik
+'Last modified: 01/05/2021
+'*************************************************
+    frmAcercade.Show , frmMain
 End Sub
 
 Private Sub mnuAutoCompletarSuperficies_Click()
