@@ -286,7 +286,7 @@ Begin VB.Form frmRellenar
       Width           =   4035
       Begin WinterMapEditor.lvButtons_H LvBAreas 
          Height          =   405
-         Index           =   0
+         Index           =   1
          Left            =   1830
          TabIndex        =   10
          Top             =   240
@@ -317,7 +317,7 @@ Begin VB.Form frmRellenar
       End
       Begin WinterMapEditor.lvButtons_H LvBAreas 
          Height          =   405
-         Index           =   1
+         Index           =   0
          Left            =   120
          TabIndex        =   11
          Top             =   240

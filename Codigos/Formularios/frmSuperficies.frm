@@ -119,7 +119,7 @@ Begin VB.Form frmSuperficies
       Height          =   315
       ItemData        =   "frmSuperficies.frx":0000
       Left            =   1080
-      List            =   "frmSuperficies.frx":000D
+      List            =   "frmSuperficies.frx":0002
       TabIndex        =   6
       TabStop         =   0   'False
       Text            =   "1"
@@ -300,6 +300,18 @@ Private Sub cQuitarEnTodasLasCapas_Click()
     End If
 End Sub
 
+Private Sub Form_Load()
+'*************************************************
+'Author: Lorwik
+'Last modified: 01/05/2021
+'*************************************************
+    Dim i As Byte
+    
+    For i = 1 To 4
+        cCapas.AddItem i
+    Next i
+End Sub
+
 Private Sub Form_Click()
 '*************************************************
 'Author: Lorwik
@@ -364,15 +376,18 @@ Private Sub CargarInfo()
 'Last modified: 27/04/2021
 '*************************************************
 
+    Dim Seleccionado As Long
+
     HotKeysAllow = False
+    Seleccionado = LynxSuperficies.CellText(, 0)
         
     'Obtiene el numero del Grh
-    cGrh.Text = DameGrhIndex(LynxSuperficies.CellText(, 0))
-        
+    cGrh.Text = DameGrhIndex(Seleccionado)
+
     'TODO: Faltan movidas aqui
-    If SupData(LynxSuperficies.Row + 1).Capa <> 0 Then
-        If (LynxSuperficies.Row + 1) = 0 Then cCapas.Tag = cCapas.Text
-        cCapas.Text = SupData(LynxSuperficies.Row + 1).Capa
+    If SupData(Seleccionado).Capa <> 0 Then
+        If (Seleccionado) = 0 Then cCapas.Tag = cCapas.Text
+        cCapas.Text = SupData(Seleccionado).Capa
             
     Else
 

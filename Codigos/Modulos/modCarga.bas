@@ -386,8 +386,8 @@ On Error GoTo ErrorHandler:
                     .sY = fileBuff.getInteger
                     If .sY < 0 Then GoTo ErrorHandler
                     
-                    .Trans = fileBuff.getByte
-                    If .Trans < 0 Then GoTo ErrorHandler
+                    '.Trans = fileBuff.getByte
+                    'If .Trans < 0 Then GoTo ErrorHandler
                     
                     .TileWidth = .pixelWidth / TilePixelHeight
                     .TileHeight = .pixelHeight / TilePixelWidth
@@ -579,7 +579,7 @@ On Error GoTo Fallo
         SupData(i).Height = Val(Leer.GetValue("REFERENCIA" & i, "Alto"))
         SupData(i).Block = IIf(Val(Leer.GetValue("REFERENCIA" & i, "Bloquear")) = 1, True, False)
         SupData(i).Capa = Val(Leer.GetValue("REFERENCIA" & i, "Capa"))
-
+        
         frmSuperficies.LynxSuperficies.AddItem i
         K = frmSuperficies.LynxSuperficies.Rows - 1
         frmSuperficies.LynxSuperficies.CellText(K, 1) = SupData(i).Grh
