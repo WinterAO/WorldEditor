@@ -18,8 +18,6 @@ Public Sub DibujarMinimapa(Optional ByVal Refrescar = False)
 
     Dim map_x As Integer
     Dim map_y As Integer
-    Dim X As Integer
-    Dim Y As Integer
     Dim XMin As Long
     Dim XMax As Long
     Dim YMin As Long
@@ -148,3 +146,79 @@ Public Sub ActualizarMinimapa(ByVal tX As Integer, ByVal tY As Integer)
 
 End Sub
 
+Public Sub RenderizarCuadrantes()
+    Dim map_x As Integer
+    Dim map_y As Integer
+    Dim XMin As Long
+    Dim XMax As Long
+    Dim YMin As Long
+    Dim YMax As Long
+    Dim LoopC As Byte
+    
+    Dim X As Integer
+    Dim Y As Integer
+    
+    Dim AnchoCuadrante As Byte
+    
+    Dim picMapahDC As Long
+    
+    frmMinimapa.Show , frmMain
+    frmMinimapa.minimapa.BackColor = vbBlack
+    picMapahDC = frmMinimapa.minimapa.hDC
+    
+    If XMaxMapSize < 100 Or YMaxMapSize < 100 Then
+        MsgBox "Solo disponibles para mundos gigantes."
+        Exit Sub
+    End If
+    
+    XMin = 1
+    XMax = 100
+    YMin = 1
+    YMax = 100
+    
+    For LoopC = 0 To 110
+        X = 0
+        For map_x = XMin To XMax
+        
+            X = X + 1
+        
+            For map_y = YMin To YMax
+            
+                Y = Y + 1
+            
+                If MapData(map_x, map_y).Graphic(1).GrhIndex > 0 Then _
+                    SetPixel picMapahDC, X - 1, Y - 1, GrhData(MapData(map_x, map_y).Graphic(1).GrhIndex).mini_map_color
+                    
+                If MapData(map_x, map_y).Graphic(2).GrhIndex > 0 Then _
+                    SetPixel picMapahDC, X - 1, Y - 1, GrhData(MapData(map_x, map_y).Graphic(2).GrhIndex).mini_map_color
+
+            Next map_y
+            
+            Y = 0
+            
+        Next map_x
+        
+        XMin = XMin + 100
+        XMax = XMax + 100
+        AnchoCuadrante = AnchoCuadrante + 1
+        
+        If AnchoCuadrante = 11 Then
+            XMin = 1
+            XMax = 100
+            YMin = YMin + 100
+            YMax = YMax + 100
+            AnchoCuadrante = 0
+        End If
+        
+        Call frmMapa.Capturar_Imagen(frmMinimapa.minimapa, frmMinimapa.minimapa)
+        Call SavePicture(frmMinimapa.minimapa, App.Path & "\Render\Minimapa\" & MapaActual & "-" & LoopC & ".bmp")
+        
+        frmMinimapa.minimapa.BackColor = vbBlack
+        frmMinimapa.minimapa.Refresh
+        DoEvents
+        
+    Next LoopC
+    
+    Unload frmMinimapa
+    
+End Sub
