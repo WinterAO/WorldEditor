@@ -99,6 +99,7 @@ Public Sub Engine_DirectX8_Init()
         End Select
         
     Else
+    
         'Detectamos el modo de renderizado mas compatible con tu PC.
         If Not Engine_Init_DirectDevice(D3DCREATE_HARDWARE_VERTEXPROCESSING) Then
             If Not Engine_Init_DirectDevice(D3DCREATE_MIXED_VERTEXPROCESSING) Then

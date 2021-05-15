@@ -20,6 +20,7 @@ Public MapaCargado As Boolean
 Public MousePos As String
 Public ParticlePreview As Long
 Public NoSobreescribir As Boolean
+Public SupActual As Integer
 
 ' Objeto de Translado
 Public Cfg_TrOBJ As Integer

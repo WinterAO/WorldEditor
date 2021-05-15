@@ -233,6 +233,10 @@ Sub ShowNextFrame()
 On Error GoTo ErrorHandler:
 
     If EngineRun Then
+    
+        Dim cX As Integer
+        Dim cY As Integer
+        Dim Cuadrante As Integer
         
         Call Engine_BeginScene
         
@@ -267,6 +271,9 @@ On Error GoTo ErrorHandler:
         Call Engine_Update_FPS
         Call DrawText(10, 5, "FPS: " & modTileEngine.FPS, -1, False)
         Call DrawText(10, 20, "Mouse: " & MousePos, -1, False)
+        
+        Call ObtenerCuadrante(Cuadrante, cX, cY)
+        Call DrawText(10, 35, "Cuadrante: " & Cuadrante & " X:" & cX & " Y: " & cY, -1, False)
         
         'Get timing info
         timerElapsedTime = GetElapsedTime()
@@ -923,7 +930,18 @@ Public Sub RenderPreview()
     Call Engine_BeginScene
 
     If frmConfigSup.MOSAICO.value = vbUnchecked Or frmSuperficies.Visible = True Then
-        Call Draw_GrhIndex(CurrentGrh.GrhIndex, (GrhData(CurrentGrh.GrhIndex).pixelWidth), (GrhData(CurrentGrh.GrhIndex).pixelHeight), 1, Normal_RGBList(), 0)
+    
+        'Call Draw_GrhIndex(CurrentGrh.GrhIndex, (GrhData(CurrentGrh.GrhIndex).pixelWidth) / 2, (GrhData(CurrentGrh.GrhIndex).pixelHeight), 1, Normal_RGBList(), 0)
+        For i = 1 To SupData(SupActual).Height
+            For j = 1 To SupData(SupActual).Width
+            
+                Call Draw_GrhIndex(CurrentGrh.GrhIndex, (j - 1) * 32, (i - 1) * 32, 1, Normal_RGBList(), 0)
+                
+                If Cont < SupData(SupActual).Height * SupData(SupActual).Width Then _
+                    Cont = Cont + 1: CurrentGrh.GrhIndex = CurrentGrh.GrhIndex + 1
+                    
+            Next j
+        Next i
  
     Else
         For i = 1 To CInt(Val(frmConfigSup.mLargo))
@@ -1056,13 +1074,13 @@ Function NextOpenChar() As Integer
 'Author: Unkwown
 'Last modified: 20/05/06
 '*************************************************
-    Dim loopc As Integer
+    Dim LoopC As Integer
     
-    loopc = 1
-    Do While CharList(loopc).active
-        loopc = loopc + 1
+    LoopC = 1
+    Do While CharList(LoopC).active
+        LoopC = LoopC + 1
     Loop
     
-    NextOpenChar = loopc
+    NextOpenChar = LoopC
 
 End Function

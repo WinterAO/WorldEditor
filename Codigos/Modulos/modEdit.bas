@@ -80,10 +80,12 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
 
     Dim Heading  As Byte
 
-    Dim loopc    As Integer
+    Dim LoopC    As Integer
 
     If tY < YMinMapSize Or tY > YMaxMapSize Then Exit Sub
     If tX < XMinMapSize Or tX > XMaxMapSize Then Exit Sub
+    
+    Call ActualizarMinimapa(tX, tY)
 
     If Button = 0 Then
         SobreY = tY
@@ -157,9 +159,9 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 If frmSuperficies.cQuitarEnTodasLasCapas.value = True Then
                     MapInfo.Changed = 1 'Set changed flag
 
-                    For loopc = 2 To 3
-                        .Graphic(loopc).GrhIndex = 0
-                    Next loopc
+                    For LoopC = 2 To 3
+                        .Graphic(LoopC).GrhIndex = 0
+                    Next LoopC
                         
                     Exit Sub
 
@@ -200,6 +202,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                         If frmConfigSup.DespMosaic.value = vbChecked Then
                             dy = Val(frmConfigSup.DMLargo)
                             dX = Val(frmConfigSup.DMAncho.Text)
+                            
                         Else
                             dy = 0
                             dX = 0

@@ -121,7 +121,7 @@ Begin VB.Form frmTraslados
          Strikethrough   =   0   'False
       EndProperty
       cGradient       =   0
-      Mode            =   1
+      Mode            =   2
       Value           =   0   'False
       cBack           =   -2147483633
    End
@@ -270,11 +270,11 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Sub cInsertarTrans_Click()
-    cInsertarTrans.value = (cUnionManual.value = True)
-    Call cInsertarTrans_Click
-End Sub
-
 Private Sub cUnionAuto_Click()
     frmUnionAdyacente.Show , frmMain
+End Sub
+
+Private Sub cUnionManual_Click()
+    cInsertarTrans.value = (cUnionManual.value = True)
+    'Call cInsertarTrans_Click
 End Sub

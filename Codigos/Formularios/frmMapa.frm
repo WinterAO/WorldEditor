@@ -59,6 +59,78 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+' Función BitBlt para copiar la imagen del control en un picturebox
+Private Declare Function BitBlt Lib "gdi32" ( _
+        ByVal hDestDC As Long, _
+        ByVal X As Long, _
+        ByVal Y As Long, _
+        ByVal nWidth As Long, _
+        ByVal nHeight As Long, _
+        ByVal hSrcDC As Long, _
+        ByVal xSrc As Long, _
+        ByVal ySrc As Long, _
+        ByVal dwRop As Long) As Long
+      
+' Recupera la imagen del área del control
+Private Declare Function GetWindowDC Lib "user32" (ByVal hwnd As Long) As Long
+
+Public Sub Capturar_Imagen(Control As Control, Destino As Object)
+'***********************************************
+'Autor: ????
+'Fecha: ????
+'Descripcion: copia la imagen del control en un picturebox
+'***********************************************
+          
+    Dim hDC             As Long
+    Dim Escala_Anterior As Integer
+    Dim Ancho           As Long
+    Dim Alto            As Long
+          
+    ' Para que se mantenga la imagen por si se repinta la ventana
+    Destino.AutoRedraw = True
+          
+    On Error Resume Next
+
+    ' Si da error es por que el control está dentro de un Frame _
+      ya que  los Frame no tiene  dicha propiedad
+    Escala_Anterior = Control.Container.ScaleMode
+          
+    If Err.Number = 438 Then
+        ' Si el control está en un Frame, convierte la escala
+        Ancho = ScaleX(Control.Width, vbTwips, vbPixels)
+        Alto = ScaleY(Control.Height, vbTwips, vbPixels)
+    Else
+        ' Si no cambia la escala del  contenedor a pixeles
+        Control.Container.ScaleMode = vbPixels
+        Ancho = Control.Width
+        Alto = Control.Height
+
+    End If
+          
+    ' limpia el error
+    On Error GoTo 0
+
+    ' Captura el área de pantalla correspondiente al control
+    hDC = GetWindowDC(Control.hwnd)
+    
+    ' Copia esa área al picturebox
+    Call BitBlt(Destino.hDC, 0, 0, 3000, 3000, hDC, 0, 0, vbSrcCopy)
+    
+    ' Convierte la imagen anterior en un Mapa de bits
+    Destino.Picture = Destino.Image
+    
+    ' Borra la imagen ya que ahora usa el Picture
+    Call Destino.Cls
+          
+    On Error Resume Next
+
+    If Err.Number = 0 Then
+        ' Si el control no está en un  Frame, restaura la escala del contenedor
+        Control.Container.ScaleMode = Escala_Anterior
+
+    End If
+          
+End Sub
 
 Private Sub picMapa_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
@@ -67,8 +139,8 @@ Private Sub picMapa_MouseDown(Button As Integer, Shift As Integer, X As Single, 
     
     ElseIf Button = 2 Then
         Call AddtoRichTextBox(frmConsola.StatTxt, "Guardando Minimapa...", 255, 255, 255)
-        'Call frmRenderer.Capturar_Imagen(frmMapa.picMapa, frmMapa.picMapa)
-        'Call SavePicture(frmMapa.picMapa, App.Path & "\Render\Minimapa\" & NumMap_Save & ".bmp")
+        Call Capturar_Imagen(frmMapa.picMapa, frmMapa.picMapa)
+        Call SavePicture(frmMapa.picMapa, App.Path & "\Render\Minimapa\" & NumMap_Save & ".bmp")
         Call AddtoRichTextBox(frmConsola.StatTxt, "Minimapa guardado.", 0, 255, 0)
     End If
 End Sub

@@ -9,6 +9,7 @@ Public MMiniMap_Npcs       As Boolean
 Public MMiniMap_objetos    As Boolean
 Public MMiniMap_Bloqueos   As Boolean
 Public MMiniMap_particulas As Boolean
+Public MMiniMap_cuadrantes As Boolean
 Public MMiniMap_Nombre     As Boolean
 
 Private Declare Function SetPixel Lib "gdi32" (ByVal hDC As Long, ByVal X As Long, ByVal Y As Long, ByVal crColor As Long) As Long
@@ -17,6 +18,8 @@ Public Sub DibujarMinimapa(Optional ByVal Refrescar = False)
 
     Dim map_x As Integer
     Dim map_y As Integer
+    Dim X As Integer
+    Dim Y As Integer
     Dim XMin As Long
     Dim XMax As Long
     Dim YMin As Long
@@ -87,7 +90,7 @@ Public Sub DibujarMinimapa(Optional ByVal Refrescar = False)
                 End If
             
                 If MMiniMap_Bloqueos Then
-                    If MapData(map_x, map_y).Blocked > 0 Then
+                    If MapData(map_x, map_y).bLocked > 0 Then
                         SetPixel picMapahDC, map_x - 1, map_y - 1, vbRed
     
                     End If
@@ -100,6 +103,13 @@ Public Sub DibujarMinimapa(Optional ByVal Refrescar = False)
     
                     End If
     
+                End If
+                
+                If MMiniMap_cuadrantes Then
+                    
+                    If (map_x - (Fix(map_x / 100)) * 100) = 0 Or (map_y - (Fix(map_y / 100)) * 100) = 0 Then _
+                        SetPixel picMapahDC, map_x - 1, map_y - 1, vbWhite
+                        
                 End If
     
                 If MMiniMap_Nombre Then
@@ -127,14 +137,14 @@ Public Sub ActualizarMinimapa(ByVal tX As Integer, ByVal tY As Integer)
     If tY < YMinMapSize Or tY > YMaxMapSize Then Exit Sub
     If tX < XMinMapSize Or tX > XMaxMapSize Then Exit Sub
     
-'    If frmMain.cSeleccionarSuperficie.value = True Then
-'        If MapData(tX, tY).Graphic(Val(frmMain.cCapas.Text)).GrhIndex > 0 Then _
-'            SetPixel frmMapa.picMapa.hDC, tX - 1, tY - 1, GrhData(MapData(tX, tY).Graphic(Val(frmMain.cCapas.Text)).GrhIndex).mini_map_color
-'
-'    ElseIf frmMain.cQuitarEnEstaCapa.value = True Then
-'        SetPixel frmMapa.picMapa.hDC, tX - 1, tY - 1, 0
-'
-'    End If
+    If frmSuperficies.cSeleccionarSuperficie.value = True Then
+        If MapData(tX, tY).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex > 0 Then _
+            SetPixel frmMapa.picMapa.hDC, tX - 1, tY - 1, GrhData(MapData(tX, tY).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex).mini_map_color
+
+    ElseIf frmSuperficies.cQuitarEnEstaCapa.value = True Then
+        SetPixel frmMapa.picMapa.hDC, tX - 1, tY - 1, 0
+
+    End If
 
 End Sub
 

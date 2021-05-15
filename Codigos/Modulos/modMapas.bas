@@ -261,14 +261,14 @@ Public Sub NuevoMapa()
 
     Dim i     As Byte
 
-    Dim loopc As Integer
+    Dim LoopC As Integer
     
     frmMain.mnuReAbrirMapa.Enabled = False
     
     MapaCargado = False
     
-    For loopc = 0 To frmMain.MapPest.Count - 1
-        frmMain.MapPest(loopc).Enabled = False
+    For LoopC = 0 To frmMain.MapPest.Count - 1
+        frmMain.MapPest(LoopC).Enabled = False
     Next
     
     frmMain.MousePointer = 11
@@ -364,6 +364,8 @@ Public Sub NuevoMapa()
         Call MapInfo_Actualizar
 
     End If
+    
+    Call DibujarMinimapa
     
     Estado_Actual = Estados(e_estados.MedioDia)
     Call Actualizar_Estado
@@ -785,24 +787,24 @@ Sub Cargar_CSM(ByVal Map As String)
     
     'MapInfo_Cargar Map
     frmMapInfo.txtMapVersion.Text = MapInfo.MapVersion
-    '
+    
     Call Pestanas(Map, ".csm")
 
     'Change mouse icon
     frmMain.MousePointer = 0
-    '
+    
     ' Vacio deshacer
     '    modEdicion.Deshacer_Clear
-    '
+    
     Call CSMInfoCargar
-    '
+    
     '    'Set changed flag
     MapInfo.Changed = 0
 
     MapaCargado = True
-    '
-    '    Call DibujarMinimapa ' Radar
-    '
+    
+    Call DibujarMinimapa
+    
     Call AddtoRichTextBox(frmConsola.StatTxt, "Mapa " & Map & " cargado...", 0, 255, 0)
 
     Exit Sub
@@ -1164,7 +1166,7 @@ Public Function Save_CSM(ByVal MapRoute As String, _
 
                     End If
                     
-                    If .ZonaIndex > 0 Then
+                    If .ZonaIndex > 0 And .ZonaIndex < CantZonas Then
                         MH.NumeroZonas = MH.NumeroZonas + 1
                         ReDim Preserve Zonas(1 To MH.NumeroZonas)
                         Zonas(MH.NumeroZonas).X = i
@@ -1339,7 +1341,7 @@ Public Sub Cargar_Map(ByVal Map As String, Optional ByVal EsInteger As Boolean =
 
     On Error Resume Next
 
-    Dim loopc       As Integer
+    Dim LoopC       As Integer
 
     Dim TempInt     As Integer
 
@@ -1572,7 +1574,7 @@ Public Sub MapInfo_Cargar(ByVal Archivo As String)
     
     Dim Leer      As New clsIniManager
 
-    Dim loopc     As Integer
+    Dim LoopC     As Integer
 
     Dim Path      As String
 
@@ -1581,10 +1583,10 @@ Public Sub MapInfo_Cargar(ByVal Archivo As String)
     MapTitulo = Empty
     Leer.Initialize Archivo
 
-    For loopc = Len(Archivo) To 1 Step -1
+    For LoopC = Len(Archivo) To 1 Step -1
 
-        If mid(Archivo, loopc, 1) = "\" Then
-            Path = Left(Archivo, loopc)
+        If mid(Archivo, LoopC, 1) = "\" Then
+            Path = Left(Archivo, LoopC)
             Exit For
 
         End If
@@ -1640,7 +1642,7 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
 
     Dim FreeFileInf As Long
 
-    Dim loopc       As Long
+    Dim LoopC       As Long
 
     Dim TempInt     As Integer
 
@@ -1736,17 +1738,17 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
 
                 End If
                 
-                For loopc = 2 To 4
+                For LoopC = 2 To 4
                     
                     If ClientSetup.TipoMapaCargado = eTipoMapa.tInt Then
-                        If .Graphic(loopc).GrhIndex Then Put FreeFileMap, , .Graphic(loopc).GrhIndexInt
+                        If .Graphic(LoopC).GrhIndex Then Put FreeFileMap, , .Graphic(LoopC).GrhIndexInt
                     Else
 
-                        If .Graphic(loopc).GrhIndex Then Put FreeFileMap, , .Graphic(loopc).GrhIndex
+                        If .Graphic(LoopC).GrhIndex Then Put FreeFileMap, , .Graphic(LoopC).GrhIndex
 
                     End If
 
-                Next loopc
+                Next LoopC
                     
                 If .Trigger Then Put FreeFileMap, , .Trigger
                 
@@ -1849,12 +1851,12 @@ Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".
     '*************************************************
     On Error Resume Next
 
-    Dim loopc As Integer
+    Dim LoopC As Integer
     
-    For loopc = Len(Map) To 1 Step -1
+    For LoopC = Len(Map) To 1 Step -1
 
-        If mid(Map, loopc, 1) = "\" Then
-            PATH_Save = Left(Map, loopc)
+        If mid(Map, LoopC, 1) = "\" Then
+            PATH_Save = Left(Map, LoopC)
             Exit For
 
         End If
@@ -1866,25 +1868,25 @@ Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".
     MapaActual = ReadField(1, Right(Map, Len(Map) - 4), Asc("."))
     'If frmCopiarBordes.Visible Then Call frmCopiarBordes.Inicializar
     
-    For loopc = Len(Left(Map, Len(Map) - 4)) To 1 Step -1
+    For LoopC = Len(Left(Map, Len(Map) - 4)) To 1 Step -1
 
-        If IsNumeric(mid(Left(Map, Len(Map) - 4), loopc, 1)) = False Then
-            NumMap_Save = Right(Left(Map, Len(Map) - 4), Len(Left(Map, Len(Map) - 4)) - loopc)
-            NameMap_Save = Left(Map, loopc)
+        If IsNumeric(mid(Left(Map, Len(Map) - 4), LoopC, 1)) = False Then
+            NumMap_Save = Right(Left(Map, Len(Map) - 4), Len(Left(Map, Len(Map) - 4)) - LoopC)
+            NameMap_Save = Left(Map, LoopC)
             Exit For
 
         End If
 
     Next
     
-    For loopc = (NumMap_Save - 4) To (NumMap_Save + 8)
+    For LoopC = (NumMap_Save - 4) To (NumMap_Save + 8)
 
-        If FileExist(PATH_Save & NameMap_Save & loopc & MapFormat, vbArchive) = True Then
-            frmMain.MapPest(loopc - NumMap_Save + 4).Visible = True
-            frmMain.MapPest(loopc - NumMap_Save + 4).Enabled = True
-            frmMain.MapPest(loopc - NumMap_Save + 4).Caption = NameMap_Save & loopc
+        If FileExist(PATH_Save & NameMap_Save & LoopC & MapFormat, vbArchive) = True Then
+            frmMain.MapPest(LoopC - NumMap_Save + 4).Visible = True
+            frmMain.MapPest(LoopC - NumMap_Save + 4).Enabled = True
+            frmMain.MapPest(LoopC - NumMap_Save + 4).Caption = NameMap_Save & LoopC
         Else
-            frmMain.MapPest(loopc - NumMap_Save + 4).Visible = False
+            frmMain.MapPest(LoopC - NumMap_Save + 4).Visible = False
 
         End If
 

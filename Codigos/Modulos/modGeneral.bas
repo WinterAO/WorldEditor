@@ -56,7 +56,7 @@ Sub Main()
     
     frmCarga.lblStatus.Caption = "Cargando Minimapa."
     DoEvents
-    'Call modCarga.CargarMinimapa
+    Call modCarga.CargarMinimapa
     
     frmCarga.lblStatus.Caption = "Cargando Cuerpos."
     DoEvents
@@ -190,8 +190,8 @@ Public Sub CheckKeys()
 
         End If
         
-        'Call DibujarMinimapa(True)
-        'frmMain.SetFocus
+        Call DibujarMinimapa(True)
+        frmMain.SetFocus
         Exit Sub
 
     End If
@@ -209,8 +209,8 @@ Public Sub CheckKeys()
             
         End If
         
-        'Call DibujarMinimapa(True)
-        'frmMain.SetFocus
+        Call DibujarMinimapa(True)
+        frmMain.SetFocus
         Exit Sub
 
     End If
@@ -229,8 +229,8 @@ Public Sub CheckKeys()
             
         End If
         
-        'Call DibujarMinimapa(True)
-        'frmMain.SetFocus
+        Call DibujarMinimapa(True)
+        frmMain.SetFocus
         Exit Sub
         
     End If
@@ -247,8 +247,8 @@ Public Sub CheckKeys()
 
         End If
 
-        ' Call DibujarMinimapa(True)
-        'frmMain.SetFocus
+        Call DibujarMinimapa(True)
+        frmMain.SetFocus
         Exit Sub
 
     End If
@@ -295,6 +295,26 @@ Public Sub ToggleWalkMode()
 ToggleWalkMode_Err:
     Call RegistrarError(Err.Number, Err.Description, "modGeneral.ToggleWalkMode", Erl)
     Resume Next
+End Sub
+
+Public Sub ObtenerCuadrante(ByRef Cuadrante As Integer, ByRef tX As Integer, ByRef tY As Integer)
+'*****************************************************
+'Autor: Lorwik
+'Fecha: 03/04/2021
+'Descripción: Actualiza las coordenadas ya sean totales o por cuadrantes
+'*****************************************************
+
+    Dim cX As Integer
+    Dim cY As Integer
+    
+    cX = Fix((UserPos.X / 100))
+    cY = Fix((UserPos.Y / 100))
+    
+    tX = UserPos.X - (cX * 100)
+    tY = UserPos.Y - (cY * 100)
+    
+    Cuadrante = cX * cY
+
 End Sub
 
 Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _

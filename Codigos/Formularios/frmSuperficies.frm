@@ -376,18 +376,16 @@ Private Sub CargarInfo()
 'Last modified: 27/04/2021
 '*************************************************
 
-    Dim Seleccionado As Long
-
     HotKeysAllow = False
-    Seleccionado = LynxSuperficies.CellText(, 0)
+    SupActual = LynxSuperficies.CellText(, 0)
         
     'Obtiene el numero del Grh
-    cGrh.Text = DameGrhIndex(Seleccionado)
+    cGrh.Text = DameGrhIndex(SupActual)
 
     'TODO: Faltan movidas aqui
-    If SupData(Seleccionado).Capa <> 0 Then
-        If (Seleccionado) = 0 Then cCapas.Tag = cCapas.Text
-        cCapas.Text = SupData(Seleccionado).Capa
+    If SupData(SupActual).Capa <> 0 Then
+        If (SupActual) = 0 Then cCapas.Tag = cCapas.Text
+        cCapas.Text = SupData(SupActual).Capa
             
     Else
 

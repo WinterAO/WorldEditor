@@ -1,4 +1,4 @@
 [History]
-1=#P0#=mb	#P1#=LynxSuperficies_Click	#P2#=WinterMapEditor/frmSuperficies/LynxSuperficies_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210504003000	#P7#=0	#P8#=1	.
-2=#P0#=mb	#P1#=CargarIndicesSuperficie	#P2#=WinterMapEditor/modCarga/CargarIndicesSuperficie	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210504002948	#P7#=0	#P8#=36	.
-3=#P0#=mb	#P1#=CargarInfo	#P2#=WinterMapEditor/frmSuperficies/CargarInfo	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210504003135	#P7#=0	#P8#=17	.
+1=#P0#=mb	#P1#=Capturar_Imagen	#P2#=WinterMapEditor/frmMapa/Capturar_Imagen	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210515184848	#P7#=0	#P8#=34	.
+2=#P0#=mb	#P1#=picMapa_MouseDown	#P2#=WinterMapEditor/frmMapa/picMapa_MouseDown	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210515184254	#P7#=0	#P8#=-1	.
+3=#P0#=mb	#P1#=DibujarMinimapa	#P2#=WinterMapEditor/modMinimapa/DibujarMinimapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210515181142	#P7#=0	#P8#=105	.
