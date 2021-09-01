@@ -963,6 +963,9 @@ Public Sub guardarInfoZona(ByVal id As Integer)
         .MagiaSinEfecto = chkMapMagiaSinEfecto.value
         .InviSinEfecto = chkMapInviSinEfecto.value
         .ResuSinEfecto = chkMapResuSinEfecto.value
+        .RoboNpcsPermitido = ChkMapNpc.value
+        .InvocarSinEfecto = chkInvocarSin.value
+        .OcultarSinEfecto = chkOcultarSin.value
         .Terreno = txtMapTerreno.Text
         .Zona = txtMapZona.Text
         .Restringir = txtMapRestringir.Text
@@ -971,7 +974,7 @@ Public Sub guardarInfoZona(ByVal id As Integer)
         
     End With
     
-    Call ActualizarZonaList
+    Call ActualizarZonaList(id - 1)
 
 End Sub
 

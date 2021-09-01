@@ -483,7 +483,7 @@ Public Sub EliminarZona()
     
 End Sub
 
-Public Sub ActualizarZonaList()
+Public Sub ActualizarZonaList(ByVal id As Integer)
     '*****************************************
     'Autor: Lorwik
     'Fecha: 02/04/2021
@@ -498,6 +498,8 @@ Public Sub ActualizarZonaList()
         frmZonas.LstZona.AddItem (i & "- " & MapZonas(i).name)
             
     Next i
+    
+    frmZonas.LstZona.ListIndex = id
     
 End Sub
 
@@ -523,11 +525,11 @@ Public Sub MapZona_Actualizar(ByVal id As Integer)
         .TxtlvlMinimo = MapZonas(id).lvlMinimo
         .chkMapMagiaSinEfecto.value = IIf(MapZonas(id).MagiaSinEfecto, vbChecked, vbUnchecked)
         .chkMapInviSinEfecto.value = IIf(MapZonas(id).InviSinEfecto, vbChecked, vbUnchecked)
-        .chkInvocarSin.value = MapZonas(id).InvocarSinEfecto
-        .chkOcultarSin.value = MapZonas(id).OcultarSinEfecto
+        .chkInvocarSin.value = IIf(MapZonas(id).InvocarSinEfecto, vbChecked, vbUnchecked)
+        .chkOcultarSin.value = IIf(MapZonas(id).OcultarSinEfecto, vbChecked, vbUnchecked)
         .chkMapResuSinEfecto.value = IIf(MapZonas(id).ResuSinEfecto, vbChecked, vbUnchecked)
         .txtMapVersion = MapZonas(id).MapVersion
-        .ChkMapNpc.value = MapZonas(id).RoboNpcsPermitido
+        .ChkMapNpc.value = IIf(MapZonas(id).RoboNpcsPermitido, vbChecked, vbUnchecked)
         
         If MapZonas(id).LuzBase = 0 Then
             .chkLuzClimatica = vbUnchecked
@@ -630,7 +632,8 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , Blqs
 
             For i = 1 To .NumeroBloqueados
-                MapData(Blqs(i).X, Blqs(i).Y).bLocked = 1
+                If Blqs(i).X > XMinMapSize And Blqs(i).X < XMaxMapSize And Blqs(i).Y > YMinMapSize And Blqs(i).Y < YMaxMapSize Then _
+                    MapData(Blqs(i).X, Blqs(i).Y).bLocked = 1
             Next i
 
         End If
@@ -640,7 +643,8 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , L2
 
             For i = 1 To .NumeroLayers(2)
-                InitGrh MapData(L2(i).X, L2(i).Y).Graphic(2), L2(i).GrhIndex
+                If L2(i).X > XMinMapSize And L2(i).X < XMaxMapSize And L2(i).Y > YMinMapSize And L2(i).Y < YMaxMapSize Then _
+                    InitGrh MapData(L2(i).X, L2(i).Y).Graphic(2), L2(i).GrhIndex
             Next i
 
         End If
@@ -650,7 +654,8 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , L3
 
             For i = 1 To .NumeroLayers(3)
-                InitGrh MapData(L3(i).X, L3(i).Y).Graphic(3), L3(i).GrhIndex
+                If L3(i).X > XMinMapSize And L3(i).X < XMaxMapSize And L3(i).Y > YMinMapSize And L3(i).Y < YMaxMapSize Then _
+                    InitGrh MapData(L3(i).X, L3(i).Y).Graphic(3), L3(i).GrhIndex
             Next i
 
         End If
@@ -660,7 +665,8 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , L4
 
             For i = 1 To .NumeroLayers(4)
-                InitGrh MapData(L4(i).X, L4(i).Y).Graphic(4), L4(i).GrhIndex
+                If L4(i).X > XMinMapSize And L4(i).X < XMaxMapSize And L4(i).Y > YMinMapSize And L4(i).Y < YMaxMapSize Then _
+                    InitGrh MapData(L4(i).X, L4(i).Y).Graphic(4), L4(i).GrhIndex
             Next i
 
         End If
@@ -670,7 +676,8 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , Triggers
 
             For i = 1 To .NumeroTriggers
-                MapData(Triggers(i).X, Triggers(i).Y).Trigger = Triggers(i).Trigger
+                If Triggers(i).X > XMinMapSize And Triggers(i).X < XMaxMapSize And Triggers(i).Y > YMinMapSize And Triggers(i).Y < YMaxMapSize Then _
+                    MapData(Triggers(i).X, Triggers(i).Y).Trigger = Triggers(i).Trigger
             Next i
 
         End If
@@ -680,8 +687,10 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , Particulas
 
             For i = 1 To .NumeroParticulas
-                MapData(Particulas(i).X, Particulas(i).Y).Particle_Index = Particulas(i).Particula
-                Call General_Particle_Create(Particulas(i).Particula, Particulas(i).X, Particulas(i).Y)
+                If Particulas(i).X > XMinMapSize And Particulas(i).X < XMaxMapSize And Particulas(i).Y > YMinMapSize And Particulas(i).Y < YMaxMapSize Then
+                    MapData(Particulas(i).X, Particulas(i).Y).Particle_Index = Particulas(i).Particula
+                    Call General_Particle_Create(Particulas(i).Particula, Particulas(i).X, Particulas(i).Y)
+                End If
             Next i
 
         End If
@@ -696,16 +705,18 @@ Sub Cargar_CSM(ByVal Map As String)
 
             For i = 1 To .NumeroLuces
 
-                With MapData(Luces(i).X, Luces(i).Y)
-                    .Light.range = Luces(i).range ' Changed by: Project Administrator at: 4/26/2021-20:26:18 on machine: DESKTOP-BR8H09Q
-                    .Light.RGBCOLOR.a = 255
-                    .Light.RGBCOLOR.R = Luces(i).R
-                    .Light.RGBCOLOR.G = Luces(i).G
-                    .Light.RGBCOLOR.B = Luces(i).B
-
-                End With
-
-                Call Create_Light_To_Map(Luces(i).X, Luces(i).Y, Luces(i).range, Luces(i).R, Luces(i).G, Luces(i).B)
+                If Luces(i).X > XMinMapSize And Luces(i).X < XMaxMapSize And Luces(i).Y > YMinMapSize And Luces(i).Y < YMaxMapSize Then
+                    With MapData(Luces(i).X, Luces(i).Y)
+                        .Light.range = Luces(i).range ' Changed by: Project Administrator at: 4/26/2021-20:26:18 on machine: DESKTOP-BR8H09Q
+                        .Light.RGBCOLOR.a = 255
+                        .Light.RGBCOLOR.R = Luces(i).R
+                        .Light.RGBCOLOR.G = Luces(i).G
+                        .Light.RGBCOLOR.B = Luces(i).B
+    
+                    End With
+    
+                    Call Create_Light_To_Map(Luces(i).X, Luces(i).Y, Luces(i).range, Luces(i).R, Luces(i).G, Luces(i).B)
+                End If
             Next i
 
             Call LightRenderAll
@@ -718,7 +729,8 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , Zonas
 
             For i = 1 To .NumeroZonas
-                MapData(Zonas(i).X, Zonas(i).Y).ZonaIndex = Zonas(i).Zona
+                If Zonas(i).X > XMinMapSize And Zonas(i).X < XMaxMapSize + 1 And Zonas(i).Y > YMinMapSize And Zonas(i).Y < YMaxMapSize + 1 Then _
+                    MapData(Zonas(i).X, Zonas(i).Y).ZonaIndex = Zonas(i).Zona
             Next i
 
         End If
@@ -1166,7 +1178,8 @@ Public Function Save_CSM(ByVal MapRoute As String, _
 
                     End If
                     
-                    If .ZonaIndex > 0 And .ZonaIndex < CantZonas Then
+                    If .ZonaIndex > 0 And .ZonaIndex <= CantZonas Then
+                    
                         MH.NumeroZonas = MH.NumeroZonas + 1
                         ReDim Preserve Zonas(1 To MH.NumeroZonas)
                         Zonas(MH.NumeroZonas).X = i
@@ -1174,7 +1187,7 @@ Public Function Save_CSM(ByVal MapRoute As String, _
                         Zonas(MH.NumeroZonas).Zona = .ZonaIndex
 
                     End If
-                    
+
                     If .OBJInfo.ObjIndex > 0 Then
                         MH.NumeroOBJs = MH.NumeroOBJs + 1
                         ReDim Preserve Objetos(1 To MH.NumeroOBJs)

@@ -520,6 +520,9 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                     
                 End If
                 
+                '########################
+                'ZONAS
+                '########################
                 If frmZonas.LvBPintar.value Then
                     .ZonaIndex = frmZonas.LstZona.ListIndex + 1
                     MapInfo.Changed = 1

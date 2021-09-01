@@ -3,10 +3,10 @@ Begin VB.Form frmZonas
    BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Configuración de Zonas"
-   ClientHeight    =   3270
+   ClientHeight    =   5220
    ClientLeft      =   10215
    ClientTop       =   6885
-   ClientWidth     =   2415
+   ClientWidth     =   3465
    ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
@@ -20,15 +20,15 @@ Begin VB.Form frmZonas
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   218
+   ScaleHeight     =   348
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   161
+   ScaleWidth      =   231
    ShowInTaskbar   =   0   'False
    Begin WinterMapEditor.lvButtons_H LvBCerrar 
       Height          =   405
-      Left            =   270
+      Left            =   750
       TabIndex        =   7
-      Top             =   2820
+      Top             =   4740
       Width           =   1965
       _ExtentX        =   3466
       _ExtentY        =   714
@@ -53,19 +53,19 @@ Begin VB.Form frmZonas
       BackColor       =   &H00535353&
       Caption         =   "Zonas"
       ForeColor       =   &H00FFFFFF&
-      Height          =   2775
+      Height          =   4635
       Left            =   60
       TabIndex        =   0
       Top             =   0
-      Width           =   2295
+      Width           =   3345
       Begin WinterMapEditor.lvButtons_H LvBQuitar 
-         Height          =   435
-         Left            =   1200
+         Height          =   315
+         Left            =   1770
          TabIndex        =   6
-         Top             =   2280
-         Width           =   915
-         _ExtentX        =   1614
-         _ExtentY        =   767
+         Top             =   4200
+         Width           =   1485
+         _ExtentX        =   2619
+         _ExtentY        =   556
          Caption         =   "Quitar"
          CapAlign        =   2
          BackStyle       =   2
@@ -84,13 +84,13 @@ Begin VB.Form frmZonas
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBPintar 
-         Height          =   435
-         Left            =   180
+         Height          =   315
+         Left            =   120
          TabIndex        =   5
-         Top             =   2280
-         Width           =   975
-         _ExtentX        =   1720
-         _ExtentY        =   767
+         Top             =   4200
+         Width           =   1455
+         _ExtentX        =   2566
+         _ExtentY        =   556
          Caption         =   "Insertar"
          CapAlign        =   2
          BackStyle       =   2
@@ -109,13 +109,13 @@ Begin VB.Form frmZonas
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBResetear 
-         Height          =   405
-         Left            =   180
+         Height          =   345
+         Left            =   2280
          TabIndex        =   4
-         Top             =   1800
-         Width           =   1965
-         _ExtentX        =   3466
-         _ExtentY        =   714
+         Top             =   3810
+         Width           =   975
+         _ExtentX        =   1720
+         _ExtentY        =   609
          Caption         =   "Resetear"
          CapAlign        =   2
          BackStyle       =   2
@@ -123,24 +123,28 @@ Begin VB.Form frmZonas
             Name            =   "Tahoma"
             Size            =   8.25
             Charset         =   0
-            Weight          =   400
+            Weight          =   700
             Underline       =   0   'False
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
+         cFore           =   16777215
+         cFHover         =   16777215
+         cBhover         =   0
          cGradient       =   0
+         Gradient        =   3
          Mode            =   0
          Value           =   0   'False
-         cBack           =   -2147483633
+         cBack           =   255
       End
       Begin WinterMapEditor.lvButtons_H LvBZona 
          Height          =   345
          Index           =   1
          Left            =   1020
          TabIndex        =   3
-         Top             =   1380
-         Width           =   1155
-         _ExtentX        =   2037
+         Top             =   3810
+         Width           =   1215
+         _ExtentX        =   2143
          _ExtentY        =   609
          Caption         =   "Eliminar"
          CapAlign        =   2
@@ -163,11 +167,11 @@ Begin VB.Form frmZonas
       Begin WinterMapEditor.lvButtons_H LvBZona 
          Height          =   345
          Index           =   0
-         Left            =   150
+         Left            =   90
          TabIndex        =   2
-         Top             =   1380
-         Width           =   1185
-         _ExtentX        =   2090
+         Top             =   3810
+         Width           =   1215
+         _ExtentX        =   2143
          _ExtentY        =   609
          Caption         =   "Nueva"
          CapAlign        =   2
@@ -189,11 +193,11 @@ Begin VB.Form frmZonas
       End
       Begin VB.ListBox LstZona 
          Appearance      =   0  'Flat
-         Height          =   1005
+         Height          =   3345
          Left            =   120
          TabIndex        =   1
          Top             =   240
-         Width           =   2055
+         Width           =   3135
       End
    End
 End
@@ -238,7 +242,7 @@ End Sub
 Private Sub LvBResetear_Click()
     If MsgBox("¿¡Estas seguro que deseas resetear las propiedades de la zona!?", vbExclamation + vbYesNo) = vbYes Then
         Call ResetearZona(LstZona.ListIndex + 1)
-        Call ActualizarZonaList
+        Call ActualizarZonaList(LstZona.ListIndex)
     End If
 End Sub
 
