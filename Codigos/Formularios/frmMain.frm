@@ -1520,12 +1520,12 @@ Private Sub mnuNuevoMapa_Click()
 'Last modified: 29/04/2021
 '*************************************************
 On Error Resume Next
-    Dim loopc As Integer
+    Dim LoopC As Integer
     
     DeseaGuardarMapa Dialog.filename
     
-    For loopc = 0 To frmMain.MapPest.Count - 1
-        frmMain.MapPest(loopc).Visible = False
+    For LoopC = 0 To frmMain.MapPest.Count - 1
+        frmMain.MapPest(LoopC).Visible = False
     Next
     
     frmMain.Dialog.filename = Empty
@@ -1939,8 +1939,15 @@ Private Sub Form_Load()
     Me.Caption = Form_Caption
 
     'Temporal
-    ClientSetup.MapTam = 1
-    Call setMapSize
+    If ClientSetup.MeMode = eMeMode.ImperiumClasico Then
+        ClientSetup.MapTam = 1
+        Call setMapSize
+        
+    Else
+        ClientSetup.MapTam = 0
+        Call setMapSize
+        
+    End If
     
     LvBOpcion(0).value = VerBlockeados
     LvBOpcion(1).value = VerTranslados
@@ -1953,6 +1960,16 @@ Private Sub Form_Load()
     LvBOpcion(8).value = VerCapa3
     LvBOpcion(9).value = VerCapa4
     LvBOpcion(10).value = VerGrilla
+    
+    'Opciones que no van a esta disponibles si iniciamos en modo IAOC
+    If ClientSetup.MeMode = eMeMode.ImperiumClasico Then
+        mnuZonas.Enabled = False
+        mnuZonas.Visible = False
+        
+        mnuVent(0).Visible = False
+        mnuVent(0).Enabled = False
+        
+    End If
 
 End Sub
 

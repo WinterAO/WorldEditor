@@ -281,7 +281,7 @@ Public Sub AbrirunMapa(ByVal Path As String, Optional ByVal Mode As Boolean = Fa
             
         ElseIf ClientSetup.MeMode = eMeMode.ImperiumClasico Then
             #If Privado = 0 Then
-                Call modMapas.Cargar_MapImpClasico(Path, tIAOClasico)
+                Call modMapas.Cargar_MapImpClasico(Path)
             #End If
             
         End If
@@ -1920,68 +1920,94 @@ ErrorSave:
 
 End Sub
 
+Public Sub MapInfo_Guardar(ByVal Archivo As String)
+'*************************************************
+'Author: Lorwik
+'Last modified: 01/05/2021
+'Guardar Informacion del Mapa (.dat)
+'*************************************************
+
+    Dim MapTitulo As String
+
+    If LenB(MapTitulo) = 0 Then
+        MapTitulo = NameMap_Save
+    End If
+
+    Call WriteVar(Archivo, MapTitulo, "Name", MapInfo.name)
+    Call WriteVar(Archivo, MapTitulo, "MusicNum", MapInfo.Music)
+    Call WriteVar(Archivo, MapTitulo, "MagiaSinefecto", Val(MapInfo.MagiaSinEfecto))
+    Call WriteVar(Archivo, MapTitulo, "InviSinEfecto", Val(MapInfo.InviSinEfecto))
+    Call WriteVar(Archivo, MapTitulo, "ResuSinEfecto", Val(MapInfo.ResuSinEfecto))
+    Call WriteVar(Archivo, MapTitulo, "NoEncriptarMP", Val(MapInfo.NoEncriptarMP))
+
+    Call WriteVar(Archivo, MapTitulo, "Terreno", MapInfo.Terreno)
+    Call WriteVar(Archivo, MapTitulo, "Zona", MapInfo.Zona)
+    Call WriteVar(Archivo, MapTitulo, "Restringir", MapInfo.Restringir)
+    Call WriteVar(Archivo, MapTitulo, "BackUp", str(MapInfo.BackUp))
+
+    If MapInfo.PK Then
+        Call WriteVar(Archivo, MapTitulo, "Pk", "0")
+        
+    Else
+        Call WriteVar(Archivo, MapTitulo, "Pk", "1")
+        
+    End If
+End Sub
+
 '#######################################
-'GUARDADO DE MAPAS FORMATO IMPERIUM CLASICO
+'CARGO DE MAPAS FORMATO IMPERIUM CLASICO
 '#######################################
 
-Sub Cargar_MapImpClasico(ByVal Map As String, ByVal Tipo As eTipoMapa)
+Sub Cargar_MapImpClasico(ByVal Map As String)
     '***************************************************
     'Author: Lorwik
     'Last Modification: 14/03/2021
-    'Descripcion: Carga los mapas de ImperiumAO de la 1.3 y 1.4
+    'Descripcion: Carga los mapas de Imperium Clasico. Actualmente es identico al formato de Winter
+    'lo separo, por que en un futuro los de Winter cambiaran.
     '***************************************************
     
     On Error GoTo ErrorHandler
     
-    Dim fh              As Integer
-    Dim File            As Integer
-    Dim MH              As tMapHeader
-    Dim Blqs()          As tDatosBloqueados
-    Dim L1()            As Integer
-    Dim Ln1()           As Long
-    Dim L2()            As tDatosGrh
-    Dim L3()            As tDatosGrh
-    Dim L4()            As tDatosGrh
-    Dim Triggers()      As tDatosTrigger
-    Dim Luces()         As tDatosLucesIAC
-    Dim Particulas()    As tDatosParticulas
-    Dim Objetos()       As tDatosObjs
-    Dim NPCs()          As tDatosNPC
-    Dim TEs()           As tDatosTE
+    Dim fh As Integer
+    Dim File As Integer
+    Dim MH As tMapHeaderIAC
+    Dim Blqs() As tDatosBloqueadosIAC
+    Dim L1() As Long
+    Dim L2() As tDatosGrhIAC
+    Dim L3() As tDatosGrhIAC
+    Dim L4() As tDatosGrhIAC
+    Dim Triggers() As tDatosTriggerIAC
+    Dim Luces() As tDatosLucesIAC
+    Dim Particulas() As tDatosParticulasIAC
+    Dim Objetos() As tDatosObjsIAC
+    Dim NPCs() As tDatosNPCIAC
+    Dim TEs() As tDatosTEIAC
+    Dim LaCabecera As tCabecera
     
-    Dim i               As Long
-    Dim j               As Long
-    Dim tR              As Byte
-    Dim tG              As Byte
-    Dim tB              As Byte
-    
+    Dim i As Long
+    Dim j As Long
+    DoEvents
+          
+    'Change mouse icon
+    frmMain.MousePointer = 11
+        
     fh = FreeFile
-    
     Open Map For Binary Access Read As fh
+    
+        Get #fh, , LaCabecera
     
         Get #fh, , MH
         Get #fh, , MapSize
+        Get #fh, , MapDatIAC
         
-        If Tipo = eTipoMapa.tIAOnew Then
-            TipoMapaCargado = eTipoMapa.tIAOnew
-            Call CaptionWorldEditor(Map, False, "ImperiumAO 1.4")
-            
-            Get #fh, , MapDatIAO
-            ReDim Ln1(MapSize.XMin To MapSize.XMax, MapSize.YMin To MapSize.YMax) As Long
-            Get #fh, , Ln1
-            
-        ElseIf Tipo = eTipoMapa.tIAOold Then
-            TipoMapaCargado = eTipoMapa.tIAOold
-            Call CaptionWorldEditor(Map, False, "ImperiumAO 1.3")
-            
-            Get #fh, , MapDatIAOOld
-            ReDim L1(MapSize.XMin To MapSize.XMax, MapSize.YMin To MapSize.YMax) As Integer
-            Get #fh, , L1
-            
-        Else
-            Exit Sub
-            
-        End If
+        With MapSize
+            If Not .XMax = XMaxMapSize Or Not .YMax = YMaxMapSize Then
+                ReDim MapData(.XMin To .XMax, .YMin To .YMax)
+            End If
+            ReDim L1(.XMin To .XMax, .YMin To .YMax)
+        End With
+        
+        Get #fh, , L1
         
         With MH
             If .NumeroBloqueados > 0 Then
@@ -2013,7 +2039,7 @@ Sub Cargar_MapImpClasico(ByVal Map As String, ByVal Tipo As eTipoMapa)
                 Get #fh, , L4
                 For i = 1 To .NumeroLayers(4)
                     InitGrh MapData(L4(i).X, L4(i).Y).Graphic(4), L4(i).GrhIndex
-                  Next i
+                Next i
             End If
             
             If .NumeroTriggers > 0 Then
@@ -2041,11 +2067,16 @@ Sub Cargar_MapImpClasico(ByVal Map As String, ByVal Tipo As eTipoMapa)
                 Get #fh, , Luces
                 For i = 1 To .NumeroLuces
                 
-                    MapData(Luces(i).X, Luces(i).Y).Light.range = Luces(i).Rango
-                    
-                    Call ConvertLongToRGB(Luces(i).color, tR, tG, tB)
+                    With MapData(Luces(i).X, Luces(i).Y)
+                        .Light.range = Luces(i).range
+                        .Light.RGBCOLOR.a = 255
+                        .Light.RGBCOLOR.R = Luces(i).R
+                        .Light.RGBCOLOR.G = Luces(i).G
+                        .Light.RGBCOLOR.B = Luces(i).B
+
+                    End With
                 
-                    Call Create_Light_To_Map(Luces(i).X, Luces(i).Y, Luces(i).Rango, tR, tG, tB)
+                    Call Create_Light_To_Map(Luces(i).X, Luces(i).Y, Luces(i).range, Luces(i).R, Luces(i).G, Luces(i).B)
                 Next i
                 
                 Call LightRenderAll
@@ -2093,16 +2124,8 @@ Sub Cargar_MapImpClasico(ByVal Map As String, ByVal Tipo As eTipoMapa)
     
     For j = MapSize.YMin To MapSize.YMax
         For i = MapSize.XMin To MapSize.XMax
-            If Tipo = eTipoMapa.tIAOnew Then
-                If Ln1(i, j) > 0 Then
-                    InitGrh MapData(i, j).Graphic(1), Ln1(i, j)
-                End If
-                
-            ElseIf Tipo = eTipoMapa.tIAOold Then
-                If L1(i, j) > 0 Then
-                    InitGrh MapData(i, j).Graphic(1), L1(i, j)
-                End If
-                
+            If L1(i, j) > 0 Then
+                InitGrh MapData(i, j).Graphic(1), L1(i, j)
             End If
         Next i
     Next j
@@ -2111,14 +2134,11 @@ Sub Cargar_MapImpClasico(ByVal Map As String, ByVal Tipo As eTipoMapa)
     frmMapInfo.txtMapVersion.Text = MapInfo.MapVersion
     
     Call Pestanas(Map, ".csm")
-
-    ' Vacia el Deshacer
-    modEdicion.Deshacer_Clear
     
     'Change mouse icon
     frmMain.MousePointer = 0
     
-    Call CSMInfoCargarIAO
+    Call CSMInfoCargarIAC
     
     'Set changed flag
     MapInfo.Changed = 0
@@ -2127,50 +2147,62 @@ Sub Cargar_MapImpClasico(ByVal Map As String, ByVal Tipo As eTipoMapa)
     
     Call DibujarMinimapa ' Radar
     
-    Call AddtoRichTextBox(frmMain.StatTxt, "Mapa " & Map & " cargado...", 0, 255, 0)
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Mapa " & Map & " cargado...", 0, 255, 0)
+    
 ErrorHandler:
 
     If fh <> 0 Then Close fh
-    Call AddtoRichTextBox(frmMain.StatTxt, "Error en el Mapa " & Map & ", se ha generado un informe de errores en: " & App.Path & "\Logs.txt", 255, 0, 0)
-    File = FreeFile
-    Open App.Path & "\Logs.txt" For Output As #File
-        Print #File, Err.Description
-    Close #File
     
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Mapa " & Map & ", se ha generado un informe de errores en: " & App.Path & "\Logs.txt", 255, 0, 0)
+    
+    File = FreeFile
+    
+    Call RegistrarError(Err.Number, Err.Description, "modMapas.Cargar_CSM", Erl)
+
 End Sub
 
-Public Sub MapInfo_Guardar(ByVal Archivo As String)
-'*************************************************
-'Author: Lorwik
-'Last modified: 01/05/2021
-'Guardar Informacion del Mapa (.dat)
-'*************************************************
+Public Sub CSMInfoCargarIAC()
+'**********************************
+'Autor: Lorwik
+'Fecha: 14/03/2021
+'Descripcion: Cargar la informacion de los mapas de Imperium Clasico
+'**********************************
 
-    Dim MapTitulo As String
-
-    If LenB(MapTitulo) = 0 Then
-        MapTitulo = NameMap_Save
-    End If
-
-    Call WriteVar(Archivo, MapTitulo, "Name", MapInfo.name)
-    Call WriteVar(Archivo, MapTitulo, "MusicNum", MapInfo.Music)
-    Call WriteVar(Archivo, MapTitulo, "MagiaSinefecto", Val(MapInfo.MagiaSinEfecto))
-    Call WriteVar(Archivo, MapTitulo, "InviSinEfecto", Val(MapInfo.InviSinEfecto))
-    Call WriteVar(Archivo, MapTitulo, "ResuSinEfecto", Val(MapInfo.ResuSinEfecto))
-    Call WriteVar(Archivo, MapTitulo, "NoEncriptarMP", Val(MapInfo.NoEncriptarMP))
-
-    Call WriteVar(Archivo, MapTitulo, "Terreno", MapInfo.Terreno)
-    Call WriteVar(Archivo, MapTitulo, "Zona", MapInfo.Zona)
-    Call WriteVar(Archivo, MapTitulo, "Restringir", MapInfo.Restringir)
-    Call WriteVar(Archivo, MapTitulo, "BackUp", str(MapInfo.BackUp))
-
-    If MapInfo.PK Then
-        Call WriteVar(Archivo, MapTitulo, "Pk", "0")
+    Dim tR As Byte
+    Dim tG As Byte
+    Dim tB As Byte
+    
+    MapInfo.name = MapDatIAC.map_name
+    MapInfo.Music = MapDatIAC.music_number
+    
+    MapInfo.lvlMinimo = Val(MapDatIAC.lvlMinimo)
+    MapInfo.LuzBase = MapDatIAC.LuzBase
+    
+    If MapDatIAC.LuzBase <> 0 Then
+        frmMapInfo.chkLuzClimatica = Checked
+        Call ConvertLongToRGB(MapDatIAC.LuzBase, tR, tG, tB)
         
+        frmMapInfo.LuzMapa.Text = tR & "-" & tG & "-" & tB
     Else
-        Call WriteVar(Archivo, MapTitulo, "Pk", "1")
-        
+        frmMapInfo.chkLuzClimatica = Unchecked
     End If
+    
+    MapInfo.MapVersion = MapDatIAC.version
+    
+    If MapDatIAC.battle_mode = True Then
+        MapInfo.PK = True
+    Else
+        MapInfo.PK = False
+    End If
+    
+    MapInfo.ambient = MapDatIAC.ambient
+    
+    MapInfo.Terreno = MapDatIAC.terrain
+    MapInfo.Zona = MapDatIAC.zone
+    MapInfo.Restringir = MapDatIAC.restrict_mode
+    MapInfo.BackUp = MapDatIAC.backup_mode
+    
+    Call MapInfo_Actualizar
 End Sub
 
 Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".map")

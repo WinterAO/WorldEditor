@@ -1,13 +1,2 @@
 [History]
-1=#P0#=mb	#P1#=Cargar_MapImpClasico	#P2#=WinterMapEditor/modMapas/Cargar_MapImpClasico	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210901170139	#P7#=0	#P8#=39	.
-2=#P0#=mb	#P1#=Cargar_MapIAO	#P2#=WinterMapEditor/modMapas/Cargar_MapIAO	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210901165938	#P7#=0	#P8#=0	.
-3=#P0#=mb	#P1#=MapInfo_Guardar	#P2#=WinterMapEditor/modMapas/MapInfo_Guardar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210901165343	#P7#=0	#P8#=-2	.
-4=#P0#=mb	#P1#=CSMInfoSave	#P2#=WinterMapEditor/modMapas/CSMInfoSave	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210901165331	#P7#=0	#P8#=47	.
-5=#P0#=mb	#P1#=Save_CSM	#P2#=WinterMapEditor/modMapas/Save_CSM	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210901165215	#P7#=0	#P8#=13	.
-6=#P0#=mb	#P1#=Cargar_Map	#P2#=WinterMapEditor/modMapas/Cargar_Map	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210901165118	#P7#=0	#P8#=9	.
-7=#P0#=mb	#P1#=MapInfo_Cargar	#P2#=WinterMapEditor/modMapas/MapInfo_Cargar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210901165103	#P7#=0	#P8#=53	.
-8=#P0#=mb	#P1#=Cargar_CSM	#P2#=WinterMapEditor/modMapas/Cargar_CSM	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210901164311	#P7#=0	#P8#=91	.
-9=#P0#=mb	#P1#=AbrirunMapa	#P2#=WinterMapEditor/modMapas/AbrirunMapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210901170010	#P7#=0	#P8#=18	.
-10=#P0#=mb	#P1#=AbrirMapa	#P2#=WinterMapEditor/modMapas/AbrirMapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210901165042	#P7#=0	#P8#=19	.
-11=#P0#=mb	#P1#=RowSelected	#P2#=WinterMapEditor/LynxGrid/RowSelected [Let]	#P3#=	#P4#=	#P5#=MembProperty	#P6#=20210901160459	#P7#=0	#P8#=0	.
-12=#P0#=mb	#P1#=Main	#P2#=WinterMapEditor/modGeneral/Main	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210901155459	#P7#=0	#P8#=9	.
+1=#P0#=mb	#P1#=CrearGrafico	#P2#=WinterMapEditor/clsTextureManager/CrearGrafico	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210902125335	#P7#=0	#P8#=7	.

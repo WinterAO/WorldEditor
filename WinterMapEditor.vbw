@@ -1,4 +1,4 @@
-frmMain = 52, 52, 1891, 936, C, 26, 26, 1843, 910, C
+frmMain = 52, 52, 1891, 936, , 26, 26, 1843, 910, C
 modGeneral = 130, 130, 1969, 1014, C
 modCarga = 0, 0, 1810, 884, C
 clsIniManager = 104, 104, 1916, 988, C
@@ -7,7 +7,7 @@ lvButtons_H = 364, 364, 2269, 1187, C, 208, 208, 2047, 1092, C
 modLvTimer = 338, 338, 2150, 1222, C
 modMapas = 208, 208, 2047, 1092, Z
 modTileEngine = 78, 78, 1917, 962, C
-modCompression = 364, 364, 2176, 1248, C
+modCompression = 364, 364, 2176, 1248, 
 frmModo = 0, 0, 0, 0, C, 234, 234, 2073, 1118, C
 modLogs = 0, 0, 0, 0, C
 modDeclaraciones = 26, 26, 1836, 910, C

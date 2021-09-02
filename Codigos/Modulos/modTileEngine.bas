@@ -188,7 +188,8 @@ Public Sub setMapSize()
     'Seteamos el tamaño del mapa
     '***********************************
     
-    If ClientSetup.MapTam = 0 Then
+    'Si se establece el tamaño por defecto o se carga en modo IAOC va a ser si o si 100 x 100
+    If ClientSetup.MapTam = 0 Or ClientSetup.MeMode = eMeMode.ImperiumClasico Then
         XMaxMapSize = 100
         YMaxMapSize = 100
         
