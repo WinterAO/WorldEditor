@@ -65,7 +65,7 @@ HelpContextID="0"
 CompatibleMode="0"
 MajorVer=1
 MinorVer=0
-RevisionVer=18
+RevisionVer=19
 AutoIncrementVer=1
 ServerSupportFiles=0
 VersionComments="Editor de Mapas Comunidad Winter"
@@ -74,7 +74,7 @@ VersionFileDescription="Editor de Mapas Comunidad Winter"
 VersionLegalCopyright="Desarrollado por Lorwik para Comunidad Winter"
 VersionLegalTrademarks="Comunidad Winter"
 VersionProductName="WinterMapEditor"
-CondComp="LightEngine = 1 : Privado = 1"
+CondComp="LightEngine = 1 : Privado = 0"
 CompilationType=0
 OptimizationType=0
 FavorPentiumPro(tm)=0
