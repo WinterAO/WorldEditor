@@ -1962,8 +1962,7 @@ Sub Cargar_MapImpClasico(ByVal Map As String)
     '***************************************************
     'Author: Lorwik
     'Last Modification: 14/03/2021
-    'Descripcion: Carga los mapas de Imperium Clasico. Actualmente es identico al formato de Winter
-    'lo separo, por que en un futuro los de Winter cambiaran.
+    'Descripcion: Carga los mapas de Imperium Clasico.
     '***************************************************
     
     On Error GoTo ErrorHandler
@@ -2050,15 +2049,17 @@ Sub Cargar_MapImpClasico(ByVal Map As String)
                 Next i
             End If
             
-            If .NumeroParticulas > 0 Then
+             If .NumeroParticulas > 0 Then
                 ReDim Particulas(1 To .NumeroParticulas)
                 Get #fh, , Particulas
+    
                 For i = 1 To .NumeroParticulas
-                    MapData(Particulas(i).X, Particulas(i).Y).Particle_Index = Particulas(i).Particula
-                    Call General_Particle_Create(Particulas(i).Particula, Particulas(i).X, Particulas(i).Y)
-                    
-                    'MapData(Particulas(i).X, Particulas(i).y).Particle_Group_Index = General_Particle_Create(Particulas(i).Particula, Particulas(i).X, Particulas(i).y)
+                    If Particulas(i).X > XMinMapSize And Particulas(i).X < XMaxMapSize And Particulas(i).Y > YMinMapSize And Particulas(i).Y < YMaxMapSize Then
+                        MapData(Particulas(i).X, Particulas(i).Y).Particle_Index = Particulas(i).Particula
+                        Call General_Particle_Create(Particulas(i).Particula, Particulas(i).X, Particulas(i).Y)
+                    End If
                 Next i
+    
             End If
                 
             If .NumeroLuces > 0 Then
