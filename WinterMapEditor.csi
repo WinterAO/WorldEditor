@@ -1,2 +1,12 @@
 [History]
-1=#P0#=mb	#P1#=Cargar_MapImpClasico	#P2#=WinterMapEditor/modMapas/Cargar_MapImpClasico	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210906114237	#P7#=0	#P8#=-5	.
+1=#P0#=mb	#P1#=DobleClick	#P2#=WinterMapEditor/modEdit/DobleClick	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210913105003	#P7#=0	#P8#=5	.
+2=#P0#=mb	#P1#=AbrirunMapa	#P2#=WinterMapEditor/modMapas/AbrirunMapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210913104945	#P7#=0	#P8#=12	.
+3=#P0#=mb	#P1#=mnuReAbrirMapa_Click	#P2#=WinterMapEditor/frmMain/mnuReAbrirMapa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210913104925	#P7#=0	#P8#=20	.
+4=#P0#=mb	#P1#=MapPest_Click	#P2#=WinterMapEditor/frmMain/MapPest_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210913104843	#P7#=0	#P8#=45	.
+5=#P0#=mb	#P1#=Cargar_Map	#P2#=WinterMapEditor/modMapas/Cargar_Map	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210913104627	#P7#=0	#P8#=-5	.
+6=#P0#=mb	#P1#=Cargar_MapImpClasico	#P2#=WinterMapEditor/modMapasIAC/Cargar_MapImpClasico	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210913104810	#P7#=0	#P8#=-5	.
+7=#P0#=mb	#P1#=AbrirMapa	#P2#=WinterMapEditor/modMapas/AbrirMapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210913104801	#P7#=0	#P8#=26	.
+8=#P0#=mb	#P1#=MapInfo_Guardar	#P2#=WinterMapEditor/modMapas/MapInfo_Guardar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210913104440	#P7#=0	#P8#=32	.
+9=#P0#=mb	#P1#=Save_MapImpClasico	#P2#=WinterMapEditor/modMapas/Save_MapImpClasico	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210913104251	#P7#=0	#P8#=3	.
+10=#P0#=mb	#P1#=Save_CSM	#P2#=WinterMapEditor/modMapas/Save_CSM	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210913104217	#P7#=0	#P8#=344	.
+11=#P0#=mb	#P1#=Cargar_CSM	#P2#=WinterMapEditor/modMapas/Cargar_CSM	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210913104614	#P7#=0	#P8#=-4	.

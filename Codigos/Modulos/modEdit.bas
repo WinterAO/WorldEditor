@@ -34,7 +34,12 @@ Public Sub DobleClick(tX As Integer, tY As Integer)
                 
                     Case 1
                         If ClientSetup.MeMode = eMeMode.WinterAO Then
-                            Call modMapas.Cargar_CSM(frmMain.Dialog.filename)
+                            Call modMapasWAO.Cargar_CSM(frmMain.Dialog.filename)
+                        
+                        #If Privado = 0 Then
+                        ElseIf ClientSetup.TipoMapaCargado = eTipoMapa.tIAOClasico Then
+                            Call modMapasIAC.Cargar_MapImpClasico(frmMain.Dialog.filename)
+                        #End If
                         End If
                 
                 End Select

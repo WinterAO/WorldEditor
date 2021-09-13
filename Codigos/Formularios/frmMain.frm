@@ -1415,7 +1415,12 @@ Private Sub MapPest_Click(Index As Integer)
         
             Case 1
                 If ClientSetup.TipoMapaCargado = eTipoMapa.tWinter Then
-                    Call modMapas.Cargar_CSM(Dialog.filename)
+                    Call modMapasWAO.Cargar_CSM(Dialog.filename)
+                
+                #If Privado = 0 Then
+                ElseIf ClientSetup.TipoMapaCargado = eTipoMapa.tIAOClasico Then
+                    Call modMapasIAC.Cargar_MapImpClasico(Dialog.filename)
+                #End If
                 End If
                 
             Case 2
@@ -1604,7 +1609,15 @@ Private Sub mnuReAbrirMapa_Click()
     If frmMain.Dialog.FilterIndex = 0 Then
         modMapas.Cargar_Map Dialog.filename
     Else
-        modMapas.Cargar_CSM Dialog.filename
+    
+        If ClientSetup.TipoMapaCargado = eTipoMapa.tWinter Then
+            modMapasWAO.Cargar_CSM Dialog.filename
+            
+        #If Privado = 0 Then
+        ElseIf ClientSetup.TipoMapaCargado = eTipoMapa.tIAOClasico Then
+            modMapasIAC.Cargar_MapImpClasico Dialog.filename
+        #End If
+        End If
     End If
     
     DoEvents

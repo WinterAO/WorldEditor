@@ -930,6 +930,18 @@ Private Sub cmdMusica_Click()
     
 End Sub
 
+Private Sub Form_Load()
+
+    'Si el editor esta iniciado en modo Imperium Clasico, no va a estar disponibles la siguientes opciones:
+    If ClientSetup.MeMode = eMeMode.ImperiumClasico Then
+    
+        LvBOptX(0).value = True
+        LvBOptX(1).Visible = False
+    
+    End If
+
+End Sub
+
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 '*************************************************
 'Author: ^[GS]^
@@ -941,7 +953,6 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     End If
     
 End Sub
-
 
 Private Sub LvBActualizarLuces_Click()
     Call Actualizar_Estado
