@@ -22,7 +22,7 @@ End Type
 
 Public Enum srcFileType
     Graphics
-    ambient
+    Ambient
     Music
     Midi
     Wav
@@ -305,7 +305,7 @@ On Local Error GoTo errhandler
         Case Map
                 SourceFilePath = DirRecursos & "Mapas" & Formato
 
-        Case ambient
+        Case Ambient
                 SourceFilePath = DirRecursos & "Ambient" & Formato
                 
         Case Fuentes
@@ -447,6 +447,7 @@ On Error GoTo errhandler
         file_name = file_name & Space$(Len(info_head.strFileName) - Len(file_name))
    
     file_handler = FreeFile
+    
     Open resource_file_path For Binary Access Read Lock Write As file_handler
    
     Get file_handler, 1, file_head
@@ -489,6 +490,8 @@ errhandler:
     Close file_handler
     File_Find.strFileName = ""
     File_Find.lngFileSize = 0
+    
+    Debug.Print resource_file_path & " no existe."
 End Function
 
 

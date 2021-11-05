@@ -41,24 +41,16 @@ Begin VB.Form frmMapInfo
          TabIndex        =   35
          Top             =   5550
          Width           =   1845
-         _ExtentX        =   3254
-         _ExtentY        =   714
-         Caption         =   "Cerrar"
-         CapAlign        =   2
-         BackStyle       =   2
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cGradient       =   0
-         Mode            =   0
-         Value           =   0   'False
-         cBack           =   -2147483633
+         _extentx        =   3254
+         _extenty        =   714
+         caption         =   "Cerrar"
+         capalign        =   2
+         backstyle       =   2
+         font            =   "frmMapInfo.frx":628A
+         cgradient       =   0
+         mode            =   0
+         value           =   0   'False
+         cback           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBGuardar 
          Height          =   405
@@ -66,28 +58,20 @@ Begin VB.Form frmMapInfo
          TabIndex        =   34
          Top             =   5550
          Width           =   2055
-         _ExtentX        =   3625
-         _ExtentY        =   714
-         Caption         =   "Guardar"
-         CapAlign        =   2
-         BackStyle       =   2
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cFore           =   16777215
-         cFHover         =   16777215
-         cBhover         =   0
-         cGradient       =   0
-         Gradient        =   3
-         Mode            =   0
-         Value           =   0   'False
-         cBack           =   255
+         _extentx        =   3625
+         _extenty        =   714
+         caption         =   "Guardar"
+         capalign        =   2
+         backstyle       =   2
+         font            =   "frmMapInfo.frx":62B2
+         cfore           =   16777215
+         cfhover         =   16777215
+         cbhover         =   0
+         cgradient       =   0
+         gradient        =   3
+         mode            =   0
+         value           =   0   'False
+         cback           =   255
       End
       Begin WinterMapEditor.lvButtons_H cmdMusica 
          Height          =   345
@@ -95,24 +79,16 @@ Begin VB.Form frmMapInfo
          TabIndex        =   32
          Top             =   1050
          Width           =   645
-         _ExtentX        =   1138
-         _ExtentY        =   609
-         Caption         =   "&Más"
-         CapAlign        =   2
-         BackStyle       =   2
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cGradient       =   0
-         Mode            =   0
-         Value           =   0   'False
-         cBack           =   -2147483633
+         _extentx        =   1138
+         _extenty        =   609
+         caption         =   "&Más"
+         capalign        =   2
+         backstyle       =   2
+         font            =   "frmMapInfo.frx":62DA
+         cgradient       =   0
+         mode            =   0
+         value           =   0   'False
+         cback           =   -2147483633
       End
       Begin VB.ComboBox txtMapZona 
          Appearance      =   0  'Flat
@@ -126,9 +102,9 @@ Begin VB.Form frmMapInfo
             Strikethrough   =   0   'False
          EndProperty
          Height          =   330
-         ItemData        =   "frmMapInfo.frx":628A
+         ItemData        =   "frmMapInfo.frx":6302
          Left            =   1680
-         List            =   "frmMapInfo.frx":6297
+         List            =   "frmMapInfo.frx":630F
          TabIndex        =   31
          Text            =   "txtMapZona"
          Top             =   1440
@@ -158,24 +134,16 @@ Begin VB.Form frmMapInfo
             TabIndex        =   33
             Top             =   150
             Width           =   435
-            _ExtentX        =   767
-            _ExtentY        =   661
-            CapAlign        =   2
-            BackStyle       =   2
-            BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-               Name            =   "Tahoma"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            cGradient       =   0
-            Mode            =   0
-            Value           =   0   'False
-            Image           =   "frmMapInfo.frx":62B3
-            cBack           =   -2147483633
+            _extentx        =   767
+            _extenty        =   661
+            capalign        =   2
+            backstyle       =   2
+            font            =   "frmMapInfo.frx":632B
+            cgradient       =   0
+            mode            =   0
+            value           =   0   'False
+            image           =   "frmMapInfo.frx":6353
+            cback           =   -2147483633
          End
          Begin VB.TextBox LuzMapa 
             Appearance      =   0  'Flat
@@ -269,7 +237,7 @@ Begin VB.Form frmMapInfo
             ForeColor       =   &H00FFFFFF&
             Height          =   195
             Index           =   0
-            Left            =   90
+            Left            =   120
             TabIndex        =   26
             Top             =   390
             Width           =   1695
@@ -383,9 +351,9 @@ Begin VB.Form frmMapInfo
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         ItemData        =   "frmMapInfo.frx":1CBF5
+         ItemData        =   "frmMapInfo.frx":1CC95
          Left            =   1680
-         List            =   "frmMapInfo.frx":1CC02
+         List            =   "frmMapInfo.frx":1CCA2
          TabIndex        =   11
          Text            =   "txtMapTerreno"
          Top             =   1800
@@ -431,9 +399,9 @@ Begin VB.Form frmMapInfo
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         ItemData        =   "frmMapInfo.frx":1CC1F
+         ItemData        =   "frmMapInfo.frx":1CCBF
          Left            =   1680
-         List            =   "frmMapInfo.frx":1CC35
+         List            =   "frmMapInfo.frx":1CCD5
          TabIndex        =   9
          Text            =   "txtMapRestringir"
          Top             =   2160
@@ -937,6 +905,7 @@ Private Sub Form_Load()
     
         LvBOptX(0).value = True
         LvBOptX(1).Visible = False
+        LvBGuardar.Visible = False
     
     End If
 
@@ -959,7 +928,9 @@ Private Sub LvBActualizarLuces_Click()
 End Sub
 
 Private Sub LvBGuardar_Click()
-    Call guardarInfoZona(frmZonas.LstZona.ListIndex + 1)
+    If ClientSetup.MeMode = eMeMode.WinterAO Then
+        Call guardarInfoZona(frmZonas.LstZona.ListIndex + 1)
+    End If
 End Sub
 
 Public Sub guardarInfoZona(ByVal id As Integer)
@@ -969,7 +940,7 @@ Public Sub guardarInfoZona(ByVal id As Integer)
         .MapVersion = txtMapVersion.Text
         .name = txtMapNombre.Text
         .Music = txtMapMusica.Text
-        .ambient = TxtAmbient.Text
+        .Ambient = TxtAmbient.Text
         .PK = chkMapPK.value
         .MagiaSinEfecto = chkMapMagiaSinEfecto.value
         .InviSinEfecto = chkMapInviSinEfecto.value
@@ -1016,7 +987,7 @@ Private Sub txtAmbient_Change()
 'Author: Lorwik
 'Last modified: 10/08/14
 '*************************************************
-    MapInfo.ambient = TxtAmbient.Text
+    MapInfo.Ambient = TxtAmbient.Text
     MapInfo.Changed = 1
     
 End Sub

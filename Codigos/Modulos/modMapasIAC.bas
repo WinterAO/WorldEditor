@@ -88,7 +88,7 @@ Private Type tMapDatIAC
     music_number As String
     zone As String
     terrain As String
-    ambient As String
+    Ambient As String
     lvlMinimo As String
     LuzBase As Long
     version As Long
@@ -294,6 +294,8 @@ Sub Cargar_MapImpClasico(ByVal Map As String)
 
     MapaCargado = True
     
+    TipoMapaActual = eTipoMapa.tIAOClasico
+    
     Call DibujarMinimapa ' Radar
     
     Call AddtoRichTextBox(frmConsola.StatTxt, "Mapa " & Map & " cargado...", 0, 255, 0)
@@ -306,7 +308,7 @@ ErrorHandler:
     
     File = FreeFile
     
-    Call RegistrarError(Err.Number, Err.Description, "modMapas.Cargar_CSM", Erl)
+    Call RegistrarError(Err.Number, Err.Description, "modMapasIAC.MapImpClasico", Erl)
 
 End Sub
 
@@ -316,6 +318,8 @@ Public Sub CSMInfoCargarIAC()
 'Fecha: 14/03/2021
 'Descripcion: Cargar la informacion de los mapas de Imperium Clasico
 '**********************************
+
+On Error GoTo ErrorHandler
 
     Dim tR As Byte
     Dim tG As Byte
@@ -344,7 +348,7 @@ Public Sub CSMInfoCargarIAC()
         MapInfo.PK = False
     End If
     
-    MapInfo.ambient = MapDatIAC.ambient
+    MapInfo.Ambient = MapDatIAC.Ambient
     
     MapInfo.Terreno = MapDatIAC.terrain
     MapInfo.Zona = MapDatIAC.zone
@@ -352,6 +356,12 @@ Public Sub CSMInfoCargarIAC()
     MapInfo.BackUp = MapDatIAC.backup_mode
     
     Call MapInfo_Actualizar
+    
+    Exit Sub
+
+ErrorHandler:
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Error en CSMInfoCargarIAC, nro. " & Err.Number & " - " & Err.Description)
+
 End Sub
 
 '#######################################
@@ -586,7 +596,7 @@ Public Sub CSMInfoSaveIAC()
         MapDatIAC.battle_mode = False
     End If
     
-    MapDatIAC.ambient = MapInfo.ambient
+    MapDatIAC.Ambient = MapInfo.Ambient
     MapDatIAC.terrain = MapInfo.Terreno
     MapDatIAC.zone = MapInfo.Zona
     MapDatIAC.restrict_mode = MapInfo.Restringir

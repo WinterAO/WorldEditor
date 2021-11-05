@@ -108,7 +108,7 @@ Public Property Let Path(ByVal inString As String)
     WavPath = inString
 End Property
 
-Public Sub GetBuffer(ByVal filename As String, ByRef tBuff As DirectSoundSecondaryBuffer8, tipo As srcFileType)
+Public Sub GetBuffer(ByVal filename As String, ByRef tBuff As DirectSoundSecondaryBuffer8, Tipo As srcFileType)
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Modified by Augusto José Rando
@@ -136,7 +136,7 @@ Public Sub GetBuffer(ByVal filename As String, ByRef tBuff As DirectSoundSeconda
                 Set tBuff = mBuffers(IndiceObtenido).buffer
             'End If
         Else
-            If CreateBufferFromFile_Ex(filename, IndiceObtenido, tipo) Then
+            If CreateBufferFromFile_Ex(filename, IndiceObtenido, Tipo) Then
                 Set tBuff = mBuffers(IndiceObtenido).buffer
             End If
         End If
@@ -154,11 +154,11 @@ CrearNuevoBuffer:
     'Vemos si puedo agregar uno a la lista
     If mMaxEntries = mCantidadBuffers Then
         'Sacamos el que hace más que no usamos, y utilizamos el slot
-        IndiceObtenido = CrearBuffer(filename, BorraMenosUsado(), tipo)
+        IndiceObtenido = CrearBuffer(filename, BorraMenosUsado(), Tipo)
         Set tBuff = mBuffers(IndiceObtenido).buffer
     Else
         'Agrego un buffer nueva a la lista
-        IndiceObtenido = CrearBuffer(filename, IndiceObtenido, tipo)
+        IndiceObtenido = CrearBuffer(filename, IndiceObtenido, Tipo)
         Set tBuff = mBuffers(IndiceObtenido).buffer
     End If
     
@@ -305,7 +305,7 @@ Public Function Borrar(ByVal filename As Integer) As Integer
     ReDim Preserve mBuffers(1 To mCantidadBuffers)
 End Function
 
-Private Function CrearBuffer(ByVal Archivo As String, ByVal Index As Integer, ByVal tipo As srcFileType) As Integer
+Private Function CrearBuffer(ByVal Archivo As String, ByVal Index As Integer, ByVal Tipo As srcFileType) As Integer
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
 'Last Modify Date: 5/04/2005
@@ -331,7 +331,7 @@ On Error GoTo errhandler
         'Ultimo acceso
         .UltimoAcceso = GetTickCount
         
-        Call CreateBufferFromFile_Ex(Archivo, Index, tipo)
+        Call CreateBufferFromFile_Ex(Archivo, Index, Tipo)
         
     End With
     
@@ -346,7 +346,7 @@ errhandler:
     
 End Function
 
-Private Function CreateBufferFromFile_Ex(ByVal file_name As String, ByVal buffer_index, ByVal tipo As srcFileType) As Boolean
+Private Function CreateBufferFromFile_Ex(ByVal file_name As String, ByVal buffer_index, ByVal Tipo As srcFileType) As Boolean
 '**************************************************************
 'Author: Augusto José Rando
 'Last Modify Date: 3/04/2007
@@ -368,17 +368,17 @@ On Error GoTo ErrorHandler
     
     Dim udtBufferDesc As DSBUFFERDESC
     
-    If tipo = srcFileType.ambient Then
+    If Tipo = srcFileType.Ambient Then
         file_name = file_name & ".amb"
-        InfoHead = File_Find(App.Path & "\recursos\Ambient" & Formato, file_name)
+        InfoHead = File_Find(DirRecursos & "Sounds" & Formato, file_name)
     Else
         file_name = file_name & ".wav"
-        InfoHead = File_Find(App.Path & "\recursos\Sounds" & Formato, file_name)
+        InfoHead = File_Find(DirRecursos & "Sounds" & Formato, file_name)
     End If
     
     If InfoHead.lngFileSize = 0 Then Exit Function
     
-    If Extract_File_Memory(tipo, file_name, btArr) Then
+    If Extract_File_Memory(Tipo, file_name, btArr) Then
         lngOffset = LenB(gudtHeader)
         
         Call CopyMemory(gudtHeader, btArr(0), lngOffset)
@@ -538,7 +538,7 @@ Public Sub BorraTimerProc()
     mCantidadBuffers = mCantidadBuffers - offset
 End Sub
 
-Public Function CargarBuffer(ByVal filename As String, ByVal tipo As srcFileType) As Boolean
+Public Function CargarBuffer(ByVal filename As String, ByVal Tipo As srcFileType) As Boolean
 '**************************************************************
 'Author: Augusto José Rando
 'Last Modify Date: 17/08/2005
@@ -554,11 +554,11 @@ Public Function CargarBuffer(ByVal filename As String, ByVal tipo As srcFileType
         'Vemos si puedo agregar uno a la lista
         If mMaxEntries = mCantidadBuffers Then
             'Sacamos el que hace más que no usamos, y utilizamos el slot
-            Call CrearBuffer(filename, BorraMenosUsado(), tipo)
+            Call CrearBuffer(filename, BorraMenosUsado(), Tipo)
             CargarBuffer = True
         Else
             'Agrego un buffer nueva a la lista
-            Call CrearBuffer(filename, Index, tipo)
+            Call CrearBuffer(filename, Index, Tipo)
             CargarBuffer = True
         End If
     End If

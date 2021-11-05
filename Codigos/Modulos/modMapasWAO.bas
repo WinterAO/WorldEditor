@@ -117,7 +117,7 @@ Private Type tMapDat
     music_number As String
     zone As String
     terrain As String
-    ambient As String
+    Ambient As String
     lvlMinimo As String
     RoboNpcsPermitido As Boolean
     InvocarSinEfecto As Boolean
@@ -188,8 +188,6 @@ Sub Cargar_CSM(ByVal Map As String)
     Dim j            As Long
 
     DoEvents
-        
-    ClientSetup.TipoMapaCargado = eTipoMapa.tWinter
         
     'Change mouse icon
     frmMain.MousePointer = 11
@@ -408,6 +406,8 @@ Sub Cargar_CSM(ByVal Map As String)
 
     MapaCargado = True
     
+    TipoMapaActual = eTipoMapa.tWinter
+    
     Call DibujarMinimapa
     
     Call AddtoRichTextBox(frmConsola.StatTxt, "Mapa " & Map & " cargado...", 0, 255, 0)
@@ -494,7 +494,7 @@ Public Sub CSMInfoCargar()
 
             End If
             
-            .ambient = MapDat(i).ambient
+            .Ambient = MapDat(i).Ambient
             
             .Terreno = MapDat(i).terrain
             .Zona = MapDat(i).zone
@@ -923,7 +923,7 @@ Private Sub CSMInfoSave()
 
             End If
             
-            MapDat(i).ambient = .ambient
+            MapDat(i).Ambient = .Ambient
             MapDat(i).terrain = .Terreno
             MapDat(i).zone = .Zona
             MapDat(i).restrict_mode = .Restringir

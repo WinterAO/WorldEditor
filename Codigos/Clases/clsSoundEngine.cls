@@ -543,7 +543,7 @@ Public Function Music_Empty() As Boolean
     
     On Error GoTo Error_Handl
     
-    Dim ret As Long
+    Dim Ret As Long
     
     If (ClientSetup.bMusic = CONST_DESHABILITADA) Or (Engine_Initialized = False) Then Exit Function
     
@@ -580,7 +580,7 @@ Public Function Music_Load(ByVal file_str As String, Optional ByVal Volume As Lo
     
     On Error GoTo Error_Handl
     
-    Dim ret As Long
+    Dim Ret As Long
     
     If (LenB(file_str) <= 0) Or (ClientSetup.bMusic = CONST_DESHABILITADA) Or (Engine_Initialized = False) Then Exit Function
 
@@ -658,7 +658,7 @@ Public Function Music_Play() As Boolean
     
     On Error GoTo Error_Handl
     
-    Dim ret As Long
+    Dim Ret As Long
     
     If (ClientSetup.bMusic = CONST_DESHABILITADA) Or (Engine_Initialized = False) Then Exit Function
     
@@ -708,7 +708,7 @@ Public Function Music_Stop() As Boolean
 
     On Error GoTo Error_Handl
     
-    Dim ret As Long
+    Dim Ret As Long
     
     If (ClientSetup.bMusic = CONST_DESHABILITADA) Or (Engine_Initialized = False) Then Exit Function
     
@@ -783,7 +783,7 @@ Public Function Ambient_Load(ByVal file_name As String, Optional ByVal Volume As
 Debug.Print "Ambient_Load AMB: " & file_name
     If (file_name <= 0) Or (ClientSetup.bAmbient = 0) Or (Engine_Initialized = False) Then Exit Function
 
-    Call Buffers.GetBuffer(file_name, ambient_buffer, srcFileType.ambient)
+    Call Buffers.GetBuffer(file_name, ambient_buffer, srcFileType.Ambient)
     
     If Volume < -4000 Then Volume = -4000
     ambient_buffer.SetVolume Volume
@@ -845,7 +845,7 @@ Public Function Ambient_Stop() As Boolean
     If (ClientSetup.bAmbient = 0) Or (Engine_Initialized = False) Then Exit Function
     
     If Not ambient_buffer Is Nothing Then ambient_buffer.Stop
-    ambient_fire_buffer.Stop
+'    ambient_fire_buffer.Stop
     
     play_fire = False
     mAmbienteActual = 0
@@ -899,7 +899,7 @@ Public Function Sound_Render()
         
         EXTERIOR_VOLUME = ClientSetup.AmbientVol - 300
                 
-        mAmb = Val(MapInfo.ambient)
+        mAmb = Val(MapInfo.Ambient)
                         
         If mAmbienteActual <> mAmb And mAmb > 0 Then
             Call Ambient_Stop

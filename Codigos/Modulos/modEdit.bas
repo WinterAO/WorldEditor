@@ -30,19 +30,7 @@ Public Sub DobleClick(tX As Integer, tY As Integer)
                 Call modMapas.NuevoMapa
                 frmMain.Dialog.filename = PATH_Save & NameMap_Save & tTrans.Map & Formato
                 
-                Select Case frmMain.Dialog.FilterIndex
-                
-                    Case 1
-                        If ClientSetup.MeMode = eMeMode.WinterAO Then
-                            Call modMapasWAO.Cargar_CSM(frmMain.Dialog.filename)
-                        
-                        #If Privado = 0 Then
-                        ElseIf ClientSetup.TipoMapaCargado = eTipoMapa.tIAOClasico Then
-                            Call modMapasIAC.Cargar_MapImpClasico(frmMain.Dialog.filename)
-                        #End If
-                        End If
-                
-                End Select
+                Call abrirCargarMapa(frmMain.Dialog.filename, TipoMapaActual)
                 
                 'modMapIO.AbrirunMapa frmMain.Dialog.filename
                 UserPos.X = tTrans.X

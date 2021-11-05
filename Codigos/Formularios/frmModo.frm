@@ -27,15 +27,6 @@ Begin VB.Form frmModo
    Begin VB.Frame FraConfiguraciónDe 
       BackColor       =   &H00535353&
       Caption         =   "Configuración de video"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   1335
       Left            =   120
@@ -77,15 +68,6 @@ Begin VB.Form frmModo
    Begin VB.Frame FraModo 
       BackColor       =   &H00535353&
       Caption         =   "¿En que modo quieres iniciar el WorldEditor?"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   1575
       Left            =   120
@@ -159,7 +141,7 @@ Begin VB.Form frmModo
       End
       Begin VB.OptionButton OptModo 
          BackColor       =   &H00535353&
-         Caption         =   "Modo Imperium Classic"
+         Caption         =   "Modo Imperium Clasico"
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Index           =   1

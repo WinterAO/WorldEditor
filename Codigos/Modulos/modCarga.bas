@@ -16,7 +16,7 @@ End Enum
 
 Public Enum eTipoMapa
     tInt
-    tLong
+    tlong
     tWinter
     tIAOClasico
     tIAOnew
@@ -53,9 +53,6 @@ Public Type tSetupMods
     
     'CONFIGURACION
     MeMode As Byte
-    
-    'OTROS
-    TipoMapaCargado As eTipoMapa
 End Type
 
 Public ClientSetup As tSetupMods
@@ -102,7 +99,14 @@ End Function
 Public Sub IniciarCabecera()
 
     With MiCabecera
-        .Desc = "WinterAO Resurrection mod Argentum Online by Noland Studios. http://winterao.com.ar"
+        If eMeMode.WinterAO Then
+            .Desc = "WinterAO Resurrection mod Argentum Online by Noland Studios. http://winterao.com.ar"
+            
+        ElseIf eMeMode.ImperiumClasico Then
+            .Desc = "Imperium Clasico mod Argentum Online by Comunidad Winter. http://imperiumclasico.com.ar"
+            
+        End If
+        
         .CRC = Rnd * 245
         .MagicWord = Rnd * 92
     End With

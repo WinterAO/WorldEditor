@@ -1,12 +1,15 @@
 Attribute VB_Name = "modMapas"
 Option Explicit
 
+Public TipoMapaActual As Byte 'Indica que tipo de mapa se abrio actualmente
+
 '/////////////////////////////////////////////////////////////////////
 'Lectura, guardado y otras features del formato de mapas Argentum y
 'otras funciones relacionadas con mapas en general
 '/////////////////////////////////////////////////////////////////////
 
-Public Sub AbrirMapa(Optional ByVal IntMode As Boolean = False)
+Public Sub AbrirMapa(ByRef Tipo As Byte)
+
     frmMain.Dialog.CancelError = True
 
     On Error GoTo AbrirMapa_Err
@@ -22,7 +25,7 @@ Public Sub AbrirMapa(Optional ByVal IntMode As Boolean = False)
         
     Call modMapas.NuevoMapa
         
-    Call AbrirunMapa(frmMain.Dialog.filename, IntMode)
+    Call abrirCargarMapa(frmMain.Dialog.filename, Tipo)
         
     DoEvents
     frmMain.mnuReAbrirMapa.Enabled = True
@@ -35,34 +38,46 @@ AbrirMapa_Err:
     Resume Next
 End Sub
 
-Public Sub AbrirunMapa(ByVal Path As String, Optional ByVal Mode As Boolean = False)
-    '********************************
-    'Autor: Lorwik
-    'Fecha: 23/03/2021
-    '********************************
+Public Sub abrirCargarMapa(ByVal Path As String, ByRef Tipo As Byte)
 
     If frmMain.Dialog.FilterIndex = 1 Then
-        If ClientSetup.MeMode = eMeMode.WinterAO Then
-            If Mode Then
-                'Call modMapas.Cargar_CSM_Old(Path)
+    
+        Select Case Tipo
+        
+            Case eTipoMapa.tWinter_Old
+                'Call modMapas.Cargar_CSM_Old(frmMain.Dialog.filename)
+                MsgBox "Función no disponible por el momento."
+                Exit Sub
                 
-            Else
-                Call modMapasWAO.Cargar_CSM(Path)
+            Case eTipoMapa.tWinter
+                Call modMapasWAO.Cargar_CSM(frmMain.Dialog.filename)
                 
-            End If
+            Case eTipoMapa.tIAOClasico
+                #If Privado = 0 Then
+                    Call modMapasIAC.Cargar_MapImpClasico(frmMain.Dialog.filename)
+                #End If
+                
+            Case eTipoMapa.tIAOold
+                Call Cargar_MapIAO(frmMain.Dialog.filename, eTipoMapa.tIAOold)
+                
+            Case eTipoMapa.tIAOnew
+                Call Cargar_MapIAO(frmMain.Dialog.filename, eTipoMapa.tIAOnew)
             
-        ElseIf ClientSetup.MeMode = eMeMode.ImperiumClasico Then
-            #If Privado = 0 Then
-                Call modMapasIAC.Cargar_MapImpClasico(Path)
-            #End If
-            
-        End If
+        End Select
 
     Else
-        Call modMapas.Cargar_Map(Path, Mode)
+    
+        Select Case Tipo
+        
+            Case eTipoMapa.tInt
+                Call modMapas.Cargar_Map(frmMain.Dialog.filename, True)
+                
+            Case eTipoMapa.tlong
+                Call modMapas.Cargar_Map(frmMain.Dialog.filename, False)
+                
+        End Select
             
     End If
-
 End Sub
 
 Public Sub DeseaGuardarMapa(Optional Path As String)
@@ -224,7 +239,7 @@ Public Sub NuevoMapa()
         MapInfo.MapVersion = 0
         MapInfo.name = "Mapa Desconocido"
         MapInfo.Music = 0
-        MapInfo.ambient = 0
+        MapInfo.Ambient = 0
         MapInfo.PK = True
         MapInfo.MagiaSinEfecto = 0
         MapInfo.InviSinEfecto = 0
@@ -270,7 +285,7 @@ Public Sub MapInfo_Actualizar()
         .txtMapRestringir.Text = MapInfo.Restringir
         '   .chkMapBackup.value = MapInfo.BackUp
         .chkMapPK.value = IIf(MapInfo.PK = True, 1, 0)
-        .TxtAmbient.Text = MapInfo.ambient
+        .TxtAmbient.Text = MapInfo.Ambient
         .TxtlvlMinimo = MapInfo.lvlMinimo
         .chkMapMagiaSinEfecto.value = MapInfo.MagiaSinEfecto
         .chkMapInviSinEfecto.value = IIf(MapInfo.InviSinEfecto, vbChecked, vbUnchecked)
@@ -318,7 +333,7 @@ Public Sub ResetearZona(ByVal id As Integer)
         .MapVersion = 0
         .name = "Zona Desconocida"
         .Music = 0
-        .ambient = 0
+        .Ambient = 0
         .PK = True
         .MagiaSinEfecto = 0
         .InviSinEfecto = 0
@@ -395,7 +410,7 @@ Public Sub MapZona_Actualizar(ByVal id As Integer)
         .txtMapRestringir = MapZonas(id).Restringir
         '   .chkMapBackup.value = MapZonas(ID).BackUp
         .chkMapPK.value = IIf(MapZonas(id).PK = True, 1, 0)
-        .TxtAmbient.Text = MapZonas(id).ambient
+        .TxtAmbient.Text = MapZonas(id).Ambient
         .TxtlvlMinimo = MapZonas(id).lvlMinimo
         .chkMapMagiaSinEfecto.value = IIf(MapZonas(id).MagiaSinEfecto, vbChecked, vbUnchecked)
         .chkMapInviSinEfecto.value = IIf(MapZonas(id).InviSinEfecto, vbChecked, vbUnchecked)
@@ -461,10 +476,10 @@ Public Sub Cargar_Map(ByVal Map As String, Optional ByVal EsInteger As Boolean =
     'Con esto, le digo al WE que estamos usando mapas de tipo integer,
     'lo uso mas que nada para que no crashee cargar los mapas siguientes en las Pestañas.
     If EsInteger Then
-        ClientSetup.TipoMapaCargado = eTipoMapa.tInt
+        TipoMapaActual = eTipoMapa.tInt
         
     Else
-        ClientSetup.TipoMapaCargado = eTipoMapa.tLong
+        TipoMapaActual = eTipoMapa.tlong
         
     End If
     
@@ -820,7 +835,7 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
                     
                 Put FreeFileMap, , ByFlags
                     
-                If ClientSetup.TipoMapaCargado = eTipoMapa.tInt Then
+                If TipoMapaActual = eTipoMapa.tInt Then
                     Put FreeFileMap, , .Graphic(1).GrhIndexInt
                     
                 Else
@@ -830,7 +845,7 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
                 
                 For LoopC = 2 To 4
                     
-                    If ClientSetup.TipoMapaCargado = eTipoMapa.tInt Then
+                    If TipoMapaActual = eTipoMapa.tInt Then
                         If .Graphic(LoopC).GrhIndex Then Put FreeFileMap, , .Graphic(LoopC).GrhIndexInt
                     Else
 

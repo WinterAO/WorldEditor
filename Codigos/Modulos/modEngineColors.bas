@@ -6,7 +6,7 @@ Public temp_rgb(3) As Long
 Public AlphaTecho As Boolean
 
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" _
-    (Destination As Any, source As Any, ByVal Length As Long)
+    (Destination As Any, Source As Any, ByVal Length As Long)
 
 Public Sub Engine_D3DColor_To_RGB_List(rgb_list() As Long, color As D3DCOLORVALUE)
 '***************************************************
@@ -33,6 +33,7 @@ Public Sub Engine_Long_To_RGB_List(rgb_list() As Long, long_color As Long)
 End Sub
 
 Sub ConvertLongToRGB(ByVal value As Long, R As Byte, G As Byte, B As Byte)
+    If value < 0 Then Exit Sub
     R = value Mod 256
     G = Int(value / 256) Mod 256
     B = Int(value / 256 / 256) Mod 256

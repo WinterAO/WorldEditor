@@ -887,7 +887,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   4
-      Left            =   12090
+      Left            =   12120
       TabIndex        =   29
       Top             =   270
       Visible         =   0   'False
@@ -1007,7 +1007,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   12
-      Left            =   18240
+      Left            =   18210
       TabIndex        =   37
       Top             =   270
       Visible         =   0   'False
@@ -1030,9 +1030,28 @@ Begin VB.Form frmMain
          Index           =   0
          Shortcut        =   ^A
       End
-      Begin VB.Menu mnuAbrirMapa 
-         Caption         =   "&Abrir Mapa [Int]"
-         Index           =   1
+      Begin VB.Menu mnuOtrosAbrirMapa 
+         Caption         =   "&Abrir otros Mapas"
+         Begin VB.Menu abrirOtroMapa 
+            Caption         =   "IAO 1.3"
+            Index           =   0
+         End
+         Begin VB.Menu abrirOtroMapa 
+            Caption         =   "IAO 1.4"
+            Index           =   1
+         End
+         Begin VB.Menu abrirOtroMapa 
+            Caption         =   "&Abrir Mapa AO [Int]"
+            Index           =   2
+         End
+         Begin VB.Menu abrirOtroMapa 
+            Caption         =   "Abrir Mapa AO [Long]"
+            Index           =   3
+         End
+         Begin VB.Menu abrirOtroMapa 
+            Caption         =   "Winter Old"
+            Index           =   4
+         End
       End
       Begin VB.Menu mnuArchivoLine3 
          Caption         =   "-"
@@ -1223,8 +1242,14 @@ Begin VB.Form frmMain
          Caption         =   "Buscar zonas nulas"
       End
    End
-   Begin VB.Menu mnuAcerca 
-      Caption         =   "Acerca de..."
+   Begin VB.Menu mnusobre 
+      Caption         =   "Sobre..."
+      Begin VB.Menu mnuFormatos 
+         Caption         =   "Formatos de Mapa"
+      End
+      Begin VB.Menu mnuAcerca 
+         Caption         =   "Acerca de..."
+      End
    End
 End
 Attribute VB_Name = "frmMain"
@@ -1406,33 +1431,13 @@ Private Sub MapPest_Click(Index As Integer)
 
         On Error GoTo errhandler
 
-        Dialog.filename = PATH_Save & NameMap_Save & (Index + NumMap_Save - 7) & Formato
+        Dialog.filename = PATH_Save & NameMap_Save & (Index + NumMap_Save - 4) & Formato
         
         Call modMapas.NuevoMapa
         
         DoEvents
-        Select Case frmMain.Dialog.FilterIndex
         
-            Case 1
-                If ClientSetup.TipoMapaCargado = eTipoMapa.tWinter Then
-                    Call modMapasWAO.Cargar_CSM(Dialog.filename)
-                
-                #If Privado = 0 Then
-                ElseIf ClientSetup.TipoMapaCargado = eTipoMapa.tIAOClasico Then
-                    Call modMapasIAC.Cargar_MapImpClasico(Dialog.filename)
-                #End If
-                End If
-                
-            Case 2
-                If ClientSetup.TipoMapaCargado = eTipoMapa.tInt Then
-                    Call modMapas.Cargar_Map(Dialog.filename, True)
-                    
-                Else
-                    Call modMapas.Cargar_Map(Dialog.filename)
-                    
-                End If
-            
-        End Select
+        Call abrirCargarMapa(frmMain.Dialog.filename, TipoMapaActual)
         
         EngineRun = True
         
@@ -1469,16 +1474,43 @@ Private Sub mnuAbrirMapa_Click(Index As Integer)
 'Author: Lorwik
 'Last modified: 25/04/2020
 '*************************************************
-    Select Case Index
+
+    Select Case ClientSetup.MeMode
     
-        Case 0
-            Call AbrirMapa(False)
-            
-        Case 1
-            Call AbrirMapa(True)
-            
+        Case eMeMode.WinterAO
+            Call AbrirMapa(eTipoMapa.tWinter)
+    
+        Case eMeMode.ImperiumClasico
+            Call AbrirMapa(eTipoMapa.tIAOClasico)
+        
     End Select
     
+End Sub
+
+Private Sub abrirOtroMapa_Click(Index As Integer)
+'*************************************************
+'Author: Lorwik
+'Last modified: 21/09/2021
+'*************************************************
+    Select Case Index
+    
+        Case 0 'IAO 1.3
+            Call AbrirMapa(eTipoMapa.tIAOold)
+            
+        Case 1 'IAO 1.4
+            Call AbrirMapa(eTipoMapa.tIAOnew)
+            
+        Case 2 'AO Int
+            Call AbrirMapa(eTipoMapa.tInt)
+            
+        Case 3 'AO Long
+            Call AbrirMapa(eTipoMapa.tlong)
+            
+        Case 4 'WAO Old
+            Call AbrirMapa(tWinter_Old)
+            
+            
+    End Select
 End Sub
 
 Private Sub mnuAcerca_Click()
@@ -1497,6 +1529,10 @@ Private Sub mnuAutoCompletarSuperficies_Click()
 '*************************************************
     mnuAutoCompletarSuperficies.Checked = (mnuAutoCompletarSuperficies.Checked = False)
     
+End Sub
+
+Private Sub mnuFormatos_Click()
+    frmFormatos.Show , frmMain
 End Sub
 
 Private Sub mnuInformes_Click()
@@ -1606,19 +1642,7 @@ Private Sub mnuReAbrirMapa_Click()
     
     Call modMapas.NuevoMapa
     
-    If frmMain.Dialog.FilterIndex = 0 Then
-        modMapas.Cargar_Map Dialog.filename
-    Else
-    
-        If ClientSetup.TipoMapaCargado = eTipoMapa.tWinter Then
-            modMapasWAO.Cargar_CSM Dialog.filename
-            
-        #If Privado = 0 Then
-        ElseIf ClientSetup.TipoMapaCargado = eTipoMapa.tIAOClasico Then
-            modMapasIAC.Cargar_MapImpClasico Dialog.filename
-        #End If
-        End If
-    End If
+    Call abrirCargarMapa(frmMain.Dialog.filename, TipoMapaActual)
     
     DoEvents
     mnuReAbrirMapa.Enabled = True
@@ -1982,6 +2006,8 @@ Private Sub Form_Load()
         mnuVent(0).Visible = False
         mnuVent(0).Enabled = False
         
+        abrirOtroMapa(4).Visible = False 'Desactivamos los mapas Winter Old
+    
     End If
 
 End Sub
