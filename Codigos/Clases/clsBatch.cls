@@ -105,7 +105,7 @@ Public Sub Draw(ByVal X As Long, _
                 ByVal Y As Long, _
                 ByVal Width As Long, _
                 ByVal Height As Long, _
-                ByRef Color() As Long, _
+                ByRef color() As Long, _
                 Optional ByVal Tx1 As Single = 0, _
                 Optional ByVal Ty1 As Single = 0, _
                 Optional ByVal Tx2 As Single = 1, _
@@ -134,7 +134,7 @@ Public Sub Draw(ByVal X As Long, _
     m_Data(m_Position).X = X
     m_Data(m_Position).Y = Y
     m_Data(m_Position).Z = 0
-    m_Data(m_Position).Colour = Color(0)
+    m_Data(m_Position).Colour = color(0)
     m_Data(m_Position).tX = Tx1
     m_Data(m_Position).tY = Ty1
    
@@ -153,7 +153,7 @@ Public Sub Draw(ByVal X As Long, _
     m_Data(m_Position).X = X
     m_Data(m_Position).Y = Y + Height
     m_Data(m_Position).Z = 0
-    m_Data(m_Position).Colour = Color(1)
+    m_Data(m_Position).Colour = color(1)
     m_Data(m_Position).tX = Tx1
     m_Data(m_Position).tY = Ty2
  
@@ -172,7 +172,7 @@ Public Sub Draw(ByVal X As Long, _
     m_Data(m_Position).X = X + Width
     m_Data(m_Position).Y = Y + Height
     m_Data(m_Position).Z = 0
-    m_Data(m_Position).Colour = Color(2)
+    m_Data(m_Position).Colour = color(2)
     m_Data(m_Position).tX = Tx2
     m_Data(m_Position).tY = Ty2
  
@@ -191,7 +191,7 @@ Public Sub Draw(ByVal X As Long, _
     m_Data(m_Position).X = X + Width
     m_Data(m_Position).Y = Y
     m_Data(m_Position).Z = 0
-    m_Data(m_Position).Colour = Color(3)
+    m_Data(m_Position).Colour = color(3)
     m_Data(m_Position).tX = Tx2
     m_Data(m_Position).tY = Ty1
  
@@ -279,5 +279,8 @@ Public Sub Initialise(ByVal Capacity As Long)
     Call D3DIndexBuffer8SetData(m_IBuffer, 0, UBound(lpIndices), 0, lpIndices(0))
        
 End Sub
+
+
+
 
 
