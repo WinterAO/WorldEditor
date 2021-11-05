@@ -1973,6 +1973,8 @@ End Sub
 
 Private Sub Form_Load()
 
+    Dim i As Byte
+
     Me.Caption = Form_Caption
 
     'Temporal
@@ -2009,6 +2011,32 @@ Private Sub Form_Load()
         abrirOtroMapa(4).Visible = False 'Desactivamos los mapas Winter Old
     
     End If
+    
+    #If VisorMode = 1 Then
+    
+        mnuGuardarMapa.Visible = False
+        mnuGuardarMapaComo.Visible = False
+        
+        mnuVent(3).Visible = False
+        mnuVent(4).Visible = False
+        mnuRellenar.Visible = False
+        
+        For i = 0 To 6
+            LvBEdit(i).Visible = False
+        Next i
+        
+        LvBEdit(8).Visible = False
+        
+        mnuEdicion.Visible = False
+        mnuFunciones.Visible = False
+        mnuFormatos.Visible = False
+        
+        minimapaSave.Visible = False
+        saveAllMinimap.Visible = False
+        
+        mnuOtrosAbrirMapa.Visible = False
+    
+    #End If
 
 End Sub
 

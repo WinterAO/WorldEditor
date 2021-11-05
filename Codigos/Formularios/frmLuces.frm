@@ -482,6 +482,23 @@ Public Sub AccionLuces()
     Call cQuitarLuz_Click
 End Sub
 
+Private Sub Form_Load()
+    Dim i As Byte
+    
+    #If VisorMode = 1 Then
+    
+        RGBCOLOR.Visible = False
+        Frame2.Visible = False
+        cQuitarLuz.Visible = False
+        cInsertarLuz.Visible = False
+        
+        For i = 0 To 5
+            lvButtons_H5(i).Visible = False
+        Next i
+        
+    #End If
+End Sub
+
 Private Sub lvButtons_H1_Click(Index As Integer)
 
     If frmMapInfo.chkLuzClimatica.value = Checked Then
