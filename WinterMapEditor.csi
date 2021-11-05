@@ -1,0 +1,4 @@
+[History]
+1=#P0#=mb	#P1#=CrearGrafico	#P2#=WinterMapEditor/clsTextureManager/CrearGrafico	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20211105185226	#P7#=0	#P8#=57	.
+2=#P0#=mb	#P1#=Initialise	#P2#=WinterMapEditor/clsBatch/Initialise	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20211105183833	#P7#=0	#P8#=19	.
+3=#P0#=mb	#P1#=Engine_DirectX8_Init	#P2#=WinterMapEditor/mDx8_Engine/Engine_DirectX8_Init	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20211105183436	#P7#=0	#P8#=0	.
