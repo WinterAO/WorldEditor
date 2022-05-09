@@ -1027,7 +1027,6 @@ Begin VB.Form frmMain
       End
       Begin VB.Menu mnuAbrirMapa 
          Caption         =   "&Abrir Mapa"
-         Index           =   0
          Shortcut        =   ^A
       End
       Begin VB.Menu mnuOtrosAbrirMapa 
@@ -1231,6 +1230,9 @@ Begin VB.Form frmMain
       End
       Begin VB.Menu mnuOptimizar 
          Caption         =   "Optimizar"
+      End
+      Begin VB.Menu mnuOptimizarMasiv 
+         Caption         =   "Optimización masiva"
       End
       Begin VB.Menu mnuInformes 
          Caption         =   "Informes"
@@ -1469,7 +1471,7 @@ Minimap_cuadrante_Click_Err:
     
 End Sub
 
-Private Sub mnuAbrirMapa_Click(Index As Integer)
+Private Sub mnuAbrirMapa_Click()
 '*************************************************
 'Author: Lorwik
 'Last modified: 25/04/2020
@@ -1481,6 +1483,9 @@ Private Sub mnuAbrirMapa_Click(Index As Integer)
             Call AbrirMapa(eTipoMapa.tWinter)
     
         Case eMeMode.ImperiumClasico
+            Call AbrirMapa(eTipoMapa.tIAOClasico)
+            
+        Case eMeMode.WinterUltimate
             Call AbrirMapa(eTipoMapa.tIAOClasico)
         
     End Select
@@ -1623,6 +1628,21 @@ Private Sub mnuOptimizar_Click()
 '*************************************************
 
     frmOptimizar.Show , frmMain
+    
+    frmOptimizar.Height = 4214
+    frmOptimizar.FraOptimizarTodos.Visible = False
+End Sub
+
+Private Sub mnuOptimizarMasiv_Click()
+'*************************************************
+'Author: Lorwik
+'Last modified: 01/05/2021
+'*************************************************
+
+    frmOptimizar.Show , frmMain
+    
+    frmOptimizar.Height = 6075
+    frmOptimizar.FraOptimizarTodos.Visible = True
 End Sub
 
 Private Sub mnuReAbrirMapa_Click()
@@ -2001,7 +2021,7 @@ Private Sub Form_Load()
     LvBOpcion(10).value = VerGrilla
     
     'Opciones que no van a esta disponibles si iniciamos en modo IAOC
-    If ClientSetup.MeMode = eMeMode.ImperiumClasico Then
+    If ClientSetup.MeMode = eMeMode.ImperiumClasico Or ClientSetup.MeMode = eMeMode.WinterUltimate Then
         mnuZonas.Enabled = False
         mnuZonas.Visible = False
         
@@ -2009,6 +2029,10 @@ Private Sub Form_Load()
         mnuVent(0).Enabled = False
         
         abrirOtroMapa(4).Visible = False 'Desactivamos los mapas Winter Old
+        
+    Else
+    
+        mnuOptimizarMasiv.Visible = False
     
     End If
     

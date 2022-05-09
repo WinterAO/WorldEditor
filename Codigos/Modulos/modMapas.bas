@@ -126,6 +126,9 @@ Public Sub GuardarMapa(Optional Path As String)
             Case eMeMode.ImperiumClasico
                 Call Save_MapImpClasico(Path)
                 
+            Case eMeMode.WinterUltimate
+                Call Save_MapImpClasico(Path)
+                
         End Select
             
     ElseIf frmMain.Dialog.FilterIndex = 2 Then
@@ -186,7 +189,7 @@ Public Sub NuevoMapa()
                 .ObjGrh.GrhIndex = 0
         
                 ' Translados
-                .TileExit.Map = 0
+                .TileExit.map = 0
                 .TileExit.X = 0
                 .TileExit.Y = 0
                 
@@ -438,7 +441,7 @@ End Sub
 'CARGA DE MAPAS FORMATO ARGENTUM
 '#######################################
 
-Public Sub Cargar_Map(ByVal Map As String, Optional ByVal EsInteger As Boolean = False)
+Public Sub Cargar_Map(ByVal map As String, Optional ByVal EsInteger As Boolean = False)
     '*************************************************
     'Author: Lorwik
     'Last modified: 01/05/2021
@@ -448,7 +451,7 @@ Public Sub Cargar_Map(ByVal Map As String, Optional ByVal EsInteger As Boolean =
 
     Dim LoopC       As Integer
 
-    Dim TempInt     As Integer
+    Dim tempint     As Integer
 
     Dim Body        As Integer
 
@@ -485,30 +488,30 @@ Public Sub Cargar_Map(ByVal Map As String, Optional ByVal EsInteger As Boolean =
     
     'Open files
     FreeFileMap = FreeFile
-    Open Map For Binary As FreeFileMap
+    Open map For Binary As FreeFileMap
     Seek FreeFileMap, 1
     
-    Map = Left$(Map, Len(Map) - 4)
-    Map = Map & ".inf"
+    map = Left$(map, Len(map) - 4)
+    map = map & ".inf"
     
     FreeFileInf = FreeFile
-    Open Map For Binary As FreeFileInf
+    Open map For Binary As FreeFileInf
     Seek FreeFileInf, 1
     
     'Cabecera map
     Get FreeFileMap, , MapInfo.MapVersion
     Get FreeFileMap, , MiCabecera
-    Get FreeFileMap, , TempInt
-    Get FreeFileMap, , TempInt
-    Get FreeFileMap, , TempInt
-    Get FreeFileMap, , TempInt
+    Get FreeFileMap, , tempint
+    Get FreeFileMap, , tempint
+    Get FreeFileMap, , tempint
+    Get FreeFileMap, , tempint
     
     'Cabecera inf
-    Get FreeFileInf, , TempInt
-    Get FreeFileInf, , TempInt
-    Get FreeFileInf, , TempInt
-    Get FreeFileInf, , TempInt
-    Get FreeFileInf, , TempInt
+    Get FreeFileInf, , tempint
+    Get FreeFileInf, , tempint
+    Get FreeFileInf, , tempint
+    Get FreeFileInf, , tempint
+    Get FreeFileInf, , tempint
 
     'Load arrays
     For Y = YMinMapSize To YMaxMapSize
@@ -602,7 +605,7 @@ Public Sub Cargar_Map(ByVal Map As String, Optional ByVal EsInteger As Boolean =
                     
                     With .TileExit
                     
-                        Get FreeFileInf, , .Map
+                        Get FreeFileInf, , .map
                         Get FreeFileInf, , .X
                         Get FreeFileInf, , .Y
                     
@@ -647,11 +650,11 @@ Public Sub Cargar_Map(ByVal Map As String, Optional ByVal EsInteger As Boolean =
     Close FreeFileMap
     Close FreeFileInf
     
-    Call Pestanas(Map, ".map")
+    Call Pestanas(map, ".map")
     
-    Map = Left$(Map, Len(Map) - 4) & ".dat"
+    map = Left$(map, Len(map) - 4) & ".dat"
     
-    Call MapInfo_Cargar(Map)
+    Call MapInfo_Cargar(map)
     
     With frmMain
     
@@ -749,7 +752,7 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
 
     Dim LoopC       As Long
 
-    Dim TempInt     As Integer
+    Dim tempint     As Integer
 
     Dim Y           As Long
 
@@ -805,17 +808,17 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
 
     Put FreeFileMap, , CInt(frmMapInfo.txtMapVersion.Text)
     Put FreeFileMap, , MiCabecera
-    Put FreeFileMap, , TempInt
-    Put FreeFileMap, , TempInt
-    Put FreeFileMap, , TempInt
-    Put FreeFileMap, , TempInt
+    Put FreeFileMap, , tempint
+    Put FreeFileMap, , tempint
+    Put FreeFileMap, , tempint
+    Put FreeFileMap, , tempint
     
     'inf Header
-    Put FreeFileInf, , TempInt
-    Put FreeFileInf, , TempInt
-    Put FreeFileInf, , TempInt
-    Put FreeFileInf, , TempInt
-    Put FreeFileInf, , TempInt
+    Put FreeFileInf, , tempint
+    Put FreeFileInf, , tempint
+    Put FreeFileInf, , tempint
+    Put FreeFileInf, , tempint
+    Put FreeFileInf, , tempint
     
     'Write .map file
     For Y = YMinMapSize To YMaxMapSize
@@ -860,7 +863,7 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
                 'Escribimos el archivo ".INF"
                 ByFlags = 0
                     
-                If .TileExit.Map Then ByFlags = ByFlags Or 1
+                If .TileExit.map Then ByFlags = ByFlags Or 1
                 
                 If .NPCIndex Then ByFlags = ByFlags Or 2
                 
@@ -868,8 +871,8 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
                     
                 Put FreeFileInf, , ByFlags
                     
-                If .TileExit.Map Then
-                    Put FreeFileInf, , .TileExit.Map
+                If .TileExit.map Then
+                    Put FreeFileInf, , .TileExit.map
                     Put FreeFileInf, , .TileExit.X
                     Put FreeFileInf, , .TileExit.Y
 
@@ -947,7 +950,7 @@ Public Sub MapInfo_Guardar(ByVal Archivo As String)
     End If
 End Sub
 
-Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".map")
+Public Sub Pestanas(ByVal map As String, Optional ByVal MapFormat As String = ".map")
 
     '*************************************************
     'Author: ^[GS]^
@@ -958,26 +961,26 @@ Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".
 
     Dim LoopC As Integer
     
-    For LoopC = Len(Map) To 1 Step -1
+    For LoopC = Len(map) To 1 Step -1
 
-        If mid(Map, LoopC, 1) = "\" Then
-            PATH_Save = Left(Map, LoopC)
+        If mid(map, LoopC, 1) = "\" Then
+            PATH_Save = Left(map, LoopC)
             Exit For
 
         End If
 
     Next
     
-    Map = Right(Map, Len(Map) - (Len(PATH_Save)))
+    map = Right(map, Len(map) - (Len(PATH_Save)))
     
-    MapaActual = ReadField(1, Right(Map, Len(Map) - 4), Asc("."))
+    MapaActual = ReadField(1, Right(map, Len(map) - 4), Asc("."))
     'If frmCopiarBordes.Visible Then Call frmCopiarBordes.Inicializar
     
-    For LoopC = Len(Left(Map, Len(Map) - 4)) To 1 Step -1
+    For LoopC = Len(Left(map, Len(map) - 4)) To 1 Step -1
 
-        If IsNumeric(mid(Left(Map, Len(Map) - 4), LoopC, 1)) = False Then
-            NumMap_Save = Right(Left(Map, Len(Map) - 4), Len(Left(Map, Len(Map) - 4)) - LoopC)
-            NameMap_Save = Left(Map, LoopC)
+        If IsNumeric(mid(Left(map, Len(map) - 4), LoopC, 1)) = False Then
+            NumMap_Save = Right(Left(map, Len(map) - 4), Len(Left(map, Len(map) - 4)) - LoopC)
+            NameMap_Save = Left(map, LoopC)
             Exit For
 
         End If
