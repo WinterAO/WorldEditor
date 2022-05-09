@@ -368,7 +368,7 @@ End Sub
 'GUARDO DE MAPAS FORMATO IMPERIUM CLASICO
 '#######################################
 
-Public Function Save_MapImpClasico(ByVal MapRoute As String) As Boolean
+Public Function Save_MapImpClasico(ByVal MapRoute As String, Optional ByVal SinAvisos As Boolean = False) As Boolean
     '***************************************************
     'Author: Lorwik
     'Last Modification: 14/03/2021
@@ -394,7 +394,7 @@ On Error GoTo ErrorHandler
     Dim i As Integer
     Dim j As Integer
     
-    If NoSobreescribir = False Then
+    If SinAvisos = False Then
         If FileExist(MapRoute, vbNormal) = True Then
             If MsgBox("¿Desea sobrescribir " & MapRoute & "?", vbCritical + vbYesNo) = vbNo Then
                 Exit Function

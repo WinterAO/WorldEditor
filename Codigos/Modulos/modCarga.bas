@@ -12,6 +12,7 @@ Public MiCabecera As tCabecera
 Public Enum eMeMode
     WinterAO
     ImperiumClasico
+    WinterUltimate
 End Enum
 
 Public Enum eTipoMapa
@@ -201,7 +202,7 @@ On Local Error GoTo fileErr:
         End If
         
         If FileExist(DirRecursos & "Graficos" & Formato, vbArchive) = False Then
-            MsgBox "No se encontro el recursos de graficos."
+            MsgBox "No se encontro el recursos de graficos en " & DirRecursos & "Graficos" & Formato & "."
             End
         End If
         

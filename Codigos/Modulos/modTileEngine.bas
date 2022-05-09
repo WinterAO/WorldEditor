@@ -198,8 +198,8 @@ Public Sub setMapSize()
         UserPos.Y = 50
         
     Else
-        XMaxMapSize = 1100
-        YMaxMapSize = 1100
+        XMaxMapSize = 1000
+        YMaxMapSize = 1000
         
         'Set intial user position
         UserPos.X = 550
