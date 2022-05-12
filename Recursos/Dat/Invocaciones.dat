@@ -1,0 +1,41 @@
+'WinterAO - Invocaciones
+
+'Map = El mapa al que corresponde la invocacion
+'NPC = el bicho que sale de la invocacion
+'CastInvocacion = El tiempo que tarda en aparecer el bicho
+'Quest = Si la invocacion requiere una quest para iniciarse
+'Coords = Indica las coordenadas donde los usuarios se deben colocar en el formarto X1-X2-Y1-Y2
+'PosAparicion = Posicion donde aparece el bicho
+
+[GLOBAL]
+NumInvocaciones=3
+
+[INVOC1]
+Map=118
+NPC=1050
+CastInvocacion=30
+Quest=5
+Coords1=49-50-43-44
+Coords2=44-43-51-52
+Coords3=55-56-51-52
+PosAparicion=50-49
+
+[INVOC2]
+Map=122
+NPC=1051
+CastInvocacion=30
+Quest=5
+Coords1=42-43-22-23
+Coords2=37-38-26-27
+Coords3=47-48-26-27
+PosAparicion=43-26
+
+[INVOC3]
+Map=113
+NPC=1052
+CastInvocacion=30
+Quest=5
+Coords1=31-32-24-25
+Coords2=26-27-28-29
+Coords3=36-37-28-29
+PosAparicion=32-28

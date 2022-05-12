@@ -1,0 +1,8 @@
+'En este archivo se debe especificar la cantidad de mapas
+'que cargara el servidor
+'No modificar este valor por uno menor, ya que la programacion esta pensada para el server Alkon
+'y podria llegar a explotar la aplicacion
+
+[INIT]
+NumMaps=3
+NumBgs=1
