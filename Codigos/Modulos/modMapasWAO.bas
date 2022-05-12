@@ -573,8 +573,8 @@ Public Function Save_CSM(ByVal MapRoute As String, _
     MapSize.YMin = YMinMapSize
     
     If Fusion Then
-        MapSize.XMax = 1100
-        MapSize.YMax = 1100
+        MapSize.XMax = 1000
+        MapSize.YMax = 1000
 
     End If
     

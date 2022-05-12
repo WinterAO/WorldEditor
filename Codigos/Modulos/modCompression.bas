@@ -42,12 +42,12 @@ Private Declare Function UnCompress Lib "zlib.dll" Alias "uncompress" (dest As A
 
 Public Function Formato() As String
 
-    If ClientSetup.MeMode = eMeMode.WinterAO Then
+    If ClientSetup.MeMode = eMeMode.WinterAO Or ClientSetup.MeMode = eMeMode.WinterUltimate Then
         Formato = ".WAO"
         
     ElseIf ClientSetup.MeMode = eMeMode.ImperiumClasico Then
         Formato = ".IAC"
-        
+
     End If
 
 End Function

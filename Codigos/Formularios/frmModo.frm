@@ -74,6 +74,17 @@ Begin VB.Form frmModo
       TabIndex        =   0
       Top             =   120
       Width           =   5175
+      Begin VB.OptionButton OptModo 
+         BackColor       =   &H00535353&
+         Caption         =   "Modo Winter Ultimate"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   195
+         Index           =   2
+         Left            =   1410
+         TabIndex        =   10
+         Top             =   660
+         Width           =   1965
+      End
       Begin WinterMapEditor.lvButtons_H LvBBoton 
          Height          =   345
          Index           =   1
@@ -134,10 +145,10 @@ Begin VB.Form frmModo
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Index           =   0
-         Left            =   600
+         Left            =   630
          TabIndex        =   2
-         Top             =   480
-         Width           =   1455
+         Top             =   360
+         Width           =   1275
       End
       Begin VB.OptionButton OptModo 
          BackColor       =   &H00535353&
@@ -145,10 +156,10 @@ Begin VB.Form frmModo
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Index           =   1
-         Left            =   2520
+         Left            =   2550
          TabIndex        =   1
-         Top             =   480
-         Width           =   2415
+         Top             =   360
+         Width           =   1965
       End
       Begin VB.PictureBox Picture1 
          Height          =   0

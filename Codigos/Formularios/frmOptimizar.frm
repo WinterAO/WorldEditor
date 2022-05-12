@@ -3,7 +3,7 @@ Begin VB.Form frmOptimizar
    BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Optimizar el Mapa"
-   ClientHeight    =   3675
+   ClientHeight    =   5640
    ClientLeft      =   45
    ClientTop       =   390
    ClientWidth     =   3765
@@ -19,11 +19,116 @@ Begin VB.Form frmOptimizar
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   245
+   ScaleHeight     =   376
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   251
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.Frame FraOptimizarTodos 
+      BackColor       =   &H00535353&
+      Caption         =   "Optimizador automatico"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   1845
+      Left            =   90
+      TabIndex        =   9
+      Top             =   3720
+      Visible         =   0   'False
+      Width           =   3615
+      Begin VB.TextBox txtRuta 
+         BorderStyle     =   0  'None
+         Height          =   285
+         Left            =   240
+         TabIndex        =   15
+         Top             =   810
+         Width           =   3165
+      End
+      Begin VB.TextBox txtMax 
+         Appearance      =   0  'Flat
+         Height          =   285
+         Left            =   2220
+         TabIndex        =   13
+         Text            =   "2"
+         Top             =   1290
+         Width           =   945
+      End
+      Begin VB.TextBox txtMin 
+         Appearance      =   0  'Flat
+         Height          =   285
+         Left            =   630
+         TabIndex        =   11
+         Text            =   "1"
+         Top             =   1320
+         Width           =   915
+      End
+      Begin VB.Label lblInserteLa 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Inserte la ruta de los mapas: (Ejemmplo: ""C\EditordeMapas\Mapas\"")"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   465
+         Left            =   270
+         TabIndex        =   14
+         Top             =   270
+         Width           =   2970
+      End
+      Begin VB.Label lblMax 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Max"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   195
+         Left            =   1860
+         TabIndex        =   12
+         Top             =   1320
+         Width           =   300
+      End
+      Begin VB.Label lblMin 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Min:"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   195
+         Left            =   270
+         TabIndex        =   10
+         Top             =   1350
+         Width           =   300
+      End
+   End
    Begin WinterMapEditor.lvButtons_H cOptimizar 
       Height          =   525
       Left            =   1650
@@ -234,6 +339,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private optimizacionMasiva As Boolean
+
 Private Sub cCancelar_Click()
     '*************************************************
     'Author: Lorwik
@@ -248,7 +355,50 @@ Private Sub cOptimizar_Click()
     'Author: Lorwik
     'Last modified: 01/05/2021
     '*************************************************
-    Call Optimizar
+    
+    Dim RutadelMapa As String
+    Dim MinMapa As Integer
+    Dim MaxMapa As Integer
+    Dim i As Integer
+    
+    If optimizacionMasiva = False Then
+        Call Optimizar
+        
+    Else
+        
+        If txtRuta.Text = "" Then
+            MsgBox "Ruta de mapas invalido.", vbCritical
+            Exit Sub
+        End If
+        
+        RutadelMapa = txtRuta.Text
+        
+        If Not IsNumeric(txtMin.Text) Or Not IsNumeric(txtMax.Text) Then
+            MsgBox "Los numeros de los mapas solo pueden ser numericos!"
+            Exit Sub
+        End If
+        
+        MinMapa = txtMin.Text
+        MaxMapa = txtMax.Text
+        
+        If MinMapa >= MaxMapa Then
+            MsgBox "El mapa minimo no puede ser igual o mayor que el mapa maximo!", vbCritical
+            Exit Sub
+        End If
+        
+        For i = MinMapa To MaxMapa
+
+            Call Cargar_MapImpClasico(RutadelMapa & "Mapa" & i & ".csm")
+            
+            Call Optimizar
+            
+            Call Save_MapImpClasico(RutadelMapa & "Mapa" & i & ".csm", True)
+            
+            Call modMapas.NuevoMapa
+        
+        Next i
+        
+    End If
     
 End Sub
 
@@ -344,3 +494,13 @@ Public Sub Optimizar()
 
 End Sub
 
+Private Sub Form_Load()
+    'Si tenemos ventana grande es que queremos optimizar muchos mapas
+    If Me.Height > 4215 Then
+        optimizacionMasiva = True
+        
+    Else 'Ventana chica, normal...
+        optimizacionMasiva = False
+        
+    End If
+End Sub
