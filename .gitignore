@@ -8,7 +8,6 @@ Codigo/*.log
 *.OBJ
 *.log
 Config.ini
-INIT/*
 Graficos/*
 WinterMapEditor.exe
 
