@@ -83,6 +83,9 @@ Public PantallaY As Integer
 Public ClienteHeight As Integer
 Public ClienteWidth As Integer
 
+'Contador de tiles
+Public ContadorTiles As Long
+
 'Heading Constants
 Public Enum eDireccion
     NORTH = 1
@@ -128,14 +131,14 @@ End Type
 'Posicion en un mapa
 Public Type Position
     X As Integer
-    Y As Integer
+    y As Integer
 End Type
 
 'Holds a world position
 Public Type WorldPos
     Map As Integer
     X As Integer
-    Y As Integer
+    y As Integer
 End Type
 
 ' Cuerpos body.dat
@@ -219,7 +222,7 @@ Public Type tMapInfo
     InvocarSinEfecto As Byte
     OcultarSinEfecto As Byte
     lvlMinimo As Byte
-    ambient As String
+    Ambient As String
     NoEncriptarMP As Byte
 End Type
 

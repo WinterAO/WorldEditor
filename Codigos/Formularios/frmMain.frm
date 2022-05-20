@@ -2093,17 +2093,6 @@ Private Sub Form_Load()
     Dim i As Byte
 
     Me.Caption = Form_Caption
-
-    'Temporal
-    If ClientSetup.MeMode = eMeMode.ImperiumClasico Then
-        ClientSetup.MapTam = 1
-        Call setMapSize
-        
-    Else
-        ClientSetup.MapTam = 0
-        Call setMapSize
-        
-    End If
     
     LvBOpcion(0).value = VerBlockeados
     LvBOpcion(1).value = VerTranslados
@@ -2158,6 +2147,17 @@ Private Sub Form_Load()
         mnuOtrosAbrirMapa.Visible = False
     
     #End If
+    
+    'Temporal
+    If ClientSetup.MeMode = eMeMode.ImperiumClasico Then
+        ClientSetup.MapTam = 1
+        Call setMapSize
+        
+    Else
+        ClientSetup.MapTam = 0
+        Call setMapSize
+        
+    End If
 
 End Sub
 
@@ -2285,6 +2285,8 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y A
         SeleccionFY = tY '+ TileY
         frmRellenar.DX2.Text = tX
         frmRellenar.DY2.Text = tY
+        
+        ContadorTiles = (frmRellenar.DX2.Text - frmRellenar.DX1.Text + 1) * (frmRellenar.DY2.Text - frmRellenar.DY1.Text + 1)
         
     Else
         Call modEdit.ClickEdit(Button, tX, tY)
