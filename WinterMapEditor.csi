@@ -1,0 +1,4 @@
+[History]
+1=#P0#=mb	#P1#=Form_Load	#P2#=WinterMapEditor/frmMapInfo/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20220520192225	#P7#=0	#P8#=9	.
+2=#P0#=mb	#P1#=Form_Load	#P2#=WinterMapEditor/frmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20220520192016	#P7#=0	#P8#=65	.
+3=#P0#=mb	#P1#=LvBOptX_Click	#P2#=WinterMapEditor/frmMapInfo/LvBOptX_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20220520191751	#P7#=0	#P8#=8	.
