@@ -265,14 +265,23 @@ On Local Error GoTo fileErr:
         VerBlockeados = Val(Lector.GetValue("MOSTRAR", "Bloqueos"))
         
         frmMain.Minimap_capa1.Checked = Val(Lector.GetValue("MINIMAP", "Capa1"))
+        MMiniMap_capa1 = frmMain.Minimap_capa1.Checked
         frmMain.Minimap_capa2.Checked = Val(Lector.GetValue("MINIMAP", "Capa2"))
+        MMiniMap_capa2 = frmMain.Minimap_capa2.Checked
         frmMain.Minimap_capa3.Checked = Val(Lector.GetValue("MINIMAP", "Capa3"))
+        MMiniMap_capa3 = frmMain.Minimap_capa3.Checked
         frmMain.Minimap_capa4.Checked = Val(Lector.GetValue("MINIMAP", "Capa4"))
+        MMiniMap_capa4 = frmMain.Minimap_capa4.Checked
         frmMain.Minimap_objetos.Checked = Val(Lector.GetValue("MINIMAP", "Obj"))
+        MMiniMap_objetos = frmMain.Minimap_objetos.Checked
         frmMain.Minimap_npcs.Checked = Val(Lector.GetValue("MINIMAP", "NPC"))
+        MMiniMap_Npcs = frmMain.Minimap_npcs.Checked
         frmMain.Minimap_particulas.Checked = Val(Lector.GetValue("MINIMAP", "Particulas"))
+        MMiniMap_particulas = frmMain.Minimap_particulas.Checked
         frmMain.Minimap_ndemapa.Checked = Val(Lector.GetValue("MINIMAP", "Nombre"))
+        MMiniMap_Nombre = frmMain.Minimap_ndemapa.Checked
         frmMain.Minimap_bloqueos.Checked = Val(Lector.GetValue("MINIMAP", "Bloqueos"))
+        MMiniMap_Bloqueos = frmMain.Minimap_bloqueos.Checked
         
         ' AUDIO
         .bMusic = CByte(Lector.GetValue("AUDIO", "MUSICA"))
@@ -513,7 +522,7 @@ On Error GoTo errhandler:
                 Call InitGrh(BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0)
                 
                 BodyData(i).HeadOffset.X = MisCuerpos(i).HeadOffsetX
-                BodyData(i).HeadOffset.Y = MisCuerpos(i).HeadOffsetY
+                BodyData(i).HeadOffset.y = MisCuerpos(i).HeadOffsetY
             End If
         Next i
     
