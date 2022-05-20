@@ -1211,6 +1211,9 @@ Begin VB.Form frmMain
          Begin VB.Menu mnuInsertarSuperficieEnTodo 
             Caption         =   "Inser. Superficie en todo el mapa"
          End
+         Begin VB.Menu mnuInsertarSuperficieEnBordes 
+            Caption         =   "Inser. Superficie en bordes del mapa"
+         End
          Begin VB.Menu mnuBloquearBordes 
             Caption         =   "Inser. Bloqueos en bordes"
          End
@@ -1222,6 +1225,9 @@ Begin VB.Form frmMain
          End
          Begin VB.Menu mnuQuitarSuperficieDeCapa 
             Caption         =   "Elim. Superficie capa seleccionada"
+         End
+         Begin VB.Menu QuitarSuperficieBordes 
+            Caption         =   "Elim. Superficie en bordes del mapa"
          End
          Begin VB.Menu mnuDesbloquearBordes 
             Caption         =   "Elim. Bloqueos en bordes"
@@ -1607,6 +1613,22 @@ Private Sub mnuInformes_Click()
 
     frmInformes.Show , frmMain
 
+End Sub
+
+Private Sub mnuInsertarSuperficieEnBordes_Click()
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 20/05/06
+'*************************************************
+Call modEdicion.Superficie_Bordes
+End Sub
+
+Private Sub mnuQuitarSuperficieBordes_Click()
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 20/05/06
+'*************************************************
+Call modEdicion.Quitar_Bordes
 End Sub
 
 Private Sub mnuInsertarSuperficieEnTodo_Click()

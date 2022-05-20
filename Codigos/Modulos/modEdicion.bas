@@ -172,3 +172,138 @@ Next y
 MapInfo.Changed = 1
 
 End Sub
+
+''
+' Elimita todo lo que se encuentre en los bordes del mapa
+'
+
+Public Sub Quitar_Bordes()
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 20/05/06
+'*************************************************
+
+If EditWarning Then Exit Sub
+
+'*****************************************************************
+'Clears a border in a room with current GRH
+'*****************************************************************
+
+Dim y As Integer
+Dim X As Integer
+
+If Not MapaCargado Then
+    Exit Sub
+End If
+
+For y = YMinMapSize To YMaxMapSize
+    For X = XMinMapSize To XMaxMapSize
+
+        If X < MinXBorder Or X > MaxXBorder Or y < MinYBorder Or y > MaxYBorder Then
+        
+            MapData(X, y).Graphic(1).GrhIndex = 1
+            InitGrh MapData(X, y).Graphic(1), 1
+            MapData(X, y).bLocked = 0
+            
+             'Erase NPCs
+            If MapData(X, y).NPCIndex > 0 Then
+                EraseChar MapData(X, y).CharIndex
+                MapData(X, y).NPCIndex = 0
+            End If
+
+            'Erase Objs
+            MapData(X, y).OBJInfo.ObjIndex = 0
+            MapData(X, y).OBJInfo.Amount = 0
+            MapData(X, y).ObjGrh.GrhIndex = 0
+
+            'Clear exits
+            MapData(X, y).TileExit.Map = 0
+            MapData(X, y).TileExit.X = 0
+            MapData(X, y).TileExit.y = 0
+            
+            ' Triggers
+            MapData(X, y).Trigger = 0
+
+        End If
+
+    Next X
+Next y
+
+'Set changed flag
+MapInfo.Changed = 1
+
+End Sub
+
+''
+' Coloca la superficie seleccionada en todos los bordes
+'
+
+Public Sub Superficie_Bordes()
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 20/05/06
+'*************************************************
+
+Dim y As Integer
+Dim X As Integer
+
+If Not MapaCargado Then
+    Exit Sub
+End If
+
+For y = YMinMapSize To YMaxMapSize
+    For X = XMinMapSize To XMaxMapSize
+
+        If X < MinXBorder Or X > MaxXBorder Or y < MinYBorder Or y > MaxYBorder Then
+
+          If frmConfigSup.MOSAICO.value = vbChecked Then
+            Dim aux As Integer
+            aux = Val(frmSuperficies.cGrh.Text) + _
+            ((y Mod frmConfigSup.mLargo) * frmConfigSup.mAncho) + (X Mod frmConfigSup.mAncho)
+            If frmBloqueos.cInsertarBloqueo.value = True Then
+                MapData(X, y).bLocked = 1
+            Else
+                MapData(X, y).bLocked = 0
+            End If
+            MapData(X, y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = aux
+            'Setup GRH
+            InitGrh MapData(X, y).Graphic(Val(frmSuperficies.cCapas.Text)), aux
+          Else
+            'Else Place graphic
+            If frmBloqueos.cInsertarBloqueo.value = True Then
+                MapData(X, y).bLocked = 1
+            Else
+                MapData(X, y).bLocked = 0
+            End If
+            
+            MapData(X, y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = Val(frmSuperficies.cGrh.Text)
+            
+            'Setup GRH
+    
+            InitGrh MapData(X, y).Graphic(Val(frmSuperficies.cCapas.Text)), Val(frmSuperficies.cGrh.Text)
+        End If
+             'Erase NPCs
+            If MapData(X, y).NPCIndex > 0 Then
+                EraseChar MapData(X, y).CharIndex
+                MapData(X, y).NPCIndex = 0
+            End If
+
+            'Erase Objs
+            MapData(X, y).OBJInfo.ObjIndex = 0
+            MapData(X, y).OBJInfo.Amount = 0
+            MapData(X, y).ObjGrh.GrhIndex = 0
+
+            'Clear exits
+            MapData(X, y).TileExit.Map = 0
+            MapData(X, y).TileExit.X = 0
+            MapData(X, y).TileExit.y = 0
+
+        End If
+
+    Next X
+Next y
+
+'Set changed flag
+MapInfo.Changed = 1
+
+End Sub

@@ -1,13 +1,15 @@
 [History]
-1=#P0#=mb	#P1#=Bloqueo_Todo	#P2#=WinterMapEditor/modEdicion/Bloqueo_Todo	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105441	#P7#=0	#P8#=9	.
-2=#P0#=mb	#P1#=mnuDesbloquearMapa_Click	#P2#=WinterMapEditor/frmMain/mnuDesbloquearMapa_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105435	#P7#=0	#P8#=5	.
-3=#P0#=mb	#P1#=mnuBloquearMapa_Click	#P2#=WinterMapEditor/frmMain/mnuBloquearMapa_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105413	#P7#=0	#P8#=8	.
-4=#P0#=mb	#P1#=Desbloquear_Bordes	#P2#=WinterMapEditor/modEdicion/Desbloquear_Bordes	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105221	#P7#=0	#P8#=22	.
-5=#P0#=mb	#P1#=Bloquear_Bordes	#P2#=WinterMapEditor/modEdicion/Bloquear_Bordes	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105208	#P7#=0	#P8#=28	.
-6=#P0#=mb	#P1#=mnuDesBloquearBordes_Click	#P2#=WinterMapEditor/frmMain/mnuDesBloquearBordes_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105409	#P7#=0	#P8#=-2	.
-7=#P0#=mb	#P1#=mnuBloquearBordes_Click	#P2#=WinterMapEditor/frmMain/mnuBloquearBordes_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105122	#P7#=0	#P8#=5	.
-8=#P0#=mb	#P1#=mnuFormatos_Click	#P2#=WinterMapEditor/frmMain/mnuFormatos_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20220520105117	#P7#=0	#P8#=-2	.
-9=#P0#=mb	#P1#=mnuQuitarSuperficieDeCapa_Click	#P2#=WinterMapEditor/frmMain/mnuQuitarSuperficieDeCapa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20220520104752	#P7#=0	#P8#=3	.
-10=#P0#=mb	#P1#=Quitar_Capa	#P2#=WinterMapEditor/modEdicion/Quitar_Capa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520104609	#P7#=0	#P8#=17	.
-11=#P0#=mb	#P1#=Superficie_Todo	#P2#=WinterMapEditor/modEdicion/Superficie_Todo	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105203	#P7#=0	#P8#=38	.
-12=#P0#=mb	#P1#=mnuInsertarSuperficieEnTodo_Click	#P2#=WinterMapEditor/frmMain/mnuInsertarSuperficieEnTodo_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20220520104501	#P7#=0	#P8#=0	.
+1=#P0#=mb	#P1#=Quitar_Bordes	#P2#=WinterMapEditor/modEdicion/Quitar_Bordes	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105901	#P7#=0	#P8#=17	.
+2=#P0#=mb	#P1#=Superficie_Bordes	#P2#=WinterMapEditor/modEdicion/Superficie_Bordes	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520110016	#P7#=0	#P8#=29	.
+3=#P0#=mb	#P1#=Bloqueo_Todo	#P2#=WinterMapEditor/modEdicion/Bloqueo_Todo	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105811	#P7#=0	#P8#=-3	.
+4=#P0#=mb	#P1#=mnuDesbloquearMapa_Click	#P2#=WinterMapEditor/frmMain/mnuDesbloquearMapa_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105435	#P7#=0	#P8#=5	.
+5=#P0#=mb	#P1#=mnuBloquearMapa_Click	#P2#=WinterMapEditor/frmMain/mnuBloquearMapa_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105413	#P7#=0	#P8#=8	.
+6=#P0#=mb	#P1#=Desbloquear_Bordes	#P2#=WinterMapEditor/modEdicion/Desbloquear_Bordes	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105221	#P7#=0	#P8#=22	.
+7=#P0#=mb	#P1#=Bloquear_Bordes	#P2#=WinterMapEditor/modEdicion/Bloquear_Bordes	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105208	#P7#=0	#P8#=28	.
+8=#P0#=mb	#P1#=mnuDesBloquearBordes_Click	#P2#=WinterMapEditor/frmMain/mnuDesBloquearBordes_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105409	#P7#=0	#P8#=-2	.
+9=#P0#=mb	#P1#=mnuBloquearBordes_Click	#P2#=WinterMapEditor/frmMain/mnuBloquearBordes_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105122	#P7#=0	#P8#=5	.
+10=#P0#=mb	#P1#=mnuFormatos_Click	#P2#=WinterMapEditor/frmMain/mnuFormatos_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20220520105117	#P7#=0	#P8#=-2	.
+11=#P0#=mb	#P1#=mnuQuitarSuperficieDeCapa_Click	#P2#=WinterMapEditor/frmMain/mnuQuitarSuperficieDeCapa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20220520104752	#P7#=0	#P8#=3	.
+12=#P0#=mb	#P1#=Quitar_Capa	#P2#=WinterMapEditor/modEdicion/Quitar_Capa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520104609	#P7#=0	#P8#=17	.
+13=#P0#=mb	#P1#=Superficie_Todo	#P2#=WinterMapEditor/modEdicion/Superficie_Todo	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220520105203	#P7#=0	#P8#=38	.
+14=#P0#=mb	#P1#=mnuInsertarSuperficieEnTodo_Click	#P2#=WinterMapEditor/frmMain/mnuInsertarSuperficieEnTodo_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20220520105757	#P7#=0	#P8#=-2	.
