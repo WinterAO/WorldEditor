@@ -93,8 +93,8 @@ Public Sub Bloquear_Bordes()
 'Author: ^[GS]^
 'Last modified: 20/05/06
 '*************************************************
-    Dim y As Integer
-    Dim X As Integer
+    Dim y As Long
+    Dim X As Long
     
     If Not MapaCargado Then
         Exit Sub
@@ -122,8 +122,8 @@ Public Sub Desbloquear_Bordes()
 'Author: Lorwik
 'Last modified: 20/05/2022
 '*************************************************
-    Dim y As Integer
-    Dim X As Integer
+    Dim y As Long
+    Dim X As Long
     
     If Not MapaCargado Then
         Exit Sub
