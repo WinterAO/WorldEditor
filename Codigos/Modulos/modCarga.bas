@@ -433,7 +433,6 @@ ErrorHandler:
     End If
     
 End Sub
-
 Public Sub CargarMinimapa()
 '************************************
 'Autor: Lorwik

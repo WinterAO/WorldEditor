@@ -924,6 +924,8 @@ Public Sub RenderPreview()
     
     Dim i As Integer, j As Integer
     Dim Cont As Integer
+    Dim aux As Long
+    Dim W As Long, H As Long
     
     With DestRect
         .Bottom = frmPreview.PreviewGrh.ScaleHeight
@@ -933,33 +935,34 @@ Public Sub RenderPreview()
     'Clear the inventory window
     Call Engine_BeginScene
 
-    If frmConfigSup.MOSAICO.value = vbUnchecked Or frmSuperficies.Visible = True Then
+    If frmSuperficies.Visible = True Then
+
+       If frmConfigSup.MOSAICO.value = vbUnchecked Then
+       
+           'Call Draw_GrhIndex(CurrentGrh.GrhIndex, (GrhData(CurrentGrh.GrhIndex).pixelWidth) / 2, (GrhData(CurrentGrh.GrhIndex).pixelHeight), 1, Normal_RGBList(), 0)
+           
+           H = frmConfigSup.mLargo.Text
+           If H <= 0 Then H = 1
+           W = frmConfigSup.mAncho.Text
+           If W <= 0 Then W = 1
+           
+           aux = Val(CurrentGrh.GrhIndex) + (((1 + 1) Mod H) * W) + ((1 + 1) Mod W)
+           Call Draw_GrhIndex(aux, 0, 0, 0, Normal_RGBList(), 0)
     
-        'Call Draw_GrhIndex(CurrentGrh.GrhIndex, (GrhData(CurrentGrh.GrhIndex).pixelWidth) / 2, (GrhData(CurrentGrh.GrhIndex).pixelHeight), 1, Normal_RGBList(), 0)
-        For i = 1 To SupData(SupActual).Height
-            For j = 1 To SupData(SupActual).Width
-            
-                Call Draw_GrhIndex(CurrentGrh.GrhIndex, (j - 1) * 32, (i - 1) * 32, 1, Normal_RGBList(), 0)
-                
-                If Cont < SupData(SupActual).Height * SupData(SupActual).Width Then _
-                    Cont = Cont + 1: CurrentGrh.GrhIndex = CurrentGrh.GrhIndex + 1
-                    
-            Next j
-        Next i
- 
-    Else
-        For i = 1 To CInt(Val(frmConfigSup.mLargo))
-            For j = 1 To CInt(Val(frmConfigSup.mAncho))
-            
-                Call Draw_GrhIndex(CurrentGrh.GrhIndex, (j - 1) * 32, (i - 1) * 32, 1, Normal_RGBList(), 0)
-                
-                If Cont < CInt(Val(frmConfigSup.mLargo)) * CInt(Val(frmConfigSup.mAncho)) Then _
-                    Cont = Cont + 1: CurrentGrh.GrhIndex = CurrentGrh.GrhIndex + 1
-                    
-            Next j
-        Next i
-        
-        CurrentGrh.GrhIndex = CurrentGrh.GrhIndex - Cont
+       Else
+           For i = 1 To CInt(Val(frmConfigSup.mLargo))
+               For j = 1 To CInt(Val(frmConfigSup.mAncho))
+               
+                   Call Draw_GrhIndex((CurrentGrh.GrhIndex), j * 32, i * 32, 0, Normal_RGBList(), 0)
+                   
+                   If Cont < CInt(Val(frmConfigSup.mLargo)) * CInt(Val(frmConfigSup.mAncho)) Then _
+                       Cont = Cont + 1: CurrentGrh.GrhIndex = CurrentGrh.GrhIndex + 1
+                       
+               Next j
+           Next i
+           
+           CurrentGrh.GrhIndex = CurrentGrh.GrhIndex - Cont
+       End If
     End If
     
     frmPreview.PreviewGrh.AutoRedraw = False

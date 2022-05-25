@@ -109,19 +109,19 @@ Private Declare Sub GetMem1 Lib "msvbvm60" (ByVal Addr As Long, RetVal As Byte)
 Private Declare Sub GetMem4 Lib "msvbvm60" (ByVal Addr As Long, RetVal As Long)
 Private Declare Function CallWindowProcA Lib "user32" ( _
       ByVal lpPrevWndFunc As Long, _
-      ByVal hWnd As Long, _
+      ByVal hwnd As Long, _
       ByVal Msg As Long, _
       ByVal wParam As Long, _
       ByVal lParam As Long) As Long
 Private Declare Function GetCurrentProcessId Lib "kernel32" () As Long
 Private Declare Function GetModuleHandleA Lib "kernel32" (ByVal lpModuleName As String) As Long
 Private Declare Function GetProcAddress Lib "kernel32" (ByVal hModule As Long, ByVal lpProcName As String) As Long
-Private Declare Function GetWindowThreadProcessId Lib "user32" (ByVal hWnd As Long, lpdwProcessId As Long) As Long
+Private Declare Function GetWindowThreadProcessId Lib "user32" (ByVal hwnd As Long, lpdwProcessId As Long) As Long
 Private Declare Function IsBadCodePtr Lib "kernel32" (ByVal lpfn As Long) As Long
-Private Declare Function IsWindow Lib "user32" (ByVal hWnd As Long) As Long
+Private Declare Function IsWindow Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Function LoadLibraryA Lib "kernel32" (ByVal lpLibFileName As String) As Long
 Private Declare Function SetWindowLongA Lib "user32" ( _
-      ByVal hWnd As Long, _
+      ByVal hwnd As Long, _
       ByVal nIndex As Long, _
       ByVal dwNewLong As Long) As Long
 Private Declare Function VirtualAlloc Lib "kernel32" ( _
@@ -168,7 +168,7 @@ End Type
 Private Type typSHELLEXECUTEINFO
    cbSize       As Long
    fMask        As Long
-   hWnd         As Long
+   hwnd         As Long
    lpVerb       As String
    lpFile       As String
    lpParameters As String
@@ -186,7 +186,7 @@ End Type
 Private Declare Function ShellExecuteEx Lib "shell32.dll" (ByRef SEI As typSHELLEXECUTEINFO) As Long
 
 Private Declare Function SHGetSpecialFolderLocation Lib "shell32.dll" ( _
-      ByVal hWndOwner As Long, _
+      ByVal hwndOwner As Long, _
       ByVal nFolder As Long, _
       ByRef Pidl As typITEMIDLIST) As Long
 Private Declare Function SHGetPathFromIDList Lib "shell32.dll" _
@@ -238,15 +238,15 @@ Private Type GRADIENT_RECT
 End Type
 
 Private Declare Function SetWindowLongW Lib "user32" ( _
-      ByVal hWnd As Long, _
+      ByVal hwnd As Long, _
       ByVal nIndex As Long, _
       ByVal dwNewLong As Long) As Long
-Private Declare Function GetWindowLongW Lib "user32" (ByVal hWnd As Long, ByVal nIndex As Long) As Long
-Private Declare Function GetWindowLongA Lib "user32" (ByVal hWnd As Long, ByVal nIndex As Long) As Long
+Private Declare Function GetWindowLongW Lib "user32" (ByVal hwnd As Long, ByVal nIndex As Long) As Long
+Private Declare Function GetWindowLongA Lib "user32" (ByVal hwnd As Long, ByVal nIndex As Long) As Long
 
 Private Declare Function IsCharAlphaNumeric Lib "user32" _
       Alias "IsCharAlphaNumericA" (ByVal cChar As Byte) As Long
-Private Declare Function IsWindowUnicode Lib "user32.dll" (ByVal hWnd As Long) As Long
+Private Declare Function IsWindowUnicode Lib "user32.dll" (ByVal hwnd As Long) As Long
 Private Declare Function GetVersionEx Lib "kernel32" _
       Alias "GetVersionExA" ( _
       ByRef lpVersionInformation As OSVersionInfo) As Long
@@ -258,12 +258,12 @@ Private Declare Function SetParent Lib "user32" ( _
       
 Private Declare Function SendMessageAsLong Lib "user32" _
       Alias "SendMessageA" ( _
-      ByVal hWnd As Long, _
+      ByVal hwnd As Long, _
       ByVal wMsg As Long, _
       ByVal wParam As Long, _
       ByVal lParam As Long) As Long
 
-Private Declare Function SetCapture Lib "user32" (ByVal hWnd As Long) As Long
+Private Declare Function SetCapture Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Function ReleaseCapture Lib "user32" () As Long
 
 Private Declare Function SetRect Lib "user32" ( _
@@ -273,7 +273,7 @@ Private Declare Function SetRect Lib "user32" ( _
       ByVal x2 As Long, _
       ByVal y2 As Long) As Long
 
-Private Declare Function SelectObject Lib "gdi32" (ByVal hdc As Long, ByVal hObject As Long) As Long
+Private Declare Function SelectObject Lib "gdi32" (ByVal hDC As Long, ByVal hObject As Long) As Long
 Private Declare Function DeleteObject Lib "gdi32" (ByVal hObject As Long) As Long
 
 Private Declare Function CreateRectRgn Lib "gdi32" ( _
@@ -287,23 +287,23 @@ Private Declare Function SetRectRgn Lib "gdi32" ( _
       ByVal y1 As Long, _
       ByVal x2 As Long, _
       ByVal y2 As Long) As Long
-Private Declare Function SelectClipRgn Lib "gdi32" (ByVal hdc As Long, ByVal hRgn As Long) As Long
+Private Declare Function SelectClipRgn Lib "gdi32" (ByVal hDC As Long, ByVal hRgn As Long) As Long
 
 Private Declare Function DrawTextA Lib "user32" ( _
-      ByVal hdc As Long, _
+      ByVal hDC As Long, _
       ByVal lpStr As String, _
       ByVal nCount As Long, _
       ByRef lpRect As RECT, _
       ByVal wFormat As Long) As Long
 Private Declare Function DrawTextW Lib "user32" ( _
-      ByVal hdc As Long, _
+      ByVal hDC As Long, _
       ByVal lpStr As Long, _
       ByVal nCount As Long, _
       ByRef lpRect As RECT, _
       ByVal wFormat As Long) As Long
 
 Private Declare Function MoveToEx Lib "gdi32" ( _
-      ByVal hdc As Long, _
+      ByVal hDC As Long, _
       ByVal X As Long, _
       ByVal y As Long, _
       ByRef lpPoint As POINTAPI) As Long
@@ -312,32 +312,32 @@ Private Declare Function CreatePen Lib "gdi32" ( _
       ByVal nPenStyle As Long, _
       ByVal nWidth As Long, _
       ByVal crColor As Long) As Long
-Private Declare Function LineTo Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal y As Long) As Long
+Private Declare Function LineTo Lib "gdi32" (ByVal hDC As Long, ByVal X As Long, ByVal y As Long) As Long
 Private Declare Function OleTranslateColor Lib "olepro32.dll" ( _
       ByVal OLE_COLOR As Long, _
       ByVal hPalette As Long, _
       ByRef pccolorref As Long) As Long
 Private Declare Function CreateSolidBrush Lib "gdi32" (ByVal crColor As Long) As Long
-Private Declare Function DrawFocusRect Lib "user32" (ByVal hdc As Long, lpRect As RECT) As Long
+Private Declare Function DrawFocusRect Lib "user32" (ByVal hDC As Long, lpRect As RECT) As Long
 Private Declare Function DrawFrameControl Lib "user32" ( _
-      ByVal hdc As Long, _
+      ByVal hDC As Long, _
       ByRef lpRect As RECT, _
       ByVal un1 As Long, _
       ByVal un2 As Long) As Long
-Private Declare Function FillRect Lib "user32" (ByVal hdc As Long, lpRect As RECT, ByVal hBrush As Long) As Long
-Private Declare Function FrameRect Lib "user32" (ByVal hdc As Long, lpRect As RECT, ByVal hBrush As Long) As Long
+Private Declare Function FillRect Lib "user32" (ByVal hDC As Long, lpRect As RECT, ByVal hBrush As Long) As Long
+Private Declare Function FrameRect Lib "user32" (ByVal hDC As Long, lpRect As RECT, ByVal hBrush As Long) As Long
 Private Declare Function GradientFillRect Lib "msimg32" _
       Alias "GradientFill" ( _
-      ByVal hdc As Long, _
+      ByVal hDC As Long, _
       ByRef pVertex As TRIVERTEX, _
       ByVal dwNumVertex As Long, _
       ByRef pMesh As GRADIENT_RECT, _
       ByVal dwNumMesh As Long, _
       ByVal dwMode As Long) As Long
 Private Declare Function GetDesktopWindow Lib "user32.dll" () As Long
-Private Declare Function GetWindowRect Lib "user32.dll" (ByVal hWnd As Long, ByRef lpRect As RECT) As Long
+Private Declare Function GetWindowRect Lib "user32.dll" (ByVal hwnd As Long, ByRef lpRect As RECT) As Long
 Private Declare Function RoundRect Lib "gdi32" ( _
-      ByVal hdc As Long, _
+      ByVal hDC As Long, _
       ByVal Left As Long, _
       ByVal Top As Long, _
       ByVal Right As Long, _
@@ -372,7 +372,7 @@ Private Declare Function DrawThemeBackground Lib "uxtheme.dll" ( _
       ByRef pClipRect As RECT) As Long
 
 Private Declare Function OpenThemeData Lib "uxtheme.dll" ( _
-      ByVal hWnd As Long, _
+      ByVal hwnd As Long, _
       ByVal pszClassList As Long) As Long
 Private Declare Function CloseThemeData Lib "uxtheme.dll" (ByVal mhTheme As Long) As Long
 Private Declare Function GetCurrentThemeName Lib "uxtheme.dll" ( _
@@ -438,12 +438,12 @@ Private Declare Function InitialiseFlatSB Lib "comctl32.dll" _
       Alias "InitializeFlatSB" ( _
       ByVal lHwnd As Long) As Long
 Private Declare Function SetScrollInfo Lib "user32" ( _
-      ByVal hWnd As Long, _
+      ByVal hwnd As Long, _
       ByVal n As Long, _
       ByRef lpcScrollInfo As SCROLLINFO, _
       ByVal bool As Boolean) As Long
 Private Declare Function GetScrollInfo Lib "user32" ( _
-      ByVal hWnd As Long, _
+      ByVal hwnd As Long, _
       ByVal n As Long, _
       ByRef LPSCROLLINFO As SCROLLINFO) As Long
 '//Private Declare Function EnableScrollBar Lib "user32" ( _
@@ -451,7 +451,7 @@ Private Declare Function GetScrollInfo Lib "user32" ( _
       ByVal wSBflags As Long, _
       ByVal wArrows As Long) As Long
 Private Declare Function ShowScrollBar Lib "user32" ( _
-      ByVal hWnd As Long, _
+      ByVal hwnd As Long, _
       ByVal wBar As Long, _
       ByVal bShow As Long) As Long
 '//Private Declare Function FlatSB_EnableScrollBar Lib "comctl32.dll" ( _
@@ -459,24 +459,24 @@ Private Declare Function ShowScrollBar Lib "user32" ( _
       ByVal int2 As Long, _
       ByVal UINT3 As Long) As Long
 Private Declare Function FlatSB_ShowScrollBar Lib "comctl32.dll" ( _
-      ByVal hWnd As Long, _
+      ByVal hwnd As Long, _
       ByVal Code As Long, _
       ByVal fRedraw As Boolean) As Long
 Private Declare Function FlatSB_GetScrollInfo Lib "comctl32.dll" ( _
-      ByVal hWnd As Long, _
+      ByVal hwnd As Long, _
       ByVal Code As Long, _
       ByRef LPSCROLLINFO As SCROLLINFO) As Long
 Private Declare Function FlatSB_SetScrollInfo Lib "comctl32.dll" ( _
-      ByVal hWnd As Long, _
+      ByVal hwnd As Long, _
       ByVal Code As Long, _
       ByRef LPSCROLLINFO As SCROLLINFO, _
       ByVal fRedraw As Boolean) As Long
 Private Declare Function FlatSB_SetScrollProp Lib "comctl32.dll" ( _
-      ByVal hWnd As Long, _
+      ByVal hwnd As Long, _
       ByVal Index As Long, _
       ByVal vNewValue As Long, _
       ByVal fRedraw As Boolean) As Long
-Private Declare Function UninitializeFlatSB Lib "comctl32.dll" (ByVal hWnd As Long) As Long
+Private Declare Function UninitializeFlatSB Lib "comctl32.dll" (ByVal hwnd As Long) As Long
 
 Public Enum ScrollBarOrienationEnum
    Scroll_Horizontal
@@ -1165,7 +1165,7 @@ Public Function AddColumn(Optional ByVal Caption As String, _
       '// set default values for new cells
       FormatCells 0, mRowCount, lNewCol, lNewCol, lgCFBackColor, mBackColor
       FormatCells 0, mRowCount, lNewCol, lNewCol, lgCFForeColor, mForeColor
-      FormatCells 0, mRowCount, lNewCol, lNewCol, lgCFFontName, mFont.Name
+      FormatCells 0, mRowCount, lNewCol, lNewCol, lgCFFontName, mFont.name
       
       Call SetRedrawState(True)
    End If
@@ -1261,7 +1261,7 @@ Public Function AddRow(Optional ByVal vstrItem As String, _
       
       ApplyCellFormat mRowCount, lCount, lgCFBackColor, mBackColor
       ApplyCellFormat mRowCount, lCount, lgCFForeColor, mForeColor
-      ApplyCellFormat mRowCount, lCount, lgCFFontName, mFont.Name
+      ApplyCellFormat mRowCount, lCount, lgCFFontName, mFont.name
       
       '// Add text to each cell
       If lTxtCnt >= lCount Then
@@ -1553,7 +1553,7 @@ Private Sub ApplyCellFormat(ByVal vRow As Long, _
       '// Set default properties
       lBackColor = mBackColor
       lForeColor = mForeColor
-      sFontName = mFont.Name
+      sFontName = mFont.name
    End If
 
    Select Case Apply
@@ -2987,7 +2987,7 @@ End Property
 
 Private Sub DrawCaption()
 
-  Dim r As RECT
+  Dim R As RECT
    
    If LenB(msCaption) > 0 Then
    
@@ -2995,42 +2995,42 @@ Private Sub DrawCaption()
          Set .Font = mHFont
          .ForeColor = mForeColorHdr
 
-         Call SetRect(r, -1, 0, ScaleX(VisibleWidth, vbTwips, vbPixels) + 1 + mlngRowNoWidth, mR.CaptionHeight)
+         Call SetRect(R, -1, 0, ScaleX(VisibleWidth, vbTwips, vbPixels) + 1 + mlngRowNoWidth, mR.CaptionHeight)
 
          Select Case muThemeStyle
          Case lgTSWindows3D
-            Call DrawFrameControl(.hdc, r, DFC_BUTTON, DFCS_BUTTONPUSH)
+            Call DrawFrameControl(.hDC, R, DFC_BUTTON, DFCS_BUTTONPUSH)
 
          Case lgTSWindowsFlat
-            Call DrawFrameControl(.hdc, r, DFC_BUTTON, DFCS_BUTTONPUSH Or DFCS_FLAT)
+            Call DrawFrameControl(.hDC, R, DFC_BUTTON, DFCS_BUTTONPUSH Or DFCS_FLAT)
 
          Case lgTSWindowsXP
-            DrawXPHeader .hdc, r, 1, True
+            DrawXPHeader .hDC, R, 1, True
 
          Case lgTSOfficeXP
-            DrawOfficeXPHeader .hdc, r, 1
+            DrawOfficeXPHeader .hDC, R, 1
          
          Case lgTSCustom
-            DrawXPHeader .hdc, r, 1, True, True
+            DrawXPHeader .hDC, R, 1, True, True
             
          Case lgTSCustom3D
-            DrawCustom3DHeader .hdc, r, 1, True
+            DrawCustom3DHeader .hDC, R, 1, True
             
          Case lgTSVista
-            DrawCustom3DHeader .hdc, r, 1, True, True
+            DrawCustom3DHeader .hDC, R, 1, True, True
             
          Case lgTSWindowsTheme
             '// Try XP Theme API
-            If Not DrawTheme("Header", 1, 1, r) Then
+            If Not DrawTheme("Header", 1, 1, R) Then
                '// Use XP emulation
-               DrawXPHeader .hdc, r, 1
+               DrawXPHeader .hDC, R, 1
             End If
          End Select
 
-         r.Top = mR.CaptionHeight \ 8
-         r.Right = r.Right - 15
-         r.Left = r.Left + 15
-         Call DrawText(.hdc, msCaption, -1, r, muCaptionAlignment)
+         R.Top = mR.CaptionHeight \ 8
+         R.Right = R.Right - 15
+         R.Left = R.Left + 15
+         Call DrawText(.hDC, msCaption, -1, R, muCaptionAlignment)
 
          Set .Font = mFont
       End With
@@ -3143,7 +3143,7 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
   DoEvents
 
   Dim IR             As RECT
-  Dim r              As RECT
+  Dim R              As RECT
   Dim lX             As Long
   Dim lY             As Long
   Dim lCol           As Long
@@ -3291,11 +3291,11 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                bToggle = Not bToggle
                
                If mblnShowRowNo Then '// for "Show Row Numbers"
-                  Call SetRect(r, 0, lY, mlngRowNoWidth, lY + mItems(mRowPtr(lRow)).lHeight)
-                  DrawRect .hdc, r, TranslateColor(lngBColor), True
+                  Call SetRect(R, 0, lY, mlngRowNoWidth, lY + mItems(mRowPtr(lRow)).lHeight)
+                  DrawRect .hDC, R, TranslateColor(lngBColor), True
                   .ForeColor = mForeColorHdr
-                  r.Right = r.Right - 3
-                  Call DrawText(UserControl.hdc, CStr(lRow + 1), -1, r, (lgAlignCenterCenter Or DT_SINGLELINE))
+                  R.Right = R.Right - 3
+                  Call DrawText(UserControl.hDC, CStr(lRow + 1), -1, R, (lgAlignCenterCenter Or DT_SINGLELINE))
                End If
             
                If (muMultiSelect > 0 Or mbFullRowSelect) And (mItems(mRowPtr(lRow)).nFlags And lgFLSelected) Then
@@ -3303,27 +3303,27 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
    
                   If lStartCol = 0 Then '// Code for column 0 only
                      If mCols(0).lWidth < mR.LeftText Then
-                        SetRect r, mlngRowNoWidth, lY + 1, mCols(0).lWidth + mlngRowNoWidth, lY + (mItems(mRowPtr(lRow)).lHeight) + 1
+                        SetRect R, mlngRowNoWidth, lY + 1, mCols(0).lWidth + mlngRowNoWidth, lY + (mItems(mRowPtr(lRow)).lHeight) + 1
                      Else
-                        SetRect r, mlngRowNoWidth, lY + 1, mR.LeftText + mlngRowNoWidth, lY + (mItems(mRowPtr(lRow)).lHeight) + 1
+                        SetRect R, mlngRowNoWidth, lY + 1, mR.LeftText + mlngRowNoWidth, lY + (mItems(mRowPtr(lRow)).lHeight) + 1
                      End If
    
                      If mbBackColorEvenRowsE Then
                         If bToggle Then
-                           DrawRect .hdc, r, TranslateColor(mBackColor), True
+                           DrawRect .hDC, R, TranslateColor(mBackColor), True
                         Else
-                           DrawRect .hdc, r, TranslateColor(mBackColorEvenRows), True
+                           DrawRect .hDC, R, TranslateColor(mBackColorEvenRows), True
                         End If
    
                      Else
-                        DrawRect .hdc, r, TranslateColor(mBackColor), True
+                        DrawRect .hDC, R, TranslateColor(mBackColor), True
                      End If
    
                   Else '// Column 0 is not visible
-                     r.Right = mlngRowNoWidth
+                     R.Right = mlngRowNoWidth
                   End If
    
-                  SetRect r, r.Right - 1, lY + 1, lColumnsWidth, lY + (mItems(mRowPtr(lRow)).lHeight) + 1
+                  SetRect R, R.Right - 1, lY + 1, lColumnsWidth, lY + (mItems(mRowPtr(lRow)).lHeight) + 1
    
                   If mbAlphaBlendSelection Then
                      lValue = mItems(mRowPtr(lRow)).Cell(0).nFormat
@@ -3339,30 +3339,30 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
    
                   Select Case muFocusRowHighlightStyle '// gradient
                   Case [Solid]
-                     DrawRect .hdc, r, lValue, True
+                     DrawRect .hDC, R, lValue, True
    
                   Case [Gradient_H]
-                     Call FillGradient(.hdc, r, lValue, TranslateColor(mBackColor), False)
+                     Call FillGradient(.hDC, R, lValue, TranslateColor(mBackColor), False)
    
                   Case [Gradient_V]
-                     Call FillGradient(.hdc, r, lValue, TranslateColor(mBackColor), True)
+                     Call FillGradient(.hDC, R, lValue, TranslateColor(mBackColor), True)
                   End Select
    
                   .ForeColor = mForeColorSel
    
                Else '// row not selected
                   bLockColor = False
-                  SetRect r, mlngRowNoWidth, lY + 1, lColumnsWidth, lY + (mItems(mRowPtr(lRow)).lHeight) + 1
+                  SetRect R, mlngRowNoWidth, lY + 1, lColumnsWidth, lY + (mItems(mRowPtr(lRow)).lHeight) + 1
    
                   If mbBackColorEvenRowsE Then
                      If bToggle Then
-                        DrawRect .hdc, r, TranslateColor(mBackColor), True
+                        DrawRect .hDC, R, TranslateColor(mBackColor), True
                      Else
-                        DrawRect .hdc, r, TranslateColor(mBackColorEvenRows), True
+                        DrawRect .hDC, R, TranslateColor(mBackColorEvenRows), True
                      End If
    
                   Else
-                     DrawRect .hdc, r, TranslateColor(mBackColor), True
+                     DrawRect .hDC, R, TranslateColor(mBackColor), True
                   End If
                End If
    
@@ -3375,13 +3375,13 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
    
                      If mCols(mColPtr(lCol)).bVisible Then
                         SetRectRgn mClipRgn, lX, lY, lX + mCols(mColPtr(lCol)).lWidth, lY + mItems(mRowPtr(lRow)).lHeight
-                        SelectClipRgn .hdc, mClipRgn
+                        SelectClipRgn .hDC, mClipRgn
    
-                        Call SetRect(r, lX, lY, lX + mCols(mColPtr(lCol)).lWidth, lY + mItems(mRowPtr(lRow)).lHeight)
+                        Call SetRect(R, lX, lY, lX + mCols(mColPtr(lCol)).lWidth, lY + mItems(mRowPtr(lRow)).lHeight)
    
                         If Not bLockColor Then
                            If Not (mCF(mItems(mRowPtr(lRow)).Cell(mColPtr(lCol)).nFormat).lBackColor = mBackColor) Then
-                              DrawRect .hdc, r, TranslateColor(mCF(mItems(mRowPtr(lRow)).Cell(mColPtr(lCol)).nFormat).lBackColor), True
+                              DrawRect .hDC, R, TranslateColor(mCF(mItems(mRowPtr(lRow)).Cell(mColPtr(lCol)).nFormat).lBackColor), True
                            End If
                            .ForeColor = mCF(mItems(mRowPtr(lRow)).Cell(mColPtr(lCol)).nFormat).lForeColor
                         
@@ -3392,7 +3392,7 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                         '----------------------------------------------------------------------------------------------
                         If lCol = 0 Then '// Code for column 0 only (checkbox and row image)
                            If Not mItems(mRowPtr(lRow)).bGroupRow And mbCheckboxes Then '// Row CheckMarks?
-                              Call SetRect(r, mlngRowNoWidth + 3, lY, mlngRowNoWidth + mR.CheckBoxSize, lY + mItems(mRowPtr(lRow)).lHeight)
+                              Call SetRect(R, mlngRowNoWidth + 3, lY, mlngRowNoWidth + mR.CheckBoxSize, lY + mItems(mRowPtr(lRow)).lHeight)
    
                               If (mItems(mRowPtr(lRow)).nFlags And lgFLChecked) Then
                                  lValue = 5
@@ -3400,17 +3400,17 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                                  lValue = 0
                               End If
    
-                              If Not DrawTheme("Button", 3, lValue, r) Then
-                                 lngTemp = (r.Top + 14 - r.Bottom) \ 2
+                              If Not DrawTheme("Button", 3, lValue, R) Then
+                                 lngTemp = (R.Top + 14 - R.Bottom) \ 2
                                  If lngTemp < 0 Then
-                                    r.Top = r.Top - lngTemp
-                                    r.Bottom = r.Bottom + lngTemp
+                                    R.Top = R.Top - lngTemp
+                                    R.Bottom = R.Bottom + lngTemp
                                  End If
                               
                                  If (mItems(mRowPtr(lRow)).nFlags And lgFLChecked) Then
-                                    Call DrawFrameControl(.hdc, r, DFC_BUTTON, DFCS_BUTTONCHECK Or DFCS_CHECKED Or DFCS_FLAT)
+                                    Call DrawFrameControl(.hDC, R, DFC_BUTTON, DFCS_BUTTONCHECK Or DFCS_CHECKED Or DFCS_FLAT)
                                  Else
-                                    Call DrawFrameControl(.hdc, r, DFC_BUTTON, DFCS_BUTTONCHECK Or DFCS_FLAT)
+                                    Call DrawFrameControl(.hDC, R, DFC_BUTTON, DFCS_BUTTONCHECK Or DFCS_FLAT)
                                  End If
    
                               End If
@@ -3433,22 +3433,22 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                                  End If
    
                                  If bLockColor And mbApplySelectionToImages Then
-                                    moImageList.ListImages(Abs(mItems(mRowPtr(lRow)).lImage)).Draw .hdc, lImageLeft, _
+                                    moImageList.ListImages(Abs(mItems(mRowPtr(lRow)).lImage)).Draw .hDC, lImageLeft, _
                                        ScaleY(lY + lImgTop, vbPixels, mImageListScaleMode), 2
                                  Else
-                                    moImageList.ListImages(Abs(mItems(mRowPtr(lRow)).lImage)).Draw .hdc, lImageLeft, _
+                                    moImageList.ListImages(Abs(mItems(mRowPtr(lRow)).lImage)).Draw .hDC, lImageLeft, _
                                        ScaleY(lY + lImgTop, vbPixels, mImageListScaleMode), 1
                                  End If
    
                               End If
                            End If
    
-                           Call SetRect(r, mR.LeftText + C_TEXT_SPACE + mlngRowNoWidth, lY, _
+                           Call SetRect(R, mR.LeftText + C_TEXT_SPACE + mlngRowNoWidth, lY, _
                               (lX + mCols(mColPtr(lCol)).lWidth) - C_TEXT_SPACE, lY + mItems(mRowPtr(lRow)).lHeight)
    
                            '----------------------------------------------------------------------------------------------
                         Else '// all columns but 0
-                           Call SetRect(r, lX + C_TEXT_SPACE, lY, (lX + mCols(mColPtr(lCol)).lWidth) - C_TEXT_SPACE, _
+                           Call SetRect(R, lX + C_TEXT_SPACE, lY, (lX + mCols(mColPtr(lCol)).lWidth) - C_TEXT_SPACE, _
                               lY + mItems(mRowPtr(lRow)).lHeight)
    
                         End If '// column = 0
@@ -3458,7 +3458,7 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                         Select Case mCols(mColPtr(lCol)).nType
                         Case lgBoolean
                            If Not mItems(mRowPtr(lRow)).bGroupRow Then
-                              SetItemRect lRow, lCol, lY, r, lgRTCheckBox
+                              SetItemRect lRow, lCol, lY, R, lgRTCheckBox
       
                               If (mItems(mRowPtr(lRow)).Cell(mColPtr(lCol)).nFlags And lgFLChecked) Then
                                  lValue = 5
@@ -3466,17 +3466,17 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                                  lValue = 0
                               End If
       
-                              If Not DrawTheme("Button", 3, lValue, r) Then
-                                 lngTemp = (r.Top + 14 - r.Bottom) \ 2
+                              If Not DrawTheme("Button", 3, lValue, R) Then
+                                 lngTemp = (R.Top + 14 - R.Bottom) \ 2
                                  If lngTemp < 0 Then
-                                    r.Top = r.Top - lngTemp
-                                    r.Bottom = r.Bottom + lngTemp
+                                    R.Top = R.Top - lngTemp
+                                    R.Bottom = R.Bottom + lngTemp
                                  End If
                                  
                                  If (mItems(mRowPtr(lRow)).Cell(mColPtr(lCol)).nFlags And lgFLChecked) Then
-                                    Call DrawFrameControl(.hdc, r, DFC_BUTTON, DFCS_BUTTONCHECK Or DFCS_CHECKED Or DFCS_FLAT)
+                                    Call DrawFrameControl(.hDC, R, DFC_BUTTON, DFCS_BUTTONCHECK Or DFCS_CHECKED Or DFCS_FLAT)
                                  Else
-                                    Call DrawFrameControl(.hdc, r, DFC_BUTTON, DFCS_BUTTONCHECK Or DFCS_FLAT)
+                                    Call DrawFrameControl(.hDC, R, DFC_BUTTON, DFCS_BUTTONCHECK Or DFCS_FLAT)
                                  End If
                               End If
                            End If
@@ -3485,12 +3485,12 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                            If Not mItems(mRowPtr(lRow)).bGroupRow Then
                               Select Case mCols(mColPtr(lCol)).nType
                               Case lgButton
-                                 Call SetRect(r, lX, lY, (lX + mCols(mColPtr(lCol)).lWidth), lY + mItems(mRowPtr(lRow)).lHeight)
+                                 Call SetRect(R, lX, lY, (lX + mCols(mColPtr(lCol)).lWidth), lY + mItems(mRowPtr(lRow)).lHeight)
       
                                  If mbMouseDown And mMouseDownRow = lRow And mCol = lCol Then
-                                    Call DrawXPButton(r, lgDOWN)
+                                    Call DrawXPButton(R, lgDOWN)
                                  Else
-                                    Call DrawXPButton(r, lgNormal)
+                                    Call DrawXPButton(R, lgNormal)
                                  End If
       
                                  .ForeColor = vbButtonText
@@ -3498,11 +3498,11 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                               Case lgProgressBar
                                  If mItems(mRowPtr(lRow)).Cell(mColPtr(lCol)).nFlags > 0 Then
                                     lValue = ((mCols(mColPtr(lCol)).lWidth - 2) / 100) * mItems(mRowPtr(lRow)).Cell(mColPtr(lCol)).nFlags
-                                    SetRect r, lX + 2, lY + 2, lX + lValue, (lY + mItems(mRowPtr(lRow)).lHeight) - 2
-                                    DrawRect .hdc, r, TranslateColor(mProgressBarColor), True
+                                    SetRect R, lX + 2, lY + 2, lX + lValue, (lY + mItems(mRowPtr(lRow)).lHeight) - 2
+                                    DrawRect .hDC, R, TranslateColor(mProgressBarColor), True
                                  End If
       
-                                 SetRect r, lX + C_TEXT_SPACE, lY, (lX + mCols(mColPtr(lCol)).lWidth) - C_TEXT_SPACE, _
+                                 SetRect R, lX + C_TEXT_SPACE, lY, (lX + mCols(mColPtr(lCol)).lWidth) - C_TEXT_SPACE, _
                                     lY + mItems(mRowPtr(lRow)).lHeight
                               End Select
                            End If
@@ -3563,7 +3563,7 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                                  IR.Right = IR.Right - mR.ImageWidth
                               End If
    
-                              Call DrawText(UserControl.hdc, sText, Len(sText), IR, DT_CALCRECT Or DT_SINGLELINE)
+                              Call DrawText(UserControl.hDC, sText, Len(sText), IR, DT_CALCRECT Or DT_SINGLELINE)
    
                               '// Is word wrapping necessary?
                               If mbAllowWordWrap Then
@@ -3573,7 +3573,7 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                                        SetRect IR, 0, 0, cWidth, mItems(mRowPtr(lRow)).lHeight
          
                                        lValue = DT_WORDBREAK
-                                       Call DrawText(UserControl.hdc, sText, Len(sText), IR, DT_CALCRECT Or DT_WORDBREAK)
+                                       Call DrawText(UserControl.hDC, sText, Len(sText), IR, DT_CALCRECT Or DT_WORDBREAK)
          
                                        If IR.Bottom - IR.Top > mR.TextHeight Then
                                           nImage = mExpandRowImage
@@ -3581,7 +3581,7 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                                           nImage = 0
                                        End If
          
-                                       r.Top = r.Top + mMinVerticalOffset
+                                       R.Top = R.Top + mMinVerticalOffset
                                     End If
                                  End If
                               End If
@@ -3629,42 +3629,42 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                                     Select Case mCols(mColPtr(lCol)).nImageAlignment
                                     Case lgAlignLeftTop, lgAlignCenterTop
                                        lImgTop = mMinVerticalOffset
-                                       r.Left = r.Left + (IR.Right - IR.Left)
+                                       R.Left = R.Left + (IR.Right - IR.Left)
    
                                     Case lgAlignLeftBottom, lgAlignCenterBottom
                                        lImgTop = mItems(mRowPtr(lRow)).lHeight - mR.ImageHeight - mMinVerticalOffset
-                                       r.Left = r.Left + (IR.Right - IR.Left)
+                                       R.Left = R.Left + (IR.Right - IR.Left)
    
                                     Case lgAlignLeftCenter
                                        lImgTop = (mItems(mRowPtr(lRow)).lHeight - mR.ImageHeight) \ 2
-                                       r.Left = r.Left + (IR.Right - IR.Left)
+                                       R.Left = R.Left + (IR.Right - IR.Left)
    
                                     Case lgAlignRightTop
                                        If mExpandRowImage Then lImgTop = 0
                                        lImgTop = mMinVerticalOffset
-                                       r.Right = r.Right - (IR.Right - IR.Left)
+                                       R.Right = R.Right - (IR.Right - IR.Left)
    
                                     Case lgAlignRightBottom
                                        lImgTop = mItems(mRowPtr(lRow)).lHeight - mR.ImageHeight - mMinVerticalOffset
-                                       r.Right = r.Right - (IR.Right - IR.Left)
+                                       R.Right = R.Right - (IR.Right - IR.Left)
    
                                     Case lgAlignRightCenter
                                        lImgTop = (mItems(mRowPtr(lRow)).lHeight - mR.ImageHeight) \ 2
-                                       r.Right = r.Right - (IR.Right - IR.Left)
+                                       R.Right = R.Right - (IR.Right - IR.Left)
    
                                     Case lgAlignCenterCenter
                                        lImgTop = (mItems(mRowPtr(lRow)).lHeight - mR.ImageHeight - mMinVerticalOffset) \ 2
-                                       r.Right = r.Right + ((r.Right - (IR.Right - IR.Left)) \ 2)
+                                       R.Right = R.Right + ((R.Right - (IR.Right - IR.Left)) \ 2)
    
                                     End Select
    
                                     If IR.Left >= 0 Then
                                        If bLockColor And mbApplySelectionToImages Then
-                                          moImageList.ListImages(Abs(nImage)).Draw UserControl.hdc, ScaleX(IR.Left, vbPixels, _
+                                          moImageList.ListImages(Abs(nImage)).Draw UserControl.hDC, ScaleX(IR.Left, vbPixels, _
                                              mImageListScaleMode), ScaleY(lY + lImgTop, vbPixels, mImageListScaleMode), 2
    
                                        Else
-                                          moImageList.ListImages(Abs(nImage)).Draw UserControl.hdc, ScaleX(IR.Left, vbPixels, _
+                                          moImageList.ListImages(Abs(nImage)).Draw UserControl.hDC, ScaleX(IR.Left, vbPixels, _
                                              mImageListScaleMode), ScaleY(lY + lImgTop, vbPixels, mImageListScaleMode), 1
                                        End If
    
@@ -3672,7 +3672,7 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                                  End If '// End Draw image
                               End If
                               
-                              Call DrawText(UserControl.hdc, sText, -1, r, lValue)
+                              Call DrawText(UserControl.hDC, sText, -1, R, lValue)
    
                            End With '// mItems(mRowPtr(lRow)).Cell(mColPtr(lCol))
    
@@ -3688,15 +3688,15 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
    
                Next lCol
    
-               SelectClipRgn .hdc, 0&
+               SelectClipRgn .hDC, 0&
    
                '// Display Horizontal Lines
                If muGridLines = lgGrid_Both Or muGridLines = lgGrid_Horizontal Then
-                  DrawLine .hdc, mlngRowNoWidth, lY, lColumnsWidth, lY, lGridColor, mGridLineWidth
+                  DrawLine .hDC, mlngRowNoWidth, lY, lColumnsWidth, lY, lGridColor, mGridLineWidth
                End If
                '// draw Horizontal line if showing row numbers
                If mblnShowRowNo Then
-                  DrawLine .hdc, 0, lY, mlngRowNoWidth, lY, lngGColor, mGridLineWidth
+                  DrawLine .hDC, 0, lY, mlngRowNoWidth, lY, lngGColor, mGridLineWidth
                End If
    
                lY = lY + mItems(mRowPtr(lRow)).lHeight
@@ -3718,44 +3718,44 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                Dim dblTemp As Double
 
                .ForeColor = mForeColorHdr
-               SetRect r, 0, lY + 1, lColumnsWidth, lY + mMinRowHeight + 1
+               SetRect R, 0, lY + 1, lColumnsWidth, lY + mMinRowHeight + 1
 
                Select Case muThemeStyle
                Case lgTSWindows3D
-                  Call DrawFrameControl(.hdc, r, DFC_BUTTON, DFCS_BUTTONPUSH)
+                  Call DrawFrameControl(.hDC, R, DFC_BUTTON, DFCS_BUTTONPUSH)
 
                Case lgTSWindowsFlat
-                  Call DrawFrameControl(.hdc, r, DFC_BUTTON, DFCS_BUTTONPUSH Or DFCS_FLAT)
+                  Call DrawFrameControl(.hDC, R, DFC_BUTTON, DFCS_BUTTONPUSH Or DFCS_FLAT)
 
                Case lgTSWindowsXP
-                  DrawXPHeader .hdc, r, 1
+                  DrawXPHeader .hDC, R, 1
                
                Case lgTSCustom
-                  DrawXPHeader .hdc, r, 1, True, True
+                  DrawXPHeader .hDC, R, 1, True, True
                
                Case lgTSCustom3D
-                  DrawCustom3DHeader .hdc, r, 1, True
+                  DrawCustom3DHeader .hDC, R, 1, True
                
                Case lgTSVista
-                  DrawCustom3DHeader .hdc, r, 1, True, True
+                  DrawCustom3DHeader .hDC, R, 1, True, True
                
                Case lgTSWindowsTheme
-                  If Not DrawTheme("Header", 1, 1, r) Then '// Try XP Theme API
-                     DrawXPHeader .hdc, r, 1               '// Use XP emulation
+                  If Not DrawTheme("Header", 1, 1, R) Then '// Try XP Theme API
+                     DrawXPHeader .hDC, R, 1               '// Use XP emulation
                   End If
                
                Case lgTSOfficeXP
-                  DrawOfficeXPHeader .hdc, r, 1
+                  DrawOfficeXPHeader .hDC, R, 1
                End Select
 
-               DrawLine .hdc, 0, lY, lColumnsWidth, lY, mForeColorHdr, mGridLineWidth
+               DrawLine .hDC, 0, lY, lColumnsWidth, lY, mForeColorHdr, mGridLineWidth
 
                lX = mlngRowNoWidth
 
                For lCol = 0 To UBound(mCols)
                   If lCol <= mlngFreezeAtCol Or lCol >= lStartCol Then
                      If mCols(mColPtr(lCol)).bVisible Then
-                        Call SetRect(r, lX + C_TEXT_SPACE, lY + C_TEXT_SPACE, (lX + mCols(mColPtr(lCol)).lWidth) - C_TEXT_SPACE, lY + mMinRowHeight)
+                        Call SetRect(R, lX + C_TEXT_SPACE, lY + C_TEXT_SPACE, (lX + mCols(mColPtr(lCol)).lWidth) - C_TEXT_SPACE, lY + mMinRowHeight)
                         lValue = mCols(mColPtr(lCol)).nAlignment
 
                         If mCols(mColPtr(lCol)).nType = lgNumeric Then
@@ -3772,11 +3772,11 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                               sText = mudtTotals(mColPtr(lCol)).sCaption & " " & sText
                            End If
 
-                           Call DrawText(UserControl.hdc, sText, -1, r, lValue)
+                           Call DrawText(UserControl.hDC, sText, -1, R, lValue)
 
                         Else '// NOT mCols(mColPtr(lCol)).nType = lgNumeric
                            If LenB(mudtTotals(mColPtr(lCol)).sCaption) Then
-                              Call DrawText(UserControl.hdc, mudtTotals(mColPtr(lCol)).sCaption, -1, r, lValue)
+                              Call DrawText(UserControl.hDC, mudtTotals(mColPtr(lCol)).sCaption, -1, R, lValue)
                            End If
                         End If
 
@@ -3788,13 +3788,13 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
             End If '// lRow > mRowCount
             
          Else
-            DrawLine .hdc, 0, lY, lColumnsWidth, lY, lGridColor, mGridLineWidth
+            DrawLine .hDC, 0, lY, lColumnsWidth, lY, lGridColor, mGridLineWidth
          End If '// mbTotalsLineShow
 
          '---------------------------------------------------------------------------------
          '// Display Vertical Lines
          If muGridLines = lgGrid_Both Or muGridLines = lgGrid_Vertical Then
-            lBottomEdge = r.Bottom
+            lBottomEdge = R.Bottom
             lX = mlngRowNoWidth
 
             For lCol = 0 To UBound(mCols)
@@ -3802,10 +3802,10 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
 
                   If mCols(mColPtr(lCol)).bVisible Then
                      If bAtFreeze Then
-                        DrawLine .hdc, lX, mR.HeaderHeight, lX, lBottomEdge, lGridColor, mGridLineWidth * 2
+                        DrawLine .hDC, lX, mR.HeaderHeight, lX, lBottomEdge, lGridColor, mGridLineWidth * 2
                         bAtFreeze = False
                      Else
-                        DrawLine .hdc, lX, mR.HeaderHeight, lX, lBottomEdge, lGridColor, mGridLineWidth
+                        DrawLine .hDC, lX, mR.HeaderHeight, lX, lBottomEdge, lGridColor, mGridLineWidth
                      End If
 
                      lX = lX + mCols(mColPtr(lCol)).lWidth
@@ -3815,7 +3815,7 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
 
                If lCol = mlngFreezeAtCol Then bAtFreeze = True
             Next lCol
-            DrawLine .hdc, lX, mR.HeaderHeight, lX, lBottomEdge, lGridColor, mGridLineWidth
+            DrawLine .hDC, lX, mR.HeaderHeight, lX, lBottomEdge, lGridColor, mGridLineWidth
          End If
 
          '---------------------------------------------------------------------------------
@@ -3827,22 +3827,22 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                   lY = RowTopY(mRow, mlTopRow)
    
                   If Not lY = C_NULL_RESULT Then
-                     r.Right = mlngRowNoWidth
+                     R.Right = mlngRowNoWidth
    
                      If muFocusRectMode = lgCol Then
-                        SetColRect mCol, r
-                        r.Top = lY + 1
-                        r.Bottom = lY + mItems(mRowPtr(mRow)).lHeight
+                        SetColRect mCol, R
+                        R.Top = lY + 1
+                        R.Bottom = lY + mItems(mRowPtr(mRow)).lHeight
    
                      Else
-                        SetRect r, 1, lY + 1, lColumnsWidth, lY + mItems(mRowPtr(mRow)).lHeight
+                        SetRect R, 1, lY + 1, lColumnsWidth, lY + mItems(mRowPtr(mRow)).lHeight
                      End If
    
-                     If r.Right > mlngRowNoWidth Then
+                     If R.Right > mlngRowNoWidth Then
    
                         Select Case muFocusRectStyle
                         Case lgFRLight
-                           Call DrawFocusRect(.hdc, r)
+                           Call DrawFocusRect(.hDC, R)
    
                         Case lgFRHeavy
                            UserControl.DrawWidth = 3
@@ -3853,14 +3853,14 @@ Private Sub DrawGrid(ByVal bRedraw As Boolean, _
                               UserControl.ForeColor = ColorBrightness(mBackColorSel)
                            End If
    
-                           Call RoundRect(.hdc, r.Left, r.Top, r.Right, r.Bottom, 0&, 0&)
+                           Call RoundRect(.hDC, R.Left, R.Top, R.Right, R.Bottom, 0&, 0&)
                            UserControl.DrawWidth = 1
    
                         Case lgFRMedium
                            If mbFullRowSelect Then
-                              DrawRect .hdc, r, TranslateColor(mFocusRectColor), False
+                              DrawRect .hDC, R, TranslateColor(mFocusRectColor), False
                            Else
-                              DrawRect .hdc, r, ColorBrightness(mBackColorSel), False
+                              DrawRect .hDC, R, ColorBrightness(mBackColorSel), False
                            End If
    
                         End Select
@@ -3895,7 +3895,7 @@ Private Sub DrawHeader(ByVal lCol As Long, _
 
    '// Purpose: Renders a Column Header. This involves drawing the Border, displaying
    '// the Caption and optionally Sort Arrows
-  Dim r         As RECT
+  Dim R         As RECT
   Dim lngCenter As Long
   Dim sText     As String
 
@@ -3911,60 +3911,60 @@ Private Sub DrawHeader(ByVal lCol As Long, _
             .ForeColor = mForeColorHdr
    
             If vblnRowNumbers Then
-               Call SetRect(r, -1, mR.CaptionHeight, mlngRowNoWidth, mR.HeaderHeight)
+               Call SetRect(R, -1, mR.CaptionHeight, mlngRowNoWidth, mR.HeaderHeight)
                State = lgNormal
             Else
                '// Draw the Column Headers
-               Call SetRect(r, mCols(mColPtr(lCol)).lX - 1 + mlngRowNoWidth, mR.CaptionHeight, _
+               Call SetRect(R, mCols(mColPtr(lCol)).lX - 1 + mlngRowNoWidth, mR.CaptionHeight, _
                   mCols(mColPtr(lCol)).lX + mCols(mColPtr(lCol)).lWidth + mlngRowNoWidth, mR.HeaderHeight)
             End If
             
             Select Case muThemeStyle
             Case lgTSCustom
-               DrawXPHeader .hdc, r, State, False, True
+               DrawXPHeader .hDC, R, State, False, True
             
             Case lgTSCustom3D
-               DrawCustom3DHeader .hdc, r, State
+               DrawCustom3DHeader .hDC, R, State
             
             Case lgTSVista
-               DrawCustom3DHeader .hdc, r, State, False, True
+               DrawCustom3DHeader .hDC, R, State, False, True
                
             Case lgTSWindows3D
                Select Case State
                Case lgNormal
-                  Call DrawFrameControl(.hdc, r, DFC_BUTTON, DFCS_BUTTONPUSH)
+                  Call DrawFrameControl(.hDC, R, DFC_BUTTON, DFCS_BUTTONPUSH)
    
                Case lgHot
-                  Call DrawFrameControl(.hdc, r, DFC_BUTTON, DFCS_BUTTONPUSH Or DFCS_HOT)
+                  Call DrawFrameControl(.hDC, R, DFC_BUTTON, DFCS_BUTTONPUSH Or DFCS_HOT)
    
                Case lgDOWN
-                  Call DrawFrameControl(.hdc, r, DFC_BUTTON, DFCS_BUTTONPUSH Or DFCS_PUSHED)
+                  Call DrawFrameControl(.hDC, R, DFC_BUTTON, DFCS_BUTTONPUSH Or DFCS_PUSHED)
                End Select
    
             Case lgTSWindowsFlat
                Select Case State
                Case lgNormal
-                  Call DrawFrameControl(.hdc, r, DFC_BUTTON, DFCS_BUTTONPUSH Or DFCS_FLAT)
+                  Call DrawFrameControl(.hDC, R, DFC_BUTTON, DFCS_BUTTONPUSH Or DFCS_FLAT)
    
                Case lgHot
-                  Call DrawFrameControl(.hdc, r, DFC_BUTTON, DFCS_BUTTONPUSH Or DFCS_HOT)
+                  Call DrawFrameControl(.hDC, R, DFC_BUTTON, DFCS_BUTTONPUSH Or DFCS_HOT)
    
                Case lgDOWN
-                  Call DrawFrameControl(.hdc, r, DFC_BUTTON, DFCS_BUTTONPUSH Or DFCS_PUSHED)
+                  Call DrawFrameControl(.hDC, R, DFC_BUTTON, DFCS_BUTTONPUSH Or DFCS_PUSHED)
                End Select
    
             Case lgTSWindowsXP
-               DrawXPHeader .hdc, r, State
+               DrawXPHeader .hDC, R, State
             
             Case lgTSWindowsTheme
                '// Try XP Theme API
-               If Not DrawTheme("Header", 1, State, r) Then
+               If Not DrawTheme("Header", 1, State, R) Then
                   '// Use XP emulation
-                  DrawXPHeader .hdc, r, State
+                  DrawXPHeader .hDC, R, State
                End If
             
             Case lgTSOfficeXP
-               DrawOfficeXPHeader .hdc, r, State
+               DrawOfficeXPHeader .hDC, R, State
             End Select
    
             If vblnRowNumbers Then Exit Sub
@@ -3976,45 +3976,45 @@ Private Sub DrawHeader(ByVal lCol As Long, _
                   DrawSortArrow (mCols(mColPtr(lCol)).lX + mCols(mColPtr(lCol)).lWidth) + mlngRowNoWidth - 12, _
                      mR.CaptionHeight + 6, 9, 5, mCols(mColPtr(lCol)).nSortOrder
    
-                  Call SetRect(r, mCols(mColPtr(lCol)).lX + C_TEXT_SPACE, mR.CaptionHeight, _
+                  Call SetRect(R, mCols(mColPtr(lCol)).lX + C_TEXT_SPACE, mR.CaptionHeight, _
                      (mCols(mColPtr(lCol)).lX + mCols(mColPtr(lCol)).lWidth) - (C_ARROW_SPACE + C_SIZE_SORTARROW), mR.HeaderHeight)
    
                ElseIf mColPtr(lCol) = mSortSubColumn Then
                   DrawSortArrow (mCols(mColPtr(lCol)).lX + mCols(mColPtr(lCol)).lWidth) + mlngRowNoWidth - 12, _
                      mR.CaptionHeight + 6, 6, 3, mCols(mColPtr(lCol)).nSortOrder
    
-                  Call SetRect(r, mCols(mColPtr(lCol)).lX + C_TEXT_SPACE, mR.CaptionHeight, _
+                  Call SetRect(R, mCols(mColPtr(lCol)).lX + C_TEXT_SPACE, mR.CaptionHeight, _
                      (mCols(mColPtr(lCol)).lX + mCols(mColPtr(lCol)).lWidth) - (C_ARROW_SPACE + C_SIZE_SORTARROW), mR.HeaderHeight)
                Else
-                  Call SetRect(r, mCols(mColPtr(lCol)).lX + C_TEXT_SPACE, mR.CaptionHeight, _
+                  Call SetRect(R, mCols(mColPtr(lCol)).lX + C_TEXT_SPACE, mR.CaptionHeight, _
                      (mCols(mColPtr(lCol)).lX + mCols(mColPtr(lCol)).lWidth) - (C_TEXT_SPACE * 2), mR.HeaderHeight)
                End If
    
             Else
-               Call SetRect(r, mCols(mColPtr(lCol)).lX + C_TEXT_SPACE, mR.CaptionHeight, _
+               Call SetRect(R, mCols(mColPtr(lCol)).lX + C_TEXT_SPACE, mR.CaptionHeight, _
                   (mCols(mColPtr(lCol)).lX + mCols(mColPtr(lCol)).lWidth) - (C_TEXT_SPACE * 2), mR.HeaderHeight)
             End If
    
             '// Move text based on State
-            r.Left = r.Left + 2 + mlngRowNoWidth
-            r.Right = r.Right + mlngRowNoWidth
+            R.Left = R.Left + 2 + mlngRowNoWidth
+            R.Right = R.Right + mlngRowNoWidth
             Select Case State
             Case lgHot
-               r.Top = r.Top - 1
+               R.Top = R.Top - 1
             Case lgDOWN
-               r.Top = r.Top + 1
+               R.Top = R.Top + 1
             End Select
                
             If mColumnHeaderLines > 1 And Not bDraging Then '// More than 1 line of text?
                '// needed to vertically center wrapped text
-               sText = SplitToLines(mCols(mColPtr(lCol)).sCaption, r.Right - r.Left, mColumnHeaderLines)
+               sText = SplitToLines(mCols(mColPtr(lCol)).sCaption, R.Right - R.Left, mColumnHeaderLines)
                lngCenter = (mR.HeaderHeight - mR.CaptionHeight - UserControl.TextHeight(sText)) / 2
    
-               r.Top = r.Top + lngCenter
-               Call DrawText(.hdc, sText, -1, r, mCols(mColPtr(lCol)).nAlignment Or DT_WORDBREAK Or DT_WORD_ELLIPSIS)
+               R.Top = R.Top + lngCenter
+               Call DrawText(.hDC, sText, -1, R, mCols(mColPtr(lCol)).nAlignment Or DT_WORDBREAK Or DT_WORD_ELLIPSIS)
    
             Else '// single line of text
-               Call DrawText(.hdc, mCols(mColPtr(lCol)).sCaption, -1, r, mCols(mColPtr(lCol)).nAlignment Or DT_SINGLELINE)
+               Call DrawText(.hDC, mCols(mColPtr(lCol)).sCaption, -1, R, mCols(mColPtr(lCol)).nAlignment Or DT_SINGLELINE)
             End If
    
          End With
@@ -4055,7 +4055,7 @@ Private Function DrawHeaderRow(Optional ByVal bDraging As Boolean = False) As Lo
    
 End Function
 
-Private Sub DrawLine(ByVal hdc As Long, _
+Private Sub DrawLine(ByVal hDC As Long, _
                      ByVal x1 As Long, _
                      ByVal y1 As Long, _
                      ByVal x2 As Long, _
@@ -4068,10 +4068,10 @@ Private Sub DrawLine(ByVal hdc As Long, _
   Dim hPenOld As Long
 
    hPen = CreatePen(0, lWidth, lColor)
-   hPenOld = SelectObject(hdc, hPen)
-   MoveToEx hdc, x1, y1, pt
-   LineTo hdc, x2, y2
-   SelectObject hdc, hPenOld
+   hPenOld = SelectObject(hDC, hPen)
+   MoveToEx hDC, x1, y1, pt
+   LineTo hDC, x2, y2
+   SelectObject hDC, hPenOld
    DeleteObject hPen
 
 End Sub
@@ -4151,7 +4151,7 @@ Private Sub DrawSortArrow(ByVal lX As Long, _
    If Not nOrientation = lgSTNormal Then
 
       hPen = CreatePen(0, 1, TranslateColor(vb3DDKShadow))
-      hPenOld = SelectObject(hdc, hPen)
+      hPenOld = SelectObject(hDC, hPen)
 
       If nOrientation = lgSTDescending Then
          lVerticalChange = -1
@@ -4164,17 +4164,17 @@ Private Sub DrawSortArrow(ByVal lX As Long, _
       x2 = lWidth
       y1 = lY
 
-      MoveToEx hdc, x1, y1, pt
+      MoveToEx hDC, x1, y1, pt
 
       For lCount = 1 To lStep
-         LineTo hdc, x1 + x2, y1
+         LineTo hDC, x1 + x2, y1
          x1 = x1 + 1
          y1 = y1 + lVerticalChange
          x2 = x2 - 2
-         MoveToEx hdc, x1, y1, pt
+         MoveToEx hDC, x1, y1, pt
       Next lCount
 
-      Call SelectObject(hdc, hPenOld)
+      Call SelectObject(hDC, hPenOld)
       Call DeleteObject(hPen)
 
    End If
@@ -4211,10 +4211,10 @@ Private Function DrawTheme(ByVal sClass As String, _
 
    If mbWinXP Then
       
-      mhTheme = OpenThemeData(UserControl.hWnd, StrPtr(sClass))
+      mhTheme = OpenThemeData(UserControl.hwnd, StrPtr(sClass))
 
       If mhTheme Then
-         lResult = DrawThemeBackground(mhTheme, UserControl.hdc, iPart, iState, rtRect, rtRect)
+         lResult = DrawThemeBackground(mhTheme, UserControl.hDC, iPart, iState, rtRect, rtRect)
 
          If CloseTheme Then
             Call CloseThemeData(mhTheme)
@@ -4246,18 +4246,18 @@ Private Sub DrawXPButton(ByRef btnRect As RECT, ByVal lngState As Long)
    btnRect.Right = btnRect.Right + 1
 
    If mbWinXP Then
-      lngTheme = OpenThemeData(UserControl.hWnd, StrPtr(strXPclass))
+      lngTheme = OpenThemeData(UserControl.hwnd, StrPtr(strXPclass))
 
       If lngTheme Then
-         Call DrawThemeBackground(lngTheme, UserControl.hdc, 1, lngState, btnRect, btnRect)
+         Call DrawThemeBackground(lngTheme, UserControl.hDC, 1, lngState, btnRect, btnRect)
          Call CloseThemeData(lngTheme)
 
       Else '// no themes
-         DrawOfficeXPHeader UserControl.hdc, btnRect, lngState
+         DrawOfficeXPHeader UserControl.hDC, btnRect, lngState
       End If
 
    Else '// NOT XP or greater
-      DrawOfficeXPHeader UserControl.hdc, btnRect, lngState
+      DrawOfficeXPHeader UserControl.hDC, btnRect, lngState
    End If
 
 End Sub
@@ -4394,25 +4394,25 @@ Private Sub EditCell(ByVal vRow As Long, ByVal vCol As Long)
                If mbWinNT Then
                   Select Case mCols(mColPtr(mEditCol)).sInputFilter
                   Case "<"
-                     Call SetWindowLongW(.hWnd, GWL_STYLE, mTextBoxStyle Or ES_LOWERCASE)
+                     Call SetWindowLongW(.hwnd, GWL_STYLE, mTextBoxStyle Or ES_LOWERCASE)
 
                   Case ">"
-                     Call SetWindowLongW(.hWnd, GWL_STYLE, mTextBoxStyle Or ES_UPPERCASE)
+                     Call SetWindowLongW(.hwnd, GWL_STYLE, mTextBoxStyle Or ES_UPPERCASE)
 
                   Case Else
-                     Call SetWindowLongW(.hWnd, GWL_STYLE, mTextBoxStyle)
+                     Call SetWindowLongW(.hwnd, GWL_STYLE, mTextBoxStyle)
                   End Select
 
                Else
                   Select Case mCols(mColPtr(mEditCol)).sInputFilter
                   Case "<"
-                     Call SetWindowLongA(.hWnd, GWL_STYLE, mTextBoxStyle Or ES_LOWERCASE)
+                     Call SetWindowLongA(.hwnd, GWL_STYLE, mTextBoxStyle Or ES_LOWERCASE)
 
                   Case ">"
-                     Call SetWindowLongA(.hWnd, GWL_STYLE, mTextBoxStyle Or ES_UPPERCASE)
+                     Call SetWindowLongA(.hwnd, GWL_STYLE, mTextBoxStyle Or ES_UPPERCASE)
 
                   Case Else
-                     Call SetWindowLongA(.hWnd, GWL_STYLE, mTextBoxStyle)
+                     Call SetWindowLongA(.hwnd, GWL_STYLE, mTextBoxStyle)
                   End Select
                End If
 
@@ -4441,9 +4441,9 @@ Private Sub EditCell(ByVal vRow As Long, ByVal vCol As Long)
 
             With mCols(mColPtr(mEditCol)).EditCtrl
 
-               If Not (UserControl.ContainerHwnd = .Container.hWnd) Then
+               If Not (UserControl.ContainerHwnd = .Container.hwnd) Then
                   mEditParent = UserControl.ContainerHwnd
-                  SetParent .hWnd, UserControl.ContainerHwnd
+                  SetParent .hwnd, UserControl.ContainerHwnd
                Else
                   mEditParent = 0
                End If
@@ -4464,7 +4464,7 @@ Private Sub EditCell(ByVal vRow As Long, ByVal vCol As Long)
                .ZOrder
 
                If TypeOf mCols(mColPtr(mEditCol)).EditCtrl Is VB.ComboBox Then
-                  SendMessageAsLong mCols(mColPtr(mEditCol)).EditCtrl.hWnd, CB_SHOWDROPDOWN, 1&, 0&
+                  SendMessageAsLong mCols(mColPtr(mEditCol)).EditCtrl.hwnd, CB_SHOWDROPDOWN, 1&, 0&
                End If
 
                .SetFocus
@@ -4534,7 +4534,7 @@ Attribute ExpandRowImage.VB_Description = "Returns/sets the value of the ImageLi
    If mExpandRowImage >= 0 Then
       ExpandRowImage = mExpandRowImage
    Else
-      ExpandRowImage = moImageList.ListImages(Abs(mExpandRowImage)).Key
+      ExpandRowImage = moImageList.ListImages(Abs(mExpandRowImage)).key
    End If
 
 End Property
@@ -4701,7 +4701,7 @@ Private Sub ExportGridOpen(ByVal vstrFileName As String)
       '// Set the mask
       .fMask = &H44C 'C_SEE_MASK_NOCLOSEPROCESS Or C_SEE_MASK_INVOKEIDLIST Or C_SEE_MASK_FLAG_NO_UI
       '// Set the owner window
-      .hWnd = 0&
+      .hwnd = 0&
       '// Set the action
       .lpVerb = "open"
       '// Set the File Path and Name
@@ -4830,7 +4830,7 @@ Public Sub FilterOn(ByVal FilterText As String, _
    
             Case lgSMNavigate
                If LenB(strCellText) Then
-                  blnMatchFound = (strCellText >= FilterText) And ((Mid$(strCellText, 1, 1)) = Mid$(FilterText, 1, 1))
+                  blnMatchFound = (strCellText >= FilterText) And ((mid$(strCellText, 1, 1)) = mid$(FilterText, 1, 1))
                Else
                   blnMatchFound = False
                End If
@@ -4938,7 +4938,7 @@ Public Function FindItem(ByVal SearchText As String, _
                Case lgSMNavigate
                   If LenB(sCellText) Then
                      If sCellText >= SearchText Then
-                        If Mid$(sCellText, 1, 1) = Mid$(SearchText, 1, 1) Then
+                        If mid$(sCellText, 1, 1) = mid$(SearchText, 1, 1) Then
                            FindItem = lCount
                            Exit For
                         End If
@@ -5508,13 +5508,13 @@ End Sub
 
 Public Function GetInfo(ByVal lInfo As Long) As String
   
-  Dim Buffer   As String
+  Dim buffer   As String
   Dim Ret      As String
    
-   Buffer = String$(256, 0)
-   Ret = GetLocaleInfo(&H400, lInfo, Buffer, Len(Buffer))
+   buffer = String$(256, 0)
+   Ret = GetLocaleInfo(&H400, lInfo, buffer, Len(buffer))
    If Ret > 0 Then
-      GetInfo = Left$(Buffer, Ret - 1)
+      GetInfo = Left$(buffer, Ret - 1)
    Else
       GetInfo = ""
    End If
@@ -5625,7 +5625,7 @@ Private Sub GetThemeName(lngHWND As Long)
       stringShellStyle = stringThemeFile
 
       For lngPos = Len(stringThemeFile) To 1 Step -1
-         If Mid$(stringThemeFile, lngPos, 1) = "\" Then
+         If mid$(stringThemeFile, lngPos, 1) = "\" Then
             stringShellStyle = Left$(stringThemeFile, lngPos)
             Exit For
          End If
@@ -5687,9 +5687,9 @@ Public Property Let GridLineWidth(ByVal vNewValue As Long)
 
 End Property
 
-Public Property Get hWnd() As Long
+Public Property Get hwnd() As Long
 
-   hWnd = UserControl.hWnd
+   hwnd = UserControl.hwnd
 
 End Property
 
@@ -5847,15 +5847,15 @@ End Property
 Private Sub MoveEditControl() '//'ByVal MoveControl As lgMoveControlEnum)
 
    '// Purpose: Used to position and optionally resize the Edit control.
-  Dim r            As RECT
+  Dim R            As RECT
   Dim lBorderWidth As Long
   Dim nScaleMode   As ScaleModeConstants
   Dim lHeight      As Long
 
-   SetColRect mEditCol, r
+   SetColRect mEditCol, R
 
    If Not IsColumnTruncated(mEditCol) Then
-      r.Left = r.Left + mGridLineWidth
+      R.Left = R.Left + mGridLineWidth
    End If
 
    On Local Error Resume Next
@@ -5864,10 +5864,10 @@ Private Sub MoveEditControl() '//'ByVal MoveControl As lgMoveControlEnum)
    If mCols(mColPtr(mEditCol)).EditCtrl Is Nothing Then
       '// Using internal TextBox
       With txtEdit
-         .Left = r.Left
+         .Left = R.Left
          .Top = RowTopY(mEditRow) + mGridLineWidth
          .Height = mItems(mRowPtr(mEditRow)).lHeight - mGridLineWidth
-         .Width = (r.Right - r.Left)
+         .Width = (R.Right - R.Left)
       End With
 
    Else '// External Control
@@ -5882,7 +5882,7 @@ Private Sub MoveEditControl() '//'ByVal MoveControl As lgMoveControlEnum)
          With mCols(mColPtr(mEditCol)).EditCtrl
 
             If mCols(mColPtr(mEditCol)).MoveControl And lgBCLeft Then
-               .Left = ScaleX(r.Left + lBorderWidth, vbPixels, nScaleMode) + UserControl.Extender.Left
+               .Left = ScaleX(R.Left + lBorderWidth, vbPixels, nScaleMode) + UserControl.Extender.Left
             End If
 
             If mCols(mColPtr(mEditCol)).MoveControl And lgBCTop Then
@@ -5890,12 +5890,12 @@ Private Sub MoveEditControl() '//'ByVal MoveControl As lgMoveControlEnum)
             End If
 
             If mCols(mColPtr(mEditCol)).MoveControl And lgBCWidth Then
-               .Width = ScaleX((r.Right - r.Left), vbPixels, nScaleMode)
+               .Width = ScaleX((R.Right - R.Left), vbPixels, nScaleMode)
             End If
 
             If mCols(mColPtr(mEditCol)).MoveControl And lgBCHeight Then
                lHeight = mItems(mRowPtr(mEditRow)).lHeight - (mGridLineWidth * 2)
-               Call SendMessageAsLong(.hWnd, CB_SETITEMHEIGHT, -1, ByVal lHeight)
+               Call SendMessageAsLong(.hwnd, CB_SETITEMHEIGHT, -1, ByVal lHeight)
             End If
 
          End With
@@ -5904,7 +5904,7 @@ Private Sub MoveEditControl() '//'ByVal MoveControl As lgMoveControlEnum)
          With mCols(mColPtr(mEditCol)).EditCtrl
 
             If mCols(mColPtr(mEditCol)).MoveControl And lgBCLeft Then
-               .Left = ScaleX(r.Left + lBorderWidth, vbPixels, nScaleMode) + UserControl.Extender.Left
+               .Left = ScaleX(R.Left + lBorderWidth, vbPixels, nScaleMode) + UserControl.Extender.Left
             End If
 
             If mCols(mColPtr(mEditCol)).MoveControl And lgBCTop Then
@@ -5916,7 +5916,7 @@ Private Sub MoveEditControl() '//'ByVal MoveControl As lgMoveControlEnum)
             End If
 
             If mCols(mColPtr(mEditCol)).MoveControl And lgBCWidth Then
-               .Width = ScaleX((r.Right - r.Left), vbPixels, nScaleMode)
+               .Width = ScaleX((R.Right - R.Left), vbPixels, nScaleMode)
             End If
 
          End With
@@ -6513,7 +6513,7 @@ Public Property Get RowImage(Optional ByVal vRow As Long = C_NULL_RESULT) As Var
       If mItems(mRowPtr(vRow)).lImage >= 0 Then
          RowImage = mItems(mRowPtr(vRow)).lImage
       Else
-         RowImage = moImageList.ListImages(Abs(mItems(mRowPtr(vRow)).lImage)).Key
+         RowImage = moImageList.ListImages(Abs(mItems(mRowPtr(vRow)).lImage)).key
       End If
    End If
    
@@ -6700,13 +6700,13 @@ Public Function rVal(ByVal vString As String) As Double
       End Select
       
       For lngI = lngS To Len(vString)
-         bytAscV = AscW(Mid$(vString, lngI, 1))
+         bytAscV = AscW(mid$(vString, lngI, 1))
          Select Case bytAscV
          Case 48 To 57, 69 '// 1234567890E
-            strTemp = strTemp & Mid$(vString, lngI, 1)
+            strTemp = strTemp & mid$(vString, lngI, 1)
          
          Case 44, 45, 46 '// , - .
-            strTemp = strTemp & Mid$(vString, lngI, 1)
+            strTemp = strTemp & mid$(vString, lngI, 1)
          
          Case 36, 163, 32 '// $
             '// Ignore
@@ -6715,7 +6715,7 @@ Public Function rVal(ByVal vString As String) As Double
             If Left$(strTemp, 2) = "&H" Then '// Hex Values ?
                Select Case bytAscV
                Case 65 To 70 '// ABCDEF
-                  strTemp = strTemp & Mid$(vString, lngI, 1)
+                  strTemp = strTemp & mid$(vString, lngI, 1)
                Case Else
                   Exit For
                End Select
@@ -7244,17 +7244,17 @@ End Function
 Private Sub sc_Terminate()
 'Terminate all subclassing
 
-  Dim I As Long
+  Dim i As Long
 
    If Not (z_Funk Is Nothing) Then                 'Ensure that subclassing has been started
 
       With z_Funk
-         For I = .Count To 1 Step -1               'Loop through the collection of window handles in reverse order
-            z_ScMem = .Item(I)                     'Get the thunk address
+         For i = .Count To 1 Step -1               'Loop through the collection of window handles in reverse order
+            z_ScMem = .Item(i)                     'Get the thunk address
             If IsBadCodePtr(z_ScMem) = 0 Then      'Ensure that the thunk hasn't already released its memory
                sc_UnSubclass zData(IDX_HWND)       'UnSubclass
             End If
-         Next I                                    'Next member of the collection
+         Next i                                    'Next member of the collection
       End With
 
       Set z_Funk = Nothing                         'Destroy the hWnd/thunk-address collection
@@ -7324,7 +7324,7 @@ Public Function SelectedCount() As Long
 
 End Function
 
-Private Sub SetColRect(ByVal Index As Long, ByRef r As RECT)
+Private Sub SetColRect(ByVal Index As Long, ByRef R As RECT)
 
    '// Purpose: Set the drawing boundary for a Column
 
@@ -7347,7 +7347,7 @@ Private Sub SetColRect(ByVal Index As Long, ByRef r As RECT)
 
    If mlngFreezeAtCol >= 0 Then
       If Index < lScrollValue And Index > mlngFreezeAtCol And lScrollValue > 0 Then
-         r.Left = mlngRowNoWidth - 1
+         R.Left = mlngRowNoWidth - 1
 
       Else
          For lCol = 0 To Index - 1
@@ -7361,18 +7361,18 @@ Private Sub SetColRect(ByVal Index As Long, ByRef r As RECT)
          Next lCol
 
          If IsColumnTruncated(Index) Then
-            r.Left = mR.LeftText + mlngRowNoWidth
-            r.Right = r.Left + (mCols(mColPtr(Index)).lWidth - mR.LeftText)
+            R.Left = mR.LeftText + mlngRowNoWidth
+            R.Right = R.Left + (mCols(mColPtr(Index)).lWidth - mR.LeftText)
          Else
-            r.Left = lX
-            r.Right = r.Left + mCols(mColPtr(Index)).lWidth
+            R.Left = lX
+            R.Right = R.Left + mCols(mColPtr(Index)).lWidth
          End If
 
       End If
 
    Else  '// NOT FreezeAtCol
       If Index < lScrollValue And lScrollValue > 0 Then
-         r.Left = mlngRowNoWidth - 1
+         R.Left = mlngRowNoWidth - 1
 
       Else
          For lCol = lScrollValue To Index - 1
@@ -7383,11 +7383,11 @@ Private Sub SetColRect(ByVal Index As Long, ByRef r As RECT)
          Next lCol
 
          If IsColumnTruncated(Index) Then
-            r.Left = mR.LeftText + mlngRowNoWidth
-            r.Right = r.Left + (mCols(mColPtr(Index)).lWidth - mR.LeftText)
+            R.Left = mR.LeftText + mlngRowNoWidth
+            R.Right = R.Left + (mCols(mColPtr(Index)).lWidth - mR.LeftText)
          Else
-            r.Left = lX
-            r.Right = r.Left + mCols(mColPtr(Index)).lWidth
+            R.Left = lX
+            R.Right = R.Left + mCols(mColPtr(Index)).lWidth
          End If
 
       End If
@@ -7508,7 +7508,7 @@ End Sub
 Private Sub SetItemRect(ByVal vRow As Long, _
                         ByVal vCol As Long, _
                         ByVal lY As Long, _
-                        ByRef r As RECT, _
+                        ByRef R As RECT, _
                         ByVal ItemType As lgRectTypeEnum)
 
   Dim lHeight    As Long
@@ -7577,7 +7577,7 @@ Private Sub SetItemRect(ByVal vRow As Long, _
    End Select
 
    lLeft = lLeft + mlngRowNoWidth
-   Call SetRect(r, lLeft, lTop, lLeft + lWidth, lTop + lHeight)
+   Call SetRect(R, lLeft, lTop, lLeft + lWidth, lTop + lHeight)
 
 End Sub
 
@@ -7673,7 +7673,7 @@ End Function
 
 Private Sub SetRowSize(ByVal vRow As Long)
 
-  Dim r       As RECT
+  Dim R       As RECT
   Dim lCol    As Long
   Dim lHeight As Long
   Dim sText   As String
@@ -7685,16 +7685,16 @@ Private Sub SetRowSize(ByVal vRow As Long)
          sText = mItems(mRowPtr(vRow)).Cell(lCol).sValue
 
          If (mItems(mRowPtr(vRow)).Cell(lCol).nFlags And lgFLWordWrap) Then
-            SetRect r, 0, 2, mCols(lCol).lWidth - 5, 0
-            DrawText UserControl.hdc, sText, Len(sText), r, DT_CALCRECT Or DT_WORDBREAK
+            SetRect R, 0, 2, mCols(lCol).lWidth - 5, 0
+            DrawText UserControl.hDC, sText, Len(sText), R, DT_CALCRECT Or DT_WORDBREAK
 
          Else
-            SetRect r, 0, 0, mCols(lCol).lWidth, 0
-            DrawText UserControl.hdc, sText, Len(sText), r, DT_CALCRECT
+            SetRect R, 0, 0, mCols(lCol).lWidth, 0
+            DrawText UserControl.hDC, sText, Len(sText), R, DT_CALCRECT
          End If
 
-         If r.Bottom > lHeight Then
-            lHeight = r.Bottom
+         If R.Bottom > lHeight Then
+            lHeight = R.Bottom
          End If
 
       Next lCol
@@ -7835,7 +7835,7 @@ End Function
 Private Sub SetThemeColor()
 
    If muThemeColor = Autodetect Then
-      GetGradientColor UserControl.hWnd
+      GetGradientColor UserControl.hwnd
    Else
       SetDefaultThemeColor muThemeColor
    End If
@@ -7910,7 +7910,7 @@ End Sub
 
 Private Sub ShowCompleteCellx(ByVal lRow As Long, ByVal lCol As Long)
 
-  Dim r            As RECT
+  Dim R            As RECT
   Dim CR           As RECT
   Dim RectM        As RECT
   Dim cHeight      As Long
@@ -7981,61 +7981,61 @@ Private Sub ShowCompleteCellx(ByVal lRow As Long, ByVal lCol As Long)
 
                   cWidth = cWidth - 2
 
-                  SetRect r, 0, 0, mCols(mColPtr(lCol)).lWidth, 0
-                  Call DrawText(UserControl.hdc, sText, Len(sText), r, DT_CALCRECT Or DT_WORDBREAK)
+                  SetRect R, 0, 0, mCols(mColPtr(lCol)).lWidth, 0
+                  Call DrawText(UserControl.hDC, sText, Len(sText), R, DT_CALCRECT Or DT_WORDBREAK)
 
                   '// test to see if we need to show
-                  r.Right = r.Right + sCharW
-                  If r.Bottom + lMinRowH <= mItems(mRowPtr(lRow)).lHeight And r.Right <= cWidth Then GoTo ExitShowToolTip
+                  R.Right = R.Right + sCharW
+                  If R.Bottom + lMinRowH <= mItems(mRowPtr(lRow)).lHeight And R.Right <= cWidth Then GoTo ExitShowToolTip
 
                Else
-                  SetRect r, 0, 0, mCols(mColPtr(lCol)).lWidth, 0
-                  Call DrawText(UserControl.hdc, sText, Len(sText), r, DT_CALCRECT Or DT_SINGLELINE)
+                  SetRect R, 0, 0, mCols(mColPtr(lCol)).lWidth, 0
+                  Call DrawText(UserControl.hDC, sText, Len(sText), R, DT_CALCRECT Or DT_SINGLELINE)
 
                   '// test to see if we need to show
-                  r.Right = r.Right + sCharW
-                  If r.Right <= cWidth Then GoTo ExitShowToolTip
+                  R.Right = R.Right + sCharW
+                  If R.Right <= cWidth Then GoTo ExitShowToolTip
                End If
 
                '// begin show of 'Full View'
                sCharW = sCharW * 2
-               SetRect r, 0, 0, tWidth, 0
-               Call DrawText(UserControl.hdc, sText, Len(sText), r, DT_CALCRECT Or DT_WORDBREAK)
+               SetRect R, 0, 0, tWidth, 0
+               Call DrawText(UserControl.hDC, sText, Len(sText), R, DT_CALCRECT Or DT_WORDBREAK)
 
                SetColRect lCol, CR
                CR.Top = RowTopY(lRow)
 
-               GetWindowRect hWnd, RectM
+               GetWindowRect hwnd, RectM
                lngW = Screen.Width / Screen.TwipsPerPixelX - (RectM.Left + CR.Left)
                If lngW < tWidth Then '// does it go beyond the edge of the screen?
                   tWidth = lngW - sCharW
-                  SetRect r, 0, 0, tWidth, 0
-                  Call DrawText(UserControl.hdc, sText, Len(sText), r, DT_CALCRECT Or DT_WORDBREAK)
+                  SetRect R, 0, 0, tWidth, 0
+                  Call DrawText(UserControl.hDC, sText, Len(sText), R, DT_CALCRECT Or DT_WORDBREAK)
                   lngW = C_NULL_RESULT
                End If
 
                If lCol = 0 Then
-                  r.Left = r.Left + 2
+                  R.Left = R.Left + 2
                Else
-                  r.Left = r.Left - 1
+                  R.Left = R.Left - 1
                End If
 
-               r.Top = r.Top - 1
+               R.Top = R.Top - 1
 
-               r.Right = r.Right + sCharW + C_TEXT_SPACE
+               R.Right = R.Right + sCharW + C_TEXT_SPACE
 
-               If r.Bottom < cHeight Then
-                  r.Bottom = cHeight
+               If R.Bottom < cHeight Then
+                  R.Bottom = cHeight
                Else
-                  r.Bottom = r.Bottom + lMinRowH
+                  R.Bottom = R.Bottom + lMinRowH
                End If
 
-               RectM = r
+               RectM = R
 
                '// Draw rect
                picTooltip.Cls
-               GetWindowRect hWnd, r
-               picTooltip.Move (r.Left + CR.Left) * Screen.TwipsPerPixelX, (r.Top + CR.Top) * Screen.TwipsPerPixelY, _
+               GetWindowRect hwnd, R
+               picTooltip.Move (R.Left + CR.Left) * Screen.TwipsPerPixelX, (R.Top + CR.Top) * Screen.TwipsPerPixelY, _
                   RectM.Right * Screen.TwipsPerPixelX, RectM.Bottom * Screen.TwipsPerPixelY
 
                '// Draw Text
@@ -8048,7 +8048,7 @@ Private Sub ShowCompleteCellx(ByVal lRow As Long, ByVal lCol As Long)
                   lngW = mItems(mRowPtr(lRow)).Cell(mColPtr(lCol)).nAlignment Or DT_WORDBREAK Or DT_SINGLELINE
                End If
 
-               Call DrawText(picTooltip.hdc, sText, Len(sText), RectM, lngW)
+               Call DrawText(picTooltip.hDC, sText, Len(sText), RectM, lngW)
 
                picTooltip.Visible = True
                picTooltip.ZOrder
@@ -8502,7 +8502,7 @@ Private Function SplitToLines(ByVal sText As String, _
 
    For lngI = 1 To Len(sText)
 
-      strChar = Mid$(sText, lngI, 1) '// get single character
+      strChar = mid$(sText, lngI, 1) '// get single character
       strTemp = strTemp & strChar    '// add character to temp string
       lChrCount = Len(strTemp)       '// get temp string's length
 
@@ -8519,15 +8519,15 @@ Private Function SplitToLines(ByVal sText As String, _
 
          If LenB(SplitToLines) Then
             '// not first join
-            SplitToLines = SplitToLines & vbNewLine & Trim$(Mid$(strTemp, 1, lngPos))
+            SplitToLines = SplitToLines & vbNewLine & Trim$(mid$(strTemp, 1, lngPos))
          Else
             '// first join
-            SplitToLines = Trim$(Mid$(strTemp, 1, lngPos))
+            SplitToLines = Trim$(mid$(strTemp, 1, lngPos))
          End If
 
          If lChrCount > lngPos Then
             '// save leftover text
-            strTemp = Trim$(Mid$(strTemp, lngPos + 1))
+            strTemp = Trim$(mid$(strTemp, lngPos + 1))
          Else
             strTemp = vbNullString
          End If
@@ -8820,7 +8820,7 @@ Public Function UpdateCell(Optional ByVal bAllowMove As Boolean = False) As Bool
 
             With mCols(mColPtr(mEditCol)).EditCtrl
                If Not (mEditParent = 0) Then
-                  SetParent .hWnd, mEditParent
+                  SetParent .hwnd, mEditParent
                End If
 
                .Visible = False
@@ -8936,9 +8936,9 @@ Private Sub UserControl_Initialize()
       .Visible = False
 
       If mbWinNT Then
-         mTextBoxStyle = GetWindowLongW(.hWnd, GWL_STYLE)
+         mTextBoxStyle = GetWindowLongW(.hwnd, GWL_STYLE)
       Else
-         mTextBoxStyle = GetWindowLongA(.hWnd, GWL_STYLE)
+         mTextBoxStyle = GetWindowLongA(.hwnd, GWL_STYLE)
       End If
    End With
 
@@ -8953,8 +8953,8 @@ Private Sub UserControl_Initialize()
       .Enabled = False
    End With
 
-   SetParent picTooltip.hWnd, GetDesktopWindow
-   SetWindowLongA picTooltip.hWnd, GWL_EXSTYLE, WS_EX_TOOLWINDOW
+   SetParent picTooltip.hwnd, GetDesktopWindow
+   SetWindowLongA picTooltip.hwnd, GWL_EXSTYLE, WS_EX_TOOLWINDOW
 
    ReDim mColPtr(0) As Long
 
@@ -9500,7 +9500,7 @@ End Sub
 
 Private Sub UserControl_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
 
-  Dim r                 As RECT
+  Dim R                 As RECT
   Dim lngC              As Long
   Dim lngR              As Long
   Dim bCancel           As Boolean
@@ -9542,7 +9542,7 @@ Private Sub UserControl_MouseDown(Button As Integer, Shift As Integer, X As Sing
 
          mMouseDownRow = lngR
 
-         Call SetCapture(UserControl.hWnd)
+         Call SetCapture(UserControl.hwnd)
          mbMouseDown = True
 
          If y < mR.HeaderHeight Then
@@ -9571,12 +9571,12 @@ Private Sub UserControl_MouseDown(Button As Integer, Shift As Integer, X As Sing
                Else
                   If lngC > C_NULL_RESULT Then
                      If IsEditable() And mCols(mColPtr(lngC)).nType = lgBoolean Then '// Cell CheckMark
-                        SetItemRect mMouseDownRow, lngC, RowTopY(mMouseDownRow), r, lgRTCheckBox
+                        SetItemRect mMouseDownRow, lngC, RowTopY(mMouseDownRow), R, lgRTCheckBox
 
-                        If X >= r.Left Then
-                           If y >= r.Top Then
-                              If X <= r.Left + mR.CheckBoxSize Then
-                                 If y <= r.Top + mR.CheckBoxSize Then
+                        If X >= R.Left Then
+                           If y >= R.Top Then
+                              If X <= R.Left + mR.CheckBoxSize Then
+                                 If y <= R.Top + mR.CheckBoxSize Then
                                  
                                     bRedraw = True
                                     RaiseEvent BeforeEdit(mMouseDownRow, mColPtr(lngC), bCancel)
@@ -9891,7 +9891,7 @@ End Sub
 
 Private Sub UserControl_MouseUp(Button As Integer, Shift As Integer, X As Single, y As Single)
 
-  Dim r                As RECT
+  Dim R                As RECT
   Dim lCurrentMouseCol As Long
   Dim lCurrentMouseRow As Long
   Dim lTemp            As Long
@@ -10011,12 +10011,12 @@ Private Sub UserControl_MouseUp(Button As Integer, Shift As Integer, X As Single
             
             If Not (mCF(mItems(mRowPtr(mMouseRow)).Cell(mColPtr(mMouseCol)).nFormat).nImage = 0) Then
                '// Cell has an image
-               SetItemRect mMouseRow, mMouseCol, RowTopY(mMouseRow), r, lgRTImage
+               SetItemRect mMouseRow, mMouseCol, RowTopY(mMouseRow), R, lgRTImage
                '// has the cell's image been clicked?
-               If X >= r.Left Then
-                  If y >= r.Top Then
-                     If X <= r.Left + mR.ImageWidth Then
-                        If y <= r.Top + mR.ImageHeight Then
+               If X >= R.Left Then
+                  If y >= R.Top Then
+                     If X <= R.Left + mR.ImageWidth Then
+                        If y <= R.Top + mR.ImageHeight Then
                            RaiseEvent CellImageClick(mMouseRow, mColPtr(mMouseCol))
                         End If
                      End If
@@ -10026,12 +10026,12 @@ Private Sub UserControl_MouseUp(Button As Integer, Shift As Integer, X As Single
             ElseIf mbAllowWordWrap And (mItems(mRowPtr(mMouseRow)).Cell(mColPtr(mMouseCol)).nFlags And lgFLWordWrap) Then
                '// Using Expand/Shrink Image in word wrapped rows
                If mExpandRowImage > 0 Then
-                  SetItemRect mMouseRow, mMouseCol, RowTopY(mMouseRow), r, lgRTImage
+                  SetItemRect mMouseRow, mMouseCol, RowTopY(mMouseRow), R, lgRTImage
 
-                  If X >= r.Left Then
-                     If y >= r.Top Then
-                        If X <= r.Left + mR.ImageWidth Then
-                           If y <= r.Top + mR.ImageHeight Then
+                  If X >= R.Left Then
+                     If y >= R.Top Then
+                        If X <= R.Left + mR.ImageWidth Then
+                           If y <= R.Top + mR.ImageHeight Then
                               If RowHeight(mMouseRow) = mR.TextHeight + (mMinVerticalOffset * 2) + 2 Then
                                  '// Restore to normal
                                  RowHeight(mRow) = C_NULL_RESULT
@@ -10219,23 +10219,23 @@ Private Sub UserControl_ReadProperties(PropBag As PropertyBag)
    '// sc_Subclass
    If Ambient.UserMode Then '// If running, not designing
       With UserControl
-         Call sc_Subclass(.hWnd)
-         Call sc_AddMsg(.hWnd, WM_KILLFOCUS)
-         Call sc_AddMsg(.hWnd, WM_SETFOCUS)
-         Call sc_AddMsg(.hWnd, WM_MOUSEWHEEL)
-         Call sc_AddMsg(.hWnd, WM_MOUSEMOVE)
-         Call sc_AddMsg(.hWnd, WM_MOUSELEAVE)
-         Call sc_AddMsg(.hWnd, WM_MOUSEHOVER)
-         Call sc_AddMsg(.hWnd, WM_HSCROLL)
-         Call sc_AddMsg(.hWnd, WM_VSCROLL)
+         Call sc_Subclass(.hwnd)
+         Call sc_AddMsg(.hwnd, WM_KILLFOCUS)
+         Call sc_AddMsg(.hwnd, WM_SETFOCUS)
+         Call sc_AddMsg(.hwnd, WM_MOUSEWHEEL)
+         Call sc_AddMsg(.hwnd, WM_MOUSEMOVE)
+         Call sc_AddMsg(.hwnd, WM_MOUSELEAVE)
+         Call sc_AddMsg(.hwnd, WM_MOUSEHOVER)
+         Call sc_AddMsg(.hwnd, WM_HSCROLL)
+         Call sc_AddMsg(.hwnd, WM_VSCROLL)
 
          If mbWinXP Then
-            Call sc_AddMsg(.hWnd, WM_THEMECHANGED)
+            Call sc_AddMsg(.hwnd, WM_THEMECHANGED)
          End If
       End With
 
       '// default scroll bar settings
-      SBCreate UserControl.hWnd
+      SBCreate UserControl.hwnd
       SBStyle = Style_Regular
       SBLargeChange(efsHorizontal) = 5
       SBLargeChange(efsVertical) = 5
@@ -10435,7 +10435,7 @@ Private Sub zAddMsg(ByVal uMsg As Long, ByVal nTable As Long)
 
   Dim nCount As Long                         'Table entry count
   Dim nBase  As Long                         'Remember z_ScMem
-  Dim I      As Long                         'Loop index
+  Dim i      As Long                         'Loop index
 
    nBase = z_ScMem                           'Remember z_ScMem so that we can restore its value on exit
    z_ScMem = zData(nTable)                   'Map zData() to the specified table
@@ -10452,17 +10452,17 @@ Private Sub zAddMsg(ByVal uMsg As Long, ByVal nTable As Long)
          GoTo Bail
       End If
 
-      For I = 1 To nCount                    'Loop through the table entries
-         If zData(I) = 0 Then                'If the element is free...
-            zData(I) = uMsg                  'Use this element
+      For i = 1 To nCount                    'Loop through the table entries
+         If zData(i) = 0 Then                'If the element is free...
+            zData(i) = uMsg                  'Use this element
             GoTo Bail                        'Bail
-         ElseIf zData(I) = uMsg Then         'If the message is already in the table...
+         ElseIf zData(i) = uMsg Then         'If the message is already in the table...
             GoTo Bail                        'Bail
          End If
 
-      Next I                                 'Next message table entry
+      Next i                                 'Next message table entry
 
-      nCount = I                             'On drop through: i = nCount + 1, the new table entry count
+      nCount = i                             'On drop through: i = nCount + 1, the new table entry count
       zData(nCount) = uMsg                   'Store the message in the appended table entry
    End If
 
@@ -10476,10 +10476,10 @@ Private Function zAddressOf(ByVal oCallback As Object, ByVal nOrdinal As Long) A
 'Return the address of the specified ordinal method on the oCallback object, 1 = last private method, 2 = second last private method, etc
 
   Dim o As Long                                                   'Object pointer
-  Dim I As Long                                                   'vTable entry counter
+  Dim i As Long                                                   'vTable entry counter
   Dim j As Long                                                   'vTable address
   Dim n As Long                                                   'Method pointer
-  Dim b As Byte                                                   'First method byte
+  Dim B As Byte                                                   'First method byte
   Dim m As Byte                                                   'Known good first method byte
 
    o = ObjPtr(oCallback)                                          'Get the callback object's address
@@ -10489,21 +10489,21 @@ Private Function zAddressOf(ByVal oCallback As Object, ByVal nOrdinal As Long) A
    GetMem1 n, m                                                   'Get the first method byte... &H33 if pseudo-code, &HE9 if native
    j = j + 4                                                      'Bump to the next vtable entry
    
-   For I = 1 To 511                                               'Loop through a 'sane' number of vtable entries
+   For i = 1 To 511                                               'Loop through a 'sane' number of vtable entries
       GetMem4 j, n                                                'Get the method pointer
       
       If IsBadCodePtr(n) Then                                     'If the method pointer is an invalid code address
          GoTo vTableEnd                                           'We've reached the end of the vTable, exit the for loop
       End If
       
-      GetMem1 n, b                                                'Get the first method byte
+      GetMem1 n, B                                                'Get the first method byte
       
-      If b <> m Then                                              'If the method byte doesn't matche the known good value
+      If B <> m Then                                              'If the method byte doesn't matche the known good value
          GoTo vTableEnd                                           'We've reached the end of the vTable, exit the for loop
       End If
       
       j = j + 4                                                   'Bump to the next vTable entry
-   Next I                                                         'Bump counter
+   Next i                                                         'Bump counter
 
    Debug.Assert False                                             'Halt if running under the VB IDE
    Err.Raise vbObjectError, "zAddressOf", "Ordinal not found"     'Raise error if running compiled
@@ -10531,7 +10531,7 @@ Private Sub zDelMsg(ByVal uMsg As Long, ByVal nTable As Long)
 
   Dim nCount As Long                         'Table entry count
   Dim nBase  As Long                         'Remember z_ScMem
-  Dim I      As Long                         'Loop index
+  Dim i      As Long                         'Loop index
 
    nBase = z_ScMem                           'Remember z_ScMem so that we can restore its value on exit
    z_ScMem = zData(nTable)                   'Map zData() to the specified table
@@ -10541,13 +10541,13 @@ Private Sub zDelMsg(ByVal uMsg As Long, ByVal nTable As Long)
    Else
       nCount = zData(0)                      'Get the table entry count
 
-      For I = 1 To nCount                    'Loop through the table entries
-         If zData(I) = uMsg Then             'If the message is found...
-            zData(I) = 0                     'Null the msg value -- also frees the element for re-use
+      For i = 1 To nCount                    'Loop through the table entries
+         If zData(i) = uMsg Then             'If the message is found...
+            zData(i) = 0                     'Null the msg value -- also frees the element for re-use
             GoTo Bail                        'Bail
          End If
 
-      Next I                                 'Next message table entry
+      Next i                                 'Next message table entry
 
       zError "zDelMsg", "Message &H" & Hex$(uMsg) & " not found in table"
    End If
@@ -10784,7 +10784,7 @@ Private Sub zWndProc1(ByVal bBefore As Boolean, _
    Case WM_MOUSEMOVE
       If Not mbInCtrl Then
          mbInCtrl = True
-         Call TrackMouseLeave(hWnd)
+         Call TrackMouseLeave(hwnd)
          RaiseEvent MouseEnter
       End If
 
