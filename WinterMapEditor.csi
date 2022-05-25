@@ -1,2 +1,8 @@
 [History]
-1=#P0#=mb	#P1#=RenderPreview	#P2#=WinterMapEditor/modTileEngine/RenderPreview	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220525140440	#P7#=0	#P8#=19	.
+1=#P0#=mb	#P1#=LvBRecargarIndices_Click	#P2#=WinterMapEditor/frmEditIndices/LvBRecargarIndices_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220525143731	#P7#=0	#P8#=3	.
+2=#P0#=mb	#P1#=LvBGuardar_Click	#P2#=WinterMapEditor/frmEditIndices/LvBGuardar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20220525144741	#P7#=0	#P8#=2	.
+3=#P0#=mb	#P1#=CargarIndicesSuperficie	#P2#=WinterMapEditor/modCarga/CargarIndicesSuperficie	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220525142745	#P7#=0	#P8#=-1	.
+4=#P0#=mb	#P1#=Form_Load	#P2#=WinterMapEditor/frmEditIndices/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20220525144808	#P7#=0	#P8#=1	.
+5=#P0#=mb	#P1#=LvBSalir_Click	#P2#=WinterMapEditor/frmEditIndices/LvBSalir_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20220525143954	#P7#=0	#P8#=13	.
+6=#P0#=mb	#P1#=LvBEditarIndice_Click	#P2#=WinterMapEditor/frmSuperficies/LvBEditarIndice_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20220525142906	#P7#=0	#P8#=0	.
+7=#P0#=mb	#P1#=RenderPreview	#P2#=WinterMapEditor/modTileEngine/RenderPreview	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220525140440	#P7#=0	#P8#=31	.

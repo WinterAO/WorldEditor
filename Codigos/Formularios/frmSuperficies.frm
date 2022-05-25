@@ -3,7 +3,7 @@ Begin VB.Form frmSuperficies
    BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Superficies"
-   ClientHeight    =   5880
+   ClientHeight    =   6300
    ClientLeft      =   9420
    ClientTop       =   6465
    ClientWidth     =   4455
@@ -21,7 +21,7 @@ Begin VB.Form frmSuperficies
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   392
+   ScaleHeight     =   420
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   297
    ShowInTaskbar   =   0   'False
@@ -194,6 +194,35 @@ Begin VB.Form frmSuperficies
       ShowRowNumbersVary=   0   'False
       HotHeaderTracking=   0   'False
    End
+   Begin WinterMapEditor.lvButtons_H LvBEditarIndice 
+      Height          =   375
+      Left            =   210
+      TabIndex        =   10
+      Top             =   5880
+      Width           =   4095
+      _ExtentX        =   7223
+      _ExtentY        =   661
+      Caption         =   "Editar Indice"
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
+      cGradient       =   0
+      Gradient        =   3
+      Mode            =   0
+      Value           =   0   'False
+      cBack           =   16744576
+   End
    Begin VB.Label lbGrh 
       AutoSize        =   -1  'True
       BackColor       =   &H80000012&
@@ -319,6 +348,10 @@ Private Sub Form_Click()
 '*************************************************
     Me.SetFocus
 
+End Sub
+
+Private Sub LvBEditarIndice_Click()
+    frmEditIndices.Show , frmMain
 End Sub
 
 Private Sub LynxSuperficies_Click()
