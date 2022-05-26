@@ -309,3 +309,37 @@ Public Sub Superficie_Bordes()
     MapInfo.Changed = 1
 
 End Sub
+
+''
+' Coloca la zona seleccionada en todos los bordes
+'
+
+Public Sub Zonas_Bordes()
+'*************************************************
+'Author: Lorwik
+'Last modified: 25/05/2022
+'*************************************************
+
+    Dim y As Integer
+    Dim X As Integer
+    
+    If Not MapaCargado Then
+        Exit Sub
+    End If
+    
+    For y = YMinMapSize To YMaxMapSize
+        For X = XMinMapSize To XMaxMapSize
+    
+            If X < MinXBorder Or X > MaxXBorder Or y < MinYBorder Or y > MaxYBorder Then
+    
+                MapData(X, y).ZonaIndex = frmZonas.LstZona.ListIndex + 1
+    
+            End If
+    
+        Next X
+    Next y
+    
+    'Set changed flag
+    MapInfo.Changed = 1
+
+End Sub

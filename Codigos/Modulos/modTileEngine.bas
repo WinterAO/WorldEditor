@@ -520,13 +520,13 @@ Sub RenderScreen(ByVal tilex As Integer, _
 
     Dim screenmaxX       As Integer  'End X pos on current screen
     
-    Dim minY             As Integer  'Start Y pos on current map
+    Dim minY             As Long     'Start Y pos on current map
 
-    Dim maxY             As Integer  'End Y pos on current map
+    Dim maxY             As Long     'End Y pos on current map
 
-    Dim minX             As Integer  'Start X pos on current map
+    Dim minX             As Long     'Start X pos on current map
 
-    Dim maxX             As Integer  'End X pos on current map
+    Dim maxX             As Long     'End X pos on current map
     
     Dim ScreenX          As Integer  'Keeps track of where to place tile on screen
 
@@ -925,7 +925,7 @@ Public Sub RenderPreview()
     Dim i As Integer, j As Integer
     Dim Cont As Integer
     Dim aux As Long
-    Dim W As Long, H As Long
+    Dim W As Long, h As Long
     
     With DestRect
         .Bottom = frmPreview.PreviewGrh.ScaleHeight
@@ -941,12 +941,12 @@ Public Sub RenderPreview()
        
            'Call Draw_GrhIndex(CurrentGrh.GrhIndex, (GrhData(CurrentGrh.GrhIndex).pixelWidth) / 2, (GrhData(CurrentGrh.GrhIndex).pixelHeight), 1, Normal_RGBList(), 0)
            
-           H = frmConfigSup.mLargo.Text
-           If H <= 0 Then H = 1
+           h = frmConfigSup.mLargo.Text
+           If h <= 0 Then h = 1
            W = frmConfigSup.mAncho.Text
            If W <= 0 Then W = 1
            
-           aux = Val(CurrentGrh.GrhIndex) + (((1 + 1) Mod H) * W) + ((1 + 1) Mod W)
+           aux = Val(CurrentGrh.GrhIndex) + (((1 + 1) Mod h) * W) + ((1 + 1) Mod W)
            Call Draw_GrhIndex(aux, 0, 0, 0, Normal_RGBList(), 0)
     
        Else

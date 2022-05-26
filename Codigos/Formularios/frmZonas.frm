@@ -215,7 +215,7 @@ Private Sub LstZona_Click()
     
 End Sub
 
-Private Sub LvBCerrar_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub LvBCerrar_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
     Unload Me
 End Sub
 
@@ -246,7 +246,7 @@ Private Sub LvBResetear_Click()
     End If
 End Sub
 
-Private Sub LvBZona_MouseDown(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub LvBZona_MouseDown(Index As Integer, Button As Integer, Shift As Integer, X As Single, y As Single)
     Select Case Index
     
         Case 0
