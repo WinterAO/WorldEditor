@@ -3,10 +3,10 @@ Begin VB.Form frmModo
    BackColor       =   &H00424242&
    BorderStyle     =   0  'None
    Caption         =   "Form1"
-   ClientHeight    =   3270
+   ClientHeight    =   4110
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   5415
+   ClientWidth     =   5355
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -19,11 +19,57 @@ Begin VB.Form frmModo
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   218
+   ScaleHeight     =   274
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   361
+   ScaleWidth      =   357
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.Frame FraPerfil 
+      BackColor       =   &H00535353&
+      Caption         =   "Perfil"
+      ForeColor       =   &H00FFFFFF&
+      Height          =   795
+      Left            =   120
+      TabIndex        =   11
+      Top             =   60
+      Width           =   5115
+      Begin VB.ComboBox cmbPerfil 
+         Height          =   315
+         ItemData        =   "frmModo.frx":0000
+         Left            =   210
+         List            =   "frmModo.frx":0002
+         Style           =   2  'Dropdown List
+         TabIndex        =   12
+         Top             =   300
+         Width           =   2895
+      End
+      Begin WinterMapEditor.lvButtons_H LvBNuevo 
+         Height          =   345
+         Index           =   2
+         Left            =   3270
+         TabIndex        =   13
+         Top             =   300
+         Width           =   1635
+         _ExtentX        =   2884
+         _ExtentY        =   609
+         Caption         =   "Nuevo"
+         CapAlign        =   2
+         BackStyle       =   2
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         cGradient       =   0
+         Mode            =   0
+         Value           =   0   'False
+         cBack           =   -2147483633
+      End
+   End
    Begin VB.Frame FraConfiguraciónDe 
       BackColor       =   &H00535353&
       Caption         =   "Configuración de video"
@@ -31,8 +77,8 @@ Begin VB.Form frmModo
       Height          =   1335
       Left            =   120
       TabIndex        =   3
-      Top             =   1800
-      Width           =   5175
+      Top             =   2640
+      Width           =   5115
       Begin VB.CheckBox chkvSync 
          BackColor       =   &H00535353&
          Caption         =   "Activar sincronización vertical"
@@ -45,9 +91,9 @@ Begin VB.Form frmModo
       End
       Begin VB.ComboBox cmbProcesado 
          Height          =   315
-         ItemData        =   "frmModo.frx":0000
+         ItemData        =   "frmModo.frx":0004
          Left            =   1920
-         List            =   "frmModo.frx":0010
+         List            =   "frmModo.frx":0014
          Style           =   2  'Dropdown List
          TabIndex        =   5
          Top             =   400
@@ -70,9 +116,9 @@ Begin VB.Form frmModo
       Caption         =   "¿En que modo quieres iniciar el WorldEditor?"
       ForeColor       =   &H00FFFFFF&
       Height          =   1575
-      Left            =   120
+      Left            =   60
       TabIndex        =   0
-      Top             =   120
+      Top             =   960
       Width           =   5175
       Begin VB.OptionButton OptModo 
          BackColor       =   &H00535353&
@@ -180,10 +226,21 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Public ModoElegido As Boolean
+Private Perfiles() As String
+Private nPerfiles As Byte
 
 Private Sub Form_Load()
     On Error Resume Next
+    
+    Dim i As Byte
+    
+    nPerfiles = GetVar(configFile, "CONFIGURACION", "nPerfiles")
+    
+    ReDim Perfiles(1 To nPerfiles) As String
+    
+    For i = 1 To nPerfiles
+        cmbPerfil.AddItem (GetVar(configFile, "PERFILES", "Perfil" & i))
+    Next i
     
     #If Privado = 0 Then
         'Marcamos la opcion
@@ -216,6 +273,14 @@ Private Sub chkvSync_Click()
 End Sub
 
 Private Sub LvBBoton_Click(Index As Integer)
+
+    If cmbPerfil.ListIndex < 0 Then
+        MsgBox "¡No se ha seleccionado ningún perfil!", vbCritical
+        Exit Sub
+    End If
+
+    namePerfil = cmbPerfil.List(cmbPerfil.ListIndex)
+
     Select Case Index
     
         Case 0 'Salir
@@ -237,6 +302,16 @@ Private Sub LvBBoton_Click(Index As Integer)
             
             Unload Me
     End Select
+End Sub
+
+Private Sub LvBNuevo_Click(Index As Integer)
+    namePerfil = InputBox("Introduce el nombre para el perfil.")
+    
+    If namePerfil = vbNullString Then Exit Sub
+    
+    Call WriteVar(configFile, "CONFIGURACION", "nPerfiles", nPerfiles + 1)
+    Call WriteVar(configFile, "PERFILES", "Perfil" & nPerfiles + 1, namePerfil)
+    cmbPerfil.AddItem (namePerfil)
 End Sub
 
 Private Sub OptModo_Click(Index As Integer)

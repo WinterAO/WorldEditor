@@ -18,7 +18,7 @@ Sub Main()
     
     frmModo.Show
     
-    Do While frmModo.ModoElegido = False
+    Do While ModoElegido = False
         DoEvents
     Loop
     

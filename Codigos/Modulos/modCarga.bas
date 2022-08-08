@@ -191,13 +191,13 @@ On Local Error GoTo fileErr:
         
         '-------------------
         'Recursos
-        DirRecursos = autoCompletaPath(Lector.GetValue("PATH" & .MeMode, "DirRecursos"))
+        DirRecursos = autoCompletaPath(Lector.GetValue("PATH-" & namePerfil & "-" & .MeMode, "DirRecursos"))
         
         If FileExist(DirRecursos, vbDirectory) = False Or DirRecursos = "\" Then
             MsgBox "El directorio de Recursos es incorrecto", vbCritical + vbOKOnly
             
             NewPath = Buscar_Carpeta("DirRecursos", "")
-            Call WriteVar(configFile, "PATH" & .MeMode, "DirRecursos", NewPath)
+            Call WriteVar(configFile, "PATH-" & namePerfil & "-" & .MeMode, "DirRecursos", NewPath)
             DirRecursos = NewPath & "\"
         End If
         
@@ -218,13 +218,13 @@ On Local Error GoTo fileErr:
         
         '-------------------
         'Dats
-        DirDats = autoCompletaPath(Lector.GetValue("PATH" & .MeMode, "DirDats"))
+        DirDats = autoCompletaPath(Lector.GetValue("PATH-" & namePerfil & "-" & .MeMode, "DirDats"))
         
         If FileExist(DirDats, vbDirectory) = False Or DirDats = "\" Then
             MsgBox "El directorio de Dats es incorrecto", vbCritical + vbOKOnly
             
             NewPath = Buscar_Carpeta("DirDats", "")
-            Call WriteVar(configFile, "PATH" & .MeMode, "DirDats", NewPath)
+            Call WriteVar(configFile, "PATH-" & namePerfil & "-" & .MeMode, "DirDats", NewPath)
             DirDats = NewPath & "\"
         End If
         

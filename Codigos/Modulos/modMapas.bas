@@ -972,7 +972,9 @@ Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".
     
     Map = Right(Map, Len(Map) - (Len(PATH_Save)))
     
-    MapaActual = ReadField(1, Right(Map, Len(Map) - 4), Asc("."))
+    MapaActual = ReadField(1, Right(Map, Len(Map)), Asc("."))
+    
+    nMapaActual = ReadField(1, Right(Map, Len(Map) - 4), Asc("."))
     'If frmCopiarBordes.Visible Then Call frmCopiarBordes.Inicializar
     
     For LoopC = Len(Left(Map, Len(Map) - 4)) To 1 Step -1

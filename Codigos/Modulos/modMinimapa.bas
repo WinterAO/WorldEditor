@@ -12,7 +12,7 @@ Public MMiniMap_particulas As Boolean
 Public MMiniMap_cuadrantes As Boolean
 Public MMiniMap_Nombre     As Boolean
 
-Private Declare Function SetPixel Lib "gdi32" (ByVal hDC As Long, ByVal X As Long, ByVal Y As Long, ByVal crColor As Long) As Long
+Private Declare Function SetPixel Lib "gdi32" (ByVal hDC As Long, ByVal X As Long, ByVal y As Long, ByVal crColor As Long) As Long
 
 Public Sub DibujarMinimapa(Optional ByVal Refrescar = False)
 
@@ -124,7 +124,7 @@ Public Sub DibujarMinimapa(Optional ByVal Refrescar = False)
     'frmMain.UserM.Left = (UserPos.X * 2) - 2
     'frmMain.UserM.Top = (UserPos.Y * 2) - 2
     frmMapa.ApuntadorRadar.Left = (UserPos.X) - 9
-    frmMapa.ApuntadorRadar.Top = (UserPos.Y) - 8
+    frmMapa.ApuntadorRadar.Top = (UserPos.y) - 8
     
     'Refrescamos
     'frmMain.Minimap.Refresh
@@ -156,7 +156,7 @@ Public Sub RenderizarCuadrantes()
     Dim LoopC As Byte
     
     Dim X As Integer
-    Dim Y As Integer
+    Dim y As Integer
     
     Dim AnchoCuadrante As Byte
     
@@ -176,7 +176,7 @@ Public Sub RenderizarCuadrantes()
     YMin = 1
     YMax = 100
     
-    For LoopC = 0 To 110
+    For LoopC = 0 To 99
         X = 0
         For map_x = XMin To XMax
         
@@ -184,17 +184,17 @@ Public Sub RenderizarCuadrantes()
         
             For map_y = YMin To YMax
             
-                Y = Y + 1
+                y = y + 1
             
                 If MapData(map_x, map_y).Graphic(1).GrhIndex > 0 Then _
-                    SetPixel picMapahDC, X - 1, Y - 1, GrhData(MapData(map_x, map_y).Graphic(1).GrhIndex).mini_map_color
+                    SetPixel picMapahDC, X - 1, y - 1, GrhData(MapData(map_x, map_y).Graphic(1).GrhIndex).mini_map_color
                     
                 If MapData(map_x, map_y).Graphic(2).GrhIndex > 0 Then _
-                    SetPixel picMapahDC, X - 1, Y - 1, GrhData(MapData(map_x, map_y).Graphic(2).GrhIndex).mini_map_color
+                    SetPixel picMapahDC, X - 1, y - 1, GrhData(MapData(map_x, map_y).Graphic(2).GrhIndex).mini_map_color
 
             Next map_y
             
-            Y = 0
+            y = 0
             
         Next map_x
         
@@ -202,7 +202,7 @@ Public Sub RenderizarCuadrantes()
         XMax = XMax + 100
         AnchoCuadrante = AnchoCuadrante + 1
         
-        If AnchoCuadrante = 11 Then
+        If AnchoCuadrante = 10 Then
             XMin = 1
             XMax = 100
             YMin = YMin + 100

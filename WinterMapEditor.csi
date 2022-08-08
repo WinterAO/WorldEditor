@@ -1,0 +1,5 @@
+[History]
+1=#P0#=mb	#P1#=LvBNuevo_Click	#P2#=WinterMapEditor/frmModo/LvBNuevo_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20220808085634	#P7#=0	#P8#=0	.
+2=#P0#=mb	#P1#=Main	#P2#=WinterMapEditor/modGeneral/Main	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220808084921	#P7#=0	#P8#=16	.
+3=#P0#=mb	#P1#=leerConfiguracion	#P2#=WinterMapEditor/modCarga/leerConfiguracion	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20220808085802	#P7#=0	#P8#=32	.
+4=#P0#=mb	#P1#=LvBBoton_Click	#P2#=WinterMapEditor/frmModo/LvBBoton_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20220808085553	#P7#=0	#P8#=15	.

@@ -1,6 +1,10 @@
 Attribute VB_Name = "modDeclaraciones"
 Option Explicit
 
+'Configuracion
+Public ModoElegido As Boolean
+Public namePerfil As String
+
 'Objetos publicos
 Public Sound As clsSoundEngine
 
@@ -15,7 +19,8 @@ Public HotKeysAllow As Boolean
 Public PATH_Save As String
 Public NumMap_Save As Integer
 Public NameMap_Save As String
-Public MapaActual As Integer
+Public nMapaActual As Integer
+Public MapaActual As String
 Public MapaCargado As Boolean
 Public MousePos As String
 Public ParticlePreview As Long
