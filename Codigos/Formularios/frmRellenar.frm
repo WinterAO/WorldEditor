@@ -591,11 +591,18 @@ Public Sub Bloqueos_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long, B
     For y = y1 To y2
         For X = x1 To x2
     
-            If Inserta = True Then
-                MapData(X, y).bLocked = 1
-            Else
-                MapData(X, y).bLocked = 0
+            If y > YMinMapSize Or y < YMaxMapSize Then
+                If X > XMinMapSize Or X < XMaxMapSize Then
+    
+                    If Inserta = True Then
+                        MapData(X, y).bLocked = 1
+                    Else
+                        MapData(X, y).bLocked = 0
+                    End If
+                    
+                End If
             End If
+            
     
         Next X
     Next y

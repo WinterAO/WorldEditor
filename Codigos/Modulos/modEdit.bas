@@ -1,6 +1,13 @@
 Attribute VB_Name = "modEdit"
 Option Explicit
 
+Public Enum eEstadoSelect
+    nada = 0
+    Copiado
+End Enum
+
+Public EstadoSelect As Byte
+
 ''
 ' Acciona la operacion al hacer doble click en una posicion del mapa
 '
@@ -582,6 +589,8 @@ Public Sub PegarSeleccion() '(mx As Integer, my As Integer)
     
     If UltimoX = SobreX And UltimoY = SobreY Then Exit Sub
     
+    EstadoSelect = eEstadoSelect.nada
+    
     UltimoX = SobreX
     UltimoY = SobreY
     
@@ -678,6 +687,8 @@ Public Sub CopiarSeleccion(Optional ByVal Borde As Boolean = False)
     Dim X As Integer
     Dim y As Integer
     Dim i As Byte
+    
+    EstadoSelect = eEstadoSelect.Copiado
     
     Seleccionando = False
     SeleccionAncho = Abs(SeleccionIX - SeleccionFX) + 1

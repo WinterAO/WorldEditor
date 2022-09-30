@@ -636,8 +636,8 @@ Begin VB.Form frmMain
       End
    End
    Begin MSComDlg.CommonDialog Dialog 
-      Left            =   18660
-      Top             =   10260
+      Left            =   120
+      Top             =   750
       _ExtentX        =   847
       _ExtentY        =   847
       _Version        =   393216
@@ -2260,6 +2260,10 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y A
     
     Call ConvertCPtoTP(X, y, tX, tY)
     
+    If EstadoSelect > 0 And Button = 2 Then
+        EstadoSelect = 0
+    End If
+    
     If Shift = 1 And Button = 1 Then
         Seleccionando = True
         SeleccionIX = tX '+ UserPos.X
@@ -2271,6 +2275,8 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y A
         Call modEdit.ClickEdit(Button, tX, tY)
         
     End If
+    
+Debug.Print Button
 
 End Sub
 
@@ -2290,6 +2296,12 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y A
     
     MousePos = "X: " & tX & " - Y: " & tY
     
+    If EstadoSelect > 0 And Button = 2 Then
+        EstadoSelect = 0
+        CopyX = tX
+        CopyY = tY
+    End If
+    
      If Shift = 1 And Button = 1 Then
         Seleccionando = True
         SeleccionFX = tX '+ TileX
@@ -2303,7 +2315,7 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y A
         Call modEdit.ClickEdit(Button, tX, tY)
         
     End If
-
+    
 End Sub
 
 Private Sub mnuVerZonas_Click(Index As Integer)

@@ -1,11 +1,11 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmConsola 
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Consola"
    ClientHeight    =   4005
-   ClientLeft      =   23820
-   ClientTop       =   11865
+   ClientLeft      =   9825
+   ClientTop       =   7995
    ClientWidth     =   4785
    ClipControls    =   0   'False
    BeginProperty Font 
@@ -37,7 +37,6 @@ Begin VB.Form frmConsola
       _Version        =   393217
       BackColor       =   0
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True

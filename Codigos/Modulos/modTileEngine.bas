@@ -496,9 +496,9 @@ Public Sub CleanDrawBuffer()
 End Sub
 
 Sub RenderScreen(ByVal tilex As Integer, _
-                 ByVal tiley As Integer, _
-                 ByVal PixelOffsetX As Integer, _
-                 ByVal PixelOffsetY As Integer)
+    ByVal tiley As Integer, _
+    ByVal PixelOffsetX As Integer, _
+    ByVal PixelOffsetY As Integer)
     '**************************************************************
     'Author: Aaron Perkins
     'Last Modify Date: 8/14/2007
@@ -707,6 +707,8 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     End If
                     
                 End If
+                
+
             
             End If
         
@@ -826,13 +828,40 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 End If
 
             End If
-            
+             
             ScreenX = ScreenX + 1
             
         Next X
 
         ScreenY = ScreenY + 1
     Next y
+    
+    If EstadoSelect = eEstadoSelect.Copiado Then
+        
+        Dim sX As Long
+        Dim sY As Long
+        Dim xX As Long
+        Dim yY As Long
+                
+        For yY = 0 To SeleccionAncho - 1
+            For xX = 0 To SeleccionAlto - 1
+                            
+                ScreenX = (xX + SobreX - UserPos.X) + 21
+                ScreenY = yY + SobreY - UserPos.y + 11
+        
+                Call Draw_Grh(SeleccionMap(xX, yY).Graphic(1), (ScreenX - 1) * 32 + PixelOffsetX, (ScreenY - 1) * 32 + PixelOffsetY, 1, MapData(X, y).Engine_Light(), 1)
+                Call Draw_Grh(SeleccionMap(xX, yY).Graphic(2), (ScreenX - 1) * 32 + PixelOffsetX, (ScreenY - 1) * 32 + PixelOffsetY, 1, MapData(X, y).Engine_Light(), 1)
+                sX = sX + 32
+            Next xX
+            sX = 0
+            sY = sY + 32
+        Next yY
+                        
+        sX = 0
+        sY = 0
+                
+    End If
+    
     
 RenderScreen_Err:
 

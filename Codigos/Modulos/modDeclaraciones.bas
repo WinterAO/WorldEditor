@@ -52,6 +52,9 @@ Public DeSeleccionAlto As Integer
 Public DeSeleccionando As Boolean
 Public DeSeleccionMap() As MapBlock
 
+Public CopyX As Long
+Public CopyY As Long
+
 'Ver Capas/Npc/Objetos/etc
 Public VerBlockeados As Boolean
 Public VerTriggers As Boolean

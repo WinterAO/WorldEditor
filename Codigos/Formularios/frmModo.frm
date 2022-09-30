@@ -274,13 +274,6 @@ End Sub
 
 Private Sub LvBBoton_Click(Index As Integer)
 
-    If cmbPerfil.ListIndex < 0 Then
-        MsgBox "¡No se ha seleccionado ningún perfil!", vbCritical
-        Exit Sub
-    End If
-
-    namePerfil = cmbPerfil.List(cmbPerfil.ListIndex)
-
     Select Case Index
     
         Case 0 'Salir
@@ -288,6 +281,14 @@ Private Sub LvBBoton_Click(Index As Integer)
             End
         
         Case 1
+        
+            If cmbPerfil.ListIndex < 0 Then
+                MsgBox "¡No se ha seleccionado ningún perfil!", vbCritical
+                Exit Sub
+            End If
+        
+            namePerfil = cmbPerfil.List(cmbPerfil.ListIndex)
+        
             ModoElegido = True
             
             ClientSetup.OverrideVertexProcess = cmbProcesado.ListIndex
