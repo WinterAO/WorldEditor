@@ -7,7 +7,7 @@ Codigo/*.log
 *.lvw
 *.OBJ
 *.log
-Config.ini
+Init/configuracion.ini
 Graficos/*
 WinterMapEditor.exe
 

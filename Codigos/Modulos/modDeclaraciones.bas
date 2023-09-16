@@ -1,6 +1,10 @@
 Attribute VB_Name = "modDeclaraciones"
 Option Explicit
 
+'Configuracion
+Public ModoElegido As Boolean
+Public namePerfil As String
+
 'Objetos publicos
 Public Sound As clsSoundEngine
 
@@ -15,7 +19,8 @@ Public HotKeysAllow As Boolean
 Public PATH_Save As String
 Public NumMap_Save As Integer
 Public NameMap_Save As String
-Public MapaActual As Integer
+Public nMapaActual As Integer
+Public MapaActual As String
 Public MapaCargado As Boolean
 Public MousePos As String
 Public ParticlePreview As Long
@@ -46,6 +51,9 @@ Public DeSeleccionAncho As Integer
 Public DeSeleccionAlto As Integer
 Public DeSeleccionando As Boolean
 Public DeSeleccionMap() As MapBlock
+
+Public CopyX As Long
+Public CopyY As Long
 
 'Ver Capas/Npc/Objetos/etc
 Public VerBlockeados As Boolean
@@ -82,6 +90,9 @@ Public PantallaY As Integer
 ' Client Config
 Public ClienteHeight As Integer
 Public ClienteWidth As Integer
+
+'Contador de tiles
+Public ContadorTiles As Long
 
 'Heading Constants
 Public Enum eDireccion
@@ -128,14 +139,14 @@ End Type
 'Posicion en un mapa
 Public Type Position
     X As Integer
-    Y As Integer
+    y As Integer
 End Type
 
 'Holds a world position
 Public Type WorldPos
     Map As Integer
     X As Integer
-    Y As Integer
+    y As Integer
 End Type
 
 ' Cuerpos body.dat
@@ -219,7 +230,7 @@ Public Type tMapInfo
     InvocarSinEfecto As Byte
     OcultarSinEfecto As Byte
     lvlMinimo As Byte
-    ambient As String
+    Ambient As String
     NoEncriptarMP As Byte
 End Type
 

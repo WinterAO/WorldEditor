@@ -182,7 +182,7 @@ On Local Error GoTo fileErr:
     End If
     
     Call Lector.Initialize(configFile)
-    
+
     With ClientSetup
 
         '****
@@ -191,13 +191,13 @@ On Local Error GoTo fileErr:
         
         '-------------------
         'Recursos
-        DirRecursos = autoCompletaPath(Lector.GetValue("PATH" & .MeMode, "DirRecursos"))
+        DirRecursos = autoCompletaPath(Lector.GetValue("PATH-" & namePerfil & "-" & .MeMode, "DirRecursos"))
         
         If FileExist(DirRecursos, vbDirectory) = False Or DirRecursos = "\" Then
             MsgBox "El directorio de Recursos es incorrecto", vbCritical + vbOKOnly
             
             NewPath = Buscar_Carpeta("DirRecursos", "")
-            Call WriteVar(configFile, "PATH" & .MeMode, "DirRecursos", NewPath)
+            Call WriteVar(configFile, "PATH-" & namePerfil & "-" & .MeMode, "DirRecursos", NewPath)
             DirRecursos = NewPath & "\"
         End If
         
@@ -218,13 +218,13 @@ On Local Error GoTo fileErr:
         
         '-------------------
         'Dats
-        DirDats = autoCompletaPath(Lector.GetValue("PATH" & .MeMode, "DirDats"))
+        DirDats = autoCompletaPath(Lector.GetValue("PATH-" & namePerfil & "-" & .MeMode, "DirDats"))
         
         If FileExist(DirDats, vbDirectory) = False Or DirDats = "\" Then
             MsgBox "El directorio de Dats es incorrecto", vbCritical + vbOKOnly
             
             NewPath = Buscar_Carpeta("DirDats", "")
-            Call WriteVar(configFile, "PATH" & .MeMode, "DirDats", NewPath)
+            Call WriteVar(configFile, "PATH-" & namePerfil & "-" & .MeMode, "DirDats", NewPath)
             DirDats = NewPath & "\"
         End If
         
@@ -273,6 +273,16 @@ On Local Error GoTo fileErr:
         frmMain.Minimap_particulas.Checked = Val(Lector.GetValue("MINIMAP", "Particulas"))
         frmMain.Minimap_ndemapa.Checked = Val(Lector.GetValue("MINIMAP", "Nombre"))
         frmMain.Minimap_bloqueos.Checked = Val(Lector.GetValue("MINIMAP", "Bloqueos"))
+        
+        MMiniMap_capa1 = frmMain.Minimap_capa1.Checked
+        MMiniMap_capa2 = frmMain.Minimap_capa2.Checked
+        MMiniMap_capa3 = frmMain.Minimap_capa3.Checked
+        MMiniMap_capa4 = frmMain.Minimap_capa4.Checked
+        MMiniMap_objetos = frmMain.Minimap_objetos.Checked
+        MMiniMap_Npcs = frmMain.Minimap_npcs.Checked
+        MMiniMap_particulas = frmMain.Minimap_particulas.Checked
+        MMiniMap_Nombre = frmMain.Minimap_ndemapa.Checked
+        MMiniMap_Bloqueos = frmMain.Minimap_bloqueos.Checked
         
         ' AUDIO
         .bMusic = CByte(Lector.GetValue("AUDIO", "MUSICA"))
@@ -424,7 +434,6 @@ ErrorHandler:
     End If
     
 End Sub
-
 Public Sub CargarMinimapa()
 '************************************
 'Autor: Lorwik
@@ -513,7 +522,7 @@ On Error GoTo errhandler:
                 Call InitGrh(BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0)
                 
                 BodyData(i).HeadOffset.X = MisCuerpos(i).HeadOffsetX
-                BodyData(i).HeadOffset.Y = MisCuerpos(i).HeadOffsetY
+                BodyData(i).HeadOffset.y = MisCuerpos(i).HeadOffsetY
             End If
         Next i
     

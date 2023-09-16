@@ -292,7 +292,6 @@ Begin VB.Form frmMapInfo
             Left            =   120
             TabIndex        =   25
             Top             =   600
-            Value           =   -1  'True
             Width           =   1935
          End
       End
@@ -940,6 +939,8 @@ Private Sub Form_Load()
         LvBGuardar.Visible = False
     
     End If
+    
+    LvBOptX(ClientSetup.MapTam).value = True
 
 End Sub
 

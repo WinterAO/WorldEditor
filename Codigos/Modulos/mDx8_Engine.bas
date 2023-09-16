@@ -1,4 +1,5 @@
 Attribute VB_Name = "mDx8_Engine"
+'CSEH: RegistrarError
 Option Explicit
 
 Public Declare Function timeGetTime Lib "winmm.dll" () As Long
@@ -50,7 +51,7 @@ Public MainScreenRect As RECT
 
 Public Type TLVERTEX
     X As Single
-    Y As Single
+    y As Single
     Z As Single
     rhw As Single
     color As Long
@@ -144,10 +145,12 @@ End Sub
 
 Private Function Engine_Init_DirectDevice(D3DCREATEFLAGS As CONST_D3DCREATEFLAGS) As Boolean
 
+On Error GoTo ErrorDevice:
+
     'Establecemos el tamaño del render a lo maximo que podria alcanzar con su resolucion
     ScreenWidth = (Screen.Width \ Screen.TwipsPerPixelX)
     ScreenHeight = (Screen.Height \ Screen.TwipsPerPixelY)
-    
+
     ' Retrieve the information about your current display adapter.
     Call DirectD3D.GetAdapterDisplayMode(D3DADAPTER_DEFAULT, DispMode)
     
@@ -155,13 +158,12 @@ Private Function Engine_Init_DirectDevice(D3DCREATEFLAGS As CONST_D3DCREATEFLAGS
     ' display it's renders.
     With D3DWindow
         .Windowed = True
-        
+
         ' The swap effect determines how the graphics get from the backbuffer to the screen.
         ' D3DSWAPEFFECT_DISCARD:
         '   Means that every time the render is presented, the backbuffer
         '   image is destroyed, so everything must be rendered again.
         .SwapEffect = D3DSWAPEFFECT_DISCARD
-        
         .BackBufferFormat = DispMode.Format
         .BackBufferWidth = ScreenWidth
         .BackBufferHeight = ScreenHeight
@@ -207,9 +209,13 @@ ErrorDevice:
     'Return a failure
     Engine_Init_DirectDevice = False
     
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_Init_DirectDevice", Erl)
+    
 End Function
 
 Private Sub Engine_Init_RenderStates()
+
+On Error GoTo EngineHandler:
 
     'Set the render states
     With DirectDevice
@@ -225,8 +231,14 @@ Private Sub Engine_Init_RenderStates()
         
     End With
     
+    Exit Sub
+    
+EngineHandler:
+    
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_Init_RenderStates", Erl)
 End Sub
 
+'CSEH: RegistrarError
 Public Sub Engine_DirectX8_End()
 '***************************************************
 'Author: Standelf
@@ -234,6 +246,9 @@ Public Sub Engine_DirectX8_End()
 'Destroys all DX objects
 '***************************************************
 On Error Resume Next
+
+On Error GoTo EngineHandler:
+
     Dim i As Byte
     
     '   DeInit Lights
@@ -259,6 +274,12 @@ On Error Resume Next
     Set SpriteBatch = Nothing
     Set Sound = Nothing
     
+    Exit Sub
+    
+EngineHandler:
+    
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_DirectX8_End", Erl)
+    
 End Sub
 
 Public Sub Engine_DirectX8_Aditional_Init()
@@ -266,6 +287,8 @@ Public Sub Engine_DirectX8_Aditional_Init()
 'Author: Standelf
 'Last Modify Date: 30/12/2010
 '**************************************************************
+
+    On Error GoTo EngineHandler:
 
     FPS = 101
     FramesPerSecCounter = 101
@@ -295,9 +318,16 @@ Public Sub Engine_DirectX8_Aditional_Init()
         
     End If
     
+    Exit Sub
+    
+EngineHandler:
+    
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_DirectX8_Aditional_Init", Erl)
+    
 End Sub
 
 Public Sub Engine_Draw_Line(x1 As Single, y1 As Single, x2 As Single, y2 As Single, Optional color As Long = -1, Optional Color2 As Long = -1)
+
 On Error GoTo Error
     
     Call Engine_Long_To_RGB_List(temp_rgb(), color)
@@ -308,10 +338,12 @@ On Error GoTo Error
 Exit Sub
 
 Error:
-    'Call Log_Engine("Error in Engine_Draw_Line, " & Err.Description & " (" & Err.number & ")")
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_Draw_Line", Erl)
+    
 End Sub
 
 Public Sub Engine_Draw_Point(x1 As Single, y1 As Single, Optional color As Long = -1)
+
 On Error GoTo Error
     
     Call Engine_Long_To_RGB_List(temp_rgb(), color)
@@ -322,7 +354,8 @@ On Error GoTo Error
 Exit Sub
 
 Error:
-    'Call Log_Engine("Error in Engine_Draw_Point, " & Err.Description & " (" & Err.number & ")")
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_Draw_Point", Erl)
+    
 End Sub
 
 Public Function Engine_ElapsedTime() As Long
@@ -330,7 +363,10 @@ Public Function Engine_ElapsedTime() As Long
 'Gets the time that past since the last call
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_ElapsedTime
 '**************************************************************
-Dim Start_Time As Long
+
+    On Error GoTo Engine_ElapsedTime_Err
+
+    Dim Start_Time As Long
 
     'Get current time
     Start_Time = timeGetTime
@@ -340,7 +376,12 @@ Dim Start_Time As Long
 
     'Get next end time
     EndTime = Start_Time
+    
+    Exit Function
 
+Engine_ElapsedTime_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_ElapsedTime", Erl)
 End Function
 
 Public Function Engine_PixelPosX(ByVal X As Long) As Long
@@ -348,19 +389,32 @@ Public Function Engine_PixelPosX(ByVal X As Long) As Long
 'Converts a tile position to a screen position
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosX
 '*****************************************************************
+    On Error GoTo Engine_PixelPosX_Err
 
     Engine_PixelPosX = (X - 1) * 32
     
+    Exit Function
+    
+Engine_PixelPosX_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_PixelPosX", Erl)
+
 End Function
 
-Public Function Engine_PixelPosY(ByVal Y As Long) As Long
+Public Function Engine_PixelPosY(ByVal y As Long) As Long
 '*****************************************************************
 'Converts a tile position to a screen position
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosY
 '*****************************************************************
+    On Error GoTo Engine_PixelPosY_Err
 
-    Engine_PixelPosY = (Y - 1) * 32
+    Engine_PixelPosY = (y - 1) * 32
     
+    Exit Function
+    
+Engine_PixelPosY_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_PixelPosY", Erl)
 End Function
 
 Public Function Engine_TPtoSPX(ByVal X As Integer) As Long
@@ -369,34 +423,55 @@ Public Function Engine_TPtoSPX(ByVal X As Integer) As Long
 'Takes the tile position and returns the pixel location on the screen
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_TPtoSPX
 '************************************************************
+On Error GoTo Engine_TPtoSPX_Err
 
     Engine_TPtoSPX = Engine_PixelPosX(X - ((UserPos.X - HalfWindowTileWidth) - TileBufferSize)) + OffsetCounterX - 272 + ((10 - TileBufferSize) * 32)
     
+    Exit Function
+    
+Engine_TPtoSPX_Err:
+    
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_TPtoSPX", Erl)
+
 End Function
 
-Public Function Engine_TPtoSPY(ByVal Y As Integer) As Long
+Public Function Engine_TPtoSPY(ByVal y As Integer) As Long
 '************************************************************
 'Tile Position to Screen Position
 'Takes the tile position and returns the pixel location on the screen
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_TPtoSPY
 '************************************************************
+On Error GoTo Engine_TPtoSPY_Err
 
-    Engine_TPtoSPY = Engine_PixelPosY(Y - ((UserPos.Y - HalfWindowTileHeight) - TileBufferSize)) + OffsetCounterY - 272 + ((10 - TileBufferSize) * 32)
+    Engine_TPtoSPY = Engine_PixelPosY(y - ((UserPos.y - HalfWindowTileHeight) - TileBufferSize)) + OffsetCounterY - 272 + ((10 - TileBufferSize) * 32)
     
+    Exit Function
+    
+Engine_TPtoSPY_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_TPtoSPY", Erl)
+
 End Function
 
-Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width As Integer, ByVal Height As Integer, color As Long)
+Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal y As Integer, ByVal Width As Integer, ByVal Height As Integer, color As Long)
 '***************************************************
 'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 29/12/10
 'Blisse-AO | Render Box
 '***************************************************
+    On Error GoTo Engine_Draw_Box_Err
 
     Call Engine_Long_To_RGB_List(temp_rgb(), color)
 
     Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(X, Y, Width, ByVal Height, temp_rgb())
+    Call SpriteBatch.Draw(X, y, Width, ByVal Height, temp_rgb())
     
+    Exit Sub
+    
+Engine_Draw_Box_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_Draw_Box", Erl)
+
 End Sub
 
 Private Function Engine_Collision_Between(ByVal value As Single, ByVal Bound1 As Single, ByVal Bound2 As Single) As Byte
@@ -404,6 +479,7 @@ Private Function Engine_Collision_Between(ByVal value As Single, ByVal Bound1 As
 'Find if a value is between two other values (used for line collision)
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_Between
 '*****************************************************************
+    On Error GoTo Engine_Collision_Between_Err
 
     'Checks if a value lies between two bounds
     If Bound1 > Bound2 Then
@@ -416,6 +492,12 @@ Private Function Engine_Collision_Between(ByVal value As Single, ByVal Bound1 As
         End If
     End If
     
+    Exit Function
+    
+Engine_Collision_Between_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_Collision_Between", Erl)
+
 End Function
 
 Public Function Engine_Collision_Line(ByVal L1X1 As Long, ByVal L1Y1 As Long, ByVal L1X2 As Long, ByVal L1Y2 As Long, ByVal L2X1 As Long, ByVal L2Y1 As Long, ByVal L2X2 As Long, ByVal L2Y2 As Long) As Byte
@@ -423,11 +505,14 @@ Public Function Engine_Collision_Line(ByVal L1X1 As Long, ByVal L1Y1 As Long, By
 'Check if two lines intersect (return 1 if true)
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_Line
 '*****************************************************************
-Dim m1 As Single
-Dim M2 As Single
-Dim b1 As Single
-Dim b2 As Single
-Dim IX As Single
+
+    On Error GoTo Engine_Collision_Line_Err
+    
+    Dim m1 As Single
+    Dim M2 As Single
+    Dim b1 As Single
+    Dim b2 As Single
+    Dim IX As Single
 
     'This will fix problems with vertical lines
     If L1X1 = L1X2 Then L1X1 = L1X1 + 1
@@ -465,6 +550,12 @@ Dim IX As Single
         
     End If
     
+    Exit Function
+    
+Engine_Collision_Line_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_Collision_Line", Erl)
+
 End Function
 
 Public Function Engine_Collision_LineRect(ByVal sX As Long, ByVal sY As Long, ByVal SW As Long, ByVal SH As Long, ByVal x1 As Long, ByVal y1 As Long, ByVal x2 As Long, ByVal y2 As Long) As Byte
@@ -472,6 +563,7 @@ Public Function Engine_Collision_LineRect(ByVal sX As Long, ByVal sY As Long, By
 'Check if a line intersects with a rectangle (returns 1 if true)
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_LineRect
 '*****************************************************************
+    On Error GoTo Engine_Collision_LineRect_Err
 
     'Top line
     If Engine_Collision_Line(sX, sY, sX + SW, sY, x1, y1, x2, y2) Then
@@ -497,6 +589,12 @@ Public Function Engine_Collision_LineRect(ByVal sX As Long, ByVal sY As Long, By
         Exit Function
     End If
 
+    Exit Function
+
+Engine_Collision_LineRect_Err:
+
+Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_Collision_LineRect", Erl)
+
 End Function
 
 Function Engine_Collision_Rect(ByVal x1 As Integer, ByVal y1 As Integer, ByVal Width1 As Integer, ByVal Height1 As Integer, ByVal x2 As Integer, ByVal y2 As Integer, ByVal Width2 As Integer, ByVal Height2 As Integer) As Boolean
@@ -504,6 +602,7 @@ Function Engine_Collision_Rect(ByVal x1 As Integer, ByVal y1 As Integer, ByVal W
 'Check for collision between two rectangles
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_Rect
 '*****************************************************************
+    On Error GoTo Engine_Collision_Rect_Err
 
     If x1 + Width1 >= x2 Then
         If x1 <= x2 + Width2 Then
@@ -515,6 +614,12 @@ Function Engine_Collision_Rect(ByVal x1 As Integer, ByVal y1 As Integer, ByVal W
         End If
     End If
 
+    Exit Function
+
+Engine_Collision_Rect_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_Collision_Rect", Erl)
+
 End Function
 
 Public Sub Engine_BeginScene(Optional ByVal color As Long = 0)
@@ -524,10 +629,18 @@ Public Sub Engine_BeginScene(Optional ByVal color As Long = 0)
 'Blisse-AO | DD Clear & BeginScene
 '***************************************************
 
+    On Error GoTo Engine_BeginScene_Err
+
     Call DirectDevice.BeginScene
     Call DirectDevice.Clear(0, ByVal 0, D3DCLEAR_TARGET, color, 1#, 0)
     Call SpriteBatch.Begin
     
+    Exit Sub
+    
+Engine_BeginScene_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_BeginScene", Erl)
+
 End Sub
 
 Public Sub Engine_EndScene(ByRef DestRect As RECT, Optional ByVal hWndDest As Long = 0)
@@ -536,6 +649,7 @@ Public Sub Engine_EndScene(ByRef DestRect As RECT, Optional ByVal hWndDest As Lo
 'Last Modification: 29/12/10
 'Blisse-AO | DD EndScene & Present
 '***************************************************
+
 On Error GoTo DeviceHandler:
 
     Call SpriteBatch.Flush
@@ -561,7 +675,7 @@ DeviceHandler:
         Call LoadGraphics
 
     End If
-    
+
 End Sub
 
 Public Sub Engine_Update_FPS()
@@ -570,6 +684,7 @@ Public Sub Engine_Update_FPS()
     'Last Modification: ????
     'Calculate $ Limitate (if active) FPS.
     '***************************************************
+    On Error GoTo Engine_Update_FPS_Err
 
     If ClientSetup.LimiteFPS Then
         While (GetTickCount - FPSLastCheck) \ 10 < FramesPerSecCounter
@@ -585,6 +700,12 @@ Public Sub Engine_Update_FPS()
         FramesPerSecCounter = FramesPerSecCounter + 1
 
     End If
+    
+    Exit Sub
+
+Engine_Update_FPS_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_Update_FPS", Erl)
 
 End Sub
 
@@ -593,8 +714,9 @@ Public Function Engine_GetAngle(ByVal CenterX As Integer, ByVal CenterY As Integ
 'Gets the angle between two points in a 2d plane
 'More info: http://www.vbgore.com/GameClient.TileEn ... e_GetAngle" class="postlink" rel="nofollow" onClick="window.open(this.href);return false;
 '************************************************************
-Dim SideA As Single
-Dim SideC As Single
+
+    Dim SideA As Single
+    Dim SideC As Single
  
     On Error GoTo ErrOut
  
@@ -658,7 +780,7 @@ ErrOut:
     Engine_GetAngle = 0
  
 Exit Function
- 
+
 End Function
 
 Public Sub Engine_Get_ARGB(color As Long, Data As D3DCOLORVALUE)
@@ -666,6 +788,7 @@ Public Sub Engine_Get_ARGB(color As Long, Data As D3DCOLORVALUE)
 'Author: Standelf
 'Last Modify Date: 18/10/2012
 '**************************************************************
+    On Error GoTo Engine_Get_ARGB_Err
     
     Dim a As Long, R As Long, G As Long, B As Long
         
@@ -685,6 +808,12 @@ Public Sub Engine_Get_ARGB(color As Long, Data As D3DCOLORVALUE)
         .G = G
         .B = B
     End With
+    
+    Exit Sub
         
+Engine_Get_ARGB_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_Get_ARGB", Erl)
+
 End Sub
 

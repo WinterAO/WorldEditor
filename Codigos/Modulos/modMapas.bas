@@ -147,7 +147,7 @@ Public Sub NuevoMapa()
     'Descripcion: Limpia todo el mapa a uno nuevo
     '***************************************************
     
-    Dim Y     As Integer
+    Dim y     As Integer
 
     Dim X     As Integer
 
@@ -165,13 +165,12 @@ Public Sub NuevoMapa()
     
     frmMain.MousePointer = 11
     
-    'Volvemos a setear el tamaño del mapa
     Call setMapSize
-    
-    For Y = YMinMapSize To YMaxMapSize
+        
+    For y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
         
-            With MapData(X, Y)
+            With MapData(X, y)
             
                 .Graphic(1).GrhIndex = 1
                 
@@ -189,16 +188,16 @@ Public Sub NuevoMapa()
                 .ObjGrh.GrhIndex = 0
         
                 ' Translados
-                .TileExit.map = 0
+                .TileExit.Map = 0
                 .TileExit.X = 0
-                .TileExit.Y = 0
+                .TileExit.y = 0
                 
                 ' Triggers
                 .Trigger = 0
         
                 .Particle_Group_Index = 0
                 
-                Call Engine_Long_To_RGB_List(MapData(X, Y).Engine_Light(), -1)
+                Call Engine_Long_To_RGB_List(MapData(X, y).Engine_Light(), -1)
                 
                 .Light.active = False
                 .Light.range = 0
@@ -220,7 +219,7 @@ Public Sub NuevoMapa()
             End With
             
         Next X
-    Next Y
+    Next y
     
     'Borramos todas las luces
     Call LightRemoveAll
@@ -441,7 +440,7 @@ End Sub
 'CARGA DE MAPAS FORMATO ARGENTUM
 '#######################################
 
-Public Sub Cargar_Map(ByVal map As String, Optional ByVal EsInteger As Boolean = False)
+Public Sub Cargar_Map(ByVal Map As String, Optional ByVal EsInteger As Boolean = False)
     '*************************************************
     'Author: Lorwik
     'Last modified: 01/05/2021
@@ -459,7 +458,7 @@ Public Sub Cargar_Map(ByVal map As String, Optional ByVal EsInteger As Boolean =
 
     Dim Heading     As Byte
 
-    Dim Y           As Integer
+    Dim y           As Integer
 
     Dim X           As Integer
 
@@ -488,14 +487,14 @@ Public Sub Cargar_Map(ByVal map As String, Optional ByVal EsInteger As Boolean =
     
     'Open files
     FreeFileMap = FreeFile
-    Open map For Binary As FreeFileMap
+    Open Map For Binary As FreeFileMap
     Seek FreeFileMap, 1
     
-    map = Left$(map, Len(map) - 4)
-    map = map & ".inf"
+    Map = Left$(Map, Len(Map) - 4)
+    Map = Map & ".inf"
     
     FreeFileInf = FreeFile
-    Open map For Binary As FreeFileInf
+    Open Map For Binary As FreeFileInf
     Seek FreeFileInf, 1
     
     'Cabecera map
@@ -514,10 +513,10 @@ Public Sub Cargar_Map(ByVal map As String, Optional ByVal EsInteger As Boolean =
     Get FreeFileInf, , tempint
 
     'Load arrays
-    For Y = YMinMapSize To YMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
             
-            With MapData(X, Y)
+            With MapData(X, y)
             
                 Get FreeFileMap, , ByFlags
                 .bLocked = (ByFlags And 1)
@@ -605,9 +604,9 @@ Public Sub Cargar_Map(ByVal map As String, Optional ByVal EsInteger As Boolean =
                     
                     With .TileExit
                     
-                        Get FreeFileInf, , .map
+                        Get FreeFileInf, , .Map
                         Get FreeFileInf, , .X
-                        Get FreeFileInf, , .Y
+                        Get FreeFileInf, , .y
                     
                     End With
 
@@ -625,7 +624,7 @@ Public Sub Cargar_Map(ByVal map As String, Optional ByVal EsInteger As Boolean =
                         Body = NpcData(.NPCIndex).Body
                         Head = NpcData(.NPCIndex).Head
                         Heading = NpcData(.NPCIndex).Heading
-                        Call MakeChar(NextOpenChar(), Body, Head, Heading, X, Y)
+                        Call MakeChar(NextOpenChar(), Body, Head, Heading, X, y)
                         
                     End If
 
@@ -644,17 +643,17 @@ Public Sub Cargar_Map(ByVal map As String, Optional ByVal EsInteger As Boolean =
             End With
     
         Next X
-    Next Y
+    Next y
     
     'Close files
     Close FreeFileMap
     Close FreeFileInf
     
-    Call Pestanas(map, ".map")
+    Call Pestanas(Map, ".map")
     
-    map = Left$(map, Len(map) - 4) & ".dat"
+    Map = Left$(Map, Len(Map) - 4) & ".dat"
     
-    Call MapInfo_Cargar(map)
+    Call MapInfo_Cargar(Map)
     
     With frmMain
     
@@ -754,7 +753,7 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
 
     Dim tempint     As Integer
 
-    Dim Y           As Long
+    Dim y           As Long
 
     Dim X           As Long
 
@@ -821,10 +820,10 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
     Put FreeFileInf, , tempint
     
     'Write .map file
-    For Y = YMinMapSize To YMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
             
-            With MapData(X, Y)
+            With MapData(X, y)
             
                 ByFlags = 0
                 
@@ -863,7 +862,7 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
                 'Escribimos el archivo ".INF"
                 ByFlags = 0
                     
-                If .TileExit.map Then ByFlags = ByFlags Or 1
+                If .TileExit.Map Then ByFlags = ByFlags Or 1
                 
                 If .NPCIndex Then ByFlags = ByFlags Or 2
                 
@@ -871,10 +870,10 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
                     
                 Put FreeFileInf, , ByFlags
                     
-                If .TileExit.map Then
-                    Put FreeFileInf, , .TileExit.map
+                If .TileExit.Map Then
+                    Put FreeFileInf, , .TileExit.Map
                     Put FreeFileInf, , .TileExit.X
-                    Put FreeFileInf, , .TileExit.Y
+                    Put FreeFileInf, , .TileExit.y
 
                 End If
                     
@@ -889,7 +888,7 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
             End With
             
         Next X
-    Next Y
+    Next y
     
     'Close .map file
     Close FreeFileMap
@@ -950,7 +949,7 @@ Public Sub MapInfo_Guardar(ByVal Archivo As String)
     End If
 End Sub
 
-Public Sub Pestanas(ByVal map As String, Optional ByVal MapFormat As String = ".map")
+Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".map")
 
     '*************************************************
     'Author: ^[GS]^
@@ -961,26 +960,28 @@ Public Sub Pestanas(ByVal map As String, Optional ByVal MapFormat As String = ".
 
     Dim LoopC As Integer
     
-    For LoopC = Len(map) To 1 Step -1
+    For LoopC = Len(Map) To 1 Step -1
 
-        If mid(map, LoopC, 1) = "\" Then
-            PATH_Save = Left(map, LoopC)
+        If mid(Map, LoopC, 1) = "\" Then
+            PATH_Save = Left(Map, LoopC)
             Exit For
 
         End If
 
     Next
     
-    map = Right(map, Len(map) - (Len(PATH_Save)))
+    Map = Right(Map, Len(Map) - (Len(PATH_Save)))
     
-    MapaActual = ReadField(1, Right(map, Len(map) - 4), Asc("."))
+    MapaActual = ReadField(1, Right(Map, Len(Map)), Asc("."))
+    
+    nMapaActual = ReadField(1, Right(Map, Len(Map) - 4), Asc("."))
     'If frmCopiarBordes.Visible Then Call frmCopiarBordes.Inicializar
     
-    For LoopC = Len(Left(map, Len(map) - 4)) To 1 Step -1
+    For LoopC = Len(Left(Map, Len(Map) - 4)) To 1 Step -1
 
-        If IsNumeric(mid(Left(map, Len(map) - 4), LoopC, 1)) = False Then
-            NumMap_Save = Right(Left(map, Len(map) - 4), Len(Left(map, Len(map) - 4)) - LoopC)
-            NameMap_Save = Left(map, LoopC)
+        If IsNumeric(mid(Left(Map, Len(Map) - 4), LoopC, 1)) = False Then
+            NumMap_Save = Right(Left(Map, Len(Map) - 4), Len(Left(Map, Len(Map) - 4)) - LoopC)
+            NameMap_Save = Left(Map, LoopC)
             Exit For
 
         End If

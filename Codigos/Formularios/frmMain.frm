@@ -636,8 +636,8 @@ Begin VB.Form frmMain
       End
    End
    Begin MSComDlg.CommonDialog Dialog 
-      Left            =   18660
-      Top             =   10260
+      Left            =   120
+      Top             =   750
       _ExtentX        =   847
       _ExtentY        =   847
       _Version        =   393216
@@ -1203,6 +1203,42 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuAutoGuardarMapas 
          Caption         =   "Configuración de Auto-&Guardar Mapas"
       End
+      Begin VB.Menu mnuLineEdicion2 
+         Caption         =   "-"
+      End
+      Begin VB.Menu mnuInserDel 
+         Caption         =   "Insertar/Eliminar"
+         Begin VB.Menu mnuInsertarSuperficieEnTodo 
+            Caption         =   "Inser. Superficie en todo el mapa"
+         End
+         Begin VB.Menu mnuInsertarSuperficieEnBordes 
+            Caption         =   "Inser. Superficie en bordes del mapa"
+         End
+         Begin VB.Menu mnuBloquearBordes 
+            Caption         =   "Inser. Bloqueos en bordes"
+         End
+         Begin VB.Menu mnuBloquearMapa 
+            Caption         =   "Inser. Bloqueos en todo el mapa"
+         End
+         Begin VB.Menu mnuInsertarZonasEnBordes 
+            Caption         =   "Inser. Zonas en bordes del mapa"
+         End
+         Begin VB.Menu mnuLineInserDel0 
+            Caption         =   "-"
+         End
+         Begin VB.Menu mnuQuitarSuperficieDeCapa 
+            Caption         =   "Elim. Superficie capa seleccionada"
+         End
+         Begin VB.Menu QuitarSuperficieBordes 
+            Caption         =   "Elim. Superficie en bordes del mapa"
+         End
+         Begin VB.Menu mnuDesbloquearBordes 
+            Caption         =   "Elim. Bloqueos en bordes"
+         End
+         Begin VB.Menu mnuDesbloquearMapa 
+            Caption         =   "Elim. Bloqueos en todo el mapa"
+         End
+      End
    End
    Begin VB.Menu mnuZonas 
       Caption         =   "Ver Zonas"
@@ -1536,6 +1572,38 @@ Private Sub mnuAutoCompletarSuperficies_Click()
     
 End Sub
 
+Private Sub mnuBloquearBordes_Click()
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 20/05/06
+'*************************************************
+Call modEdicion.Bloquear_Bordes
+End Sub
+
+Private Sub mnuBloquearMapa_Click()
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 20/05/06
+'*************************************************
+Call modEdicion.Bloqueo_Todo(1)
+End Sub
+
+Private Sub mnuDesbloquearMapa_Click()
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 20/05/2022
+'*************************************************
+Call modEdicion.Bloqueo_Todo(0)
+End Sub
+
+Private Sub mnuDesbloquearBordes_Click()
+'*************************************************
+'Author: Lorwik
+'Last modified: 20/05/2022
+'*************************************************
+Call modEdicion.Desbloquear_Bordes
+End Sub
+
 Private Sub mnuFormatos_Click()
     frmFormatos.Show , frmMain
 End Sub
@@ -1548,6 +1616,46 @@ Private Sub mnuInformes_Click()
 
     frmInformes.Show , frmMain
 
+End Sub
+
+Private Sub mnuInsertarSuperficieEnBordes_Click()
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 20/05/06
+'*************************************************
+Call modEdicion.Superficie_Bordes
+End Sub
+
+Private Sub mnuQuitarSuperficieBordes_Click()
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 20/05/06
+'*************************************************
+Call modEdicion.Quitar_Bordes
+End Sub
+
+Private Sub mnuInsertarSuperficieEnTodo_Click()
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 20/05/06
+'*************************************************
+Call modEdicion.Superficie_Todo
+End Sub
+
+Private Sub mnuInsertarZonasEnBordes_Click()
+'*************************************************
+'Author: Lorwik
+'Last modified: 25/05/2022
+'*************************************************
+Call modEdicion.Zonas_Bordes
+End Sub
+
+Private Sub mnuQuitarSuperficieDeCapa_Click()
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 20/05/06
+'*************************************************
+Call modEdicion.Quitar_Capa(frmSuperficies.cCapas.Text)
 End Sub
 
 Private Sub mnuModoCaminata_Click()
@@ -1956,25 +2064,25 @@ End Sub
 Private Sub MainViewPic_MouseMove(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
-                                  Y As Single)
+                                  y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 27/04/2021
 '*************************************************
 
-    Call Form_MouseMove(Button, Shift, X, Y)
+    Call Form_MouseMove(Button, Shift, X, y)
 End Sub
 
 Private Sub MainViewPic_MouseDown(Button As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
-                                Y As Single)
+                                y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 27/04/2021
 '*************************************************
 
-    Call Form_MouseDown(Button, Shift, X, Y)
+    Call Form_MouseDown(Button, Shift, X, y)
 End Sub
 
 Private Sub MainViewPic_DblClick()
@@ -1996,17 +2104,6 @@ Private Sub Form_Load()
     Dim i As Byte
 
     Me.Caption = Form_Caption
-
-    'Temporal
-    If ClientSetup.MeMode = eMeMode.ImperiumClasico Then
-        ClientSetup.MapTam = 1
-        Call setMapSize
-        
-    Else
-        ClientSetup.MapTam = 0
-        Call setMapSize
-        
-    End If
     
     LvBOpcion(0).value = VerBlockeados
     LvBOpcion(1).value = VerTranslados
@@ -2061,6 +2158,17 @@ Private Sub Form_Load()
         mnuOtrosAbrirMapa.Visible = False
     
     #End If
+    
+    'Temporal
+    If ClientSetup.MeMode = eMeMode.ImperiumClasico Then
+        ClientSetup.MapTam = 0
+        
+    Else
+        ClientSetup.MapTam = GetVar(configFile, "MOSTRAR", "MapTam")
+        
+    End If
+    
+    Call frmMapInfo.LvBOptX_Click(CInt(ClientSetup.MapTam))
 
 End Sub
 
@@ -2139,7 +2247,7 @@ Private Sub Form_DblClick()
     End If
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 26/04/2021
@@ -2150,7 +2258,11 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y A
     
     If Not MapaCargado Then Exit Sub
     
-    Call ConvertCPtoTP(X, Y, tX, tY)
+    Call ConvertCPtoTP(X, y, tX, tY)
+    
+    If EstadoSelect > 0 And Button = 2 Then
+        EstadoSelect = 0
+    End If
     
     If Shift = 1 And Button = 1 Then
         Seleccionando = True
@@ -2163,10 +2275,12 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y A
         Call modEdit.ClickEdit(Button, tX, tY)
         
     End If
+    
+Debug.Print Button
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 26/04/2021
@@ -2178,9 +2292,15 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
     If Not MapaCargado Then Exit Sub
     HotKeysAllow = True
 
-    Call ConvertCPtoTP(X, Y, tX, tY)
+    Call ConvertCPtoTP(X, y, tX, tY)
     
     MousePos = "X: " & tX & " - Y: " & tY
+    
+    If EstadoSelect > 0 And Button = 2 Then
+        EstadoSelect = 0
+        CopyX = tX
+        CopyY = tY
+    End If
     
      If Shift = 1 And Button = 1 Then
         Seleccionando = True
@@ -2189,11 +2309,13 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
         frmRellenar.DX2.Text = tX
         frmRellenar.DY2.Text = tY
         
+        ContadorTiles = (frmRellenar.DX2.Text - frmRellenar.DX1.Text + 1) * (frmRellenar.DY2.Text - frmRellenar.DY1.Text + 1)
+        
     Else
         Call modEdit.ClickEdit(Button, tX, tY)
         
     End If
-
+    
 End Sub
 
 Private Sub mnuVerZonas_Click(Index As Integer)
@@ -2224,18 +2346,18 @@ End Sub
 
 Private Sub mnuzonanula_Click()
     Dim X As Integer
-    Dim Y As Integer
+    Dim y As Integer
     
     For X = XMinMapSize To XMaxMapSize
     
-        For Y = YMinMapSize To YMaxMapSize
+        For y = YMinMapSize To YMaxMapSize
         
-            If MapData(X, Y).ZonaIndex = 0 Then
-                MsgBox "Se ha encontrado una zona nula en la posicion X: " & X & " Y: " & Y
+            If MapData(X, y).ZonaIndex = 0 Then
+                MsgBox "Se ha encontrado una zona nula en la posicion X: " & X & " Y: " & y
                 Exit Sub
             End If
         
-        Next Y
+        Next y
     
     Next X
     
