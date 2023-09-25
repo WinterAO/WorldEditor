@@ -370,7 +370,7 @@ Private Sub LvBNuevo_Click(Index As Integer)
     Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa3", "1")
     Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa4", "1")
 
-    ReDim Perfiles(1 To nPerfiles) As String
+    ReDim Perfiles(0 To nPerfiles) As String
     
     cmbPerfil.AddItem (ProfileTag)
 End Sub
