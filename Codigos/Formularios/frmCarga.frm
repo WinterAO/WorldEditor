@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmCarga 
    BackColor       =   &H00424242&
    BorderStyle     =   0  'None
-   ClientHeight    =   3735
+   ClientHeight    =   4140
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   7500
@@ -18,12 +18,13 @@ Begin VB.Form frmCarga
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3735
+   ScaleHeight     =   4140
    ScaleWidth      =   7500
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
    Begin VB.Label lblStatus 
       Alignment       =   2  'Center
+      BackColor       =   &H00000000&
       BackStyle       =   0  'Transparent
       Caption         =   "Cargando..."
       BeginProperty Font 
@@ -39,7 +40,7 @@ Begin VB.Form frmCarga
       Height          =   195
       Left            =   300
       TabIndex        =   0
-      Top             =   3420
+      Top             =   3840
       Width           =   6885
    End
 End

@@ -155,7 +155,9 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
             'Nombre
             .filename = Archivo
             
-            Formato = IIf(ClientSetup.MeMode = eMeMode.WinterAO Or ClientSetup.MeMode = eMeMode.WinterUltimate, ".png", ".bmp")
+            Formato = IIf(ClientSetup.MeMode = eMeMode.WinterAO Or _
+                ClientSetup.MeMode = eMeMode.ArgentumUnited Or _
+                ClientSetup.MeMode = eMeMode.WinterUltimate, ".png", ".bmp")
 
             'TODO: No usar variable de compilacion y acceder a esto desde el config.ini
             #If Desarrollo = 0 Then

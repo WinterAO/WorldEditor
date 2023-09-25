@@ -3,7 +3,7 @@ Begin VB.Form frmModo
    BackColor       =   &H00424242&
    BorderStyle     =   0  'None
    Caption         =   "Form1"
-   ClientHeight    =   4110
+   ClientHeight    =   4695
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   5355
@@ -19,10 +19,9 @@ Begin VB.Form frmModo
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   274
+   ScaleHeight     =   313
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   357
-   ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
    Begin VB.Frame FraPerfil 
       BackColor       =   &H00535353&
@@ -30,8 +29,8 @@ Begin VB.Form frmModo
       ForeColor       =   &H00FFFFFF&
       Height          =   795
       Left            =   120
-      TabIndex        =   11
-      Top             =   60
+      TabIndex        =   9
+      Top             =   540
       Width           =   5115
       Begin VB.ComboBox cmbPerfil 
          Height          =   315
@@ -39,7 +38,7 @@ Begin VB.Form frmModo
          Left            =   210
          List            =   "frmModo.frx":0002
          Style           =   2  'Dropdown List
-         TabIndex        =   12
+         TabIndex        =   10
          Top             =   300
          Width           =   2895
       End
@@ -47,7 +46,7 @@ Begin VB.Form frmModo
          Height          =   345
          Index           =   2
          Left            =   3270
-         TabIndex        =   13
+         TabIndex        =   11
          Top             =   300
          Width           =   1635
          _ExtentX        =   2884
@@ -115,75 +114,32 @@ Begin VB.Form frmModo
       BackColor       =   &H00535353&
       Caption         =   "¿En que modo quieres iniciar el WorldEditor?"
       ForeColor       =   &H00FFFFFF&
-      Height          =   1575
-      Left            =   60
+      Height          =   1095
+      Left            =   120
       TabIndex        =   0
-      Top             =   960
-      Width           =   5175
+      Top             =   1440
+      Width           =   5115
+      Begin VB.OptionButton OptModo 
+         BackColor       =   &H00535353&
+         Caption         =   "Modo Argentum World"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   195
+         Index           =   3
+         Left            =   620
+         TabIndex        =   12
+         Top             =   630
+         Width           =   1965
+      End
       Begin VB.OptionButton OptModo 
          BackColor       =   &H00535353&
          Caption         =   "Modo Winter Ultimate"
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Index           =   2
-         Left            =   1410
-         TabIndex        =   10
+         Left            =   2850
+         TabIndex        =   8
          Top             =   660
          Width           =   1965
-      End
-      Begin WinterMapEditor.lvButtons_H LvBBoton 
-         Height          =   345
-         Index           =   1
-         Left            =   2310
-         TabIndex        =   9
-         Top             =   990
-         Width           =   2085
-         _ExtentX        =   3678
-         _ExtentY        =   609
-         Caption         =   "Aceptar"
-         CapAlign        =   2
-         BackStyle       =   2
-         Shape           =   1
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cGradient       =   0
-         Mode            =   0
-         Value           =   0   'False
-         cBack           =   -2147483633
-      End
-      Begin WinterMapEditor.lvButtons_H LvBBoton 
-         Height          =   345
-         Index           =   0
-         Left            =   480
-         TabIndex        =   7
-         Top             =   960
-         Width           =   2085
-         _ExtentX        =   3678
-         _ExtentY        =   609
-         Caption         =   "Salir"
-         CapAlign        =   2
-         BackStyle       =   2
-         Shape           =   2
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cGradient       =   0
-         Mode            =   0
-         Value           =   0   'False
-         cBack           =   -2147483633
       End
       Begin VB.OptionButton OptModo 
          BackColor       =   &H00535353&
@@ -202,7 +158,7 @@ Begin VB.Form frmModo
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Index           =   1
-         Left            =   2550
+         Left            =   2850
          TabIndex        =   1
          Top             =   360
          Width           =   1965
@@ -212,10 +168,82 @@ Begin VB.Form frmModo
          Left            =   0
          ScaleHeight     =   0
          ScaleWidth      =   0
-         TabIndex        =   8
+         TabIndex        =   7
          Top             =   0
          Width           =   0
       End
+   End
+   Begin WinterMapEditor.lvButtons_H LvBBoton 
+      Height          =   465
+      Index           =   1
+      Left            =   3000
+      TabIndex        =   13
+      Top             =   4080
+      Width           =   2205
+      _ExtentX        =   3889
+      _ExtentY        =   820
+      Caption         =   "&Continuar"
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   0
+      Value           =   0   'False
+      cBack           =   8454016
+   End
+   Begin WinterMapEditor.lvButtons_H LvBBoton 
+      Height          =   465
+      Index           =   0
+      Left            =   120
+      TabIndex        =   14
+      Top             =   4080
+      Width           =   2085
+      _ExtentX        =   3678
+      _ExtentY        =   820
+      Caption         =   "&Salir"
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   0
+      Value           =   0   'False
+      cBack           =   8421631
+   End
+   Begin VB.Label Label1 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "Selección de perfil"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   345
+      Left            =   240
+      TabIndex        =   15
+      Top             =   120
+      Width           =   2295
    End
 End
 Attribute VB_Name = "frmModo"
@@ -229,27 +257,51 @@ Option Explicit
 Private Perfiles() As String
 Private nPerfiles As Byte
 
+Private Sub cmbPerfil_Click()
+    Dim tag As String
+    tag = cmbPerfil.Text
+    If LenB(tag) > 0 And FileExist(profileFile(tag), vbArchive) Then
+        Dim v As Byte
+        v = CByte(Val(GetVar(profileFile(tag), "CONFIGURACION", "MeMode")))
+        OptModo(v).value = True
+
+        v = CByte(Val(GetVar(profileFile(tag), "VIDEO", "VertexProcessingOverride")))
+        cmbProcesado.ListIndex = v
+    
+        v = CByte(Val(GetVar(profileFile(tag), "VIDEO", "LimitarFPS")))
+    
+        If (v = 1) Then
+            chkvSync.value = Checked
+            
+        Else
+            chkvSync.value = Unchecked
+            
+        End If
+        
+        
+    End If
+End Sub
+
 Private Sub Form_Load()
     On Error Resume Next
     
+    OptModo(3).value = True 'default
+    
     Dim i As Byte
+        
+    nPerfiles = Val(GetVar(profilesFile, "INIT", "profiles"))
     
-    nPerfiles = GetVar(configFile, "CONFIGURACION", "nPerfiles")
-    
-    ReDim Perfiles(1 To nPerfiles) As String
+    cmbPerfil.Clear
     
     For i = 1 To nPerfiles
-        cmbPerfil.AddItem (GetVar(configFile, "PERFILES", "Perfil" & i))
+        Dim tag As String
+        tag = GetVar(profilesFile, "PROFILE" & i, "name")
+        If LenB(tag) > 0 And FileExist(profileFile(tag), vbArchive) Then
+            cmbPerfil.AddItem (tag)
+        End If
     Next i
     
-    #If Privado = 0 Then
-        'Marcamos la opcion
-        OptModo(ClientSetup.MeMode).value = True
-        
-    #Else
-        OptModo(eMeMode.WinterAO).value = True
-        OptModo(eMeMode.ImperiumClasico).Visible = False
-    #End If
+    ReDim Perfiles(1 To nPerfiles) As String
     
     cmbProcesado.ListIndex = ClientSetup.OverrideVertexProcess
     
@@ -287,15 +339,15 @@ Private Sub LvBBoton_Click(Index As Integer)
                 Exit Sub
             End If
         
-            namePerfil = cmbPerfil.List(cmbPerfil.ListIndex)
+            ProfileTag = cmbPerfil.List(cmbPerfil.ListIndex)
         
             ModoElegido = True
             
             ClientSetup.OverrideVertexProcess = cmbProcesado.ListIndex
             
-            Call WriteVar(configFile, "CONFIGURACION", "MeMode", CStr(ClientSetup.MeMode))
-            Call WriteVar(configFile, "VIDEO", "VertexProcessingOverride", CByte(ClientSetup.OverrideVertexProcess))
-            Call WriteVar(configFile, "VIDEO", "LimitarFPS", IIf(ClientSetup.LimiteFPS, "1", "0"))
+            Call WriteVar(profileFile(ProfileTag), "CONFIGURACION", "MeMode", CStr(ClientSetup.MeMode))
+            Call WriteVar(profileFile(ProfileTag), "VIDEO", "VertexProcessingOverride", CByte(ClientSetup.OverrideVertexProcess))
+            Call WriteVar(profileFile(ProfileTag), "VIDEO", "LimitarFPS", IIf(ClientSetup.LimiteFPS, "1", "0"))
             
             #If Privado = 0 Then
                 Call SimpleLogError("Modo " & OptModo(ClientSetup.MeMode).Caption & " elegido.")
@@ -306,19 +358,27 @@ Private Sub LvBBoton_Click(Index As Integer)
 End Sub
 
 Private Sub LvBNuevo_Click(Index As Integer)
-    namePerfil = InputBox("Introduce el nombre para el perfil.")
+    ProfileTag = InputBox("Introduce el nombre para el perfil.")
     
-    If namePerfil = vbNullString Then Exit Sub
+    If ProfileTag = vbNullString Then Exit Sub
     
-    Call WriteVar(configFile, "CONFIGURACION", "nPerfiles", nPerfiles + 1)
-    Call WriteVar(configFile, "PERFILES", "Perfil" & nPerfiles + 1, namePerfil)
-    cmbPerfil.AddItem (namePerfil)
+    Call WriteVar(profilesFile, "INIT", "profiles", nPerfiles + 1)
+    Call WriteVar(profilesFile, "PROFILE" & (nPerfiles + 1), "name", ProfileTag)
+    
+    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa1", "1")
+    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa2", "1")
+    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa3", "1")
+    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa4", "1")
+
+    ReDim Perfiles(1 To nPerfiles) As String
+    
+    cmbPerfil.AddItem (ProfileTag)
 End Sub
 
 Private Sub OptModo_Click(Index As Integer)
 
     #If Privado = 1 Then
-        ClientSetup.MeMode = eMeMode.WinterAO
+        ClientSetup.MeMode = eMeMode.ArgentumUnited
         
     #Else
         ClientSetup.MeMode = Index

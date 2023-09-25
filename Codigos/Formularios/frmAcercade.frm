@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmAcercade 
    BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
-   Caption         =   "Acerca de WinterMapEditor"
+   Caption         =   "Acerca del WorldEditor"
    ClientHeight    =   3735
    ClientLeft      =   45
    ClientTop       =   390
@@ -24,25 +24,24 @@ Begin VB.Form frmAcercade
    ScaleWidth      =   499
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
-   Begin VB.Label lblEsteEditor 
-      Alignment       =   2  'Center
+   Begin VB.Label Label1 
       BackStyle       =   0  'Transparent
       Caption         =   $"frmAcercade.frx":0000
       BeginProperty Font 
          Name            =   "Tahoma"
-         Size            =   8.25
+         Size            =   12
          Charset         =   0
-         Weight          =   700
+         Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00FFFFFF&
-      Height          =   615
-      Left            =   90
+      Height          =   1605
+      Left            =   240
       TabIndex        =   0
-      Top             =   3150
-      Width           =   7290
+      Top             =   240
+      Width           =   6165
    End
 End
 Attribute VB_Name = "frmAcercade"

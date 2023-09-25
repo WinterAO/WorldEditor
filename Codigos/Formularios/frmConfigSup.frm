@@ -286,7 +286,9 @@ Private Sub chkActivarPreview_Click()
         
     End If
     
-    Call WriteVar(configFile, "MOSTRAR", "Preview", IIf(ClientSetup.Preview = True, "1", "0"))
+    If Len(ProfileTag) > 0 Then
+        Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Preview", IIf(ClientSetup.Preview = True, "1", "0"))
+    End If
 End Sub
 
 Private Sub cmdDM_Click(Index As Integer)

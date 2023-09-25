@@ -13,6 +13,7 @@ Public Enum eMeMode
     WinterAO
     ImperiumClasico
     WinterUltimate
+    ArgentumUnited
 End Enum
 
 Public Enum eTipoMapa
@@ -23,6 +24,7 @@ Public Enum eTipoMapa
     tIAOnew
     tIAOold
     tWinter_Old
+    tAOUnited
 End Enum
 
 Public Enum E_SISTEMA_MUSICA
@@ -49,7 +51,6 @@ Public Type tSetupMods
     AmbientVol As Long
     
     'MOSTRAR
-    MapTam As Byte
     Preview As Boolean
     
     'CONFIGURACION
@@ -72,8 +73,12 @@ Public NumObjs     As Integer
 'Constantes
 Public Const INITDIR As String = "Init\"
 
-Public Function configFile() As String
-    configFile = IniPath & INITDIR & "configuracion.ini"
+Public Function profilesFile() As String
+    profilesFile = IniPath & INITDIR & "profiles.ini"
+End Function
+
+Public Function profileFile(ByVal tag As String) As String
+    profileFile = IniPath & INITDIR & "profile-" & tag & ".ini"
 End Function
 
 Private Function autoCompletaPath(ByVal Path As String) As String
@@ -106,6 +111,9 @@ Public Sub IniciarCabecera()
         ElseIf eMeMode.ImperiumClasico Then
             .Desc = "Imperium Clasico mod Argentum Online by Comunidad Winter. http://imperiumclasico.com.ar"
             
+        ElseIf eMeMode.ArgentumUnited Then
+            .Desc = "Argentum United"
+            
         End If
         
         .CRC = Rnd * 245
@@ -114,55 +122,28 @@ Public Sub IniciarCabecera()
     
 End Sub
 
-Public Function pre_leerConfiguracion() As Boolean
-'**********************************
-'Autor: Lorwik
-'Fecha: 26/04/2021
-'Descripcion: Pre-Lee la configuracion de WorldEditor
-'**********************************
+Public Function guardarPerfil() As Boolean
 
-On Local Error GoTo fileErr:
-    
-    Dim i As Byte
-    Dim Lector   As clsIniManager
-    Set Lector = New clsIniManager
-    
-    If Not FileExist(configFile, vbArchive) Then
-        MsgBox "¡No se ha encontrado el archivo de configuracion en la carpeta init!", vbOKOnly Or vbExclamation, App.Title
-        End
+    If Not FileExist(profileFile(ProfileTag), vbArchive) Then
+        Exit Function
     End If
     
-    Call Lector.Initialize(configFile)
+    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa1", IIf(VerCapa1, "1", "0"))
+    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa2", IIf(VerCapa2, "1", "0"))
+    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa3", IIf(VerCapa3, "1", "0"))
+    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa4", IIf(VerCapa4, "1", "0"))
     
-    With ClientSetup
+    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Translados", IIf(VerTranslados, "1", "0"))
+    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Objetos", IIf(VerObjetos, "1", "0"))
+    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "NPCs", IIf(VerNpcs, "1", "0"))
+    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Triggers", IIf(VerTriggers, "1", "0"))
+    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Grilla", IIf(VerGrilla, "1", "0"))
+    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Particulas", IIf(VerParticulas, "1", "0"))
+    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Bloqueos", IIf(VerBlockeados, "1", "0"))
     
-        .byMemory = Lector.GetValue("VIDEO", "DynamicMemory")
-        .OverrideVertexProcess = CByte(Lector.GetValue("VIDEO", "VertexProcessingOverride"))
-        .LimiteFPS = CBool(Lector.GetValue("VIDEO", "LimitarFPS"))
-        .TilesBuffer = Val(Lector.GetValue("VIDEO", "TilesBuffer"))
-        .Preview = CBool(Lector.GetValue("MOSTRAR", "Preview"))
-        .MeMode = Lector.GetValue("CONFIGURACION", "MeMode")
-        
-    End With
-
-    Set Lector = Nothing
-
-    pre_leerConfiguracion = True
-
-  Exit Function
-  
-fileErr:
-
-    pre_leerConfiguracion = False
-
-    If Err.Number <> 0 Then
-       MsgBox ("Ha ocurrido un error al pre-cargar la configuracion del cliente. Error " & Err.Number & " : " & Err.Description)
-       End 'Usar "End" en vez del Sub CloseClient() ya que todavia no se inicializa nada.
-    End If
-
 End Function
 
-Public Function leerConfiguracion() As Boolean
+Public Function leerPerfil() As Boolean
 '**********************************
 'Autor: Lorwik
 'Fecha: 26/04/2021
@@ -171,19 +152,28 @@ Public Function leerConfiguracion() As Boolean
 
 On Local Error GoTo fileErr:
     
-    Dim Lector   As clsIniManager
-    Set Lector = New clsIniManager
+    Dim Profile   As clsIniManager
+    Set Profile = New clsIniManager
+    
     Dim i As Byte
     Dim NewPath As String
     
-    If Not FileExist(configFile, vbArchive) Then
-        MsgBox "¡No se ha encontrado el archivo de configuracion en la carpeta init!", vbOKOnly Or vbExclamation, App.Title
+    If Not FileExist(profileFile(ProfileTag), vbArchive) Then
+        MsgBox "¡No se ha encontrado el archivo de perfil (" & profileFile(ProfileTag) & ") en la carpeta init!", vbOKOnly Or vbExclamation, App.Title
         End
     End If
     
-    Call Lector.Initialize(configFile)
+    Call Profile.Initialize(profileFile(ProfileTag))
 
     With ClientSetup
+
+        .MeMode = Val(Profile.GetValue("CONFIGURACION", "MeMode"))
+        
+        ' VIDEO
+        .LimiteFPS = CBool(Val(Profile.GetValue("VIDEO", "LimitarFPS")))
+        .TilesBuffer = Val(Profile.GetValue("VIDEO", "TilesBuffer"))
+        .byMemory = Val(Profile.GetValue("VIDEO", "DynamicMemory"))
+        .OverrideVertexProcess = Val(Profile.GetValue("VIDEO", "VertexProcessingOverride"))
 
         '****
         'RUTAS
@@ -191,13 +181,13 @@ On Local Error GoTo fileErr:
         
         '-------------------
         'Recursos
-        DirRecursos = autoCompletaPath(Lector.GetValue("PATH-" & namePerfil & "-" & .MeMode, "DirRecursos"))
+        DirRecursos = autoCompletaPath(Profile.GetValue("PATH-" & .MeMode, "DirRecursos"))
         
         If FileExist(DirRecursos, vbDirectory) = False Or DirRecursos = "\" Then
             MsgBox "El directorio de Recursos es incorrecto", vbCritical + vbOKOnly
             
-            NewPath = Buscar_Carpeta("DirRecursos", "")
-            Call WriteVar(configFile, "PATH-" & namePerfil & "-" & .MeMode, "DirRecursos", NewPath)
+            NewPath = Buscar_Carpeta("Seleccione la carpeta de los recursos de graficos, scripts y fuentes", "")
+            Call WriteVar(profileFile(ProfileTag), "PATH-" & .MeMode, "DirRecursos", NewPath)
             DirRecursos = NewPath & "\"
         End If
         
@@ -218,13 +208,13 @@ On Local Error GoTo fileErr:
         
         '-------------------
         'Dats
-        DirDats = autoCompletaPath(Lector.GetValue("PATH-" & namePerfil & "-" & .MeMode, "DirDats"))
+        DirDats = autoCompletaPath(Profile.GetValue("PATH-" & .MeMode, "DirDats"))
         
         If FileExist(DirDats, vbDirectory) = False Or DirDats = "\" Then
             MsgBox "El directorio de Dats es incorrecto", vbCritical + vbOKOnly
             
-            NewPath = Buscar_Carpeta("DirDats", "")
-            Call WriteVar(configFile, "PATH-" & namePerfil & "-" & .MeMode, "DirDats", NewPath)
+            NewPath = Buscar_Carpeta("Seleccione la carpeta de los Dats", "")
+            Call WriteVar(profileFile(ProfileTag), "PATH-" & .MeMode, "DirDats", NewPath)
             DirDats = NewPath & "\"
         End If
         
@@ -239,40 +229,40 @@ On Local Error GoTo fileErr:
         End If
         
         ' Tamaño de visualizacion
-        PantallaX = Val(Lector.GetValue("MOSTRAR", "PantallaX"))
-        PantallaY = Val(Lector.GetValue("MOSTRAR", "PantallaY"))
+        PantallaX = Val(Profile.GetValue("MOSTRAR", "PantallaX"))
+        PantallaY = Val(Profile.GetValue("MOSTRAR", "PantallaY"))
         If PantallaX > 23 Or PantallaX <= 2 Then PantallaX = 23
         If PantallaY > 32 Or PantallaY <= 2 Then PantallaY = 32
         
         ' [GS] 02/10/06
         ' Tamaño de visualizacion en el cliente
-        ClienteHeight = Val(Lector.GetValue("MOSTRAR", "ClienteHeight"))
-        ClienteWidth = Val(Lector.GetValue("MOSTRAR", "ClienteWidth"))
+        ClienteHeight = Val(Profile.GetValue("MOSTRAR", "ClienteHeight"))
+        ClienteWidth = Val(Profile.GetValue("MOSTRAR", "ClienteWidth"))
         If ClienteHeight <= 0 Then ClienteHeight = 13
         If ClienteWidth <= 0 Then ClienteWidth = 17
         
         ' Menu Mostrar
-        VerCapa1 = Val(Lector.GetValue("MOSTRAR", "Capa1"))
-        VerCapa2 = Val(Lector.GetValue("MOSTRAR", "Capa2"))
-        VerCapa3 = Val(Lector.GetValue("MOSTRAR", "Capa3"))
-        VerCapa4 = Val(Lector.GetValue("MOSTRAR", "Capa4"))
-        VerTranslados = Val(Lector.GetValue("MOSTRAR", "Translados"))
-        VerObjetos = Val(Lector.GetValue("MOSTRAR", "Objetos"))
-        VerNpcs = Val(Lector.GetValue("MOSTRAR", "NPCs"))
-        VerTriggers = Val(Lector.GetValue("MOSTRAR", "Triggers"))
-        VerGrilla = Val(Lector.GetValue("MOSTRAR", "Grilla")) ' Grilla
-        VerParticulas = Val(Lector.GetValue("MOSTRAR", "Particulas"))
-        VerBlockeados = Val(Lector.GetValue("MOSTRAR", "Bloqueos"))
+        VerCapa1 = Val(Profile.GetValue("MOSTRAR", "Capa1"))
+        VerCapa2 = Val(Profile.GetValue("MOSTRAR", "Capa2"))
+        VerCapa3 = Val(Profile.GetValue("MOSTRAR", "Capa3"))
+        VerCapa4 = Val(Profile.GetValue("MOSTRAR", "Capa4"))
+        VerTranslados = Val(Profile.GetValue("MOSTRAR", "Translados"))
+        VerObjetos = Val(Profile.GetValue("MOSTRAR", "Objetos"))
+        VerNpcs = Val(Profile.GetValue("MOSTRAR", "NPCs"))
+        VerTriggers = Val(Profile.GetValue("MOSTRAR", "Triggers"))
+        VerGrilla = Val(Profile.GetValue("MOSTRAR", "Grilla")) ' Grilla
+        VerParticulas = Val(Profile.GetValue("MOSTRAR", "Particulas"))
+        VerBlockeados = Val(Profile.GetValue("MOSTRAR", "Bloqueos"))
         
-        frmMain.Minimap_capa1.Checked = Val(Lector.GetValue("MINIMAP", "Capa1"))
-        frmMain.Minimap_capa2.Checked = Val(Lector.GetValue("MINIMAP", "Capa2"))
-        frmMain.Minimap_capa3.Checked = Val(Lector.GetValue("MINIMAP", "Capa3"))
-        frmMain.Minimap_capa4.Checked = Val(Lector.GetValue("MINIMAP", "Capa4"))
-        frmMain.Minimap_objetos.Checked = Val(Lector.GetValue("MINIMAP", "Obj"))
-        frmMain.Minimap_npcs.Checked = Val(Lector.GetValue("MINIMAP", "NPC"))
-        frmMain.Minimap_particulas.Checked = Val(Lector.GetValue("MINIMAP", "Particulas"))
-        frmMain.Minimap_ndemapa.Checked = Val(Lector.GetValue("MINIMAP", "Nombre"))
-        frmMain.Minimap_bloqueos.Checked = Val(Lector.GetValue("MINIMAP", "Bloqueos"))
+        frmMain.Minimap_capa1.Checked = Val(Profile.GetValue("MINIMAP", "Capa1"))
+        frmMain.Minimap_capa2.Checked = Val(Profile.GetValue("MINIMAP", "Capa2"))
+        frmMain.Minimap_capa3.Checked = Val(Profile.GetValue("MINIMAP", "Capa3"))
+        frmMain.Minimap_capa4.Checked = Val(Profile.GetValue("MINIMAP", "Capa4"))
+        frmMain.Minimap_objetos.Checked = Val(Profile.GetValue("MINIMAP", "Obj"))
+        frmMain.Minimap_npcs.Checked = Val(Profile.GetValue("MINIMAP", "NPC"))
+        frmMain.Minimap_particulas.Checked = Val(Profile.GetValue("MINIMAP", "Particulas"))
+        frmMain.Minimap_ndemapa.Checked = Val(Profile.GetValue("MINIMAP", "Nombre"))
+        frmMain.Minimap_bloqueos.Checked = Val(Profile.GetValue("MINIMAP", "Bloqueos"))
         
         MMiniMap_capa1 = frmMain.Minimap_capa1.Checked
         MMiniMap_capa2 = frmMain.Minimap_capa2.Checked
@@ -285,27 +275,27 @@ On Local Error GoTo fileErr:
         MMiniMap_Bloqueos = frmMain.Minimap_bloqueos.Checked
         
         ' AUDIO
-        .bMusic = CByte(Lector.GetValue("AUDIO", "MUSICA"))
-        .bSound = CByte(Lector.GetValue("AUDIO", "SONIDO"))
-        .bAmbient = CByte(Lector.GetValue("AUDIO", "AMBIENT"))
-        .MusicVolume = CLng(Lector.GetValue("AUDIO", "VOLMUSICA"))
-        .SoundVolume = CLng(Lector.GetValue("AUDIO", "VOLAUDIO"))
-        .AmbientVol = CLng(Lector.GetValue("AUDIO", "VOLAMBIENT"))
+        .bMusic = CByte(Val(Profile.GetValue("AUDIO", "MUSICA")))
+        .bSound = CByte(Val(Profile.GetValue("AUDIO", "SONIDO")))
+        .bAmbient = CByte(Val(Profile.GetValue("AUDIO", "AMBIENT")))
+        .MusicVolume = CLng(Val(Profile.GetValue("AUDIO", "VOLMUSICA")))
+        .SoundVolume = CLng(Val(Profile.GetValue("AUDIO", "VOLAUDIO")))
+        .AmbientVol = CLng(Val(Profile.GetValue("AUDIO", "VOLAMBIENT")))
         
     End With
 
-    Set Lector = Nothing
+    Set Profile = Nothing
 
-    leerConfiguracion = True
+    leerPerfil = True
 
   Exit Function
   
 fileErr:
 
-    leerConfiguracion = False
+    leerPerfil = False
 
     If Err.Number <> 0 Then
-       MsgBox ("Ha ocurrido un error al cargar la configuracion del cliente. Error " & Err.Number & " : " & Err.Description)
+       MsgBox ("Ha ocurrido un error al cargar la configuracion de perfil del cliente. Error " & Err.Number & " : " & Err.Description)
        End 'Usar "End" en vez del Sub CloseClient() ya que todavia no se inicializa nada.
     End If
 
@@ -704,15 +694,15 @@ On Error GoTo Fallo
 
     Call Leer.Initialize(DirDats & "\OBJ.dat")
     
-    frmObjs.LynxOBJs.Clear
-    frmObjs.LynxOBJs.Redraw = False
-    frmObjs.LynxOBJs.Visible = False
+    frmOBJs.LynxOBJs.Clear
+    frmOBJs.LynxOBJs.Redraw = False
+    frmOBJs.LynxOBJs.Visible = False
     
     NumObjs = Val(Leer.GetValue("INIT", "NumOBJs"))
     ReDim ObjData(1 To NumObjs) As ObjData
     
-    frmObjs.LynxOBJs.AddColumn "Num", 0
-    frmObjs.LynxOBJs.AddColumn "Nombre", 2
+    frmOBJs.LynxOBJs.AddColumn "Num", 0
+    frmOBJs.LynxOBJs.AddColumn "Nombre", 2
     
     For Obj = 1 To NumObjs
         frmCarga.lblStatus.Caption = "Cargando Datos de Objetos..." & Obj & "/" & NumObjs
@@ -729,16 +719,16 @@ On Error GoTo Fallo
         .Texto = Leer.GetValue("OBJ" & Obj, "Texto")
         .GrhSecundario = Val(Leer.GetValue("OBJ" & Obj, "GrhSec"))
         
-        frmObjs.LynxOBJs.AddItem Obj
-        K = frmObjs.LynxOBJs.Rows - 1
-        frmObjs.LynxOBJs.CellText(K, 1) = .name
+        frmOBJs.LynxOBJs.AddItem Obj
+        K = frmOBJs.LynxOBJs.Rows - 1
+        frmOBJs.LynxOBJs.CellText(K, 1) = .name
         
         End With
     Next Obj
     
-    frmObjs.LynxOBJs.Visible = True
-    frmObjs.LynxOBJs.Redraw = True
-    frmObjs.LynxOBJs.ColForceFit
+    frmOBJs.LynxOBJs.Visible = True
+    frmOBJs.LynxOBJs.Redraw = True
+    frmOBJs.LynxOBJs.ColForceFit
     
     DoEvents
     

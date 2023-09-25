@@ -6,7 +6,7 @@ Private Declare Function writeprivateprofilestring Lib "kernel32" Alias "WritePr
 Private Declare Function getprivateprofilestring Lib "kernel32" Alias "GetPrivateProfileStringA" (ByVal lpApplicationname As String, ByVal lpKeyname As Any, ByVal lpdefault As String, ByVal lpreturnedstring As String, ByVal nSize As Long, ByVal lpFileName As String) As Long
 
 Public Function Form_Caption() As String
-    Form_Caption = "WinterMapEditor versión: " & App.Major & "." & App.Minor & "." & App.Revision
+    Form_Caption = "WorldEditor versión: " & App.Major & "." & App.Minor & "." & App.Revision
 End Function
 
 Sub Main()
@@ -14,7 +14,7 @@ Sub Main()
     'Ruta principal
     IniPath = App.Path & "\"
 
-    Call modCarga.pre_leerConfiguracion 'Leemos la config basica para elegir un modo
+    'Call modCarga.pre_leerConfiguracion 'Leemos la config basica para elegir un modo
     
     frmModo.Show
     
@@ -25,7 +25,7 @@ Sub Main()
     frmCarga.Show
     
     Call GenerateContra
-    Call modCarga.leerConfiguracion 'Leemos el resto de la config
+    Call modCarga.leerPerfil 'Leemos el resto de la config
     Call modCarga.IniciarCabecera
     
     frmCarga.lblStatus.Caption = "Iniciando motor grafico (1/3)."

@@ -3,7 +3,7 @@ Begin VB.Form frmMapInfo
    BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Información del Mapa / Zona"
-   ClientHeight    =   6285
+   ClientHeight    =   6570
    ClientLeft      =   45
    ClientTop       =   435
    ClientWidth     =   4920
@@ -21,7 +21,7 @@ Begin VB.Form frmMapInfo
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   419
+   ScaleHeight     =   438
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   328
    ShowInTaskbar   =   0   'False
@@ -30,16 +30,16 @@ Begin VB.Form frmMapInfo
       BackColor       =   &H00535353&
       Caption         =   "Informacion"
       ForeColor       =   &H00FFFFFF&
-      Height          =   6105
+      Height          =   6345
       Left            =   120
       TabIndex        =   0
       Top             =   90
       Width           =   4695
       Begin WinterMapEditor.lvButtons_H cmdCerrar 
-         Height          =   405
+         Height          =   525
          Left            =   210
-         TabIndex        =   35
-         Top             =   5550
+         TabIndex        =   32
+         Top             =   5640
          Width           =   1845
          _ExtentX        =   3254
          _ExtentY        =   714
@@ -61,10 +61,10 @@ Begin VB.Form frmMapInfo
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBGuardar 
-         Height          =   405
-         Left            =   2280
-         TabIndex        =   34
-         Top             =   5550
+         Height          =   525
+         Left            =   2400
+         TabIndex        =   31
+         Top             =   5670
          Width           =   2055
          _ExtentX        =   3625
          _ExtentY        =   714
@@ -92,7 +92,7 @@ Begin VB.Form frmMapInfo
       Begin WinterMapEditor.lvButtons_H cmdMusica 
          Height          =   345
          Left            =   3630
-         TabIndex        =   32
+         TabIndex        =   29
          Top             =   1050
          Width           =   645
          _ExtentX        =   1138
@@ -129,7 +129,7 @@ Begin VB.Form frmMapInfo
          ItemData        =   "frmMapInfo.frx":628A
          Left            =   1680
          List            =   "frmMapInfo.frx":6297
-         TabIndex        =   31
+         TabIndex        =   28
          Text            =   "txtMapZona"
          Top             =   1440
          Width           =   2655
@@ -149,13 +149,13 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   975
          Left            =   120
-         TabIndex        =   27
+         TabIndex        =   24
          Top             =   4440
          Width           =   2175
          Begin WinterMapEditor.lvButtons_H LvBActualizarLuces 
             Height          =   375
             Left            =   1440
-            TabIndex        =   33
+            TabIndex        =   30
             Top             =   150
             Width           =   435
             _ExtentX        =   767
@@ -191,7 +191,7 @@ Begin VB.Form frmMapInfo
             EndProperty
             Height          =   285
             Left            =   600
-            TabIndex        =   30
+            TabIndex        =   27
             Top             =   580
             Width           =   1335
          End
@@ -210,7 +210,7 @@ Begin VB.Form frmMapInfo
             Left            =   120
             ScaleHeight     =   315
             ScaleWidth      =   315
-            TabIndex        =   29
+            TabIndex        =   26
             TabStop         =   0   'False
             Top             =   480
             Width           =   375
@@ -231,68 +231,9 @@ Begin VB.Form frmMapInfo
             Height          =   195
             Left            =   120
             MaskColor       =   &H00404040&
-            TabIndex        =   28
+            TabIndex        =   25
             Top             =   240
             Width           =   1455
-         End
-      End
-      Begin VB.Frame FraFormatoDel 
-         BackColor       =   &H00535353&
-         Caption         =   "Tamaño del Mapa"
-         BeginProperty Font 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   975
-         Left            =   2400
-         TabIndex        =   24
-         Top             =   4440
-         Width           =   2175
-         Begin VB.OptionButton LvBOptX 
-            BackColor       =   &H00535353&
-            Caption         =   "100 x 100 (Clasico)"
-            BeginProperty Font 
-               Name            =   "Tahoma"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H00FFFFFF&
-            Height          =   195
-            Index           =   0
-            Left            =   120
-            TabIndex        =   26
-            Top             =   390
-            Width           =   1695
-         End
-         Begin VB.OptionButton LvBOptX 
-            BackColor       =   &H00535353&
-            Caption         =   "1000 x 1000 (Winter)"
-            BeginProperty Font 
-               Name            =   "Tahoma"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H00FFFFFF&
-            Height          =   195
-            Index           =   1
-            Left            =   120
-            TabIndex        =   25
-            Top             =   600
-            Width           =   1935
          End
       End
       Begin VB.CheckBox chkMapMagiaSinEfecto 
@@ -827,7 +768,9 @@ Private Sub chkLuzClimatica_Click()
     If chkLuzClimatica.value = Unchecked Then
         PicColorMap.BackColor = 0
         
-        If ClientSetup.MeMode = eMeMode.WinterAO Then
+        If ClientSetup.MeMode = eMeMode.WinterAO Or _
+            ClientSetup.MeMode = eMeMode.ArgentumUnited Then
+            
             MapZonas(frmZonas.LstZona.ListIndex + 1).LuzBase = 0
             
         Else
@@ -929,21 +872,6 @@ Private Sub cmdMusica_Click()
     
 End Sub
 
-Private Sub Form_Load()
-
-    'Si el editor esta iniciado en modo Imperium Clasico, no va a estar disponibles la siguientes opciones:
-    If ClientSetup.MeMode = eMeMode.ImperiumClasico Then
-    
-        LvBOptX(0).value = True
-        LvBOptX(1).Visible = False
-        LvBGuardar.Visible = False
-    
-    End If
-    
-    LvBOptX(ClientSetup.MapTam).value = True
-
-End Sub
-
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 '*************************************************
 'Author: ^[GS]^
@@ -961,7 +889,8 @@ Private Sub LvBActualizarLuces_Click()
 End Sub
 
 Private Sub LvBGuardar_Click()
-    If ClientSetup.MeMode = eMeMode.WinterAO Then
+    If ClientSetup.MeMode = eMeMode.WinterAO Or _
+        ClientSetup.MeMode = eMeMode.ArgentumUnited Then
         Call guardarInfoZona(frmZonas.LstZona.ListIndex + 1)
     End If
 End Sub
@@ -991,22 +920,6 @@ Public Sub guardarInfoZona(ByVal id As Integer)
     
     Call ActualizarZonaList(id - 1)
 
-End Sub
-
-Public Sub LvBOptX_Click(Index As Integer)
-'*************************************************
-'Author: Lorwik
-'Last modified: 25/04/2020
-'*************************************************
-'Nota: Hay que cambiar muchas cosas, el engine cuando inicia hace calculos con el tamaï¿½o de los mapas
-'ademas hay mas funciones que manejan estos datos, no basta con cambiar el XMax & YMax.
-       
-    ClientSetup.MapTam = Index
-    
-    Call WriteVar(configFile, "MOSTRAR", "MapTam", CStr(ClientSetup.MapTam))
-       
-    'Seteamos el nuevo tamaño del mapa
-    Call setMapSize
 End Sub
 
 Private Sub PicColorMap_Click()
@@ -1126,9 +1039,13 @@ End Sub
 Public Sub CambiarColorMap()
 On Error GoTo PicColorMap_Err
     
-    If ClientSetup.MeMode = eMeMode.WinterAO Then
+    If ClientSetup.MeMode = eMeMode.WinterAO Or _
+        ClientSetup.MeMode = eMeMode.ArgentumUnited Then
+        
         PicColorMap.BackColor = MapZonas(frmZonas.LstZona.ListIndex + 1).LuzBase
+        
     Else
+    
         PicColorMap.BackColor = MapInfo.LuzBase
         
     End If

@@ -31,6 +31,8 @@ Public Sub AbrirMapa(ByRef Tipo As Byte)
     frmMain.mnuReAbrirMapa.Enabled = True
     EngineRun = True
     
+    Call frmMain.RefreshMapSize
+    
     Exit Sub
     
 AbrirMapa_Err:
@@ -39,6 +41,8 @@ AbrirMapa_Err:
 End Sub
 
 Public Sub abrirCargarMapa(ByVal Path As String, ByRef Tipo As Byte)
+
+    Debug.Print "Abriendo mapa " & frmMain.Dialog.filename & " - tipo " & Tipo
 
     If frmMain.Dialog.FilterIndex = 1 Then
     
@@ -50,18 +54,27 @@ Public Sub abrirCargarMapa(ByVal Path As String, ByRef Tipo As Byte)
                 Exit Sub
                 
             Case eTipoMapa.tWinter
+                Call setMapSize(1000, 1000)
                 Call modMapasWAO.Cargar_CSM(frmMain.Dialog.filename)
                 
             Case eTipoMapa.tIAOClasico
+                Call setMapSize(100, 100)
                 #If Privado = 0 Then
                     Call modMapasIAC.Cargar_MapImpClasico(frmMain.Dialog.filename)
                 #End If
                 
             Case eTipoMapa.tIAOold
+                Call setMapSize(100, 100)
                 Call Cargar_MapIAO(frmMain.Dialog.filename, eTipoMapa.tIAOold)
                 
             Case eTipoMapa.tIAOnew
+                Call setMapSize(100, 100)
                 Call Cargar_MapIAO(frmMain.Dialog.filename, eTipoMapa.tIAOnew)
+            
+            Case eTipoMapa.tAOUnited
+                Call setMapSize(1000, 1000) ' adatable
+                Call modMapUnited.Load_MapUnited(frmMain.Dialog.filename)
+                
             
         End Select
 
@@ -70,9 +83,11 @@ Public Sub abrirCargarMapa(ByVal Path As String, ByRef Tipo As Byte)
         Select Case Tipo
         
             Case eTipoMapa.tInt
+                Call setMapSize(100, 100)
                 Call modMapas.Cargar_Map(frmMain.Dialog.filename, True)
                 
             Case eTipoMapa.tlong
+                Call setMapSize(100, 100)
                 Call modMapas.Cargar_Map(frmMain.Dialog.filename, False)
                 
         End Select
@@ -129,6 +144,9 @@ Public Sub GuardarMapa(Optional Path As String)
             Case eMeMode.WinterUltimate
                 Call Save_MapImpClasico(Path)
                 
+            Case eMeMode.ArgentumUnited
+                Call Save_MapUnited(Path)
+                
         End Select
             
     ElseIf frmMain.Dialog.FilterIndex = 2 Then
@@ -147,7 +165,7 @@ Public Sub NuevoMapa()
     'Descripcion: Limpia todo el mapa a uno nuevo
     '***************************************************
     
-    Dim y     As Integer
+    Dim Y     As Integer
 
     Dim X     As Integer
 
@@ -165,12 +183,17 @@ Public Sub NuevoMapa()
     
     frmMain.MousePointer = 11
     
-    Call setMapSize
+    If ClientSetup.MeMode = eMeMode.WinterAO Or _
+        ClientSetup.MeMode = eMeMode.ArgentumUnited Then
+        Call setMapSize(1000, 1000)
+    Else
+        Call setMapSize(100, 100)
+    End If
         
-    For y = YMinMapSize To YMaxMapSize
+    For Y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
         
-            With MapData(X, y)
+            With MapData(X, Y)
             
                 .Graphic(1).GrhIndex = 1
                 
@@ -190,14 +213,14 @@ Public Sub NuevoMapa()
                 ' Translados
                 .TileExit.Map = 0
                 .TileExit.X = 0
-                .TileExit.y = 0
+                .TileExit.Y = 0
                 
                 ' Triggers
                 .Trigger = 0
         
                 .Particle_Group_Index = 0
                 
-                Call Engine_Long_To_RGB_List(MapData(X, y).Engine_Light(), -1)
+                Call Engine_Long_To_RGB_List(MapData(X, Y).Engine_Light(), -1)
                 
                 .Light.active = False
                 .Light.range = 0
@@ -208,7 +231,8 @@ Public Sub NuevoMapa()
                 .Light.RGBCOLOR.G = 0
                 .Light.RGBCOLOR.B = 0
                 
-                If ClientSetup.MeMode = eMeMode.WinterAO Then .ZonaIndex = 0
+                If ClientSetup.MeMode = eMeMode.WinterAO Or _
+                    ClientSetup.MeMode = eMeMode.ArgentumUnited Then .ZonaIndex = 0
                 
                 For i = 0 To 3
                     .Engine_Light(i) = 0
@@ -219,12 +243,13 @@ Public Sub NuevoMapa()
             End With
             
         Next X
-    Next y
+    Next Y
     
     'Borramos todas las luces
     Call LightRemoveAll
     
-    If ClientSetup.MeMode = eMeMode.WinterAO Then
+    If ClientSetup.MeMode = eMeMode.WinterAO Or _
+        ClientSetup.MeMode = eMeMode.ArgentumUnited Then
         CantZonas = 0
         ReDim MapZonas(CantZonas) As tMapInfo
     
@@ -458,7 +483,7 @@ Public Sub Cargar_Map(ByVal Map As String, Optional ByVal EsInteger As Boolean =
 
     Dim Heading     As Byte
 
-    Dim y           As Integer
+    Dim Y           As Integer
 
     Dim X           As Integer
 
@@ -513,10 +538,10 @@ Public Sub Cargar_Map(ByVal Map As String, Optional ByVal EsInteger As Boolean =
     Get FreeFileInf, , tempint
 
     'Load arrays
-    For y = YMinMapSize To YMaxMapSize
+    For Y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
             
-            With MapData(X, y)
+            With MapData(X, Y)
             
                 Get FreeFileMap, , ByFlags
                 .bLocked = (ByFlags And 1)
@@ -606,7 +631,7 @@ Public Sub Cargar_Map(ByVal Map As String, Optional ByVal EsInteger As Boolean =
                     
                         Get FreeFileInf, , .Map
                         Get FreeFileInf, , .X
-                        Get FreeFileInf, , .y
+                        Get FreeFileInf, , .Y
                     
                     End With
 
@@ -624,7 +649,7 @@ Public Sub Cargar_Map(ByVal Map As String, Optional ByVal EsInteger As Boolean =
                         Body = NpcData(.NPCIndex).Body
                         Head = NpcData(.NPCIndex).Head
                         Heading = NpcData(.NPCIndex).Heading
-                        Call MakeChar(NextOpenChar(), Body, Head, Heading, X, y)
+                        Call MakeChar(NextOpenChar(), Body, Head, Heading, X, Y)
                         
                     End If
 
@@ -643,7 +668,7 @@ Public Sub Cargar_Map(ByVal Map As String, Optional ByVal EsInteger As Boolean =
             End With
     
         Next X
-    Next y
+    Next Y
     
     'Close files
     Close FreeFileMap
@@ -753,7 +778,7 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
 
     Dim tempint     As Integer
 
-    Dim y           As Long
+    Dim Y           As Long
 
     Dim X           As Long
 
@@ -820,10 +845,10 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
     Put FreeFileInf, , tempint
     
     'Write .map file
-    For y = YMinMapSize To YMaxMapSize
+    For Y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
             
-            With MapData(X, y)
+            With MapData(X, Y)
             
                 ByFlags = 0
                 
@@ -873,7 +898,7 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
                 If .TileExit.Map Then
                     Put FreeFileInf, , .TileExit.Map
                     Put FreeFileInf, , .TileExit.X
-                    Put FreeFileInf, , .TileExit.y
+                    Put FreeFileInf, , .TileExit.Y
 
                 End If
                     
@@ -888,7 +913,7 @@ Public Sub Guardar_Map(ByVal SaveAs As String)
             End With
             
         Next X
-    Next y
+    Next Y
     
     'Close .map file
     Close FreeFileMap

@@ -1,9 +1,11 @@
 Attribute VB_Name = "modDeclaraciones"
 Option Explicit
 
+Public Const PasswordResources = "$FlLrjB3JoliHdAPKA8&YaJR5"
+
 'Configuracion
 Public ModoElegido As Boolean
-Public namePerfil As String
+Public ProfileTag As String ' Perfil seleccionado
 
 'Objetos publicos
 Public Sound As clsSoundEngine

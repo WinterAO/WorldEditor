@@ -42,7 +42,11 @@ Private Declare Function UnCompress Lib "zlib.dll" Alias "uncompress" (dest As A
 
 Public Function Formato() As String
 
-    If ClientSetup.MeMode = eMeMode.WinterAO Or ClientSetup.MeMode = eMeMode.WinterUltimate Then
+    If ClientSetup.MeMode = eMeMode.ArgentumUnited Then
+        Formato = ".PAK"
+        
+    ElseIf ClientSetup.MeMode = eMeMode.WinterAO Or _
+        ClientSetup.MeMode = eMeMode.WinterUltimate Then
         Formato = ".WAO"
         
     ElseIf ClientSetup.MeMode = eMeMode.ImperiumClasico Then
@@ -63,7 +67,7 @@ Public Sub GenerateContra()
     Dim Contra As String
     Dim LoopC As Byte
     
-    Contra = "$FlLrjB3JoliHdAPKA8&YaJR5"
+    Contra = PasswordResources
     
     Erase PkContra
     

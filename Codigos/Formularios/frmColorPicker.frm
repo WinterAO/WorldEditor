@@ -22,20 +22,28 @@ Begin VB.Form frmColorPicker
       TabIndex        =   26
       Top             =   4890
       Width           =   2475
-      _extentx        =   4366
-      _extenty        =   767
-      caption         =   "Seleccionar"
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmColorPicker.frx":0000
-      cfore           =   16777215
-      cfhover         =   16777215
-      cbhover         =   0
-      cgradient       =   0
-      gradient        =   3
-      mode            =   0
-      value           =   0   'False
-      cback           =   65280
+      _ExtentX        =   4366
+      _ExtentY        =   767
+      Caption         =   "Seleccionar"
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
+      cGradient       =   0
+      Gradient        =   3
+      Mode            =   0
+      Value           =   0   'False
+      cBack           =   65280
    End
    Begin VB.PictureBox picBigBox 
       Height          =   3870
@@ -54,7 +62,7 @@ Begin VB.Form frmColorPicker
       ForeColor       =   &H00C0FFC0&
       Height          =   3840
       Left            =   4260
-      Picture         =   "frmColorPicker.frx":0028
+      Picture         =   "frmColorPicker.frx":0000
       ScaleHeight     =   252
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   17
@@ -479,7 +487,7 @@ Dim mBlnRecentThinBoxPress         As Boolean, mBlnBigBoxReady As Boolean
 Private Declare Function SetPixelV _
                 Lib "gdi32" (ByVal hDC As Long, _
                              ByVal X As Long, _
-                             ByVal Y As Long, _
+                             ByVal y As Long, _
                              ByVal color As Long) As Byte 'Painting by API is good and fast.
 
 'FINDS THE REAL PATH FOR MyDocuments
@@ -556,7 +564,9 @@ Function Shell(Program As String, _
 End Function
 
 Private Sub Command1_Click()
-    If ClientSetup.MeMode = eMeMode.WinterAO Then
+    If ClientSetup.MeMode = eMeMode.WinterAO Or _
+        ClientSetup.MeMode = eMeMode.ArgentumUnited Then
+        
         MapZonas(frmZonas.LstZona.ListIndex + 1).LuzBase = RGB(Text1(3), Text1(4), Text1(5))
         
     Else
@@ -798,7 +808,7 @@ End Sub
 Private Sub picBigBox_MouseMove(Knapp As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
-                                Y As Single)
+                                y As Single)
 
     'PROBLEM: GIF-IMAGES ETC WONT REACT WHEN I SAVE THE OLD IMAGE AS A MATRIX. ON THE OTHER HAND I CAN PAINT OVER GIFS.
     Dim lngColor As Long, udtAngelSaturationBrightness As HSL
@@ -807,18 +817,18 @@ Private Sub picBigBox_MouseMove(Knapp As Integer, _
     
     If X > 255 Then X = 255 'LIMITER.
     If X < 0 Then X = 0
-    If Y > 255 Then Y = 255
-    If Y < 0 Then Y = 0
+    If y > 255 Then y = 255
+    If y < 0 Then y = 0
     
     'PASTE THE MARKER ON THE LOCATION OF X,Y.*******
     'HIDE THE MARKER FOR CONVENIENS. LET THE MARKER FOLLOW IF THE MOUSEBUTTON IS PRESSED. FIRST ERASE THE OLD MARKER.
-    If objOption(0) Then lngColor = HSLToRGB(intSystemColorAngleMax1530, ByVal X, ByVal 255 - Y, True) 'CONVERT AND UPDATE TEXTBOXES.
-    If objOption(1) Then lngColor = HSLToRGB(ByVal X * 6, ByVal bteSaturationMax255, ByVal 255 - Y, True): Call PaintThinBox(1) 'CONVERT AND UPDATE TEXTBOXES.
-    If objOption(2) Then lngColor = HSLToRGB(ByVal X * 6, ByVal 255 - Y, ByVal bteBrightnessMax255, True): Call PaintThinBox(2) 'CONVERT AND UPDATE TEXTBOXES.
+    If objOption(0) Then lngColor = HSLToRGB(intSystemColorAngleMax1530, ByVal X, ByVal 255 - y, True) 'CONVERT AND UPDATE TEXTBOXES.
+    If objOption(1) Then lngColor = HSLToRGB(ByVal X * 6, ByVal bteSaturationMax255, ByVal 255 - y, True): Call PaintThinBox(1) 'CONVERT AND UPDATE TEXTBOXES.
+    If objOption(2) Then lngColor = HSLToRGB(ByVal X * 6, ByVal 255 - y, ByVal bteBrightnessMax255, True): Call PaintThinBox(2) 'CONVERT AND UPDATE TEXTBOXES.
     
-    If objOption(3) Then Call BigBoxOpt3Reaction(ByVal X, Y) 'CONVERT AND UPDATE TEXTBOXES.
-    If objOption(4) Then Call BigBoxOpt4Reaction(ByVal X, Y) 'CONVERT AND UPDATE TEXTBOXES.
-    If objOption(5) Then Call BigBoxOpt5Reaction(ByVal X, Y) 'CONVERT AND UPDATE TEXTBOXES.
+    If objOption(3) Then Call BigBoxOpt3Reaction(ByVal X, y) 'CONVERT AND UPDATE TEXTBOXES.
+    If objOption(4) Then Call BigBoxOpt4Reaction(ByVal X, y) 'CONVERT AND UPDATE TEXTBOXES.
+    If objOption(5) Then Call BigBoxOpt5Reaction(ByVal X, y) 'CONVERT AND UPDATE TEXTBOXES.
     
     mBlnRecentThinBoxPress = False
 
@@ -827,7 +837,7 @@ End Sub
 Private Sub picBigBox_MouseDown(Button As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
-                                Y As Single)
+                                y As Single)
 
     Dim lngColor As Long
 
@@ -841,17 +851,17 @@ Private Sub picBigBox_MouseDown(Button As Integer, _
 
     End If
     
-    If objOption(0) Then lngColor = HSLToRGB(intSystemColorAngleMax1530, ByVal X, ByVal 255 - Y, True) 'CONVERT AND UPDATE TEXTBOXES.
+    If objOption(0) Then lngColor = HSLToRGB(intSystemColorAngleMax1530, ByVal X, ByVal 255 - y, True) 'CONVERT AND UPDATE TEXTBOXES.
     If objOption(1) Then
-        lngColor = HSLToRGB(ByVal X * 6, ByVal bteSaturationMax255, ByVal 255 - Y, True) 'CONVERT AND UPDATE TEXTBOXES.
+        lngColor = HSLToRGB(ByVal X * 6, ByVal bteSaturationMax255, ByVal 255 - y, True) 'CONVERT AND UPDATE TEXTBOXES.
         Call FadeThinBoxToGrey 'REPAINT ThinBox - FADE SATURATED COLORS; THE SYSTEM CONSTANTS ARE ALREADY UPDATED.
         picThinBox.Refresh
 
     End If
 
     If objOption(2) Then
-        picThinBox.BackColor = HSLToRGB(ByVal X * 6, ByVal 255 - Y, 255, False) 'SETTING THE BRIGHT COLOR THAT IS TO BE FADED. CONVERTING AND UPDATING TEXTBOXES.
-        lngColor = HSLToRGB(ByVal X * 6, ByVal 255 - Y, ByVal bteBrightnessMax255, True)  'UPDATING THE REAL, NONSATURATED SYSTEM CONSTANTS AND lblNewColor.
+        picThinBox.BackColor = HSLToRGB(ByVal X * 6, ByVal 255 - y, 255, False) 'SETTING THE BRIGHT COLOR THAT IS TO BE FADED. CONVERTING AND UPDATING TEXTBOXES.
+        lngColor = HSLToRGB(ByVal X * 6, ByVal 255 - y, ByVal bteBrightnessMax255, True)  'UPDATING THE REAL, NONSATURATED SYSTEM CONSTANTS AND lblNewColor.
         'Call FadeToBlack(picThinBox, 19, 255) 'Redraw ThinBox - fade strong colors; System constants are already updated.
         Call FadeThinBoxToBlack 'REPAINTING ThinBox - FADE SATURATED COLORS ; THE SYSTEM CONSTANTS ARE ALREADY UPDATED.
         picThinBox.Refresh
@@ -859,17 +869,17 @@ Private Sub picBigBox_MouseDown(Button As Integer, _
     End If
     
     If objOption(3) Then
-        Call BigBoxOpt3Reaction(ByVal X, Y)
+        Call BigBoxOpt3Reaction(ByVal X, y)
 
     End If
 
     If objOption(4) Then
-        Call BigBoxOpt4Reaction(ByVal X, Y)
+        Call BigBoxOpt4Reaction(ByVal X, y)
 
     End If
 
     If objOption(5) Then
-        Call BigBoxOpt5Reaction(ByVal X, Y)
+        Call BigBoxOpt5Reaction(ByVal X, y)
 
     End If
     
@@ -877,7 +887,7 @@ Private Sub picBigBox_MouseDown(Button As Integer, _
     'vbSrcInvert FOLLOWED BY vbDstInvert APPARENTLY GIVES A TRANSPARENT PICTURE.
     '?OLD CODE? IN CASE OF THE CURSOR COLLIDING WITH THE MARKER, THE MARKER HAS TO ENTIRELY ERASED AND ENTIRELY REPAINTED.
     mBteMarkerOldX = X 'Already changing here in order to get the correct position in SampleMarkerBackground .
-    mBteMarkerOldY = Y 'Will be used by erasemarker.
+    mBteMarkerOldY = y 'Will be used by erasemarker.
     Call SampleMarkerBackground 'Saving the new backround behind marker now when there's no Cursor in the way.
     
     blnNotFirstTimeMarker = True
@@ -888,7 +898,7 @@ End Sub
 Private Sub picBigBox_MouseUp(Knapp As Integer, _
                               Shift As Integer, _
                               X As Single, _
-                              Y As Single)
+                              y As Single)
 
     If mBlnBigBoxReady = False Then MsgBox "mBlnBigBoxReady = False!": Exit Sub 'Baile if no color in bigbox.
     
@@ -896,13 +906,13 @@ Private Sub picBigBox_MouseUp(Knapp As Integer, _
 
     If X > 255 Then X = 255 'LIMITER
     If X < 0 Then X = 0
-    If Y > 255 Then Y = 255
-    If Y < 0 Then Y = 0
+    If y > 255 Then y = 255
+    If y < 0 Then y = 0
     
     mBteMarkerOldX = X
-    mBteMarkerOldY = Y
+    mBteMarkerOldY = y
     Call SampleMarkerBackground
-    Call PaintMarker(X, Y) 'PAINT MARKER ON ITS NEW LOCATION.
+    Call PaintMarker(X, y) 'PAINT MARKER ON ITS NEW LOCATION.
 
     'picBigBox.Enabled = True 'trying to get rid of the artefacts that arise at fast double clicks.
 End Sub
@@ -923,69 +933,69 @@ End Sub
 Private Sub picThinBox_MouseDown(Button As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
-                                 Y As Single)
+                                 y As Single)
     ' set flag to start drawing
     mBlnRecentThinBoxPress = True
-    blnDrag = True: Call picThinBox_MouseMove(Button, Shift, X, Y) 'REUSING THE UPDATE ROUTINES.
+    blnDrag = True: Call picThinBox_MouseMove(Button, Shift, X, y) 'REUSING THE UPDATE ROUTINES.
 
 End Sub
 
 Private Sub lblThinContainer_MouseDown(Button As Integer, _
                                        Shift As Integer, _
                                        X As Single, _
-                                       Y As Single)
+                                       y As Single)
 
     Dim sngScaleConst As Single
 
     sngScaleConst = Screen.TwipsPerPixelY 'GIVING ME THE ACTUAL SIZE OF THE PIXELS OF THE SCREEN, HERE = 15.
     
     mBlnRecentThinBoxPress = True
-    Y = Y / sngScaleConst 'CONVERTING FROM THE UNIT TWIP TO PIXELS. ATT! PROBLEM! SHOULD BE /20 BUT IS 15.
-    blnDrag = True: Call picThinBox_MouseMove(Button, Shift, X, Y) 'REUSING THE UPDATE ROUTINES.
+    y = y / sngScaleConst 'CONVERTING FROM THE UNIT TWIP TO PIXELS. ATT! PROBLEM! SHOULD BE /20 BUT IS 15.
+    blnDrag = True: Call picThinBox_MouseMove(Button, Shift, X, y) 'REUSING THE UPDATE ROUTINES.
 
 End Sub
 
 Private Sub lblThinContainer_MouseMove(Knapp As Integer, _
                                        Shift As Integer, _
                                        X As Single, _
-                                       Y As Single)
-    Y = Y / 15 'CONVERTING FROM THE UNIT TWIP TO PIXELS. ATT! PROBLEM! SHOULD BE /20 BUT IS 15.
-    Call picThinBox_MouseMove(Knapp, Shift, X, Y)
+                                       y As Single)
+    y = y / 15 'CONVERTING FROM THE UNIT TWIP TO PIXELS. ATT! PROBLEM! SHOULD BE /20 BUT IS 15.
+    Call picThinBox_MouseMove(Knapp, Shift, X, y)
 
 End Sub
 
 Private Sub picThinBox_MouseMove(Knapp As Integer, _
                                  Shift As Integer, _
                                  X As Single, _
-                                 Y As Single)
+                                 y As Single)
 
     Dim lngColor As Long, udtAngelSaturationBrightness As HSL
     
     If blnDrag = False Then Exit Sub
 
     'If Text1(1) = "Saturation" Then Text1(1) = 100 'The program har been started recently.
-    If Y < 0 Then Y = 0 'LIMITER
-    If Y > 255 Then Y = 255
+    If y < 0 Then y = 0 'LIMITER
+    If y > 255 Then y = 255
     'imgArrows.Top = Y + 28 'Animering
-    Call TriangelMove(Y) 'ANIMATION
+    Call TriangelMove(y) 'ANIMATION
     
-    If objOption(0) Then lngColor = HSLToRGB((255 - Y) * 6, ByVal bteSaturationMax255, ByVal bteBrightnessMax255, True): Exit Sub 'Convert and update textboxes.
-    If objOption(1) Then lngColor = HSLToRGB(ByVal intSystemColorAngleMax1530, 255 - Y, ByVal bteBrightnessMax255, True): Exit Sub 'Convert and update textboxes.
-    If objOption(2) Then lngColor = HSLToRGB(ByVal intSystemColorAngleMax1530, ByVal bteSaturationMax255, 255 - Y, True) 'Convert and update textboxes.
+    If objOption(0) Then lngColor = HSLToRGB((255 - y) * 6, ByVal bteSaturationMax255, ByVal bteBrightnessMax255, True): Exit Sub 'Convert and update textboxes.
+    If objOption(1) Then lngColor = HSLToRGB(ByVal intSystemColorAngleMax1530, 255 - y, ByVal bteBrightnessMax255, True): Exit Sub 'Convert and update textboxes.
+    If objOption(2) Then lngColor = HSLToRGB(ByVal intSystemColorAngleMax1530, ByVal bteSaturationMax255, 255 - y, True) 'Convert and update textboxes.
     If objOption(3) Then
-        Text1(3) = 255 - Y: udtAngelSaturationBrightness = RGBToHSL201(RGB(Text1(3), Text1(4), Text1(5)), True) 'Convert and update textboxes.
+        Text1(3) = 255 - y: udtAngelSaturationBrightness = RGBToHSL201(RGB(Text1(3), Text1(4), Text1(5)), True) 'Convert and update textboxes.
         lblNewColor.BackColor = RGB(Text1(3), Text1(4), Text1(5))
 
     End If
 
     If objOption(4) Then
-        Text1(4) = 255 - Y: udtAngelSaturationBrightness = RGBToHSL201(RGB(Text1(3), Text1(4), Text1(5)), True) 'Convert and update textboxes.
+        Text1(4) = 255 - y: udtAngelSaturationBrightness = RGBToHSL201(RGB(Text1(3), Text1(4), Text1(5)), True) 'Convert and update textboxes.
         lblNewColor.BackColor = RGB(Text1(3), Text1(4), Text1(5))
 
     End If
 
     If objOption(5) Then
-        Text1(5) = 255 - Y: udtAngelSaturationBrightness = RGBToHSL201(RGB(Text1(3), Text1(4), Text1(5)), True) 'Convert and update textboxes.
+        Text1(5) = 255 - y: udtAngelSaturationBrightness = RGBToHSL201(RGB(Text1(3), Text1(4), Text1(5)), True) 'Convert and update textboxes.
         lblNewColor.BackColor = RGB(Text1(3), Text1(4), Text1(5))
 
     End If
@@ -995,7 +1005,7 @@ End Sub
 Private Sub picThinBox_MouseUp(Button As Integer, _
                                Shift As Integer, _
                                X As Single, _
-                               Y As Single)
+                               y As Single)
     ' set flag to start drawing
     blnDrag = False
     Call picBigBox_Colorize '(mSngRValue, mSngGValue, mSngBValue)
@@ -1005,9 +1015,9 @@ End Sub
 Private Sub lblThinContainer_MouseUp(Button As Integer, _
                                      Shift As Integer, _
                                      X As Single, _
-                                     Y As Single)
+                                     y As Single)
     ' set flag to start drawing
-    Y = Y / 20 'CONVERTING FROM THE UNIT TWIP TO PIXELS.
+    y = y / 20 'CONVERTING FROM THE UNIT TWIP TO PIXELS.
     blnDrag = False
     Call picBigBox_Colorize '(mSngRValue, mSngGValue, mSngBValue)
 
@@ -1015,17 +1025,17 @@ End Sub
 
 Public Sub FadeThinBoxToGrey()
 
-    Dim sng255saturation As Single, sngLokalBrightness As Single, X As Byte, Y As Integer ', YCtr As Integer
+    Dim sng255saturation As Single, sngLokalBrightness As Single, X As Byte, y As Integer ', YCtr As Integer
     
     sng255saturation = 255: sngLokalBrightness = bteBrightnessMax255
         
     For X = 0 To 19
-        Y = 0 'Sets YCtr for making a new countdown.
+        y = 0 'Sets YCtr for making a new countdown.
 
         Do 'Interesting if there would raise an error, thus a leap directly to EndSub.
-            SetPixelV picThinBox.hDC, X, Y, HSLToRGB(ByVal intSystemColorAngleMax1530, ByVal Round(sng255saturation - sng255saturation * Y / 255), ByVal sngLokalBrightness, False)
-            Y = Y + 1
-        Loop While Y < 256 'Because Y gets to big when the loop has finished.
+            SetPixelV picThinBox.hDC, X, y, HSLToRGB(ByVal intSystemColorAngleMax1530, ByVal Round(sng255saturation - sng255saturation * y / 255), ByVal sngLokalBrightness, False)
+            y = y + 1
+        Loop While y < 256 'Because Y gets to big when the loop has finished.
 
     Next X
 
@@ -1037,7 +1047,7 @@ Public Sub Bigbox3D()
 
     Dim sngR256delToBlack  As Single, sngG256delToBlack As Single, sngB256delToBlack As Single
 
-    Dim R                  As Single, G As Single, B As Single, lColor As Long, Y As Integer, X As Integer
+    Dim R                  As Single, G As Single, B As Single, lColor As Long, y As Integer, X As Integer
     
     sngLokalSaturation = 255: sngLokalBrightness = 255 'There is a need for intense start color.
 
@@ -1060,15 +1070,15 @@ Public Sub Bigbox3D()
         sngG256delToBlack = G / 255
         sngB256delToBlack = B / 255
         
-        For Y = 0 To 255 'Interesting if there would raise an error, thus a leap back to EndSub.
+        For y = 0 To 255 'Interesting if there would raise an error, thus a leap back to EndSub.
             'objAnyPictureBox.PSet (X, Y), RGB(R, G, B)
-            SetPixelV picBigBox.hDC, X, Y, RGB(R, G, B) 'Painting with API.
+            SetPixelV picBigBox.hDC, X, y, RGB(R, G, B) 'Painting with API.
             R = R - sngR256delToBlack 'Darkening the shade one of a 256:th.
             G = G - sngG256delToBlack
             B = B - sngB256delToBlack
-        Next Y
+        Next y
         
-        Y = Y - 1 'Because that Y gets too big when the loop is completed.
+        y = y - 1 'Because that Y gets too big when the loop is completed.
     Next X
 
 End Sub
@@ -1077,7 +1087,7 @@ Public Sub FadeThinBoxToBlack()
 
     Dim sngR256delToBlack As Single, sngG256delToBlack As Single, sngB256delToBlack As Single
 
-    Dim R                 As Single, G As Single, B As Single, lColor As Long, X As Byte, Y As Integer
+    Dim R                 As Single, G As Single, B As Single, lColor As Long, X As Byte, y As Integer
     
     For X = 0 To 19
         lColor = picThinBox.Point(X, 0) 'Reads the uppermost pixel MAX LIGHT which is to be faded.
@@ -1089,15 +1099,15 @@ Public Sub FadeThinBoxToBlack()
         sngB256delToBlack = B / 255
         'If blnVertical = True Then R = Ro: G = Go: B = Bo 'Om Vertical linje så återställer sig originalfärgen för en ny runda.
         
-        For Y = 0 To 255 'Interesting if the is an error, thus a jump directly to EndSub.
+        For y = 0 To 255 'Interesting if the is an error, thus a jump directly to EndSub.
             'objAnyPictureBox.PSet (X, Y), RGB(R, G, B)
-            SetPixelV picThinBox.hDC, X, Y, RGB(R, G, B) 'Painting with API.
+            SetPixelV picThinBox.hDC, X, y, RGB(R, G, B) 'Painting with API.
             R = R - sngR256delToBlack 'Darkening the shade of one 256th.
             G = G - sngG256delToBlack
             B = B - sngB256delToBlack
-        Next Y
+        Next y
 
-        Y = Y - 1 'Because Y gets too big when loop is complete.
+        y = y - 1 'Because Y gets too big when loop is complete.
     Next X
 
 End Sub
@@ -1205,7 +1215,7 @@ End Sub
 
 Private Sub picThinBox_KeyDown(KeyCode As Integer, Shift As Integer)
 
-    Dim Y As Integer, intDirektion As Integer
+    Dim y As Integer, intDirektion As Integer
 
     'MsgBox "Är i rutinen picThinBox_KeyDown!"
     'Y = imgArrows.Top - 28
@@ -1273,17 +1283,17 @@ Public Sub SampleMarkerBackground()
 
 End Sub
 
-Public Sub PaintMarker(X, Y)
+Public Sub PaintMarker(X, y)
 
     If bteBrightnessMax255 < 200 Then 'White marker if the surroundings are grey.
-        picBigBox.Circle (X, Y), 5, vbWhite
+        picBigBox.Circle (X, y), 5, vbWhite
         Exit Sub
 
     End If
 
     If Text1(0) < 26 Or Text1(0) > 200 Then 'Shades of blue.
         If bteSaturationMax255 > 70 Then ' And bteSaturationMax255 < 150 Then 'White marker if the surroundings are grey..
-            picBigBox.Circle (X, Y), 5, vbWhite
+            picBigBox.Circle (X, y), 5, vbWhite
             Exit Sub
 
         End If
@@ -1640,14 +1650,14 @@ Private Sub PaintThinBox(Index As Integer)
 
 End Sub
 
-Private Sub TriangelMove(Y)
-    linTriang1Vert.y1 = Y + 28: linTriang1Vert.y2 = Y + 28 + 10
-    linTriang1Rising.y1 = Y + 28 + 10: linTriang1Rising.y2 = Y + 28 + 4
-    linTriang1Falling.y1 = Y + 28: linTriang1Falling.y2 = Y + 28 + 6
+Private Sub TriangelMove(y)
+    linTriang1Vert.y1 = y + 28: linTriang1Vert.y2 = y + 28 + 10
+    linTriang1Rising.y1 = y + 28 + 10: linTriang1Rising.y2 = y + 28 + 4
+    linTriang1Falling.y1 = y + 28: linTriang1Falling.y2 = y + 28 + 6
 
-    linTriang2Vert.y1 = Y + 28: linTriang2Vert.y2 = Y + 28 + 10
-    linTriang2Rising.y2 = Y + 28 + 10: linTriang2Rising.y1 = Y + 28 + 5
-    linTriang2Falling.y2 = Y + 28: linTriang2Falling.y1 = Y + 28 + 5
+    linTriang2Vert.y1 = y + 28: linTriang2Vert.y2 = y + 28 + 10
+    linTriang2Rising.y2 = y + 28 + 10: linTriang2Rising.y1 = y + 28 + 5
+    linTriang2Falling.y2 = y + 28: linTriang2Falling.y1 = y + 28 + 5
 
 End Sub
 
@@ -1690,11 +1700,11 @@ Public Sub opt5BluePaintPicThinBox(ByVal R, G)
 
 End Sub
 
-Public Sub BigBoxOpt3Reaction(ByVal X, Y)
+Public Sub BigBoxOpt3Reaction(ByVal X, y)
 
     Dim udtAngelSaturationBrightness As HSL
 
-    lblNewColor.BackColor = picBigBox.Point(X, Y): lblNewColor.Refresh
+    lblNewColor.BackColor = picBigBox.Point(X, y): lblNewColor.Refresh
     Call SplitlblNewColorToRGBboxes 'Updating the module global mSngRValue etc.
     Call opt3RedPaintPicThinBox(ByVal mSngGValue, mSngBValue)
     picThinBox.Refresh
@@ -1702,11 +1712,11 @@ Public Sub BigBoxOpt3Reaction(ByVal X, Y)
 
 End Sub
 
-Public Sub BigBoxOpt4Reaction(ByVal X, Y)
+Public Sub BigBoxOpt4Reaction(ByVal X, y)
 
     Dim udtAngelSaturationBrightness As HSL
 
-    lblNewColor.BackColor = picBigBox.Point(X, Y): lblNewColor.Refresh
+    lblNewColor.BackColor = picBigBox.Point(X, y): lblNewColor.Refresh
     Call SplitlblNewColorToRGBboxes 'Updating the module global mSngRValue etc.
     Call opt4GreenPaintPicThinBox(ByVal mSngRValue, mSngBValue)
     picThinBox.Refresh
@@ -1714,11 +1724,11 @@ Public Sub BigBoxOpt4Reaction(ByVal X, Y)
 
 End Sub
 
-Public Sub BigBoxOpt5Reaction(ByVal X, Y)
+Public Sub BigBoxOpt5Reaction(ByVal X, y)
 
     Dim udtAngelSaturationBrightness As HSL
 
-    lblNewColor.BackColor = picBigBox.Point(X, Y): lblNewColor.Refresh
+    lblNewColor.BackColor = picBigBox.Point(X, y): lblNewColor.Refresh
     Call SplitlblNewColorToRGBboxes 'Updating the module global mSngRValue etc.
     Call opt5BluePaintPicThinBox(ByVal mSngRValue, mSngGValue)
     picThinBox.Refresh

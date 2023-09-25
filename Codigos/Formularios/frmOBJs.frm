@@ -266,7 +266,7 @@ Begin VB.Form frmOBJs
       Width           =   675
    End
 End
-Attribute VB_Name = "frmObjs"
+Attribute VB_Name = "frmOBJs"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
