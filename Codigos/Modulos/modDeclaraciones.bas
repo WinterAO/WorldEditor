@@ -141,14 +141,14 @@ End Type
 'Posicion en un mapa
 Public Type Position
     X As Integer
-    y As Integer
+    Y As Integer
 End Type
 
 'Holds a world position
 Public Type WorldPos
     Map As Integer
     X As Integer
-    y As Integer
+    Y As Integer
 End Type
 
 ' Cuerpos body.dat

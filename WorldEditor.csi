@@ -1,0 +1,8 @@
+[History]
+1=#P0#=mb	#P1#=LvBZona_MouseDown	#P2#=WinterMapEditor/frmZonas/LvBZona_MouseDown	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20230926004351	#P7#=0	#P8#=7	.
+2=#P0#=mb	#P1#=coloresZona	#P2#=WinterMapEditor/modTileEngine/coloresZona	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20230926004201	#P7#=0	#P8#=3	.
+3=#P0#=mb	#P1#=RenderScreen	#P2#=WinterMapEditor/modTileEngine/RenderScreen	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20230926002617	#P7#=0	#P8#=291	.
+4=#P0#=mb	#P1#=Cargar_CSM	#P2#=WinterMapEditor/modMapasWAO/Cargar_CSM	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20230926002529	#P7#=0	#P8#=255	.
+5=#P0#=mb	#P1#=NextOpenChar	#P2#=WinterMapEditor/modTileEngine/NextOpenChar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20230926002258	#P7#=0	#P8#=8	.
+6=#P0#=mb	#P1#=EraseChar	#P2#=WinterMapEditor/modTileEngine/EraseChar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20230926002253	#P7#=0	#P8#=22	.
+7=#P0#=mb	#P1#=Form_Load	#P2#=WinterMapEditor/frmMapaSize/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20230925212116	#P7#=0	#P8#=0	.

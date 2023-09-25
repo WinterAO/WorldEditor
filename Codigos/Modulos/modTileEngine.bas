@@ -51,6 +51,8 @@ Public Const GRH_ERROR As Long = 22512
 
 Private Const MOVEMENT_SPEED As Single = 1
 
+Private colorZona() As Long
+
 '*************
 '<<<<< API >>>>>>
 '****
@@ -808,8 +810,10 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     If MapData(X, Y).ZonaIndex = frmZonas.LstZona.ListIndex + 1 And MapData(X, Y).ZonaIndex > 0 Then Call DrawText(PixelOffsetXTemp + 7, PixelOffsetYTemp + 7, "z" & MapData(X, Y).ZonaIndex, -1, False, 1)
                             
                 ElseIf frmMain.mnuVerZonas(1).Checked Then 'Todas las zonas
-
-                    If MapData(X, Y).ZonaIndex > 0 Then Call DrawText(PixelOffsetXTemp + 7, PixelOffsetYTemp + 7, "z" & MapData(X, Y).ZonaIndex, -1, False, 1)
+                    
+                    If MapData(X, Y).ZonaIndex > 0 Then
+                        Call DrawText(PixelOffsetXTemp + 7, PixelOffsetYTemp + 7, "z" & MapData(X, Y).ZonaIndex, colorZona(MapData(X, Y).ZonaIndex), False, 1)
+                    End If
 
                 End If
 
@@ -1121,3 +1125,30 @@ Function NextOpenChar() As Integer
     NextOpenChar = LoopC
 
 End Function
+
+Public Sub coloresZona()
+
+    Dim i As Long
+
+    If CantZonas = 0 Then Exit Sub
+    
+    i = CantZonas
+    
+    ReDim colorZona(CantZonas)
+
+    ' Asigna colores aleatorios a cada número en el array MapData(X, Y).ZonaIndex
+    For i = 1 To CantZonas
+        ' Genera valores aleatorios para Red, Green y Blue
+        Dim RedValue As Integer
+        Dim GreenValue As Integer
+        Dim BlueValue As Integer
+    
+        RedValue = Int(Rnd * 256) ' Valor aleatorio entre 0 y 255
+        GreenValue = Int(Rnd * 256)
+        BlueValue = Int(Rnd * 256)
+    
+        colorZona(i) = D3DColorARGB(255, RedValue, GreenValue, BlueValue)
+    Next i
+    
+End Sub
+
