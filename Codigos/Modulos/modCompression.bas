@@ -43,7 +43,7 @@ Private Declare Function UnCompress Lib "zlib.dll" Alias "uncompress" (dest As A
 Public Function Formato() As String
 
     If ClientSetup.MeMode = eMeMode.ArgentumUnited Then
-        Formato = ".PAK"
+        Formato = ".WAO"
         
     ElseIf ClientSetup.MeMode = eMeMode.WinterAO Or _
         ClientSetup.MeMode = eMeMode.WinterUltimate Then
@@ -65,7 +65,7 @@ Public Sub GenerateContra()
 
 'on error resume next
     Dim Contra As String
-    Dim LoopC As Byte
+    Dim loopc As Byte
     
     Contra = PasswordResources
     
@@ -73,9 +73,9 @@ Public Sub GenerateContra()
     
     If LenB(Contra) <> 0 Then
         ReDim PkContra(Len(Contra) - 1)
-        For LoopC = 0 To UBound(PkContra)
-            PkContra(LoopC) = Asc(mid(Contra, LoopC + 1, 1))
-        Next LoopC
+        For loopc = 0 To UBound(PkContra)
+            PkContra(loopc) = Asc(mid(Contra, loopc + 1, 1))
+        Next loopc
     End If
     
 End Sub
@@ -88,15 +88,15 @@ Public Sub Decompress_Data(ByRef Data() As Byte, ByVal OrigSize As Long)
 '*****************************************************************
 
     Dim BufTemp() As Byte
-    Dim LoopC As Integer
+    Dim loopc As Integer
     
     ReDim BufTemp(OrigSize - 1)
     
     'Des-encrypt the first byte of the compressed data
     If UBound(PkContra) <= UBound(Data) And UBound(PkContra) <> 0 Then
-        For LoopC = 0 To UBound(PkContra)
-            Data(LoopC) = Data(LoopC) Xor PkContra(LoopC)
-        Next LoopC
+        For loopc = 0 To UBound(PkContra)
+            Data(loopc) = Data(loopc) Xor PkContra(loopc)
+        Next loopc
     End If
     
     UnCompress BufTemp(0), OrigSize, Data(0), UBound(Data) + 1
@@ -121,15 +121,15 @@ End Sub
 
 Private Sub encryptHeaderInfo(ByRef InfoHead As INFOHEADER)
     Dim EncryptedFileName As String
-    Dim LoopC As Long
+    Dim loopc As Long
     
-    For LoopC = 1 To Len(InfoHead.strFileName)
-        If LoopC Mod 2 = 0 Then
-            EncryptedFileName = EncryptedFileName & Chr(Asc(mid(InfoHead.strFileName, LoopC, 1)) Xor 12)
+    For loopc = 1 To Len(InfoHead.strFileName)
+        If loopc Mod 2 = 0 Then
+            EncryptedFileName = EncryptedFileName & Chr(Asc(mid(InfoHead.strFileName, loopc, 1)) Xor 12)
         Else
-            EncryptedFileName = EncryptedFileName & Chr(Asc(mid(InfoHead.strFileName, LoopC, 1)) Xor 23)
+            EncryptedFileName = EncryptedFileName & Chr(Asc(mid(InfoHead.strFileName, loopc, 1)) Xor 23)
         End If
-    Next LoopC
+    Next loopc
     
     'Each different variable is encrypted with a different key for extra security
     With InfoHead
@@ -185,7 +185,7 @@ Public Function extractMusic(ByVal file_name As String, Optional ByVal Midi As B
 'Extracts all files from a resource file
 '*****************************************************************
 
-    Dim LoopC As Long
+    Dim loopc As Long
     
     Dim SourceFilePath As String
     Dim OutputFilePath As String
@@ -195,7 +195,7 @@ Public Function extractMusic(ByVal file_name As String, Optional ByVal Midi As B
     Dim handle As Integer
     
 'Set up the error handler
-On Local Error GoTo errhandler
+On Local Error GoTo ErrHandler
     
     '¿Queremos descomprimir en la carpeta temporal?
     OutputFilePath = Windows_Temp_Dir
@@ -267,7 +267,7 @@ On Local Error GoTo errhandler
     extractMusic = True
 Exit Function
 
-errhandler:
+ErrHandler:
     Close handle
     Erase SourceData
     extractMusic = False
@@ -282,12 +282,12 @@ Public Function Extract_File_Memory(ByVal File_Type As srcFileType, ByVal file_n
 'Extra archivos en memoria
 '*********************************************
 
-    Dim LoopC As Long
+    Dim loopc As Long
     Dim SourceFilePath As String
     Dim InfoHead As INFOHEADER
     Dim handle As Integer
    
-On Local Error GoTo errhandler
+On Local Error GoTo ErrHandler
    
     Select Case File_Type
     
@@ -345,7 +345,7 @@ On Local Error GoTo errhandler
     Extract_File_Memory = True
 Exit Function
  
-errhandler:
+ErrHandler:
     Close handle
     Erase SourceData
 End Function
@@ -437,7 +437,7 @@ Public Function File_Find(ByVal resource_file_path As String, ByVal file_name As
 'Extra archivos en memoria
 '*********************************************
  
-On Error GoTo errhandler
+On Error GoTo ErrHandler
  
     Dim Max As Integer
     Dim Min As Integer
@@ -490,7 +490,7 @@ On Error GoTo errhandler
         End If
     Loop
    
-errhandler:
+ErrHandler:
     Close file_handler
     File_Find.strFileName = ""
     File_Find.lngFileSize = 0
