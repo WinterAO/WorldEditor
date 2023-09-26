@@ -1,4 +1,4 @@
-frmMain = 52, 52, 1873, 910, C, 26, 26, 1851, 910, C
+frmMain = 52, 52, 1873, 910, , 26, 26, 1851, 910, C
 modGeneral = 156, 156, 2096, 921, 
 modCarga = 0, 0, 0, 0, C
 clsIniManager = 0, 0, 0, 0, C
