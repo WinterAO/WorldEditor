@@ -51,8 +51,6 @@ Public Const GRH_ERROR As Long = 22512
 
 Private Const MOVEMENT_SPEED As Single = 1
 
-Private colorZona() As Long
-
 '*************
 '<<<<< API >>>>>>
 '****
@@ -1125,30 +1123,4 @@ Function NextOpenChar() As Integer
     NextOpenChar = LoopC
 
 End Function
-
-Public Sub coloresZona()
-
-    Dim i As Long
-
-    If CantZonas = 0 Then Exit Sub
-    
-    i = CantZonas
-    
-    ReDim colorZona(CantZonas)
-
-    ' Asigna colores aleatorios a cada número en el array MapData(X, Y).ZonaIndex
-    For i = 1 To CantZonas
-        ' Genera valores aleatorios para Red, Green y Blue
-        Dim RedValue As Integer
-        Dim GreenValue As Integer
-        Dim BlueValue As Integer
-    
-        RedValue = Int(Rnd * 256) ' Valor aleatorio entre 0 y 255
-        GreenValue = Int(Rnd * 256)
-        BlueValue = Int(Rnd * 256)
-    
-        colorZona(i) = D3DColorARGB(255, RedValue, GreenValue, BlueValue)
-    Next i
-    
-End Sub
 

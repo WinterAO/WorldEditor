@@ -262,5 +262,4 @@ Private Sub LvBZona_MouseDown(Index As Integer, Button As Integer, Shift As Inte
             
     End Select
     
-    Call coloresZona
 End Sub

@@ -3,6 +3,8 @@ Option Explicit
 
 Public TipoMapaActual As Byte 'Indica que tipo de mapa se abrio actualmente
 
+Public colorZona() As Long
+
 '/////////////////////////////////////////////////////////////////////
 'Lectura, guardado y otras features del formato de mapas Argentum y
 'otras funciones relacionadas con mapas en general
@@ -340,6 +342,10 @@ Public Sub NuevaZona(ByVal id As Integer)
     Call ResetearZona(id)
     
     frmZonas.LstZona.AddItem (CantZonas & "- " & MapZonas(CantZonas).name)
+    
+    ReDim Preserve colorZona(CantZonas) As Long
+    
+    colorZona(CantZonas) = D3DColorARGB(255, Int(Rnd * 256), Int(Rnd * 256), Int(Rnd * 256))
 
 End Sub
 
@@ -396,6 +402,7 @@ Public Sub EliminarZona()
     CantZonas = CantZonas - 1
     
     ReDim Preserve MapZonas(CantZonas) As tMapInfo
+    ReDim Preserve colorZona(CantZonas) As Long
     
 End Sub
 
@@ -458,6 +465,32 @@ Public Sub MapZona_Actualizar(ByVal id As Integer)
         .LuzMapa.Text = tR & "-" & tG & "-" & tB
 
     End With
+    
+End Sub
+
+Public Sub coloresZona()
+
+    Dim i As Long
+
+    If CantZonas = 0 Then Exit Sub
+    
+    i = CantZonas
+    
+    ReDim colorZona(CantZonas)
+
+    ' Asigna colores aleatorios a cada número en el array MapData(X, Y).ZonaIndex
+    For i = 1 To CantZonas
+        ' Genera valores aleatorios para Red, Green y Blue
+        Dim RedValue As Integer
+        Dim GreenValue As Integer
+        Dim BlueValue As Integer
+    
+        RedValue = Int(Rnd * 256) ' Valor aleatorio entre 0 y 255
+        GreenValue = Int(Rnd * 256)
+        BlueValue = Int(Rnd * 256)
+    
+        colorZona(i) = D3DColorARGB(255, RedValue, GreenValue, BlueValue)
+    Next i
     
 End Sub
 
