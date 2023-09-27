@@ -808,8 +808,10 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     If MapData(X, Y).ZonaIndex = frmZonas.LstZona.ListIndex + 1 And MapData(X, Y).ZonaIndex > 0 Then Call DrawText(PixelOffsetXTemp + 7, PixelOffsetYTemp + 7, "z" & MapData(X, Y).ZonaIndex, -1, False, 1)
                             
                 ElseIf frmMain.mnuVerZonas(1).Checked Then 'Todas las zonas
-
-                    If MapData(X, Y).ZonaIndex > 0 Then Call DrawText(PixelOffsetXTemp + 7, PixelOffsetYTemp + 7, "z" & MapData(X, Y).ZonaIndex, -1, False, 1)
+                    
+                    If MapData(X, Y).ZonaIndex > 0 Then
+                        Call DrawText(PixelOffsetXTemp + 7, PixelOffsetYTemp + 7, "z" & MapData(X, Y).ZonaIndex, colorZona(MapData(X, Y).ZonaIndex), False, 1)
+                    End If
 
                 End If
 
@@ -1121,3 +1123,4 @@ Function NextOpenChar() As Integer
     NextOpenChar = LoopC
 
 End Function
+

@@ -60,13 +60,12 @@ Begin VB.Form frmMapaSize
          Width           =   765
          _extentx        =   3254
          _extenty        =   714
-         caption         =   ""
          capalign        =   2
          backstyle       =   2
          cgradient       =   0
          font            =   "frmMapaSize.frx":49D2
          mode            =   0
-         value           =   0
+         value           =   0   'False
          cback           =   -2147483633
       End
       Begin VB.PictureBox Picture1 
@@ -92,7 +91,7 @@ Begin VB.Form frmMapaSize
          cgradient       =   0
          font            =   "frmMapaSize.frx":49FA
          mode            =   0
-         value           =   0
+         value           =   0   'False
          cback           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H mapResize 
@@ -109,7 +108,7 @@ Begin VB.Form frmMapaSize
          cgradient       =   0
          font            =   "frmMapaSize.frx":4A22
          mode            =   0
-         value           =   0
+         value           =   0   'False
          cback           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H mapResize 
@@ -126,7 +125,7 @@ Begin VB.Form frmMapaSize
          cgradient       =   0
          font            =   "frmMapaSize.frx":4A4A
          mode            =   0
-         value           =   0
+         value           =   0   'False
          cback           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H mapResize 
@@ -143,7 +142,7 @@ Begin VB.Form frmMapaSize
          cgradient       =   0
          font            =   "frmMapaSize.frx":4A72
          mode            =   0
-         value           =   0
+         value           =   0   'False
          cback           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H mapResize 
@@ -160,7 +159,7 @@ Begin VB.Form frmMapaSize
          cgradient       =   0
          font            =   "frmMapaSize.frx":4A9A
          mode            =   0
-         value           =   0
+         value           =   0   'False
          cback           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H mapResize 
@@ -177,7 +176,7 @@ Begin VB.Form frmMapaSize
          cgradient       =   0
          font            =   "frmMapaSize.frx":4AC2
          mode            =   0
-         value           =   0
+         value           =   0   'False
          cback           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H mapResize 
@@ -194,7 +193,7 @@ Begin VB.Form frmMapaSize
          cgradient       =   0
          font            =   "frmMapaSize.frx":4AEA
          mode            =   0
-         value           =   0
+         value           =   0   'False
          cback           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H mapResize 
@@ -211,7 +210,7 @@ Begin VB.Form frmMapaSize
          cgradient       =   0
          font            =   "frmMapaSize.frx":4B12
          mode            =   0
-         value           =   0
+         value           =   0   'False
          cback           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBAplicar 
@@ -327,9 +326,11 @@ Private Sub Form_Load()
         ClientSetup.MeMode = eMeMode.WinterUltimate Then
         ' solo 100x100
         lblMsg.Caption = frmModo.OptModo(ClientSetup.MeMode).Caption & " solo permite 100x100."
+        
     ElseIf ClientSetup.MeMode = eMeMode.WinterAO Then
         ' solo 1000x1000
         lblMsg.Caption = frmModo.OptModo(ClientSetup.MeMode).Caption & " solo permite 1000x1000."
+        
     ElseIf ClientSetup.MeMode = eMeMode.ArgentumUnited Then
         lblMsg.Caption = frmModo.OptModo(ClientSetup.MeMode).Caption & " permite tamaño adaptado."
         frameAdapted.Visible = True

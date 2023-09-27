@@ -66,7 +66,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":49D2
+         Image           =   "frmMain.frx":10CA
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBEdit 
@@ -92,7 +92,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":5624
+         Image           =   "frmMain.frx":1D1C
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBEdit 
@@ -118,7 +118,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":6276
+         Image           =   "frmMain.frx":296E
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBEdit 
@@ -144,7 +144,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":6EC8
+         Image           =   "frmMain.frx":35C0
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBEdit 
@@ -170,7 +170,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":7B1A
+         Image           =   "frmMain.frx":4212
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBEdit 
@@ -196,7 +196,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":876C
+         Image           =   "frmMain.frx":4E64
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBEdit 
@@ -222,7 +222,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":93BE
+         Image           =   "frmMain.frx":5AB6
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBEdit 
@@ -248,7 +248,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":A010
+         Image           =   "frmMain.frx":6708
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBEdit 
@@ -274,7 +274,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":A692
+         Image           =   "frmMain.frx":6D8A
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBEdit 
@@ -300,7 +300,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":AB34
+         Image           =   "frmMain.frx":722C
          cBack           =   -2147483633
       End
    End
@@ -345,7 +345,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":AE0C
+         Image           =   "frmMain.frx":7504
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
@@ -371,7 +371,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":BA5E
+         Image           =   "frmMain.frx":8156
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
@@ -397,7 +397,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":C6B0
+         Image           =   "frmMain.frx":8DA8
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
@@ -423,7 +423,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":D302
+         Image           =   "frmMain.frx":99FA
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
@@ -449,7 +449,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":DF54
+         Image           =   "frmMain.frx":A64C
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
@@ -631,7 +631,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":E5D6
+         Image           =   "frmMain.frx":ACCE
          cBack           =   -2147483633
       End
    End
@@ -1221,22 +1221,28 @@ Begin VB.Form frmMain
       End
    End
    Begin VB.Menu mnuZonas 
-      Caption         =   "Ver Zonas"
+      Caption         =   "Zonas"
+      Begin VB.Menu mnuEliminarZona 
+         Caption         =   "Eliminar una zona del mapa"
+      End
       Begin VB.Menu mnuLineZonas1 
          Caption         =   "-"
       End
-      Begin VB.Menu mnuVerZonas 
-         Caption         =   "Zona Actual"
-         Checked         =   -1  'True
-         Index           =   0
-      End
-      Begin VB.Menu mnuVerZonas 
-         Caption         =   "Todas las Zonas"
-         Index           =   1
-      End
-      Begin VB.Menu mnuVerZonas 
-         Caption         =   "Ocultar Zonas"
-         Index           =   2
+      Begin VB.Menu mnuvZonas 
+         Caption         =   "Ver Zonas"
+         Begin VB.Menu mnuverZonas 
+            Caption         =   "Zona Actual"
+            Checked         =   -1  'True
+            Index           =   0
+         End
+         Begin VB.Menu mnuverZonas 
+            Caption         =   "Todas las Zonas"
+            Index           =   1
+         End
+         Begin VB.Menu mnuverZonas 
+            Caption         =   "Ocultar Zonas"
+            Index           =   2
+         End
       End
    End
    Begin VB.Menu mnuFunciones 
@@ -1595,6 +1601,23 @@ Private Sub mnuDesbloquearBordes_Click()
 'Last modified: 20/05/2022
 '*************************************************
 Call modEdicion.Desbloquear_Bordes
+End Sub
+
+Private Sub mnuEliminarZona_Click()
+    Dim zonaDel As Integer
+    Dim x, y As Integer
+    zonaDel = InputBox("Por favor, ingrese el número de la zona a borrar:")
+    
+    For x = XMinMapSize To XMaxMapSize
+    
+        For y = YMinMapSize To YMaxMapSize
+        
+            If MapData(x, y).ZonaIndex = zonaDel Then _
+                MapData(x, y).ZonaIndex = 0
+        
+        Next y
+        
+    Next x
 End Sub
 
 Private Sub mnuFormatos_Click()
@@ -2060,26 +2083,26 @@ End Sub
 
 Private Sub MainViewPic_MouseMove(Button As Integer, _
                                   Shift As Integer, _
-                                  X As Single, _
+                                  x As Single, _
                                   y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 27/04/2021
 '*************************************************
 
-    Call Form_MouseMove(Button, Shift, X, y)
+    Call Form_MouseMove(Button, Shift, x, y)
 End Sub
 
 Private Sub MainViewPic_MouseDown(Button As Integer, _
                                 Shift As Integer, _
-                                X As Single, _
+                                x As Single, _
                                 y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 27/04/2021
 '*************************************************
 
-    Call Form_MouseDown(Button, Shift, X, y)
+    Call Form_MouseDown(Button, Shift, x, y)
 End Sub
 
 Private Sub MainViewPic_DblClick()
@@ -2236,7 +2259,7 @@ Private Sub Form_DblClick()
     End If
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 26/04/2021
@@ -2247,7 +2270,7 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y A
     
     If Not MapaCargado Then Exit Sub
     
-    Call ConvertCPtoTP(X, y, tX, tY)
+    Call ConvertCPtoTP(x, y, tX, tY)
     
     If EstadoSelect > 0 And Button = 2 Then
         EstadoSelect = 0
@@ -2269,7 +2292,7 @@ Debug.Print Button
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 26/04/2021
@@ -2281,7 +2304,7 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y A
     If Not MapaCargado Then Exit Sub
     HotKeysAllow = True
 
-    Call ConvertCPtoTP(X, y, tX, tY)
+    Call ConvertCPtoTP(x, y, tX, tY)
     
     MousePos = "X: " & tX & " - Y: " & tY
     
@@ -2313,42 +2336,42 @@ Private Sub mnuVerZonas_Click(Index As Integer)
 'Last modified: 01/04/2021
 '*************************************************
 
-    mnuVerZonas(Index).Checked = True
+    mnuverZonas(Index).Checked = True
 
     Select Case Index
     
         Case 0
-            mnuVerZonas(1).Checked = False
-            mnuVerZonas(2).Checked = False
+            mnuverZonas(1).Checked = False
+            mnuverZonas(2).Checked = False
         
         Case 1
-            mnuVerZonas(0).Checked = False
-            mnuVerZonas(2).Checked = False
+            mnuverZonas(0).Checked = False
+            mnuverZonas(2).Checked = False
         
         Case 2
-            mnuVerZonas(0).Checked = False
-            mnuVerZonas(1).Checked = False
+            mnuverZonas(0).Checked = False
+            mnuverZonas(1).Checked = False
     
     End Select
 
 End Sub
 
 Private Sub mnuzonanula_Click()
-    Dim X As Integer
+    Dim x As Integer
     Dim y As Integer
     
-    For X = XMinMapSize To XMaxMapSize
+    For x = XMinMapSize To XMaxMapSize
     
         For y = YMinMapSize To YMaxMapSize
         
-            If MapData(X, y).ZonaIndex = 0 Then
-                MsgBox "Se ha encontrado una zona nula en la posicion X: " & X & " Y: " & y
+            If MapData(x, y).ZonaIndex = 0 Then
+                MsgBox "Se ha encontrado una zona nula en la posicion X: " & x & " Y: " & y
                 Exit Sub
             End If
         
         Next y
     
-    Next X
+    Next x
     
 End Sub
 
