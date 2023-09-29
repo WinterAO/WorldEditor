@@ -1,0 +1,18 @@
+# Client Files.
+Errores.log
+Codigo/*.log
+Conversor/
+*.vbw
+*.oca
+*.csi
+*.lvw
+*.OBJ
+WorldEditor.exe
+
+# System Files.
+.DS_Store
+Thumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+*.stackdump
