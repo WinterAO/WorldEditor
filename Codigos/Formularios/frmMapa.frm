@@ -1,11 +1,11 @@
 VERSION 5.00
 Begin VB.Form frmMapa 
    BorderStyle     =   4  'Fixed ToolWindow
-   Caption         =   "Mapa - Click Izq. Renderiza / Click Der. Guarda render"
+   Caption         =   "Mapa - [Click Izq. + Shift = Renderiza / Click Der. = Guarda render]"
    ClientHeight    =   14985
    ClientLeft      =   45
    ClientTop       =   390
-   ClientWidth     =   15000
+   ClientWidth     =   15090
    ClipControls    =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
@@ -21,7 +21,7 @@ Begin VB.Form frmMapa
    MinButton       =   0   'False
    ScaleHeight     =   999
    ScaleMode       =   0  'User
-   ScaleWidth      =   993.049
+   ScaleWidth      =   999.007
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows Default
    Begin VB.PictureBox picMapa 
@@ -33,13 +33,13 @@ Begin VB.Form frmMapa
       ForeColor       =   &H8000000B&
       Height          =   15000
       Left            =   0
-      ScaleHeight     =   909.091
-      ScaleMode       =   0  'User
-      ScaleWidth      =   1000
+      ScaleHeight     =   1000
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   1007
       TabIndex        =   0
       TabStop         =   0   'False
       Top             =   0
-      Width           =   15000
+      Width           =   15105
       Begin VB.Shape ApuntadorRadar 
          BackColor       =   &H00FFFFFF&
          BorderColor     =   &H00FFFFFF&
@@ -47,7 +47,7 @@ Begin VB.Form frmMapa
          DrawMode        =   6  'Mask Pen Not
          FillColor       =   &H00FFFFFF&
          Height          =   330
-         Left            =   7350
+         Left            =   7500
          Top             =   7500
          Width           =   375
       End
@@ -63,7 +63,7 @@ Option Explicit
 Private Declare Function BitBlt Lib "gdi32" ( _
         ByVal hDestDC As Long, _
         ByVal X As Long, _
-        ByVal y As Long, _
+        ByVal Y As Long, _
         ByVal nWidth As Long, _
         ByVal nHeight As Long, _
         ByVal hSrcDC As Long, _
@@ -132,10 +132,17 @@ Public Sub Capturar_Imagen(Control As Control, Destino As Object)
           
 End Sub
 
-Private Sub picMapa_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub picMapa_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
-    If Button = 1 Then
+    If Button = 1 And Shift = vbShiftMask Then
         Call DibujarMinimapa
+        
+    ElseIf Button = 1 Then
+    
+        UserPos.X = X
+        UserPos.Y = Y
+        ApuntadorRadar.Left = X
+        ApuntadorRadar.Top = Y
     
     ElseIf Button = 2 Then
         Call AddtoRichTextBox(frmConsola.StatTxt, "Guardando Minimapa...", 255, 255, 255)
