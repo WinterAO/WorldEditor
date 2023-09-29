@@ -184,6 +184,7 @@ Public Function guardarPerfilMinimap() As Boolean
     Call Lector.ChangeValue("MINIMAPA", "Particulas", IIf(frmMain.Minimap(7).Checked, "1", "0"))
     Call Lector.ChangeValue("MINIMAPA", "Nombre", IIf(frmMain.Minimap(8).Checked, "1", "0"))
     Call Lector.ChangeValue("MINIMAPA", "Cuadrantes", IIf(frmMain.Minimap(9).Checked, "1", "0"))
+    Call Lector.ChangeValue("MINIMAPA", "Zonas", IIf(frmMain.Minimap(10).Checked, "1", "0"))
     
     Call Lector.DumpFile(profileFile(ProfileTag))
     
@@ -317,6 +318,7 @@ On Local Error GoTo fileErr:
         frmMain.Minimap(7).Checked = Val(Profile.GetValue("MINIMAPA", "Particulas"))
         frmMain.Minimap(8).Checked = Val(Profile.GetValue("MINIMAPA", "Nombre"))
         frmMain.Minimap(9).Checked = Val(Profile.GetValue("MINIMAPA", "Cuadrantes"))
+        frmMain.Minimap(10).Checked = Val(Profile.GetValue("MINIMAPA", "Zonas"))
         
         MMiniMap_capa1 = frmMain.Minimap(0).Checked
         MMiniMap_capa2 = frmMain.Minimap(1).Checked

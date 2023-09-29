@@ -1137,6 +1137,10 @@ Begin VB.Form frmMain
          Caption         =   "Cuadrantes"
          Index           =   9
       End
+      Begin VB.Menu Minimap 
+         Caption         =   "Zonas"
+         Index           =   10
+      End
       Begin VB.Menu Dibujarmini 
          Caption         =   "Dibujar"
       End
@@ -1534,6 +1538,9 @@ Private Sub Minimap_Click(Index As Integer)
         
         Case 9 'Cuadrantes
             MMiniMap_cuadrantes = Not MMiniMap_cuadrantes
+            
+        Case 10 'Zonas
+            MMiniMap_Zonas = Not MMiniMap_Zonas
             
     End Select
     
