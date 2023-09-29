@@ -1056,7 +1056,7 @@ Begin VB.Form frmMain
       End
    End
    Begin VB.Menu mnuVentanas 
-      Caption         =   "Ventanas"
+      Caption         =   "Herramientas"
       Begin VB.Menu VentMenu 
          Caption         =   "-"
       End
@@ -1088,41 +1088,54 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuRellenar 
          Caption         =   "Rellenar en area"
       End
+      Begin VB.Menu mnuMapSize 
+         Caption         =   "[Mapa ? x ?]"
+      End
    End
    Begin VB.Menu mnuMinimapa 
       Caption         =   "Minimapa"
       Begin VB.Menu MinimapMenu 
          Caption         =   "-"
       End
-      Begin VB.Menu Minimap_capa1 
+      Begin VB.Menu Minimap 
          Caption         =   "Capa 1"
+         Index           =   0
       End
-      Begin VB.Menu Minimap_capa2 
+      Begin VB.Menu Minimap 
          Caption         =   "Capa 2"
+         Index           =   1
       End
-      Begin VB.Menu Minimap_capa3 
+      Begin VB.Menu Minimap 
          Caption         =   "Capa 3"
+         Index           =   2
       End
-      Begin VB.Menu Minimap_capa4 
+      Begin VB.Menu Minimap 
          Caption         =   "Capa 4"
+         Index           =   3
       End
-      Begin VB.Menu Minimap_npcs 
+      Begin VB.Menu Minimap 
          Caption         =   "NPC's"
+         Index           =   4
       End
-      Begin VB.Menu Minimap_objetos 
+      Begin VB.Menu Minimap 
          Caption         =   "Objetos"
+         Index           =   5
       End
-      Begin VB.Menu Minimap_bloqueos 
+      Begin VB.Menu Minimap 
          Caption         =   "Bloqueos"
+         Index           =   6
       End
-      Begin VB.Menu Minimap_particulas 
+      Begin VB.Menu Minimap 
          Caption         =   "Particulas"
+         Index           =   7
       End
-      Begin VB.Menu Minimap_ndemapa 
+      Begin VB.Menu Minimap 
          Caption         =   "Nº de mapa"
+         Index           =   8
       End
-      Begin VB.Menu Minimap_cuadrantes 
+      Begin VB.Menu Minimap 
          Caption         =   "Cuadrantes"
+         Index           =   9
       End
       Begin VB.Menu Dibujarmini 
          Caption         =   "Dibujar"
@@ -1265,9 +1278,6 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuzonanula 
          Caption         =   "Buscar zonas nulas"
       End
-   End
-   Begin VB.Menu mnuMapSize 
-      Caption         =   "[Mapa ? x ?]"
    End
    Begin VB.Menu mnusobre 
       Caption         =   "Sobre..."
@@ -1485,23 +1495,57 @@ errhandler:
     
 End Sub
 
-Private Sub Minimap_cuadrantes_Click()
+Private Sub Minimap_Click(Index As Integer)
 '*************************************************
-'Author: ???
-'Last modified: ???
+'Author: Lorwik
+'Last modified: 29/09/2023
 '*************************************************
-    On Error GoTo Minimap_cuadrante_Click_Err
+
+    On Error GoTo Minimap_Err
     
-    Minimap_cuadrantes.Checked = (Minimap_cuadrantes.Checked = False)
-    MMiniMap_cuadrantes = Not MMiniMap_cuadrantes
+    Select Case Index
+    
+        Case 0 'Capa 1
+            MMiniMap_capa1 = Not MMiniMap_capa1
+            
+        Case 1 'Casa 2
+            MMiniMap_capa2 = Not MMiniMap_capa2
+            
+        Case 2 'Capa 3
+             MMiniMap_capa3 = Not MMiniMap_capa3
+        
+        Case 3 'Capa 4
+            MMiniMap_capa4 = Not MMiniMap_capa4
+            
+        Case 4 'NPC's
+            MMiniMap_Npcs = Not MMiniMap_Npcs
+            
+        Case 5 'Objetos
+            MMiniMap_objetos = Not MMiniMap_objetos
+            
+        Case 6 'Bloqueos
+            MMiniMap_Bloqueos = Not MMiniMap_Bloqueos
+        
+        Case 7 'Particulas
+            MMiniMap_particulas = Not MMiniMap_particulas
+            
+        Case 8 'Nº Mapa
+            MMiniMap_Nombre = Not MMiniMap_Nombre
+        
+        Case 9 'Cuadrantes
+            MMiniMap_cuadrantes = Not MMiniMap_cuadrantes
+            
+    End Select
+    
+    Minimap(Index).Checked = (Minimap(Index).Checked = False)
     Call DibujarMinimapa
+    Call guardarPerfilMinimap
     
     Exit Sub
-
-Minimap_cuadrante_Click_Err:
-    Call RegistrarError(Err.Number, Err.Description, "FrmMain.Minimap_cuadrante_Click", Erl)
-    Resume Next
     
+Minimap_Err:
+    Call RegistrarError(Err.Number, Err.Description, "FrmMain.Minimap_Click", Erl)
+    Resume Next
 End Sub
 
 Private Sub mnuAbrirMapa_Click()
@@ -1605,19 +1649,19 @@ End Sub
 
 Private Sub mnuEliminarZona_Click()
     Dim zonaDel As Integer
-    Dim x, y As Integer
+    Dim X, Y As Integer
     zonaDel = InputBox("Por favor, ingrese el número de la zona a borrar:")
     
-    For x = XMinMapSize To XMaxMapSize
+    For X = XMinMapSize To XMaxMapSize
     
-        For y = YMinMapSize To YMaxMapSize
+        For Y = YMinMapSize To YMaxMapSize
         
-            If MapData(x, y).ZonaIndex = zonaDel Then _
-                MapData(x, y).ZonaIndex = 0
+            If MapData(X, Y).ZonaIndex = zonaDel Then _
+                MapData(X, Y).ZonaIndex = 0
         
-        Next y
+        Next Y
         
-    Next x
+    Next X
 End Sub
 
 Private Sub mnuFormatos_Click()
@@ -1869,178 +1913,6 @@ Private Sub mnuVent_Click(Index As Integer)
 
 End Sub
 
-Private Sub MiniMap_Bloqueos_Click()
-'*************************************************
-'Author: ???
-'Last modified: ???
-'*************************************************
-    On Error GoTo MiniMap_Bloqueos_Click_Err
-    
-    Minimap_bloqueos.Checked = (Minimap_bloqueos.Checked = False)
-    MMiniMap_Bloqueos = Not MMiniMap_Bloqueos
-
-    Exit Sub
-
-MiniMap_Bloqueos_Click_Err:
-    Call RegistrarError(Err.Number, Err.Description, "FrmMain.MiniMap_Bloqueos_Click", Erl)
-    Resume Next
-    
-End Sub
-
-Private Sub MiniMap_capa1_Click()
-'*************************************************
-'Author: ???
-'Last modified: ???
-'*************************************************
-    On Error GoTo MiniMap_capa1_Click_Err
-    
-    Minimap_capa1.Checked = (Minimap_capa1.Checked = False)
-    MMiniMap_capa1 = Not MMiniMap_capa1
-    Call DibujarMinimapa
-    
-    Exit Sub
-
-MiniMap_capa1_Click_Err:
-    Call RegistrarError(Err.Number, Err.Description, "FrmMain.MiniMap_capa1_Click", Erl)
-    Resume Next
-    
-End Sub
-
-Private Sub MiniMap_capa2_Click()
-'*************************************************
-'Author: ???
-'Last modified: ???
-'*************************************************
-    On Error GoTo MiniMap_capa2_Click_Err
-    
-    Minimap_capa2.Checked = (Minimap_capa2.Checked = False)
-    MMiniMap_capa2 = Not MMiniMap_capa2
-    Call DibujarMinimapa
-
-    Exit Sub
-
-MiniMap_capa2_Click_Err:
-    Call RegistrarError(Err.Number, Err.Description, "FrmMain.MiniMap_capa2_Click", Erl)
-    Resume Next
-    
-End Sub
-
-Private Sub MiniMap_capa3_Click()
-'*************************************************
-'Author: ???
-'Last modified: ???
-'*************************************************
-    On Error GoTo MiniMap_capa3_Click_Err
-    
-    Minimap_capa3.Checked = (Minimap_capa3.Checked = False)
-    MMiniMap_capa3 = Not MMiniMap_capa3
-    Call DibujarMinimapa
-    
-    Exit Sub
-
-MiniMap_capa3_Click_Err:
-    Call RegistrarError(Err.Number, Err.Description, "FrmMain.MiniMap_capa3_Click", Erl)
-    Resume Next
-    
-End Sub
-
-Private Sub MiniMap_capa4_Click()
-'*************************************************
-'Author: ???
-'Last modified: ???
-'*************************************************
-    On Error GoTo MiniMap_capa4_Click_Err
-    
-    Minimap_capa4.Checked = (Minimap_capa4.Checked = False)
-    MMiniMap_capa4 = Not MMiniMap_capa4
-    Call DibujarMinimapa
-
-    Exit Sub
-
-MiniMap_capa4_Click_Err:
-    Call RegistrarError(Err.Number, Err.Description, "FrmMain.MiniMap_capa4_Click", Erl)
-    Resume Next
-    
-End Sub
-
-Private Sub MiniMap_ndemapa_Click()
-'*************************************************
-'Author: ???
-'Last modified: ???
-'*************************************************
-    On Error GoTo MiniMap_ndemapa_Click_Err
-    
-    Minimap_ndemapa.Checked = (Minimap_ndemapa.Checked = False)
-    MMiniMap_Nombre = Not MMiniMap_Nombre
-    Call DibujarMinimapa
-    
-    Exit Sub
-
-MiniMap_ndemapa_Click_Err:
-    Call RegistrarError(Err.Number, Err.Description, "FrmMain.MiniMap_ndemapa_Click", Erl)
-    Resume Next
-    
-End Sub
-
-Private Sub MiniMap_Npcs_Click()
-'*************************************************
-'Author: ???
-'Last modified: ???
-'*************************************************
-    On Error GoTo MiniMap_Npcs_Click_Err
-    
-    Minimap_npcs.Checked = (Minimap_npcs.Checked = False)
-    MMiniMap_Npcs = Not MMiniMap_Npcs
-    Call DibujarMinimapa
-    
-    Exit Sub
-
-MiniMap_Npcs_Click_Err:
-    Call RegistrarError(Err.Number, Err.Description, "FrmMain.MiniMap_Npcs_Click", Erl)
-    Resume Next
-    
-End Sub
-
-Private Sub MiniMap_objetos_Click()
-'*************************************************
-'Author: ???
-'Last modified: ???
-'*************************************************
-    On Error GoTo MiniMap_objetos_Click_Err
-    
-    Minimap_objetos.Checked = (Minimap_objetos.Checked = False)
-    MMiniMap_objetos = Not MMiniMap_objetos
-    Call DibujarMinimapa
-
-    
-    Exit Sub
-
-MiniMap_objetos_Click_Err:
-    Call RegistrarError(Err.Number, Err.Description, "FrmMain.MiniMap_objetos_Click", Erl)
-    Resume Next
-    
-End Sub
-
-Private Sub MiniMap_particulas_Click()
-'*************************************************
-'Author: ???
-'Last modified: ???
-'*************************************************
-    On Error GoTo MiniMap_particulas_Click_Err
-    
-    Minimap_particulas.Checked = (Minimap_particulas.Checked = False)
-    MMiniMap_particulas = Not MMiniMap_particulas
-    Call DibujarMinimapa
-
-    
-    Exit Sub
-
-MiniMap_particulas_Click_Err:
-    Call RegistrarError(Err.Number, Err.Description, "FrmMain.MiniMap_particulas_Click", Erl)
-    Resume Next
-    
-End Sub
-
 Private Sub Dibujarmini_Click()
 '*************************************************
 'Author: Lorwik
@@ -2083,26 +1955,26 @@ End Sub
 
 Private Sub MainViewPic_MouseMove(Button As Integer, _
                                   Shift As Integer, _
-                                  x As Single, _
-                                  y As Single)
+                                  X As Single, _
+                                  Y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 27/04/2021
 '*************************************************
 
-    Call Form_MouseMove(Button, Shift, x, y)
+    Call Form_MouseMove(Button, Shift, X, Y)
 End Sub
 
 Private Sub MainViewPic_MouseDown(Button As Integer, _
                                 Shift As Integer, _
-                                x As Single, _
-                                y As Single)
+                                X As Single, _
+                                Y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 27/04/2021
 '*************************************************
 
-    Call Form_MouseDown(Button, Shift, x, y)
+    Call Form_MouseDown(Button, Shift, X, Y)
 End Sub
 
 Private Sub MainViewPic_DblClick()
@@ -2259,7 +2131,7 @@ Private Sub Form_DblClick()
     End If
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 26/04/2021
@@ -2270,7 +2142,7 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y A
     
     If Not MapaCargado Then Exit Sub
     
-    Call ConvertCPtoTP(x, y, tX, tY)
+    Call ConvertCPtoTP(X, Y, tX, tY)
     
     If EstadoSelect > 0 And Button = 2 Then
         EstadoSelect = 0
@@ -2292,7 +2164,7 @@ Debug.Print Button
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: Lorwik
 'Last modified: 26/04/2021
@@ -2304,7 +2176,7 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y A
     If Not MapaCargado Then Exit Sub
     HotKeysAllow = True
 
-    Call ConvertCPtoTP(x, y, tX, tY)
+    Call ConvertCPtoTP(X, Y, tX, tY)
     
     MousePos = "X: " & tX & " - Y: " & tY
     
@@ -2357,21 +2229,21 @@ Private Sub mnuVerZonas_Click(Index As Integer)
 End Sub
 
 Private Sub mnuzonanula_Click()
-    Dim x As Integer
-    Dim y As Integer
+    Dim X As Integer
+    Dim Y As Integer
     
-    For x = XMinMapSize To XMaxMapSize
+    For X = XMinMapSize To XMaxMapSize
     
-        For y = YMinMapSize To YMaxMapSize
+        For Y = YMinMapSize To YMaxMapSize
         
-            If MapData(x, y).ZonaIndex = 0 Then
-                MsgBox "Se ha encontrado una zona nula en la posicion X: " & x & " Y: " & y
+            If MapData(X, Y).ZonaIndex = 0 Then
+                MsgBox "Se ha encontrado una zona nula en la posicion X: " & X & " Y: " & Y
                 Exit Sub
             End If
         
-        Next y
+        Next Y
     
-    Next x
+    Next X
     
 End Sub
 

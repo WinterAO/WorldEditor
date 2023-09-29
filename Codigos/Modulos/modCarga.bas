@@ -73,6 +73,8 @@ Public NumObjs     As Integer
 'Constantes
 Public Const INITDIR As String = "Init\"
 
+Private Lector As clsIniManager
+
 Public Function profilesFile() As String
     profilesFile = IniPath & INITDIR & "profiles.ini"
 End Function
@@ -124,23 +126,74 @@ End Sub
 
 Public Function guardarPerfil() As Boolean
 
+    On Local Error GoTo fileErr:
+    
     If Not FileExist(profileFile(ProfileTag), vbArchive) Then
         Exit Function
     End If
     
-    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa1", IIf(VerCapa1, "1", "0"))
-    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa2", IIf(VerCapa2, "1", "0"))
-    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa3", IIf(VerCapa3, "1", "0"))
-    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa4", IIf(VerCapa4, "1", "0"))
+    Set Lector = New clsIniManager
+    Call Lector.Initialize(profileFile(ProfileTag))
     
-    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Translados", IIf(VerTranslados, "1", "0"))
-    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Objetos", IIf(VerObjetos, "1", "0"))
-    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "NPCs", IIf(VerNpcs, "1", "0"))
-    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Triggers", IIf(VerTriggers, "1", "0"))
-    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Grilla", IIf(VerGrilla, "1", "0"))
-    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Particulas", IIf(VerParticulas, "1", "0"))
-    Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Bloqueos", IIf(VerBlockeados, "1", "0"))
+    Call Lector.ChangeValue("MOSTRAR", "Capa1", IIf(VerCapa1, "1", "0"))
+    Call Lector.ChangeValue("MOSTRAR", "Capa2", IIf(VerCapa2, "1", "0"))
+    Call Lector.ChangeValue("MOSTRAR", "Capa3", IIf(VerCapa3, "1", "0"))
+    Call Lector.ChangeValue("MOSTRAR", "Capa4", IIf(VerCapa4, "1", "0"))
     
+    Call Lector.ChangeValue("MOSTRAR", "Translados", IIf(VerTranslados, "1", "0"))
+    Call Lector.ChangeValue("MOSTRAR", "Objetos", IIf(VerObjetos, "1", "0"))
+    Call Lector.ChangeValue("MOSTRAR", "NPCs", IIf(VerNpcs, "1", "0"))
+    Call Lector.ChangeValue("MOSTRAR", "Triggers", IIf(VerTriggers, "1", "0"))
+    Call Lector.ChangeValue("MOSTRAR", "Grilla", IIf(VerGrilla, "1", "0"))
+    Call Lector.ChangeValue("MOSTRAR", "Particulas", IIf(VerParticulas, "1", "0"))
+    Call Lector.ChangeValue("MOSTRAR", "Bloqueos", IIf(VerBlockeados, "1", "0"))
+    
+    Call Lector.DumpFile(profileFile(ProfileTag))
+    
+    Exit Function
+    
+fileErr:
+
+    If Err.Number <> 0 Then
+        MsgBox ("Ha ocurrido un error al guardar la configuracion del editor. Error " & Err.Number & " : " & Err.Description)
+    End If
+End Function
+
+Public Function guardarPerfilMinimap() As Boolean
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 29/09/2023
+    '*************************************************
+    
+    On Local Error GoTo fileErr:
+    
+    If Not FileExist(profileFile(ProfileTag), vbArchive) Then
+        Exit Function
+    End If
+    
+    Set Lector = New clsIniManager
+    Call Lector.Initialize(profileFile(ProfileTag))
+    
+    Call Lector.ChangeValue("MINIMAPA", "Capa1", IIf(frmMain.Minimap(0).Checked, "1", "0"))
+    Call Lector.ChangeValue("MINIMAPA", "Capa2", IIf(frmMain.Minimap(1).Checked, "1", "0"))
+    Call Lector.ChangeValue("MINIMAPA", "Capa3", IIf(frmMain.Minimap(2).Checked, "1", "0"))
+    Call Lector.ChangeValue("MINIMAPA", "Capa4", IIf(frmMain.Minimap(3).Checked, "1", "0"))
+    Call Lector.ChangeValue("MINIMAPA", "NPC", IIf(frmMain.Minimap(4).Checked, "1", "0"))
+    Call Lector.ChangeValue("MINIMAPA", "Obj", IIf(frmMain.Minimap(5).Checked, "1", "0"))
+    Call Lector.ChangeValue("MINIMAPA", "Bloqueos", IIf(frmMain.Minimap(6).Checked, "1", "0"))
+    Call Lector.ChangeValue("MINIMAPA", "Particulas", IIf(frmMain.Minimap(7).Checked, "1", "0"))
+    Call Lector.ChangeValue("MINIMAPA", "Nombre", IIf(frmMain.Minimap(8).Checked, "1", "0"))
+    Call Lector.ChangeValue("MINIMAPA", "Cuadrantes", IIf(frmMain.Minimap(9).Checked, "1", "0"))
+    
+    Call Lector.DumpFile(profileFile(ProfileTag))
+    
+    Exit Function
+    
+fileErr:
+
+    If Err.Number <> 0 Then
+        MsgBox ("Ha ocurrido un error al guardar la configuracion del editor. Error " & Err.Number & " : " & Err.Description)
+    End If
 End Function
 
 Public Function leerPerfil() As Boolean
@@ -254,25 +307,26 @@ On Local Error GoTo fileErr:
         VerParticulas = Val(Profile.GetValue("MOSTRAR", "Particulas"))
         VerBlockeados = Val(Profile.GetValue("MOSTRAR", "Bloqueos"))
         
-        frmMain.Minimap_capa1.Checked = Val(Profile.GetValue("MINIMAP", "Capa1"))
-        frmMain.Minimap_capa2.Checked = Val(Profile.GetValue("MINIMAP", "Capa2"))
-        frmMain.Minimap_capa3.Checked = Val(Profile.GetValue("MINIMAP", "Capa3"))
-        frmMain.Minimap_capa4.Checked = Val(Profile.GetValue("MINIMAP", "Capa4"))
-        frmMain.Minimap_objetos.Checked = Val(Profile.GetValue("MINIMAP", "Obj"))
-        frmMain.Minimap_npcs.Checked = Val(Profile.GetValue("MINIMAP", "NPC"))
-        frmMain.Minimap_particulas.Checked = Val(Profile.GetValue("MINIMAP", "Particulas"))
-        frmMain.Minimap_ndemapa.Checked = Val(Profile.GetValue("MINIMAP", "Nombre"))
-        frmMain.Minimap_bloqueos.Checked = Val(Profile.GetValue("MINIMAP", "Bloqueos"))
+        frmMain.Minimap(0).Checked = Val(Profile.GetValue("MINIMAPA", "Capa1"))
+        frmMain.Minimap(1).Checked = Val(Profile.GetValue("MINIMAPA", "Capa2"))
+        frmMain.Minimap(2).Checked = Val(Profile.GetValue("MINIMAPA", "Capa3"))
+        frmMain.Minimap(3).Checked = Val(Profile.GetValue("MINIMAPA", "Capa4"))
+        frmMain.Minimap(4).Checked = Val(Profile.GetValue("MINIMAPA", "NPC"))
+        frmMain.Minimap(5).Checked = Val(Profile.GetValue("MINIMAPA", "Obj"))
+        frmMain.Minimap(6).Checked = Val(Profile.GetValue("MINIMAPA", "Bloqueos"))
+        frmMain.Minimap(7).Checked = Val(Profile.GetValue("MINIMAPA", "Particulas"))
+        frmMain.Minimap(8).Checked = Val(Profile.GetValue("MINIMAPA", "Nombre"))
+        frmMain.Minimap(9).Checked = Val(Profile.GetValue("MINIMAPA", "Cuadrantes"))
         
-        MMiniMap_capa1 = frmMain.Minimap_capa1.Checked
-        MMiniMap_capa2 = frmMain.Minimap_capa2.Checked
-        MMiniMap_capa3 = frmMain.Minimap_capa3.Checked
-        MMiniMap_capa4 = frmMain.Minimap_capa4.Checked
-        MMiniMap_objetos = frmMain.Minimap_objetos.Checked
-        MMiniMap_Npcs = frmMain.Minimap_npcs.Checked
-        MMiniMap_particulas = frmMain.Minimap_particulas.Checked
-        MMiniMap_Nombre = frmMain.Minimap_ndemapa.Checked
-        MMiniMap_Bloqueos = frmMain.Minimap_bloqueos.Checked
+        MMiniMap_capa1 = frmMain.Minimap(0).Checked
+        MMiniMap_capa2 = frmMain.Minimap(1).Checked
+        MMiniMap_capa3 = frmMain.Minimap(2).Checked
+        MMiniMap_capa4 = frmMain.Minimap(3).Checked
+        MMiniMap_Npcs = frmMain.Minimap(4).Checked
+        MMiniMap_objetos = frmMain.Minimap(5).Checked
+        MMiniMap_particulas = frmMain.Minimap(6).Checked
+        MMiniMap_Bloqueos = frmMain.Minimap(7).Checked
+        MMiniMap_Nombre = frmMain.Minimap(8).Checked
         
         ' AUDIO
         .bMusic = CByte(Val(Profile.GetValue("AUDIO", "MUSICA")))
@@ -512,7 +566,7 @@ On Error GoTo errhandler:
                 Call InitGrh(BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0)
                 
                 BodyData(i).HeadOffset.X = MisCuerpos(i).HeadOffsetX
-                BodyData(i).HeadOffset.y = MisCuerpos(i).HeadOffsetY
+                BodyData(i).HeadOffset.Y = MisCuerpos(i).HeadOffsetY
             End If
         Next i
     
