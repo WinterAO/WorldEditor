@@ -3,7 +3,7 @@
 2=#P0#=mb	#P1#=CheckKeys	#P2#=WinterMapEditor/modGeneral/CheckKeys	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20230929171333	#P7#=0	#P8#=49	.
 3=#P0#=mb	#P1#=Form_KeyPress	#P2#=WinterMapEditor/frmMain/Form_KeyPress	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20230929171234	#P7#=0	#P8#=9	.
 4=#P0#=mb	#P1#=abrirOtroMapa_Click	#P2#=WinterMapEditor/frmMain/abrirOtroMapa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20230929171156	#P7#=0	#P8#=-1	.
-5=#P0#=mb	#P1#=Capturar_Imagen	#P2#=WinterMapEditor/frmMapa/Capturar_Imagen	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20230929170847	#P7#=0	#P8#=53	.
+5=#P0#=mb	#P1#=Capturar_Imagen	#P2#=WinterMapEditor/frmMapa/Capturar_Imagen	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20230929170847	#P7#=0	#P8#=19	.
 6=#P0#=mb	#P1#=DibujarMinimapa	#P2#=WinterMapEditor/modMinimapa/DibujarMinimapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20230929170626	#P7#=0	#P8#=105	.
 7=#P0#=mb	#P1#=guardarPerfilMinimap	#P2#=WinterMapEditor/modCarga/guardarPerfilMinimap	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20230929170543	#P7#=0	#P8#=21	.
 8=#P0#=mb	#P1#=leerPerfil	#P2#=WinterMapEditor/modCarga/leerPerfil	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20230929170538	#P7#=0	#P8#=26	.
@@ -11,8 +11,8 @@
 10=#P0#=mb	#P1#=RenderScreen	#P2#=WinterMapEditor/modTileEngine/RenderScreen	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20230929170210	#P7#=0	#P8#=282	.
 11=#P0#=mb	#P1#=guardarPerfil	#P2#=WinterMapEditor/modCarga/guardarPerfil	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20230929165642	#P7#=0	#P8#=11	.
 12=#P0#=mb	#P1#=profilesFile	#P2#=WinterMapEditor/modCarga/profilesFile	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20230929165507	#P7#=0	#P8#=-2	.
-13=#P0#=mb	#P1#=Dibujarmini_Click	#P2#=WinterMapEditor/frmMain/Dibujarmini_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20230929161913	#P7#=0	#P8#=6	.
-14=#P0#=mb	#P1#=mnuVent_Click	#P2#=WinterMapEditor/frmMain/mnuVent_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20230929161913	#P7#=0	#P8#=20	.
+13=#P0#=mb	#P1#=mnuVent_Click	#P2#=WinterMapEditor/frmMain/mnuVent_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20230929161913	#P7#=0	#P8#=20	.
+14=#P0#=mb	#P1#=Dibujarmini_Click	#P2#=WinterMapEditor/frmMain/Dibujarmini_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20230929161913	#P7#=0	#P8#=6	.
 15=#P0#=mb	#P1#=MapPest_Click	#P2#=WinterMapEditor/frmMain/MapPest_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20230929161854	#P7#=0	#P8#=29	.
 16=#P0#=mb	#P1#=LvBOpcion_Click	#P2#=WinterMapEditor/frmMain/LvBOpcion_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20230929161023	#P7#=0	#P8#=24	.
 17=#P0#=mb	#P1#=Form_Load	#P2#=WinterMapEditor/frmCarga/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20230928175833	#P7#=0	#P8#=1	.
