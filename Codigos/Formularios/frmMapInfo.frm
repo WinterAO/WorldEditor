@@ -373,7 +373,7 @@ Begin VB.Form frmMapInfo
          Height          =   315
          ItemData        =   "frmMapInfo.frx":1CC1F
          Left            =   1680
-         List            =   "frmMapInfo.frx":1CC35
+         List            =   "frmMapInfo.frx":1CC38
          TabIndex        =   9
          Text            =   "txtMapRestringir"
          Top             =   2160
