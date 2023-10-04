@@ -3,10 +3,10 @@ Begin VB.Form frmMapInfo
    BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Información del Mapa / Zona"
-   ClientHeight    =   6570
+   ClientHeight    =   6510
    ClientLeft      =   45
    ClientTop       =   435
-   ClientWidth     =   4920
+   ClientWidth     =   4860
    ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
@@ -21,9 +21,9 @@ Begin VB.Form frmMapInfo
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   438
+   ScaleHeight     =   434
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   328
+   ScaleWidth      =   324
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Begin VB.Frame FraInformacion 
@@ -31,7 +31,7 @@ Begin VB.Form frmMapInfo
       Caption         =   "Informacion"
       ForeColor       =   &H00FFFFFF&
       Height          =   6345
-      Left            =   120
+      Left            =   90
       TabIndex        =   0
       Top             =   90
       Width           =   4695
@@ -754,10 +754,10 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub chkInvocarSin_LostFocus()
-'*************************************************
-'Author: Hardoz
-'Last modified: 28/08/2010
-'*************************************************
+    '*************************************************
+    'Author: Hardoz
+    'Last modified: 28/08/2010
+    '*************************************************
     MapInfo.InvocarSinEfecto = ChkMapNpc.value
     MapInfo.Changed = 1
  
@@ -767,16 +767,8 @@ Private Sub chkLuzClimatica_Click()
 
     If chkLuzClimatica.value = Unchecked Then
         PicColorMap.BackColor = 0
-        
-        If ClientSetup.MeMode = eMeMode.WinterAO Or _
-            ClientSetup.MeMode = eMeMode.ArgentumUnited Then
             
-            MapZonas(frmZonas.LstZona.ListIndex + 1).LuzBase = 0
-            
-        Else
-            MapInfo.LuzBase = 0
-            
-        End If
+        MapZonas(frmZonas.LstZona.ListIndex + 1).LuzBase = 0
         
         Call Actualizar_Estado
     End If
@@ -786,97 +778,98 @@ Private Sub chkLuzClimatica_Click()
 End Sub
 
 Private Sub chkMapBackup_LostFocus()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
     MapInfo.BackUp = chkMapBackup.value
     MapInfo.Changed = 1
 End Sub
 
 Private Sub chkMapMagiaSinEfecto_LostFocus()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
     MapInfo.MagiaSinEfecto = chkMapMagiaSinEfecto.value
     MapInfo.Changed = 1
     
 End Sub
 
 Private Sub chkMapInviSinEfecto_LostFocus()
-'*************************************************
-'Author:
-'Last modified:
-'*************************************************
+    '*************************************************
+    'Author:
+    'Last modified:
+    '*************************************************
     MapInfo.InviSinEfecto = chkMapInviSinEfecto.value
     MapInfo.Changed = 1
 
 End Sub
 
 Private Sub chkMapnpc_LostFocus()
-'*************************************************
-'Author: Hardoz
-'Last modified: 28/08/2010
-'*************************************************
+    '*************************************************
+    'Author: Hardoz
+    'Last modified: 28/08/2010
+    '*************************************************
     MapInfo.RoboNpcsPermitido = ChkMapNpc.value
     MapInfo.Changed = 1
  
 End Sub
 
 Private Sub chkMapResuSinEfecto_LostFocus()
-'*************************************************
-'Author:
-'Last modified:
-'*************************************************
+    '*************************************************
+    'Author:
+    'Last modified:
+    '*************************************************
     MapInfo.ResuSinEfecto = chkMapResuSinEfecto.value
     MapInfo.Changed = 1
 
 End Sub
 
 Private Sub chkMapPK_LostFocus()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
     MapInfo.PK = chkMapPK.value
     MapInfo.Changed = 1
     
 End Sub
 
 Private Sub chkOcultarSin_Click()
-'*************************************************
-'Author: Lorwik
-'Last modified: 26/04/2020
-'*************************************************
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 26/04/2020
+    '*************************************************
     MapInfo.OcultarSinEfecto = ChkMapNpc.value
     MapInfo.Changed = 1
     
 End Sub
 
 Private Sub cmdCerrar_Click()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
     Me.Hide
     
 End Sub
 
 Private Sub cmdMusica_Click()
-'*************************************************
-'Author: Lorwik
-'Last modified: 01/05/2021
-'*************************************************
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 01/05/2021
+    '*************************************************
     frmSound.Show , frmMain
     
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
+
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
     If UnloadMode = vbFormControlMenu Then
         Cancel = True
         Me.Hide
@@ -889,10 +882,7 @@ Private Sub LvBActualizarLuces_Click()
 End Sub
 
 Private Sub LvBGuardar_Click()
-    If ClientSetup.MeMode = eMeMode.WinterAO Or _
-        ClientSetup.MeMode = eMeMode.ArgentumUnited Then
-        Call guardarInfoZona(frmZonas.LstZona.ListIndex + 1)
-    End If
+    Call guardarInfoZona(frmZonas.LstZona.ListIndex + 1)
 End Sub
 
 Public Sub guardarInfoZona(ByVal id As Integer)
@@ -923,46 +913,47 @@ Public Sub guardarInfoZona(ByVal id As Integer)
 End Sub
 
 Private Sub PicColorMap_Click()
+
     If chkLuzClimatica.value = False Then Exit Sub
     
     frmColorPicker.Show
 End Sub
 
 Private Sub txtAmbient_Change()
-'*************************************************
-'Author: Lorwik
-'Last modified: 10/08/14
-'*************************************************
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 10/08/14
+    '*************************************************
     MapInfo.Ambient = TxtAmbient.Text
     MapInfo.Changed = 1
     
 End Sub
 
 Private Sub txtMapMusica_LostFocus()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
     MapInfo.Music = txtMapMusica.Text
     MapInfo.Changed = 1
     
 End Sub
 
 Private Sub txtMapVersion_LostFocus()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 29/05/06
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 29/05/06
+    '*************************************************
     MapInfo.MapVersion = txtMapVersion.Text
     MapInfo.Changed = 1
     
 End Sub
 
 Private Sub txtMapNombre_LostFocus()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
     MapInfo.name = txtMapNombre.Text
     MapInfo.Changed = 1
     Call AddtoRichTextBox(frmConsola.StatTxt, "Nombre de mapa cambiado a:  " & MapInfo.name, 255, 255, 255, False, True, True)
@@ -970,85 +961,76 @@ Private Sub txtMapNombre_LostFocus()
 End Sub
 
 Private Sub txtlvlminimo_LostFocus()
-'*************************************************
-'Author: Lorwik
-'Last modified: 13/09/11
-'*************************************************
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 13/09/11
+    '*************************************************
     MapInfo.lvlMinimo = TxtlvlMinimo.Text
     MapInfo.Changed = 1
     
 End Sub
 
 Private Sub txtMapRestringir_KeyPress(KeyAscii As Integer)
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
     KeyAscii = 0
     
 End Sub
 
 Private Sub txtMapRestringir_LostFocus()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
     MapInfo.Restringir = txtMapRestringir.Text
     MapInfo.Changed = 1
     
 End Sub
 
 Private Sub txtMapTerreno_KeyPress(KeyAscii As Integer)
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
     KeyAscii = 0
     
 End Sub
 
 Private Sub txtMapTerreno_LostFocus()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
     MapInfo.Terreno = txtMapTerreno.Text
     MapInfo.Changed = 1
     
 End Sub
 
 Private Sub txtMapZona_KeyPress(KeyAscii As Integer)
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
     KeyAscii = 0
     
 End Sub
 
 Private Sub txtMapZona_LostFocus()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
     MapInfo.Zona = txtMapZona.Text
     MapInfo.Changed = 1
     
 End Sub
 
 Public Sub CambiarColorMap()
-On Error GoTo PicColorMap_Err
+    On Error GoTo PicColorMap_Err
     
-    If ClientSetup.MeMode = eMeMode.WinterAO Or _
-        ClientSetup.MeMode = eMeMode.ArgentumUnited Then
-        
-        PicColorMap.BackColor = MapZonas(frmZonas.LstZona.ListIndex + 1).LuzBase
-        
-    Else
-    
-        PicColorMap.BackColor = MapInfo.LuzBase
-        
-    End If
+    PicColorMap.BackColor = MapZonas(frmZonas.LstZona.ListIndex + 1).LuzBase
     
     frmMapInfo.PicColorMap.BackColor = PicColorMap.BackColor
     

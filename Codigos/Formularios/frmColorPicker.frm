@@ -564,15 +564,8 @@ Function Shell(Program As String, _
 End Function
 
 Private Sub Command1_Click()
-    If ClientSetup.MeMode = eMeMode.WinterAO Or _
-        ClientSetup.MeMode = eMeMode.ArgentumUnited Then
         
-        MapZonas(frmZonas.LstZona.ListIndex + 1).LuzBase = RGB(Text1(3), Text1(4), Text1(5))
-        
-    Else
-        MapInfo.LuzBase = RGB(Text1(3), Text1(4), Text1(5))
-        
-    End If
+    MapZonas(frmZonas.LstZona.ListIndex + 1).LuzBase = RGB(Text1(3), Text1(4), Text1(5))
     
     frmMapInfo.LuzMapa.Text = frmColorPicker.Text1(3).Text & "-" & frmColorPicker.Text1(4).Text & "-" & frmColorPicker.Text1(5).Text
 

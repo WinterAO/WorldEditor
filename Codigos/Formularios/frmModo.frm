@@ -3,7 +3,7 @@ Begin VB.Form frmModo
    BackColor       =   &H00424242&
    BorderStyle     =   0  'None
    Caption         =   "Form1"
-   ClientHeight    =   4695
+   ClientHeight    =   3495
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   5355
@@ -19,7 +19,7 @@ Begin VB.Form frmModo
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   313
+   ScaleHeight     =   233
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   357
    StartUpPosition =   1  'CenterOwner
@@ -29,7 +29,7 @@ Begin VB.Form frmModo
       ForeColor       =   &H00FFFFFF&
       Height          =   795
       Left            =   120
-      TabIndex        =   9
+      TabIndex        =   4
       Top             =   540
       Width           =   5115
       Begin VB.ComboBox cmbPerfil 
@@ -38,7 +38,7 @@ Begin VB.Form frmModo
          Left            =   210
          List            =   "frmModo.frx":0002
          Style           =   2  'Dropdown List
-         TabIndex        =   10
+         TabIndex        =   5
          Top             =   300
          Width           =   2895
       End
@@ -46,7 +46,7 @@ Begin VB.Form frmModo
          Height          =   345
          Index           =   2
          Left            =   3270
-         TabIndex        =   11
+         TabIndex        =   6
          Top             =   300
          Width           =   1635
          _ExtentX        =   2884
@@ -75,8 +75,8 @@ Begin VB.Form frmModo
       ForeColor       =   &H00FFFFFF&
       Height          =   1335
       Left            =   120
-      TabIndex        =   3
-      Top             =   2640
+      TabIndex        =   0
+      Top             =   1440
       Width           =   5115
       Begin VB.CheckBox chkvSync 
          BackColor       =   &H00535353&
@@ -84,7 +84,7 @@ Begin VB.Form frmModo
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   240
-         TabIndex        =   6
+         TabIndex        =   3
          Top             =   930
          Width           =   3015
       End
@@ -94,7 +94,7 @@ Begin VB.Form frmModo
          Left            =   1920
          List            =   "frmModo.frx":0014
          Style           =   2  'Dropdown List
-         TabIndex        =   5
+         TabIndex        =   2
          Top             =   400
          Width           =   2895
       End
@@ -105,80 +105,17 @@ Begin VB.Form frmModo
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Left            =   240
-         TabIndex        =   4
+         TabIndex        =   1
          Top             =   480
          Width           =   1470
-      End
-   End
-   Begin VB.Frame FraModo 
-      BackColor       =   &H00535353&
-      Caption         =   "¿En que modo quieres iniciar el WorldEditor?"
-      ForeColor       =   &H00FFFFFF&
-      Height          =   1095
-      Left            =   120
-      TabIndex        =   0
-      Top             =   1440
-      Width           =   5115
-      Begin VB.OptionButton OptModo 
-         BackColor       =   &H00535353&
-         Caption         =   "Modo Argentum World"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   195
-         Index           =   3
-         Left            =   620
-         TabIndex        =   12
-         Top             =   630
-         Width           =   1965
-      End
-      Begin VB.OptionButton OptModo 
-         BackColor       =   &H00535353&
-         Caption         =   "Modo Winter Ultimate"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   195
-         Index           =   2
-         Left            =   2850
-         TabIndex        =   8
-         Top             =   660
-         Width           =   1965
-      End
-      Begin VB.OptionButton OptModo 
-         BackColor       =   &H00535353&
-         Caption         =   "Modo Winter"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   195
-         Index           =   0
-         Left            =   630
-         TabIndex        =   2
-         Top             =   360
-         Width           =   1275
-      End
-      Begin VB.OptionButton OptModo 
-         BackColor       =   &H00535353&
-         Caption         =   "Modo Imperium Clasico"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   195
-         Index           =   1
-         Left            =   2850
-         TabIndex        =   1
-         Top             =   360
-         Width           =   1965
-      End
-      Begin VB.PictureBox Picture1 
-         Height          =   0
-         Left            =   0
-         ScaleHeight     =   0
-         ScaleWidth      =   0
-         TabIndex        =   7
-         Top             =   0
-         Width           =   0
       End
    End
    Begin WinterMapEditor.lvButtons_H LvBBoton 
       Height          =   465
       Index           =   1
-      Left            =   3000
-      TabIndex        =   13
-      Top             =   4080
+      Left            =   2970
+      TabIndex        =   7
+      Top             =   2910
       Width           =   2205
       _ExtentX        =   3889
       _ExtentY        =   820
@@ -202,9 +139,9 @@ Begin VB.Form frmModo
    Begin WinterMapEditor.lvButtons_H LvBBoton 
       Height          =   465
       Index           =   0
-      Left            =   120
-      TabIndex        =   14
-      Top             =   4080
+      Left            =   180
+      TabIndex        =   8
+      Top             =   2910
       Width           =   2085
       _ExtentX        =   3678
       _ExtentY        =   820
@@ -241,7 +178,7 @@ Begin VB.Form frmModo
       ForeColor       =   &H00FFFFFF&
       Height          =   345
       Left            =   240
-      TabIndex        =   15
+      TabIndex        =   9
       Top             =   120
       Width           =   2295
    End
@@ -263,7 +200,6 @@ Private Sub cmbPerfil_Click()
     If LenB(tag) > 0 And FileExist(profileFile(tag), vbArchive) Then
         Dim v As Byte
         v = CByte(Val(GetVar(profileFile(tag), "CONFIGURACION", "MeMode")))
-        OptModo(v).value = True
 
         v = CByte(Val(GetVar(profileFile(tag), "VIDEO", "VertexProcessingOverride")))
         cmbProcesado.ListIndex = v
@@ -284,8 +220,6 @@ End Sub
 
 Private Sub Form_Load()
     On Error Resume Next
-    
-    OptModo(3).value = True 'default
     
     Dim i As Byte
         
@@ -349,10 +283,6 @@ Private Sub LvBBoton_Click(Index As Integer)
             Call WriteVar(profileFile(ProfileTag), "VIDEO", "VertexProcessingOverride", CByte(ClientSetup.OverrideVertexProcess))
             Call WriteVar(profileFile(ProfileTag), "VIDEO", "LimitarFPS", IIf(ClientSetup.LimiteFPS, "1", "0"))
             
-            #If Privado = 0 Then
-                Call SimpleLogError("Modo " & OptModo(ClientSetup.MeMode).Caption & " elegido.")
-            #End If
-            
             Unload Me
     End Select
 End Sub
@@ -373,15 +303,4 @@ Private Sub LvBNuevo_Click(Index As Integer)
     ReDim Perfiles(1 To nPerfiles) As String
     
     cmbPerfil.AddItem (ProfileTag)
-End Sub
-
-Private Sub OptModo_Click(Index As Integer)
-
-    #If Privado = 1 Then
-        ClientSetup.MeMode = eMeMode.ArgentumUnited
-        
-    #Else
-        ClientSetup.MeMode = Index
-    #End If
-    
 End Sub

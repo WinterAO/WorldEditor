@@ -22,11 +22,7 @@ Public Sub DobleClick(tX As Integer, tY As Integer)
 '*************************************************
     Dim Formato As String
     
-    If frmMain.Dialog.FilterIndex = 1 Then
-        Formato = ".csm"
-    ElseIf frmMain.Dialog.FilterIndex = 2 Then
-        Formato = ".map"
-    End If
+    Formato = ".csm"
     
     ' Translados
     Dim tTrans As WorldPos
@@ -37,7 +33,7 @@ Public Sub DobleClick(tX As Integer, tY As Integer)
                 Call modMapas.NuevoMapa
                 frmMain.Dialog.filename = PATH_Save & NameMap_Save & tTrans.Map & Formato
                 
-                Call abrirCargarMapa(frmMain.Dialog.filename, TipoMapaActual)
+                Call abrirCargarMapa(frmMain.Dialog.filename)
                 
                 'modMapIO.AbrirunMapa frmMain.Dialog.filename
                 UserPos.X = tTrans.X
@@ -411,15 +407,15 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 '########################
                 'OBJETOS
                 '########################
-                If frmObjs.cInsertarFunc.value = True Then ' Insertar Objeto
-                    If frmObjs.cNumFunc.Text > 0 Then
-                        ObjIndex = frmObjs.cNumFunc.Text
+                If frmOBJs.cInsertarFunc.value = True Then ' Insertar Objeto
+                    If frmOBJs.cNumFunc.Text > 0 Then
+                        ObjIndex = frmOBJs.cNumFunc.Text
                         
-                        If .OBJInfo.ObjIndex <> ObjIndex Or .OBJInfo.Amount <> Val(frmObjs.cCantFunc.Text) Then
+                        If .OBJInfo.ObjIndex <> ObjIndex Or .OBJInfo.Amount <> Val(frmOBJs.cCantFunc.Text) Then
                             MapInfo.Changed = 1 'Set changed flag
                             InitGrh .ObjGrh, ObjData(ObjIndex).GrhIndex
                             .OBJInfo.ObjIndex = ObjIndex
-                            .OBJInfo.Amount = Val(frmObjs.cCantFunc.Text)
+                            .OBJInfo.Amount = Val(frmOBJs.cCantFunc.Text)
                             
                             Select Case ObjData(ObjIndex).ObjType
 
@@ -432,7 +428,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
 
                     End If
 
-                ElseIf frmObjs.cQuitarFunc.value = True Then ' Quitar Objeto
+                ElseIf frmOBJs.cQuitarFunc.value = True Then ' Quitar Objeto
                 
                     If .OBJInfo.ObjIndex <> 0 Or .OBJInfo.Amount <> 0 Then
                         MapInfo.Changed = 1 'Set changed flag

@@ -9,24 +9,6 @@ End Type
 
 Public MiCabecera As tCabecera
 
-Public Enum eMeMode
-    WinterAO
-    ImperiumClasico
-    WinterUltimate
-    ArgentumUnited
-End Enum
-
-Public Enum eTipoMapa
-    tInt
-    tlong
-    tWinter
-    tIAOClasico
-    tIAOnew
-    tIAOold
-    tWinter_Old
-    tAOUnited
-End Enum
-
 Public Enum E_SISTEMA_MUSICA
     CONST_DESHABILITADA = 0
     CONST_MP3 = 1
@@ -107,17 +89,7 @@ End Function
 Public Sub IniciarCabecera()
 
     With MiCabecera
-        If eMeMode.WinterAO Then
-            .Desc = "WinterAO Resurrection mod Argentum Online by Noland Studios. http://winterao.com.ar"
-            
-        ElseIf eMeMode.ImperiumClasico Then
-            .Desc = "Imperium Clasico mod Argentum Online by Comunidad Winter. http://imperiumclasico.com.ar"
-            
-        ElseIf eMeMode.ArgentumUnited Then
-            .Desc = "Argentum United"
-            
-        End If
-        
+        .Desc = "WinterAO Resurrection mod Argentum Online by Noland Studios. http://winterao.com.ar"
         .CRC = Rnd * 245
         .MagicWord = Rnd * 92
     End With
@@ -568,7 +540,7 @@ On Error GoTo errhandler:
                 Call InitGrh(BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0)
                 
                 BodyData(i).HeadOffset.X = MisCuerpos(i).HeadOffsetX
-                BodyData(i).HeadOffset.Y = MisCuerpos(i).HeadOffsetY
+                BodyData(i).HeadOffset.y = MisCuerpos(i).HeadOffsetY
             End If
         Next i
     
