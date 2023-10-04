@@ -58,6 +58,7 @@ Module=modMapasWAO; Codigos\Modulos\modMapasWAO.bas
 Form=Codigos\Formularios\frmFormatos.frm
 Module=modEdicion; Codigos\Modulos\modEdicion.bas
 Form=Codigos\Formularios\frmEditIndices.frm
+Form=Codigos\Formularios\frmPropiedades.frm
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""

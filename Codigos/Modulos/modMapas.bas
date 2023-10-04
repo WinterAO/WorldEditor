@@ -40,7 +40,6 @@ End Sub
 
 Public Sub abrirCargarMapa(ByVal Path As String)
     
-    Call setMapSize(1000, 1000)
     Call modMapasWAO.Cargar_CSM(frmMain.Dialog.filename)
 
 End Sub
@@ -111,8 +110,6 @@ Public Sub NuevoMapa()
     Next
     
     frmMain.MousePointer = 11
-    
-    Call setMapSize(1000, 1000)
         
     For y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
