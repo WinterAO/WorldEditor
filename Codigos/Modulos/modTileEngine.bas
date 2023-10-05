@@ -934,67 +934,104 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
     End With
 End Sub
 
-Public Sub RenderPreview()
-'***********************************************
-'Autor: Lorwik
-'Fecha: ????
-'Descripcion: Renderiza la preview de la superficie, objeto, etc seleccionada
-'***********************************************
+Public Sub fPreviewGrh(ByVal GrhIn As Long)
+    '*************************************************
+    'Author: Unkwown
+    'Last modified: 22/05/06
+    '*************************************************
+    
+    On Error GoTo fPreviewGrh_Err
 
-    Dim DestRect     As RECT
+    If Val(GrhIn) < 1 Then
+        frmSuperficies.cGrh.Text = grhCount
+        Exit Sub
+
+    End If
+
+    If Val(GrhIn) > grhCount Then
+        frmSuperficies.cGrh.Text = 1
+        Exit Sub
+
+    End If
+
+    'Change CurrentGrh
+    CurrentGrh.GrhIndex = GrhIn
+    CurrentGrh.Started = 1
+    CurrentGrh.FrameCounter = 1
+
+    Exit Sub
+
+fPreviewGrh_Err:
+    'Call LogError(Err.Number, Err.Description, "modPaneles.fPreviewGrh", Erl)
+
+    Resume Next
     
-    Dim i As Integer, j As Integer
-    Dim Cont As Integer
-    Dim aux As Long
-    Dim W As Long, h As Long
+End Sub
+
+Public Sub RenderPreview(Optional ByVal SinMosaico As Boolean = False)
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 29/04/2023
+    '*************************************************
     
-    With DestRect
-        .Bottom = frmPreview.PreviewGrh.ScaleHeight
-        .Right = frmPreview.PreviewGrh.ScaleWidth
+    On Error Resume Next
+
+    Dim destRect As RECT
+    
+    Dim i        As Integer
+
+    Dim j        As Integer
+
+    Dim ww       As Integer
+
+    Dim hh       As Integer
+
+    Dim Cont     As Integer
+    
+    With destRect
+        .Bottom = frmPreview.PreviewGrh.Height
+        .Right = frmPreview.PreviewGrh.Width
+
     End With
+    
+    'Si el Render no esta activo, salimos
+    If Not frmPreview.PreviewGrh.Visible Then Exit Sub
     
     'Clear the inventory window
     Call Engine_BeginScene
-
-    If frmSuperficies.Visible = True Then
-
-       If frmConfigSup.MOSAICO.value = vbUnchecked Then
-       
-           'Call Draw_GrhIndex(CurrentGrh.GrhIndex, (GrhData(CurrentGrh.GrhIndex).pixelWidth) / 2, (GrhData(CurrentGrh.GrhIndex).pixelHeight), 1, Normal_RGBList(), 0)
-           
-           h = frmConfigSup.mLargo.Text
-           If h <= 0 Then h = 1
-           W = frmConfigSup.mAncho.Text
-           If W <= 0 Then W = 1
-           
-           aux = Val(CurrentGrh.GrhIndex) + (((1 + 1) Mod h) * W) + ((1 + 1) Mod W)
-           Call Draw_GrhIndex(aux, 0, 0, 0, Normal_RGBList(), 0)
     
-       Else
-           For i = 1 To CInt(Val(frmConfigSup.mLargo))
-               For j = 1 To CInt(Val(frmConfigSup.mAncho))
-               
-                   Call Draw_GrhIndex((CurrentGrh.GrhIndex), j * 32, i * 32, 0, Normal_RGBList(), 0)
-                   
-                   If Cont < CInt(Val(frmConfigSup.mLargo)) * CInt(Val(frmConfigSup.mAncho)) Then _
-                       Cont = Cont + 1: CurrentGrh.GrhIndex = CurrentGrh.GrhIndex + 1
-                       
-               Next j
-           Next i
-           
-           CurrentGrh.GrhIndex = CurrentGrh.GrhIndex - Cont
-       End If
+    If frmConfigSup.MOSAICO = vbUnchecked Or SinMosaico Then
+        Call Draw_GrhIndex(CurrentGrh.GrhIndex, frmPreview.PreviewGrh.Height / 2, frmPreview.PreviewGrh.Width - 100, 1, Normal_RGBList(), 0)
+        
+    Else
+    
+        hh = Val(frmConfigSup.mLargo)
+        ww = Val(frmConfigSup.mAncho)
+        
+        For i = 1 To hh
+            For j = 1 To ww
+            
+                Call Draw_GrhIndex(CurrentGrh.GrhIndex, j * 32, i * 32, 0, Normal_RGBList())
+
+                If Cont < hh * ww Then Cont = Cont + 1
+                CurrentGrh.GrhIndex = CurrentGrh.GrhIndex + 1
+            Next
+        Next
+        
+        CurrentGrh.GrhIndex = CurrentGrh.GrhIndex - Cont
+
     End If
     
     frmPreview.PreviewGrh.AutoRedraw = False
 
-    Call Engine_EndScene(DestRect, frmPreview.PreviewGrh.hwnd)
+    Call Engine_EndScene(destRect, frmPreview.PreviewGrh.hwnd)
 
     Call DrawBuffer.LoadPictureBlt(frmPreview.PreviewGrh.hDC)
 
     frmPreview.PreviewGrh.AutoRedraw = True
 
     Call DrawBuffer.PaintPicture(frmPreview.PreviewGrh.hDC, 0, 0, frmPreview.PreviewGrh.Width, frmPreview.PreviewGrh.Height, 0, 0, vbSrcCopy)
+
 End Sub
 
 Public Sub RenderParticlePreview()
@@ -1004,12 +1041,12 @@ Public Sub RenderParticlePreview()
 'Descripcion: Renderiza la preview de la particula seleccionada
 '***********************************************
 
-    Dim DestRect     As RECT
+    Dim destRect     As RECT
     
     Dim i As Integer, j As Integer
     Dim Cont As Integer
     
-    With DestRect
+    With destRect
         .Bottom = frmParticulas.ParticlePic.ScaleHeight
         .Right = frmParticulas.ParticlePic.ScaleWidth
 
@@ -1023,7 +1060,7 @@ Public Sub RenderParticlePreview()
     
     frmParticulas.ParticlePic.AutoRedraw = False
 
-    Call Engine_EndScene(DestRect, frmParticulas.ParticlePic.hwnd)
+    Call Engine_EndScene(destRect, frmParticulas.ParticlePic.hwnd)
 
     Call DrawBuffer.LoadPictureBlt(frmParticulas.ParticlePic.hDC)
 

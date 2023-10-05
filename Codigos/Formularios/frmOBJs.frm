@@ -393,10 +393,18 @@ Private Sub CargarInfo()
 'Last modified: 27/04/2021
 '*************************************************
 
+    Dim GrhObj As Long
+    
     HotKeysAllow = False
         
     'Obtiene el numero del Grh
     cNumFunc.Text = LynxOBJs.CellText(, 0)
+    
+    If frmPreview.Visible Then
+        Call fPreviewGrh(ObjData(cNumFunc.Text).GrhIndex)
+        Call RenderPreview(True)
+
+    End If
  
 End Sub
 
