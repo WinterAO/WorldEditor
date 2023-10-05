@@ -3,8 +3,8 @@ Begin VB.Form frmPreview
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Preview"
    ClientHeight    =   3975
-   ClientLeft      =   45
-   ClientTop       =   390
+   ClientLeft      =   10005
+   ClientTop       =   12495
    ClientWidth     =   4440
    BeginProperty Font 
       Name            =   "Tahoma"
@@ -22,7 +22,6 @@ Begin VB.Form frmPreview
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   296
    ShowInTaskbar   =   0   'False
-   StartUpPosition =   3  'Windows Default
    Begin VB.PictureBox PreviewGrh 
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&

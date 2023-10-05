@@ -429,7 +429,7 @@ Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".
 
     Next
     
-    For LoopC = (NumMap_Save - 4) To (NumMap_Save + 8)
+    For LoopC = (NumMap_Save - 4) To (NumMap_Save + 6)
 
         If FileExist(PATH_Save & NameMap_Save & LoopC & MapFormat, vbArchive) = True Then
             frmMain.MapPest(LoopC - NumMap_Save + 4).Visible = True

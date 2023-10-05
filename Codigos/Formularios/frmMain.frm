@@ -39,10 +39,10 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   660
-      Left            =   4890
+      Left            =   5130
       TabIndex        =   13
       Top             =   30
-      Width           =   4065
+      Width           =   4425
       Begin WinterMapEditor.lvButtons_H LvBEdit 
          Height          =   375
          Index           =   0
@@ -303,6 +303,32 @@ Begin VB.Form frmMain
          Image           =   "frmMain.frx":722C
          cBack           =   -2147483633
       End
+      Begin WinterMapEditor.lvButtons_H LvBEdit 
+         Height          =   375
+         Index           =   10
+         Left            =   3990
+         TabIndex        =   36
+         Top             =   200
+         Width           =   375
+         _ExtentX        =   661
+         _ExtentY        =   661
+         CapAlign        =   2
+         BackStyle       =   2
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Tahoma"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         cGradient       =   0
+         Mode            =   1
+         Value           =   0   'False
+         Image           =   "frmMain.frx":7504
+         cBack           =   -2147483633
+      End
    End
    Begin VB.Frame FraVer 
       BackColor       =   &H00535353&
@@ -318,7 +344,7 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   660
-      Left            =   30
+      Left            =   150
       TabIndex        =   0
       Top             =   30
       Width           =   4815
@@ -345,7 +371,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":7504
+         Image           =   "frmMain.frx":C7556
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
@@ -371,7 +397,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":8156
+         Image           =   "frmMain.frx":C81A8
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
@@ -397,7 +423,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":8DA8
+         Image           =   "frmMain.frx":C8DFA
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
@@ -423,7 +449,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":99FA
+         Image           =   "frmMain.frx":C9A4C
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
@@ -449,7 +475,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":A64C
+         Image           =   "frmMain.frx":CA69E
          cBack           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBOpcion 
@@ -631,7 +657,7 @@ Begin VB.Form frmMain
          cGradient       =   0
          Mode            =   1
          Value           =   0   'False
-         Image           =   "frmMain.frx":ACCE
+         Image           =   "frmMain.frx":CAD20
          cBack           =   -2147483633
       End
    End
@@ -660,7 +686,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   668
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   1278
-      TabIndex        =   37
+      TabIndex        =   35
       TabStop         =   0   'False
       Top             =   750
       Width           =   19200
@@ -668,18 +694,18 @@ Begin VB.Form frmMain
    Begin VB.Line Line1 
       BorderColor     =   &H00FFFFFF&
       Index           =   1
-      X1              =   1276
-      X2              =   1276
-      Y1              =   6
-      Y2              =   48
+      X1              =   652
+      X2              =   652
+      Y1              =   4
+      Y2              =   46
    End
    Begin VB.Line Line1 
       BorderColor     =   &H00FFFFFF&
       Index           =   0
-      X1              =   1274
-      X2              =   1274
-      Y1              =   6
-      Y2              =   48
+      X1              =   650
+      X2              =   650
+      Y1              =   4
+      Y2              =   46
    End
    Begin VB.Label MapPest 
       Alignment       =   2  'Center
@@ -699,7 +725,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   10
-      Left            =   16710
+      Left            =   17910
       TabIndex        =   34
       Top             =   270
       Visible         =   0   'False
@@ -723,7 +749,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   0
-      Left            =   9060
+      Left            =   10260
       TabIndex        =   24
       Top             =   270
       Visible         =   0   'False
@@ -747,7 +773,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   9
-      Left            =   15945
+      Left            =   17145
       TabIndex        =   33
       Top             =   270
       Visible         =   0   'False
@@ -771,7 +797,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   8
-      Left            =   15180
+      Left            =   16380
       TabIndex        =   32
       Top             =   270
       Visible         =   0   'False
@@ -795,7 +821,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   7
-      Left            =   14415
+      Left            =   15615
       TabIndex        =   31
       Top             =   270
       Visible         =   0   'False
@@ -819,7 +845,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   6
-      Left            =   13650
+      Left            =   14850
       TabIndex        =   30
       Top             =   270
       Visible         =   0   'False
@@ -843,7 +869,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   5
-      Left            =   12885
+      Left            =   14085
       TabIndex        =   29
       Top             =   270
       Visible         =   0   'False
@@ -867,7 +893,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   4
-      Left            =   12120
+      Left            =   13320
       TabIndex        =   28
       Top             =   270
       Visible         =   0   'False
@@ -891,7 +917,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   3
-      Left            =   11355
+      Left            =   12555
       TabIndex        =   27
       Top             =   270
       Visible         =   0   'False
@@ -915,7 +941,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   2
-      Left            =   10590
+      Left            =   11790
       TabIndex        =   26
       Top             =   270
       Visible         =   0   'False
@@ -939,56 +965,8 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   1
-      Left            =   9825
+      Left            =   11025
       TabIndex        =   25
-      Top             =   270
-      Visible         =   0   'False
-      Width           =   750
-   End
-   Begin VB.Label MapPest 
-      Alignment       =   2  'Center
-      Appearance      =   0  'Flat
-      BackColor       =   &H00FFFFFF&
-      BorderStyle     =   1  'Fixed Single
-      Caption         =   "Mapa1"
-      BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H80000008&
-      Height          =   255
-      Index           =   11
-      Left            =   17475
-      TabIndex        =   35
-      Top             =   270
-      Visible         =   0   'False
-      Width           =   750
-   End
-   Begin VB.Label MapPest 
-      Alignment       =   2  'Center
-      Appearance      =   0  'Flat
-      BackColor       =   &H00FFFFFF&
-      BorderStyle     =   1  'Fixed Single
-      Caption         =   "Mapa1"
-      BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H80000008&
-      Height          =   255
-      Index           =   12
-      Left            =   18210
-      TabIndex        =   36
       Top             =   270
       Visible         =   0   'False
       Width           =   750
@@ -1056,13 +1034,8 @@ Begin VB.Form frmMain
          Shortcut        =   ^M
       End
       Begin VB.Menu mnuVent 
-         Caption         =   "Preview"
-         Index           =   3
-         Shortcut        =   ^P
-      End
-      Begin VB.Menu mnuVent 
          Caption         =   "Configuración Avanzada de Superficies"
-         Index           =   4
+         Index           =   3
          Shortcut        =   ^T
       End
       Begin VB.Menu mnuRellenar 
@@ -1324,14 +1297,15 @@ Private Sub LvBOpcion_Click(Index As Integer)
 End Sub
 
 Private Sub LvBEdit_Click(Index As Integer)
-'*************************************************
-'Author: Lorwik
-'Last modified: 27/04/2020
-'*************************************************
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 27/04/2020
+    '*************************************************
 
     Select Case Index
     
         Case 0 ' Superficies
+
             If LvBEdit(0).value Then
                 frmSuperficies.Show , frmMain
             
@@ -1341,6 +1315,7 @@ Private Sub LvBEdit_Click(Index As Integer)
             End If
             
         Case 1 ' Traslados
+
             If LvBEdit(1).value Then
                 frmTraslados.Show , frmMain
             
@@ -1350,6 +1325,7 @@ Private Sub LvBEdit_Click(Index As Integer)
             End If
         
         Case 2 ' Bloqueos
+
             If LvBEdit(2).value Then
                 frmBloqueos.Show , frmMain
             
@@ -1359,6 +1335,7 @@ Private Sub LvBEdit_Click(Index As Integer)
             End If
         
         Case 3 ' NPCs
+
             If LvBEdit(3).value Then
                 frmNPCs.Show , frmMain
             
@@ -1368,6 +1345,7 @@ Private Sub LvBEdit_Click(Index As Integer)
             End If
         
         Case 4 ' Objetos
+
             If LvBEdit(4).value Then
                 frmOBJs.Show , frmMain
             
@@ -1377,6 +1355,7 @@ Private Sub LvBEdit_Click(Index As Integer)
             End If
         
         Case 5 ' Triggers
+
             If LvBEdit(5).value Then
                 frmTriggers.Show , frmMain
             
@@ -1386,6 +1365,7 @@ Private Sub LvBEdit_Click(Index As Integer)
             End If
         
         Case 6 ' Particulas
+
             If LvBEdit(6).value Then
                 frmParticulas.Show , frmMain
             
@@ -1395,6 +1375,7 @@ Private Sub LvBEdit_Click(Index As Integer)
             End If
         
         Case 7 ' Luces
+
             If LvBEdit(7).value Then
                 frmLuces.Show , frmMain
             
@@ -1406,12 +1387,22 @@ Private Sub LvBEdit_Click(Index As Integer)
         Case 8 ' Copiar
         
         Case 9 ' Informacion
+
             If LvBEdit(9).value Then
                 frmMapInfo.Show , frmMain
             
             Else
                 frmMapInfo.Visible = False
                 
+            End If
+            
+        Case 10 ' Preview
+
+            If LvBEdit(10).value Then
+                frmPreview.Show , frmMain
+                
+            Else
+                frmPreview.Visible = False
             End If
     
     End Select
@@ -1826,9 +1817,6 @@ Private Sub mnuVent_Click(Index As Integer)
             frmMapa.Show , frmMain
             
         Case 3
-            frmPreview.Show , frmMain
-            
-        Case 4
             frmConfigSup.Show , frmMain
     End Select
 
