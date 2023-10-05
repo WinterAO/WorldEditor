@@ -224,8 +224,8 @@ Begin VB.Form frmMain
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
-      Index           =   8
-      Left            =   4410
+      Index           =   6
+      Left            =   3330
       TabIndex        =   18
       Top             =   75
       Width           =   480
@@ -252,8 +252,8 @@ Begin VB.Form frmMain
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
-      Index           =   6
-      Left            =   3330
+      Index           =   7
+      Left            =   3870
       TabIndex        =   19
       Top             =   75
       Width           =   480
@@ -274,14 +274,14 @@ Begin VB.Form frmMain
       Mode            =   1
       Value           =   0   'False
       ImgAlign        =   4
-      Image           =   "frmMain.frx":6708
+      Image           =   "frmMain.frx":6138
       ImgSize         =   32
       cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
-      Index           =   7
-      Left            =   3870
+      Index           =   9
+      Left            =   4410
       TabIndex        =   20
       Top             =   75
       Width           =   480
@@ -302,14 +302,14 @@ Begin VB.Form frmMain
       Mode            =   1
       Value           =   0   'False
       ImgAlign        =   4
-      Image           =   "frmMain.frx":6D8A
+      Image           =   "frmMain.frx":65DA
       ImgSize         =   32
       cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
-      Index           =   9
-      Left            =   4980
+      Index           =   10
+      Left            =   4950
       TabIndex        =   21
       Top             =   75
       Width           =   480
@@ -330,35 +330,7 @@ Begin VB.Form frmMain
       Mode            =   1
       Value           =   0   'False
       ImgAlign        =   4
-      Image           =   "frmMain.frx":722C
-      ImgSize         =   32
-      cBack           =   -2147483633
-   End
-   Begin WinterMapEditor.lvButtons_H LvBEdit 
-      Height          =   480
-      Index           =   10
-      Left            =   5550
-      TabIndex        =   22
-      Top             =   75
-      Width           =   480
-      _ExtentX        =   847
-      _ExtentY        =   847
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   1
-      Value           =   0   'False
-      ImgAlign        =   4
-      Image           =   "frmMain.frx":7504
+      Image           =   "frmMain.frx":68B2
       ImgSize         =   32
       cBack           =   -2147483633
    End
@@ -1033,9 +1005,7 @@ Private Sub LvBEdit_Click(Index As Integer)
                 
             End If
         
-        Case 8 ' Copiar
-        
-        Case 9 ' Informacion
+        Case 8 ' Informacion
 
             If LvBEdit(9).value Then
                 frmMapInfo.Show , frmMain
@@ -1045,7 +1015,7 @@ Private Sub LvBEdit_Click(Index As Integer)
                 
             End If
             
-        Case 10 ' Preview
+        Case 9 ' Preview
 
             If LvBEdit(10).value Then
                 frmPreview.Show , frmMain
