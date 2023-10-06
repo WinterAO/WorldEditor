@@ -280,7 +280,7 @@ Begin VB.Form frmMain
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
-      Index           =   9
+      Index           =   8
       Left            =   4410
       TabIndex        =   20
       Top             =   75
@@ -308,7 +308,7 @@ Begin VB.Form frmMain
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
-      Index           =   10
+      Index           =   9
       Left            =   4950
       TabIndex        =   21
       Top             =   75
@@ -927,7 +927,7 @@ Private Sub LvBEdit_Click(Index As Integer)
     
         Case 0 ' Superficies
 
-            If LvBEdit(0).value Then
+            If LvBEdit(Index).value Then
                 frmSuperficies.Show , frmMain
             
             Else
@@ -937,7 +937,7 @@ Private Sub LvBEdit_Click(Index As Integer)
             
         Case 1 ' Traslados
 
-            If LvBEdit(1).value Then
+            If LvBEdit(Index).value Then
                 frmTraslados.Show , frmMain
             
             Else
@@ -947,7 +947,7 @@ Private Sub LvBEdit_Click(Index As Integer)
         
         Case 2 ' Bloqueos
 
-            If LvBEdit(2).value Then
+            If LvBEdit(Index).value Then
                 frmBloqueos.Show , frmMain
             
             Else
@@ -957,7 +957,7 @@ Private Sub LvBEdit_Click(Index As Integer)
         
         Case 3 ' NPCs
 
-            If LvBEdit(3).value Then
+            If LvBEdit(Index).value Then
                 frmNPCs.Show , frmMain
             
             Else
@@ -967,7 +967,7 @@ Private Sub LvBEdit_Click(Index As Integer)
         
         Case 4 ' Objetos
 
-            If LvBEdit(4).value Then
+            If LvBEdit(Index).value Then
                 frmOBJs.Show , frmMain
             
             Else
@@ -977,7 +977,7 @@ Private Sub LvBEdit_Click(Index As Integer)
         
         Case 5 ' Triggers
 
-            If LvBEdit(5).value Then
+            If LvBEdit(Index).value Then
                 frmTriggers.Show , frmMain
             
             Else
@@ -987,7 +987,7 @@ Private Sub LvBEdit_Click(Index As Integer)
         
         Case 6 ' Particulas
 
-            If LvBEdit(6).value Then
+            If LvBEdit(Index).value Then
                 frmParticulas.Show , frmMain
             
             Else
@@ -997,7 +997,7 @@ Private Sub LvBEdit_Click(Index As Integer)
         
         Case 7 ' Luces
 
-            If LvBEdit(7).value Then
+            If LvBEdit(Index).value Then
                 frmLuces.Show , frmMain
             
             Else
@@ -1007,7 +1007,7 @@ Private Sub LvBEdit_Click(Index As Integer)
         
         Case 8 ' Informacion
 
-            If LvBEdit(9).value Then
+            If LvBEdit(Index).value Then
                 frmMapInfo.Show , frmMain
             
             Else
@@ -1017,7 +1017,7 @@ Private Sub LvBEdit_Click(Index As Integer)
             
         Case 9 ' Preview
 
-            If LvBEdit(10).value Then
+            If LvBEdit(Index).value Then
                 frmPreview.Show , frmMain
                 
             Else
