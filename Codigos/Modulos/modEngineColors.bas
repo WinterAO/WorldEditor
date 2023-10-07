@@ -39,7 +39,7 @@ Sub ConvertLongToRGB(ByVal value As Long, R As Byte, G As Byte, B As Byte)
     B = Int(value / 256 / 256) Mod 256
 End Sub
 
-Public Function SetARGB_Alpha(rgb_list() As Long, Alpha As Byte) As Long()
+Public Function SetARGB_Alpha(rgb_list() As Long, alpha As Byte) As Long()
 
     '***************************************************
     'Author: Juan Manuel Couso (Cucsifae)
@@ -53,11 +53,11 @@ Public Function SetARGB_Alpha(rgb_list() As Long, Alpha As Byte) As Long()
     Call ARGBtoD3DCOLORVALUE(rgb_list(1), TempColor)
 
     'comprobamos ue no se salga del rango permitido
-    If Alpha > 255 Then Alpha = 255
-    If Alpha < 0 Then Alpha = 0
+    If alpha > 255 Then alpha = 255
+    If alpha < 0 Then alpha = 0
     
     'seteamos el alpha
-    TempColor.a = Alpha
+    TempColor.a = alpha
     
     'generamos el nuevo RGB_List
     Call Engine_D3DColor_To_RGB_List(tempARGB(), TempColor)
@@ -96,3 +96,25 @@ Public Function ARGB(ByVal R As Long, ByVal G As Long, ByVal B As Long, ByVal a 
 
 End Function
 
+Public Sub ARGBToRGB(ByRef colorARGB As Long, ByRef colorRGB As Long)
+    ' Extraer componentes Rojo, Verde y Azul y descartar Alfa
+    Dim alpha As Long
+    Dim red As Long
+    Dim green As Long
+    Dim blue As Long
+    alpha = (colorARGB And &HFF000000) \ &H1000000
+    red = (colorARGB And &HFF0000) \ &H10000
+    green = (colorARGB And &HFF00&) \ &H100&
+    blue = colorARGB And &HFF&
+
+    ' Asegurarse de que los valores están en el rango válido (0 a 255)
+    If red < 0 Then red = 0
+    If red > 255 Then red = 255
+    If green < 0 Then green = 0
+    If green > 255 Then green = 255
+    If blue < 0 Then blue = 0
+    If blue > 255 Then blue = 255
+
+    ' Crear color RGB
+    colorRGB = RGB(CInt(red), CInt(green), CInt(blue))
+End Sub
