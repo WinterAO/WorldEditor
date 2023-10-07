@@ -369,7 +369,7 @@ On Error GoTo ErrorHandler
     Dim udtBufferDesc As DSBUFFERDESC
     
     If Tipo = srcFileType.Ambient Then
-        file_name = file_name & ".amb"
+        file_name = file_name & ".wav"
         InfoHead = File_Find(DirRecursos & "Sounds" & Formato, file_name)
     Else
         file_name = file_name & ".wav"
@@ -445,17 +445,17 @@ Private Function BorraMenosUsado() As Integer
 'Borra el sonido menos usado. Devuelve el index del borrado para ser reutilizado
 'NO redimenciona la lista, estamos forzando a sacar uno para meter otro en su lugar
 '**************************************************************
-    Dim valor As Long
+    Dim Valor As Long
     Dim i As Long
     
     'Inicializamos todo
-    valor = mBuffers(1).UltimoAcceso
+    Valor = mBuffers(1).UltimoAcceso
     BorraMenosUsado = 1
     
     'Buscamos cual es el que lleva más tiempo sin ser utilizado
     For i = 1 To mCantidadBuffers
-        If mBuffers(i).UltimoAcceso < valor And (Not PlayingCheck(0, i)) Then
-            valor = mBuffers(i).UltimoAcceso
+        If mBuffers(i).UltimoAcceso < Valor And (Not PlayingCheck(0, i)) Then
+            Valor = mBuffers(i).UltimoAcceso
             BorraMenosUsado = i
         End If
     Next i

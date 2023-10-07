@@ -44,7 +44,7 @@ Sub Main()
     DoEvents
     Set Sound = New clsSoundEngine
 
-    If Not Sound.Initialize_Engine(frmMain.hwnd, DirRecursos, False, (ClientSetup.bSound > 0), (ClientSetup.bMusic <> CONST_DESHABILITADA), ClientSetup.SoundVolume, ClientSetup.MusicVolume, ClientSetup.Invertido) Then
+    If Not Sound.Initialize_Engine(frmMain.hwnd, DirRecursos, False, True, True, ClientSetup.SoundVolume, ClientSetup.MusicVolume, ClientSetup.Invertido) Then
         MsgBox "¡No se ha logrado iniciar el engine de DirectSound! Reinstale los últimos controladores de DirectX. No habrá soporte de audio en el editor.", vbCritical, "Advertencia"
         
     End If
@@ -178,15 +178,15 @@ Public Sub CheckKeys()
     '[/Loopzer]
     
     If GetKeyState(vbKeyUp) < 0 Then
-        If UserPos.Y < YMinMapSize Then Exit Sub ' 10
-        If LegalPos(UserPos.X, UserPos.Y - 1) And WalkMode = True Then
+        If UserPos.y < YMinMapSize Then Exit Sub ' 10
+        If LegalPos(UserPos.X, UserPos.y - 1) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.Y = UserPos.Y - 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            UserPos.y = UserPos.y - 1
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
             dLastWalk = GetTickCount
             
         ElseIf WalkMode = False Then
-            UserPos.Y = UserPos.Y - 1
+            UserPos.y = UserPos.y - 1
 
         End If
         
@@ -198,10 +198,10 @@ Public Sub CheckKeys()
 
     If GetKeyState(vbKeyRight) < 0 Then
         If UserPos.X > XMaxMapSize Then Exit Sub ' 89
-        If LegalPos(UserPos.X + 1, UserPos.Y) And WalkMode = True Then
+        If LegalPos(UserPos.X + 1, UserPos.y) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
             UserPos.X = UserPos.X + 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
             dLastWalk = GetTickCount
             
         ElseIf WalkMode = False Then
@@ -216,16 +216,16 @@ Public Sub CheckKeys()
     End If
 
     If GetKeyState(vbKeyDown) < 0 Then
-        If UserPos.Y > YMaxMapSize Then Exit Sub ' 92
+        If UserPos.y > YMaxMapSize Then Exit Sub ' 92
         
-        If LegalPos(UserPos.X, UserPos.Y + 1) And WalkMode = True Then
+        If LegalPos(UserPos.X, UserPos.y + 1) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.Y = UserPos.Y + 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            UserPos.y = UserPos.y + 1
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
             dLastWalk = GetTickCount
             
         ElseIf WalkMode = False Then
-            UserPos.Y = UserPos.Y + 1
+            UserPos.y = UserPos.y + 1
             
         End If
         
@@ -237,10 +237,10 @@ Public Sub CheckKeys()
 
     If GetKeyState(vbKeyLeft) < 0 Then
         If UserPos.X < XMinMapSize Then Exit Sub ' 12
-        If LegalPos(UserPos.X - 1, UserPos.Y) And WalkMode = True Then
+        If LegalPos(UserPos.X - 1, UserPos.y) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
             UserPos.X = UserPos.X - 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
             dLastWalk = GetTickCount
         ElseIf WalkMode = False Then
             UserPos.X = UserPos.X - 1
@@ -274,13 +274,13 @@ Public Sub ToggleWalkMode()
     If Not WalkMode Then
         'Erase character
         Call EraseChar(UserCharIndex)
-        MapData(UserPos.X, UserPos.Y).CharIndex = 0
+        MapData(UserPos.X, UserPos.y).CharIndex = 0
         
     Else
         'MakeCharacter
-        If LegalPos(UserPos.X, UserPos.Y) Then
-            Call MakeChar(NextOpenChar(), 1, 1, SOUTH, UserPos.X, UserPos.Y)
-            UserCharIndex = MapData(UserPos.X, UserPos.Y).CharIndex
+        If LegalPos(UserPos.X, UserPos.y) Then
+            Call MakeChar(NextOpenChar(), 1, 1, SOUTH, UserPos.X, UserPos.y)
+            UserCharIndex = MapData(UserPos.X, UserPos.y).CharIndex
             frmMain.mnuModoCaminata.Checked = True
             
         Else
@@ -308,10 +308,10 @@ Public Sub ObtenerCuadrante(ByRef Cuadrante As Integer, ByRef tX As Integer, ByR
     Dim cY As Integer
     
     cX = Fix((UserPos.X / 100))
-    cY = Fix((UserPos.Y / 100))
+    cY = Fix((UserPos.y / 100))
     
     tX = UserPos.X - (cX * 100)
-    tY = UserPos.Y - (cY * 100)
+    tY = UserPos.y - (cY * 100)
     
     Cuadrante = cX * cY
 
