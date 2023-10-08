@@ -141,14 +141,14 @@ End Type
 'Posicion en un mapa
 Public Type Position
     X As Integer
-    Y As Integer
+    y As Integer
 End Type
 
 'Holds a world position
 Public Type WorldPos
     Map As Integer
     X As Integer
-    Y As Integer
+    y As Integer
 End Type
 
 ' Cuerpos body.dat
@@ -217,7 +217,6 @@ End Type
 Public Type tMapInfo
     Music As String
     name As String
-    MapVersion As Integer
     PK As Boolean
     MagiaSinEfecto As Byte
     InviSinEfecto As Byte

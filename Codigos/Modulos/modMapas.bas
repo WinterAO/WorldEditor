@@ -217,7 +217,6 @@ Public Sub MapInfo_Actualizar()
         .chkInvocarSin.value = MapInfo.InvocarSinEfecto
         .chkOcultarSin.value = MapInfo.OcultarSinEfecto
         .chkMapResuSinEfecto.value = IIf(MapInfo.ResuSinEfecto, vbChecked, vbUnchecked)
-        .txtMapVersion = MapInfo.MapVersion
         .ChkMapNpc.value = MapInfo.RoboNpcsPermitido
 
     End With
@@ -259,7 +258,6 @@ Public Sub ResetearZona(ByVal id As Integer)
     End If
 
     With MapZonas(CantZonas)
-        .MapVersion = 0
         .name = "Zona Desconocida"
         .Music = 0
         .Ambient = 0
@@ -347,7 +345,6 @@ Public Sub MapZona_Actualizar(ByVal id As Integer)
         .chkInvocarSin.value = IIf(MapZonas(id).InvocarSinEfecto, vbChecked, vbUnchecked)
         .chkOcultarSin.value = IIf(MapZonas(id).OcultarSinEfecto, vbChecked, vbUnchecked)
         .chkMapResuSinEfecto.value = IIf(MapZonas(id).ResuSinEfecto, vbChecked, vbUnchecked)
-        .txtMapVersion = MapZonas(id).MapVersion
         .ChkMapNpc.value = IIf(MapZonas(id).RoboNpcsPermitido, vbChecked, vbUnchecked)
         
         If MapZonas(id).LuzBase = 0 Then

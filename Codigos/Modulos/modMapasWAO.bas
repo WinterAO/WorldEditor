@@ -388,9 +388,6 @@ Sub Cargar_CSM(ByVal Map As String)
         Next i
     Next j
     
-    'MapInfo_Cargar Map
-    frmMapInfo.txtMapVersion.Text = MapInfo.MapVersion
-    
     Call Pestanas(Map, ".csm") '
 
     'Change mouse icon
@@ -484,8 +481,6 @@ Public Sub CSMInfoCargar()
                 frmMapInfo.chkLuzClimatica = Unchecked
                 
             End If
-            
-            .MapVersion = MapDat(i).version
             
             If MapDat(i).battle_mode = True Then
                 .PK = True
@@ -913,8 +908,6 @@ Private Sub CSMInfoSave()
                 MapDat(i).LuzBase = 0
 
             End If
-            
-            MapDat(i).version = .MapVersion
             
             If .PK = True Then
                 MapDat(i).battle_mode = True
