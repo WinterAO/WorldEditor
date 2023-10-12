@@ -457,11 +457,11 @@ Public Sub CargarMinimapa()
     Dim buffer()    As Byte
     Dim i           As Long
     
-    InfoHead = File_Find(DirRecursos & "Scripts" & Formato, LCase$("minimap.bin"))
+    InfoHead = File_Find(DirRecursos & "Scripts" & Formato, LCase$("minimap.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
-        Extract_File_Memory Scripts, LCase$("minimap.bin"), buffer()
+        Extract_File_Memory Scripts, LCase$("minimap.ind"), buffer()
         
         Set fileBuff = New clsByteBuffer
         

@@ -1,6 +1,6 @@
 [History]
 1=#P0#=mb	#P1#=NuevoMapa	#P2#=WinterMapEditor/modMapas/NuevoMapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231012214943	#P7#=0	#P8#=47	.
-2=#P0#=mb	#P1#=CargarMinimapa	#P2#=WinterMapEditor/modCarga/CargarMinimapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231012195721	#P7#=0	#P8#=-1	.
+2=#P0#=mb	#P1#=CargarMinimapa	#P2#=WinterMapEditor/modCarga/CargarMinimapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231012231133	#P7#=0	#P8#=6	.
 3=#P0#=mb	#P1#=LoadGrhData	#P2#=WinterMapEditor/modCarga/LoadGrhData	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231012195639	#P7#=0	#P8#=110	.
 4=#P0#=mb	#P1#=Cargar_CSM	#P2#=WinterMapEditor/modMapasWAO/Cargar_CSM	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231012155735	#P7#=0	#P8#=-5	.
 5=#P0#=mb	#P1#=Main	#P2#=WinterMapEditor/modGeneral/Main	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231012154712	#P7#=0	#P8#=44	.
