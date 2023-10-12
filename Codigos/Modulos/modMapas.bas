@@ -130,6 +130,9 @@ Public Sub NuevoMapa()
                 .OBJInfo.ObjIndex = 0
                 .OBJInfo.Amount = 0
                 .ObjGrh.GrhIndex = 0
+                
+                .CharIndex = 0
+                .NPCIndex = 0
         
                 ' Translados
                 .TileExit.Map = 0

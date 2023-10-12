@@ -348,12 +348,12 @@ On Error GoTo ErrorHandler:
     Dim fileBuff    As clsByteBuffer
     Dim InfoHead    As INFOHEADER
     Dim buffer()    As Byte
-    
-    InfoHead = File_Find(DirRecursos & "Scripts" & Formato, LCase$("Graficos.ind"))
+
+    InfoHead = File_Find(DirRecursos & "Scripts" & Formato, LCase$("graficos.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
-        Extract_File_Memory Scripts, LCase$("Graficos.ind"), buffer()
+        Extract_File_Memory Scripts, LCase$("graficos.ind"), buffer()
         
         Set fileBuff = New clsByteBuffer
         
@@ -369,7 +369,7 @@ On Error GoTo ErrorHandler:
         
         ReDim GrhData(0 To grhCount) As GrhData
         
-        While Grh < grhCount
+        While Grh <> grhCount
             Grh = fileBuff.getLong
 
             With GrhData(Grh)
@@ -419,9 +419,6 @@ On Error GoTo ErrorHandler:
                     .sY = fileBuff.getInteger
                     If .sY < 0 Then GoTo ErrorHandler
                     
-                    '.Trans = fileBuff.getByte
-                    'If .Trans < 0 Then GoTo ErrorHandler
-                    
                     .TileWidth = .pixelWidth / TilePixelHeight
                     .TileHeight = .pixelHeight / TilePixelWidth
                     
@@ -452,22 +449,19 @@ ErrorHandler:
     End If
     
 End Sub
+
 Public Sub CargarMinimapa()
-'************************************
-'Autor: Lorwik
-'Fecha: ???
-'************************************
 
     Dim fileBuff    As clsByteBuffer
     Dim InfoHead    As INFOHEADER
     Dim buffer()    As Byte
     Dim i           As Long
     
-    InfoHead = File_Find(DirRecursos & "Scripts" & Formato, LCase$("minimap.ind"))
+    InfoHead = File_Find(DirRecursos & "Scripts" & Formato, LCase$("minimap.bin"))
     
     If InfoHead.lngFileSize <> 0 Then
     
-        Extract_File_Memory Scripts, LCase$("minimap.ind"), buffer()
+        Extract_File_Memory Scripts, LCase$("minimap.bin"), buffer()
         
         Set fileBuff = New clsByteBuffer
         
