@@ -143,6 +143,7 @@ Public Sub NuevoMapa()
                 .Trigger = 0
         
                 .Particle_Group_Index = 0
+                .Particle_Index = 0
                 
                 Call Engine_Long_To_RGB_List(MapData(X, y).Engine_Light(), -1)
                 
