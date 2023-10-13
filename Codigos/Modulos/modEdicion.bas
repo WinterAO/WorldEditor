@@ -343,3 +343,43 @@ Public Sub Zonas_Bordes()
     MapInfo.Changed = 1
 
 End Sub
+
+''
+' Elimita los NPCs del mapa
+'
+' @param Hostiles Indica si elimita solo hostiles o solo npcs no hostiles
+
+Public Sub Quitar_NPCs(ByVal Hostiles As Boolean)
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
+    
+    On Error GoTo Quitar_NPCs_Err
+
+    Dim y As Integer
+    Dim X As Integer
+
+    For y = YMinMapSize To YMaxMapSize
+        For X = XMinMapSize To XMaxMapSize
+
+            If MapData(X, y).NPCIndex > 0 Then
+                Call EraseChar(MapData(X, y).CharIndex)
+                MapData(X, y).NPCIndex = 0
+
+            End If
+        
+        Next X
+    Next y
+
+    'Set changed flag
+    MapInfo.Changed = 1
+
+    Exit Sub
+
+Quitar_NPCs_Err:
+    Call RegistrarError(Err.Number, Err.Description, "modEdicion.Quitar_NPCs", Erl)
+    Resume Next
+    
+End Sub
+
