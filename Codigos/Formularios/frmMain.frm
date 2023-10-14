@@ -62,26 +62,18 @@ Begin VB.Form frmMain
       TabIndex        =   12
       Top             =   75
       Width           =   480
-      _ExtentX        =   847
-      _ExtentY        =   847
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   1
-      Value           =   0   'False
-      ImgAlign        =   4
-      Image           =   "frmMain.frx":10CA
-      ImgSize         =   32
-      cBack           =   -2147483633
+      _extentx        =   847
+      _extenty        =   847
+      capalign        =   2
+      backstyle       =   2
+      font            =   "frmMain.frx":10CA
+      cgradient       =   0
+      mode            =   1
+      value           =   0   'False
+      imgalign        =   4
+      image           =   "frmMain.frx":10F2
+      imgsize         =   32
+      cback           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -90,25 +82,17 @@ Begin VB.Form frmMain
       TabIndex        =   13
       Top             =   75
       Width           =   480
-      _ExtentX        =   847
-      _ExtentY        =   847
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   1
-      Value           =   0   'False
-      Image           =   "frmMain.frx":1D1C
-      ImgSize         =   32
-      cBack           =   -2147483633
+      _extentx        =   847
+      _extenty        =   847
+      capalign        =   2
+      backstyle       =   2
+      font            =   "frmMain.frx":1D44
+      cgradient       =   0
+      mode            =   1
+      value           =   0   'False
+      image           =   "frmMain.frx":1D6C
+      imgsize         =   32
+      cback           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -117,26 +101,18 @@ Begin VB.Form frmMain
       TabIndex        =   14
       Top             =   75
       Width           =   480
-      _ExtentX        =   847
-      _ExtentY        =   847
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   1
-      Value           =   0   'False
-      ImgAlign        =   4
-      Image           =   "frmMain.frx":296E
-      ImgSize         =   32
-      cBack           =   -2147483633
+      _extentx        =   847
+      _extenty        =   847
+      capalign        =   2
+      backstyle       =   2
+      font            =   "frmMain.frx":29BE
+      cgradient       =   0
+      mode            =   1
+      value           =   0   'False
+      imgalign        =   4
+      image           =   "frmMain.frx":29E6
+      imgsize         =   32
+      cback           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -145,26 +121,18 @@ Begin VB.Form frmMain
       TabIndex        =   15
       Top             =   75
       Width           =   480
-      _ExtentX        =   847
-      _ExtentY        =   847
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   1
-      Value           =   0   'False
-      ImgAlign        =   4
-      Image           =   "frmMain.frx":35C0
-      ImgSize         =   32
-      cBack           =   -2147483633
+      _extentx        =   847
+      _extenty        =   847
+      capalign        =   2
+      backstyle       =   2
+      font            =   "frmMain.frx":3638
+      cgradient       =   0
+      mode            =   1
+      value           =   0   'False
+      imgalign        =   4
+      image           =   "frmMain.frx":3660
+      imgsize         =   32
+      cback           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -173,26 +141,18 @@ Begin VB.Form frmMain
       TabIndex        =   16
       Top             =   75
       Width           =   480
-      _ExtentX        =   847
-      _ExtentY        =   847
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   1
-      Value           =   0   'False
-      ImgAlign        =   4
-      Image           =   "frmMain.frx":4212
-      ImgSize         =   32
-      cBack           =   -2147483633
+      _extentx        =   847
+      _extenty        =   847
+      capalign        =   2
+      backstyle       =   2
+      font            =   "frmMain.frx":42B2
+      cgradient       =   0
+      mode            =   1
+      value           =   0   'False
+      imgalign        =   4
+      image           =   "frmMain.frx":42DA
+      imgsize         =   32
+      cback           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -201,26 +161,18 @@ Begin VB.Form frmMain
       TabIndex        =   17
       Top             =   75
       Width           =   480
-      _ExtentX        =   847
-      _ExtentY        =   847
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   1
-      Value           =   0   'False
-      ImgAlign        =   4
-      Image           =   "frmMain.frx":4E64
-      ImgSize         =   32
-      cBack           =   -2147483633
+      _extentx        =   847
+      _extenty        =   847
+      capalign        =   2
+      backstyle       =   2
+      font            =   "frmMain.frx":4F2C
+      cgradient       =   0
+      mode            =   1
+      value           =   0   'False
+      imgalign        =   4
+      image           =   "frmMain.frx":4F54
+      imgsize         =   32
+      cback           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -229,26 +181,18 @@ Begin VB.Form frmMain
       TabIndex        =   18
       Top             =   75
       Width           =   480
-      _ExtentX        =   847
-      _ExtentY        =   847
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   1
-      Value           =   0   'False
-      ImgAlign        =   4
-      Image           =   "frmMain.frx":5AB6
-      ImgSize         =   32
-      cBack           =   -2147483633
+      _extentx        =   847
+      _extenty        =   847
+      capalign        =   2
+      backstyle       =   2
+      font            =   "frmMain.frx":5BA6
+      cgradient       =   0
+      mode            =   1
+      value           =   0   'False
+      imgalign        =   4
+      image           =   "frmMain.frx":5BCE
+      imgsize         =   32
+      cback           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -257,26 +201,18 @@ Begin VB.Form frmMain
       TabIndex        =   19
       Top             =   75
       Width           =   480
-      _ExtentX        =   847
-      _ExtentY        =   847
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   1
-      Value           =   0   'False
-      ImgAlign        =   4
-      Image           =   "frmMain.frx":6138
-      ImgSize         =   32
-      cBack           =   -2147483633
+      _extentx        =   847
+      _extenty        =   847
+      capalign        =   2
+      backstyle       =   2
+      font            =   "frmMain.frx":6250
+      cgradient       =   0
+      mode            =   1
+      value           =   0   'False
+      imgalign        =   4
+      image           =   "frmMain.frx":6278
+      imgsize         =   32
+      cback           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -285,26 +221,18 @@ Begin VB.Form frmMain
       TabIndex        =   20
       Top             =   75
       Width           =   480
-      _ExtentX        =   847
-      _ExtentY        =   847
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   1
-      Value           =   0   'False
-      ImgAlign        =   4
-      Image           =   "frmMain.frx":65DA
-      ImgSize         =   32
-      cBack           =   -2147483633
+      _extentx        =   847
+      _extenty        =   847
+      capalign        =   2
+      backstyle       =   2
+      font            =   "frmMain.frx":671A
+      cgradient       =   0
+      mode            =   1
+      value           =   0   'False
+      imgalign        =   4
+      image           =   "frmMain.frx":6742
+      imgsize         =   32
+      cback           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -313,26 +241,18 @@ Begin VB.Form frmMain
       TabIndex        =   21
       Top             =   75
       Width           =   480
-      _ExtentX        =   847
-      _ExtentY        =   847
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   1
-      Value           =   0   'False
-      ImgAlign        =   4
-      Image           =   "frmMain.frx":68B2
-      ImgSize         =   32
-      cBack           =   -2147483633
+      _extentx        =   847
+      _extenty        =   847
+      capalign        =   2
+      backstyle       =   2
+      font            =   "frmMain.frx":6A1C
+      cgradient       =   0
+      mode            =   1
+      value           =   0   'False
+      imgalign        =   4
+      image           =   "frmMain.frx":6A44
+      imgsize         =   32
+      cback           =   -2147483633
    End
    Begin VB.Label MapPest 
       Alignment       =   2  'Center
@@ -879,6 +799,11 @@ Begin VB.Form frmMain
          End
          Begin VB.Menu mnuEliminarNPCs 
             Caption         =   "Elim. NPCs de todo el mapa"
+            Index           =   0
+         End
+         Begin VB.Menu mnuEliminarNPCs 
+            Caption         =   "Elim. NPC's Hostiles de todo el mapa"
+            Index           =   1
          End
       End
    End
@@ -1183,14 +1108,22 @@ Private Sub mnuDesbloquearBordes_Click()
     Call modEdicion.Desbloquear_Bordes
 End Sub
 
-Private Sub mnuEliminarNPCs_Click()
+Private Sub mnuEliminarNPCs_Click(Index As Integer)
     '*************************************************
-    'Author: ^[GS]^
-    'Last modified: 20/05/06
+    'Author: Lorwik
+    'Last modified: 14/10/2023
     '*************************************************
     On Error GoTo mnuQuitarNPCs_Click_Err
     
-    Call modEdicion.Quitar_NPCs(False)
+    Select Case Index
+    
+        Case 0
+            Call modEdicion.Quitar_NPCs(False)
+        
+        Case 1
+            Call modEdicion.Quitar_NPCs(True)
+    
+    End Select
     
     Exit Sub
 

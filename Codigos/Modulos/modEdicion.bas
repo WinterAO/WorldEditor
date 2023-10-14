@@ -360,13 +360,23 @@ Public Sub Quitar_NPCs(ByVal Hostiles As Boolean)
     Dim y As Integer
     Dim X As Integer
 
+    If EditWarning Then Exit Sub
+
     For y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
-
-            If MapData(X, y).NPCIndex > 0 Then
-                Call EraseChar(MapData(X, y).CharIndex)
-                MapData(X, y).NPCIndex = 0
-
+            
+            If Not Hostiles Then
+                If MapData(X, y).NPCIndex > 0 Then
+                    Call EraseChar(MapData(X, y).CharIndex)
+                    MapData(X, y).NPCIndex = 0
+    
+                End If
+            Else
+                    If MapData(X, y).NPCIndex > 500 Then
+                    Call EraseChar(MapData(X, y).CharIndex)
+                    MapData(X, y).NPCIndex = 0
+    
+                End If
             End If
         
         Next X
@@ -383,3 +393,19 @@ Quitar_NPCs_Err:
     
 End Sub
 
+''
+' Manda una advertencia de Edicion Critica
+'
+' @return   Nos devuelve si acepta o no el cambio
+
+Private Function EditWarning() As Boolean
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 20/05/06
+'*************************************************
+    If MsgBox(MSGDang, vbExclamation + vbYesNo) = vbNo Then
+        EditWarning = True
+    Else
+        EditWarning = False
+    End If
+End Function

@@ -57,7 +57,7 @@ Sub Main()
     
     frmCarga.lblStatus.Caption = "Cargando Minimapa."
     DoEvents
-    Call modCarga.CargarMinimapa
+    'Call modCarga.CargarMinimapa
     
     frmCarga.lblStatus.Caption = "Cargando Cuerpos."
     DoEvents
