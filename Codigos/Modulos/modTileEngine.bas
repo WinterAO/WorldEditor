@@ -841,8 +841,8 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 ScreenX = (xX + SobreX - UserPos.X) + 21
                 ScreenY = yY + SobreY - UserPos.y + 11
         
-                Call Draw_Grh(SeleccionMap(xX, yY).Graphic(1), (ScreenX - 1) * 32 + PixelOffsetX, (ScreenY - 1) * 32 + PixelOffsetY, 1, MapData(X, y).Engine_Light(), 1)
-                Call Draw_Grh(SeleccionMap(xX, yY).Graphic(2), (ScreenX - 1) * 32 + PixelOffsetX, (ScreenY - 1) * 32 + PixelOffsetY, 1, MapData(X, y).Engine_Light(), 1)
+                Call Draw_Grh(SeleccionMap(xX, yY).Graphic(1), (ScreenX - 1) * 32 + PixelOffsetX, (ScreenY - 1) * 32 + PixelOffsetY, 1, MapData(X, y).Engine_Light(), 1, True)
+                Call Draw_Grh(SeleccionMap(xX, yY).Graphic(2), (ScreenX - 1) * 32 + PixelOffsetX, (ScreenY - 1) * 32 + PixelOffsetY, 1, MapData(X, y).Engine_Light(), 1, True)
                 sX = sX + 32
             Next xX
 
@@ -976,7 +976,7 @@ Public Sub RenderPreview(Optional ByVal SinMosaico As Boolean = False)
     
     On Error Resume Next
 
-    Dim destRect As RECT
+    Dim DestRect As RECT
     
     Dim i        As Integer
 
@@ -988,7 +988,7 @@ Public Sub RenderPreview(Optional ByVal SinMosaico As Boolean = False)
 
     Dim Cont     As Integer
     
-    With destRect
+    With DestRect
         .Bottom = frmPreview.PreviewGrh.Height
         .Right = frmPreview.PreviewGrh.Width
 
@@ -1024,7 +1024,7 @@ Public Sub RenderPreview(Optional ByVal SinMosaico As Boolean = False)
     
     frmPreview.PreviewGrh.AutoRedraw = False
 
-    Call Engine_EndScene(destRect, frmPreview.PreviewGrh.hwnd)
+    Call Engine_EndScene(DestRect, frmPreview.PreviewGrh.hwnd)
 
     Call DrawBuffer.LoadPictureBlt(frmPreview.PreviewGrh.hDC)
 
@@ -1041,12 +1041,12 @@ Public Sub RenderParticlePreview()
 'Descripcion: Renderiza la preview de la particula seleccionada
 '***********************************************
 
-    Dim destRect     As RECT
+    Dim DestRect     As RECT
     
     Dim i As Integer, j As Integer
     Dim Cont As Integer
     
-    With destRect
+    With DestRect
         .Bottom = frmParticulas.ParticlePic.ScaleHeight
         .Right = frmParticulas.ParticlePic.ScaleWidth
 
@@ -1060,7 +1060,7 @@ Public Sub RenderParticlePreview()
     
     frmParticulas.ParticlePic.AutoRedraw = False
 
-    Call Engine_EndScene(destRect, frmParticulas.ParticlePic.hwnd)
+    Call Engine_EndScene(DestRect, frmParticulas.ParticlePic.hwnd)
 
     Call DrawBuffer.LoadPictureBlt(frmParticulas.ParticlePic.hDC)
 

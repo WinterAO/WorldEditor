@@ -349,7 +349,7 @@ End Sub
 '
 ' @param Hostiles Indica si elimita solo hostiles o solo npcs no hostiles
 
-Public Sub Quitar_NPCs(ByVal Hostiles As Boolean)
+Public Sub Quitar_NPCs(ByVal Hostiles As Boolean, ByVal Zona As Boolean)
     '*************************************************
     'Author: ^[GS]^
     'Last modified: 20/05/06
@@ -360,27 +360,66 @@ Public Sub Quitar_NPCs(ByVal Hostiles As Boolean)
     Dim y As Integer
     Dim X As Integer
 
+    'Mensaje de Alerta
     If EditWarning Then Exit Sub
 
-    For y = YMinMapSize To YMaxMapSize
-        For X = XMinMapSize To XMaxMapSize
-            
-            If Not Hostiles Then
-                If MapData(X, y).NPCIndex > 0 Then
-                    Call EraseChar(MapData(X, y).CharIndex)
-                    MapData(X, y).NPCIndex = 0
-    
-                End If
-            Else
-                    If MapData(X, y).NPCIndex > 500 Then
-                    Call EraseChar(MapData(X, y).CharIndex)
-                    MapData(X, y).NPCIndex = 0
-    
-                End If
-            End If
+    'Si es el mapa general...
+    If Not Zona Then
+
+        For y = YMinMapSize To YMaxMapSize
+            For X = XMinMapSize To XMaxMapSize
+                
+                If Not Hostiles Then
+                    If MapData(X, y).NPCIndex > 0 Then
+                        Call EraseChar(MapData(X, y).CharIndex)
+                        MapData(X, y).NPCIndex = 0
         
-        Next X
-    Next y
+                    End If
+                Else
+
+                    If MapData(X, y).NPCIndex > 500 Then
+                        Call EraseChar(MapData(X, y).CharIndex)
+                        MapData(X, y).NPCIndex = 0
+        
+                    End If
+                End If
+            
+            Next X
+        Next y
+    
+    Else 'Si es solo la zona...
+    
+        Dim zonaNumber As Integer
+        
+        zonaNumber = InputBox("Indica el numero de la zona.", "Eliminar NPC's de la zona.")
+        
+        For y = YMinMapSize To YMaxMapSize
+            For X = XMinMapSize To XMaxMapSize
+            
+                If Not Hostiles Then
+                    If zonaNumber = MapData(X, y).ZonaIndex Then
+                        If MapData(X, y).NPCIndex > 0 Then
+                            Call EraseChar(MapData(X, y).CharIndex)
+                            MapData(X, y).NPCIndex = 0
+        
+                        End If
+                    End If
+                Else
+
+                    If zonaNumber = MapData(X, y).ZonaIndex Then
+                        If MapData(X, y).NPCIndex > 500 Then
+                            Call EraseChar(MapData(X, y).CharIndex)
+                            MapData(X, y).NPCIndex = 0
+        
+                        End If
+                    End If
+                End If
+                
+            Next X
+            
+        Next y
+    
+    End If
 
     'Set changed flag
     MapInfo.Changed = 1
