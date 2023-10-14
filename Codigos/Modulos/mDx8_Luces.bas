@@ -362,84 +362,41 @@ Public Sub Init_MeteoEngine()
 End Sub
 
 Public Sub Actualizar_Estado()
-'***************************************************
-'Author: Lorwik
-'Last Modification: 09/08/2020
-'Actualiza el estado del clima y del dia
-'***************************************************
-    Dim X As Integer, y As Integer
+    '***************************************************
+    'Author: Lorwik
+    'Last Modification: 09/08/2020
+    'Actualiza el estado del clima y del dia
+    '***************************************************
+    Dim X  As Integer, y As Integer
     Dim tR As Byte
     Dim tG As Byte
     Dim tB As Byte
     
-    '******************
-    'MODO WINTER
-    '******************
-    If ClientSetup.MeMode = eMeMode.WinterAO Or _
-        ClientSetup.MeMode = eMeMode.ArgentumUnited Then
-    
-        For X = XMinMapSize To XMaxMapSize
-            For y = YMinMapSize To YMaxMapSize
-                If MapZonas(MapData(X, y).ZonaIndex).LuzBase <> 0 Then
+    For X = XMinMapSize To XMaxMapSize
+        For y = YMinMapSize To YMaxMapSize
+
+            If MapZonas(MapData(X, y).ZonaIndex).LuzBase <> 0 Then
                 
-                    Call ConvertLongToRGB(MapZonas(MapData(X, y).ZonaIndex).LuzBase, tR, tG, tB)
+                Call ConvertLongToRGB(MapZonas(MapData(X, y).ZonaIndex).LuzBase, tR, tG, tB)
                     
-                    With Estado_Custom
-                        .a = 255
-                        .R = tR
-                        .G = tG
-                        .B = tB
-                    End With
+                With Estado_Custom
+                    .a = 255
+                    .R = tR
+                    .G = tG
+                    .B = tB
+                End With
                     
-                    Call Engine_D3DColor_To_RGB_List(MapData(X, y).Engine_Light(), Estado_Custom)
+                Call Engine_D3DColor_To_RGB_List(MapData(X, y).Engine_Light(), Estado_Custom)
             
-                Else
+            Else
                 
-                    Call Engine_D3DColor_To_RGB_List(MapData(X, y).Engine_Light(), Estado_Actual)
-                
-                End If
-            Next y
-        Next X
-        
-    Else
-    
-    '******************
-    'MODO IMPC
-    '******************
-        '¿El mapa tiene su propia luz?
-        If MapInfo.LuzBase <> 0 Then
-        
-            Call ConvertLongToRGB(MapZonas(MapData(X, y).ZonaIndex).LuzBase, tR, tG, tB)
-                    
-            With Estado_Custom
-                .a = 255
-                .R = tR
-                .G = tG
-                .B = tB
-            End With
-        
-            For X = XMinMapSize To XMaxMapSize
-                For y = YMinMapSize To YMaxMapSize
-                    Call Engine_D3DColor_To_RGB_List(MapData(X, y).Engine_Light(), Estado_Custom)
-                Next y
-            Next X
-            
-            Call LightRenderAll
-            
-            Exit Sub
-        End If
-            
-        For X = XMinMapSize To XMaxMapSize
-            For y = YMinMapSize To YMaxMapSize
                 Call Engine_D3DColor_To_RGB_List(MapData(X, y).Engine_Light(), Estado_Actual)
-            Next y
-        Next X
-        
-    End If
+                
+            End If
+        Next y
+    Next X
     
     Call LightRenderAll
 
 End Sub
-
-
 

@@ -28,7 +28,7 @@ Begin VB.Form frmSuperficies
    Begin WinterMapEditor.lvButtons_H cQuitarEnTodasLasCapas 
       Height          =   375
       Left            =   150
-      TabIndex        =   9
+      TabIndex        =   8
       Top             =   5460
       Width           =   2175
       _ExtentX        =   3836
@@ -57,7 +57,7 @@ Begin VB.Form frmSuperficies
    Begin WinterMapEditor.lvButtons_H cQuitarEnEstaCapa 
       Height          =   405
       Left            =   150
-      TabIndex        =   8
+      TabIndex        =   7
       Top             =   5040
       Width           =   2175
       _ExtentX        =   3836
@@ -86,7 +86,7 @@ Begin VB.Form frmSuperficies
    Begin WinterMapEditor.lvButtons_H cSeleccionarSuperficie 
       Height          =   795
       Left            =   2490
-      TabIndex        =   7
+      TabIndex        =   6
       Top             =   5040
       Width           =   1875
       _ExtentX        =   3307
@@ -120,7 +120,7 @@ Begin VB.Form frmSuperficies
       ItemData        =   "frmSuperficies.frx":0000
       Left            =   1080
       List            =   "frmSuperficies.frx":0002
-      TabIndex        =   6
+      TabIndex        =   5
       TabStop         =   0   'False
       Text            =   "1"
       Top             =   4560
@@ -131,7 +131,7 @@ Begin VB.Form frmSuperficies
       ForeColor       =   &H80000014&
       Height          =   315
       Left            =   600
-      TabIndex        =   2
+      TabIndex        =   1
       Top             =   4170
       Width           =   3765
    End
@@ -141,16 +141,45 @@ Begin VB.Form frmSuperficies
       ForeColor       =   &H80000014&
       Height          =   315
       Left            =   3000
-      TabIndex        =   1
+      TabIndex        =   0
       Text            =   "1"
       Top             =   4560
       Width           =   1335
    End
+   Begin WinterMapEditor.lvButtons_H LvBEditarIndice 
+      Height          =   375
+      Left            =   210
+      TabIndex        =   9
+      Top             =   5880
+      Width           =   4095
+      _ExtentX        =   7223
+      _ExtentY        =   661
+      Caption         =   "Editar Indice"
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
+      cGradient       =   0
+      Gradient        =   3
+      Mode            =   0
+      Value           =   0   'False
+      cBack           =   16744576
+   End
    Begin WinterMapEditor.LynxGrid LynxSuperficies 
       Height          =   3975
       Left            =   60
-      TabIndex        =   0
-      Top             =   60
+      TabIndex        =   10
+      Top             =   90
       Width           =   4305
       _ExtentX        =   7594
       _ExtentY        =   7011
@@ -194,35 +223,6 @@ Begin VB.Form frmSuperficies
       ShowRowNumbersVary=   0   'False
       HotHeaderTracking=   0   'False
    End
-   Begin WinterMapEditor.lvButtons_H LvBEditarIndice 
-      Height          =   375
-      Left            =   210
-      TabIndex        =   10
-      Top             =   5880
-      Width           =   4095
-      _ExtentX        =   7223
-      _ExtentY        =   661
-      Caption         =   "Editar Indice"
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cFore           =   16777215
-      cFHover         =   16777215
-      cBhover         =   0
-      cGradient       =   0
-      Gradient        =   3
-      Mode            =   0
-      Value           =   0   'False
-      cBack           =   16744576
-   End
    Begin VB.Label lbGrh 
       AutoSize        =   -1  'True
       BackColor       =   &H80000012&
@@ -231,7 +231,7 @@ Begin VB.Form frmSuperficies
       ForeColor       =   &H80000014&
       Height          =   195
       Left            =   2160
-      TabIndex        =   5
+      TabIndex        =   4
       Top             =   4620
       Width           =   825
    End
@@ -242,7 +242,7 @@ Begin VB.Form frmSuperficies
       ForeColor       =   &H80000014&
       Height          =   195
       Left            =   120
-      TabIndex        =   4
+      TabIndex        =   3
       Top             =   4605
       Width           =   930
    End
@@ -255,7 +255,7 @@ Begin VB.Form frmSuperficies
       Height          =   195
       Index           =   0
       Left            =   120
-      TabIndex        =   3
+      TabIndex        =   2
       Top             =   4230
       Width           =   480
    End
@@ -417,14 +417,14 @@ Private Sub CargarInfo()
 
     'TODO: Faltan movidas aqui
     If SupData(SupActual).Capa <> 0 Then
-        If (SupActual) = 0 Then cCapas.Tag = cCapas.Text
+        If (SupActual) = 0 Then cCapas.tag = cCapas.Text
         cCapas.Text = SupData(SupActual).Capa
             
     Else
 
-        If LenB(cCapas.Tag) <> 0 Then
-            cCapas.Text = cCapas.Tag
-            cCapas.Tag = vbNullString
+        If LenB(cCapas.tag) <> 0 Then
+            cCapas.Text = cCapas.tag
+            cCapas.tag = vbNullString
                 
         End If
             
@@ -432,7 +432,7 @@ Private Sub CargarInfo()
         
     'Manda a renderizar la superficie seleccionada
     If frmPreview.Visible Then
-        Call frmPreview.fPreviewGrh(cGrh.Text)
+        Call fPreviewGrh(cGrh.Text)
         Call RenderPreview
 
     End If

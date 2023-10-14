@@ -15,7 +15,7 @@ Global NumChars As Integer
 Global LastChar As Integer
 
 Public Const MSGMod As String = "Este mapa há sido modificado." & vbCrLf & "Si no lo guardas perderas todos los cambios ¿Deseas guardarlo?"
-Public Const MSGDang As String = "CUIDADO! Este comando puede arruinar el mapa." & vbCrLf & "¿Estas seguro que desea continuar?"
+Public Const MSGDang As String = "¡CUIDADO! Esta función podria arruinar el mapa." & vbCrLf & "¿Estas seguro que quieres continuar?"
 
 Public HotKeysAllow As Boolean
 Public PATH_Save As String
@@ -141,14 +141,14 @@ End Type
 'Posicion en un mapa
 Public Type Position
     X As Integer
-    Y As Integer
+    y As Integer
 End Type
 
 'Holds a world position
 Public Type WorldPos
     Map As Integer
     X As Integer
-    Y As Integer
+    y As Integer
 End Type
 
 ' Cuerpos body.dat
@@ -217,7 +217,6 @@ End Type
 Public Type tMapInfo
     Music As String
     name As String
-    MapVersion As Integer
     PK As Boolean
     MagiaSinEfecto As Byte
     InviSinEfecto As Byte

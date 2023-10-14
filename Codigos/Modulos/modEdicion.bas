@@ -343,3 +343,108 @@ Public Sub Zonas_Bordes()
     MapInfo.Changed = 1
 
 End Sub
+
+''
+' Elimita los NPCs del mapa
+'
+' @param Hostiles Indica si elimita solo hostiles o solo npcs no hostiles
+
+Public Sub Quitar_NPCs(ByVal Hostiles As Boolean, ByVal Zona As Boolean)
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
+    
+    On Error GoTo Quitar_NPCs_Err
+
+    Dim y As Integer
+    Dim X As Integer
+
+    'Mensaje de Alerta
+    If EditWarning Then Exit Sub
+
+    'Si es el mapa general...
+    If Not Zona Then
+
+        For y = YMinMapSize To YMaxMapSize
+            For X = XMinMapSize To XMaxMapSize
+                
+                If Not Hostiles Then
+                    If MapData(X, y).NPCIndex > 0 Then
+                        Call EraseChar(MapData(X, y).CharIndex)
+                        MapData(X, y).NPCIndex = 0
+        
+                    End If
+                Else
+
+                    If MapData(X, y).NPCIndex > 500 Then
+                        Call EraseChar(MapData(X, y).CharIndex)
+                        MapData(X, y).NPCIndex = 0
+        
+                    End If
+                End If
+            
+            Next X
+        Next y
+    
+    Else 'Si es solo la zona...
+    
+        Dim zonaNumber As Integer
+        
+        zonaNumber = InputBox("Indica el numero de la zona.", "Eliminar NPC's de la zona.")
+        
+        For y = YMinMapSize To YMaxMapSize
+            For X = XMinMapSize To XMaxMapSize
+            
+                If Not Hostiles Then
+                    If zonaNumber = MapData(X, y).ZonaIndex Then
+                        If MapData(X, y).NPCIndex > 0 Then
+                            Call EraseChar(MapData(X, y).CharIndex)
+                            MapData(X, y).NPCIndex = 0
+        
+                        End If
+                    End If
+                Else
+
+                    If zonaNumber = MapData(X, y).ZonaIndex Then
+                        If MapData(X, y).NPCIndex > 500 Then
+                            Call EraseChar(MapData(X, y).CharIndex)
+                            MapData(X, y).NPCIndex = 0
+        
+                        End If
+                    End If
+                End If
+                
+            Next X
+            
+        Next y
+    
+    End If
+
+    'Set changed flag
+    MapInfo.Changed = 1
+
+    Exit Sub
+
+Quitar_NPCs_Err:
+    Call RegistrarError(Err.Number, Err.Description, "modEdicion.Quitar_NPCs", Erl)
+    Resume Next
+    
+End Sub
+
+''
+' Manda una advertencia de Edicion Critica
+'
+' @return   Nos devuelve si acepta o no el cambio
+
+Private Function EditWarning() As Boolean
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 20/05/06
+'*************************************************
+    If MsgBox(MSGDang, vbExclamation + vbYesNo) = vbNo Then
+        EditWarning = True
+    Else
+        EditWarning = False
+    End If
+End Function

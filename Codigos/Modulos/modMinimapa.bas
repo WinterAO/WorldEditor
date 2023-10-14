@@ -13,16 +13,16 @@ Public MMiniMap_cuadrantes As Boolean
 Public MMiniMap_Nombre     As Boolean
 Public MMiniMap_Zonas      As Boolean
 
-Private Declare Function SetPixel Lib "gdi32" (ByVal hDC As Long, ByVal X As Long, ByVal Y As Long, ByVal crColor As Long) As Long
+Private Declare Function SetPixel Lib "gdi32" (ByVal hDC As Long, ByVal X As Long, ByVal y As Long, ByVal crColor As Long) As Long
 
 Public Sub DibujarMinimapa(Optional ByVal Refrescar = False)
 
-    Dim map_x As Integer
-    Dim map_y As Integer
-    Dim XMin As Long
-    Dim XMax As Long
-    Dim YMin As Long
-    Dim YMax As Long
+    Dim map_x      As Integer
+    Dim map_y      As Integer
+    Dim XMin       As Long
+    Dim XMax       As Long
+    Dim YMin       As Long
+    Dim YMax       As Long
     
     Dim picMapahDC As Long
     
@@ -106,8 +106,7 @@ Public Sub DibujarMinimapa(Optional ByVal Refrescar = False)
                 
                 If MMiniMap_cuadrantes Then
                     
-                    If (map_x - (Fix(map_x / 100)) * 100) = 0 Or (map_y - (Fix(map_y / 100)) * 100) = 0 Then _
-                        SetPixel picMapahDC, map_x - 1, map_y - 1, vbWhite
+                    If (map_x - (Fix(map_x / 100)) * 100) = 0 Or (map_y - (Fix(map_y / 100)) * 100) = 0 Then SetPixel picMapahDC, map_x - 1, map_y - 1, vbWhite
                         
                 End If
     
@@ -119,8 +118,12 @@ Public Sub DibujarMinimapa(Optional ByVal Refrescar = False)
                 End If
                 
                 If MMiniMap_Zonas Then
-                    If MapData(map_x, map_y).ZonaIndex > 0 Then _
-                        SetPixel picMapahDC, map_x - 1, map_y - 1, colorZona(MapData(map_x, map_y).ZonaIndex)
+                    If MapData(map_x, map_y).ZonaIndex > 0 Then
+                        Dim zonaRGB As Long
+                        
+                        Call ARGBToRGB(colorZona(MapData(map_x, map_y).ZonaIndex), zonaRGB)
+                        SetPixel picMapahDC, map_x - 1, map_y - 1, zonaRGB
+                    End If
                 End If
                 
             Next map_x
@@ -131,7 +134,7 @@ Public Sub DibujarMinimapa(Optional ByVal Refrescar = False)
     'frmMain.UserM.Left = (UserPos.X * 2) - 2
     'frmMain.UserM.Top = (UserPos.Y * 2) - 2
     frmMapa.ApuntadorRadar.Left = (UserPos.X) - 9
-    frmMapa.ApuntadorRadar.Top = (UserPos.Y) - 8
+    frmMapa.ApuntadorRadar.Top = (UserPos.y) - 8
     
     'Refrescamos
     'frmMain.Minimap.Refresh
@@ -163,7 +166,7 @@ Public Sub RenderizarCuadrantes()
     Dim LoopC As Byte
     
     Dim X As Integer
-    Dim Y As Integer
+    Dim y As Integer
     
     Dim AnchoCuadrante As Byte
     
@@ -191,17 +194,17 @@ Public Sub RenderizarCuadrantes()
         
             For map_y = YMin To YMax
             
-                Y = Y + 1
+                y = y + 1
             
                 If MapData(map_x, map_y).Graphic(1).GrhIndex > 0 Then _
-                    SetPixel picMapahDC, X - 1, Y - 1, GrhData(MapData(map_x, map_y).Graphic(1).GrhIndex).mini_map_color
+                    SetPixel picMapahDC, X - 1, y - 1, GrhData(MapData(map_x, map_y).Graphic(1).GrhIndex).mini_map_color
                     
                 If MapData(map_x, map_y).Graphic(2).GrhIndex > 0 Then _
-                    SetPixel picMapahDC, X - 1, Y - 1, GrhData(MapData(map_x, map_y).Graphic(2).GrhIndex).mini_map_color
+                    SetPixel picMapahDC, X - 1, y - 1, GrhData(MapData(map_x, map_y).Graphic(2).GrhIndex).mini_map_color
 
             Next map_y
             
-            Y = 0
+            y = 0
             
         Next map_x
         

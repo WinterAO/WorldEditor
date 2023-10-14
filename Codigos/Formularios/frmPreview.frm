@@ -2,9 +2,9 @@ VERSION 5.00
 Begin VB.Form frmPreview 
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Preview"
-   ClientHeight    =   3540
-   ClientLeft      =   9420
-   ClientTop       =   12540
+   ClientHeight    =   3975
+   ClientLeft      =   10005
+   ClientTop       =   12495
    ClientWidth     =   4440
    BeginProperty Font 
       Name            =   "Tahoma"
@@ -18,8 +18,9 @@ Begin VB.Form frmPreview
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3540
-   ScaleWidth      =   4440
+   ScaleHeight     =   265
+   ScaleMode       =   3  'Pixel
+   ScaleWidth      =   296
    ShowInTaskbar   =   0   'False
    Begin VB.PictureBox PreviewGrh 
       Appearance      =   0  'Flat
@@ -35,11 +36,10 @@ Begin VB.Form frmPreview
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000008&
-      Height          =   3540
+      Height          =   4020
       Left            =   0
-      ScaleHeight     =   234
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   295
+      ScaleHeight     =   3990
+      ScaleWidth      =   4425
       TabIndex        =   0
       TabStop         =   0   'False
       Top             =   0
@@ -52,27 +52,3 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-
-Public Sub fPreviewGrh(ByVal GrhIn As Long)
-'*************************************************
-'Author: Unkwown
-'Last modified: 22/05/06
-'*************************************************
-
-    If Val(GrhIn) < 1 Then
-      frmSuperficies.cGrh.Text = grhCount
-      Exit Sub
-    End If
-    
-    If Val(GrhIn) > grhCount Then
-      frmSuperficies.cGrh.Text = 1
-      Exit Sub
-    End If
-    
-    'Change CurrentGrh
-    CurrentGrh.GrhIndex = GrhIn
-    CurrentGrh.Started = 1
-    CurrentGrh.FrameCounter = 1
-    CurrentGrh.speed = GrhData(CurrentGrh.GrhIndex).speed
-
-End Sub
