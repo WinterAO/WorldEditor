@@ -3,7 +3,7 @@ Begin VB.Form frmSuperficies
    BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Superficies"
-   ClientHeight    =   6300
+   ClientHeight    =   6600
    ClientLeft      =   9420
    ClientTop       =   6465
    ClientWidth     =   4455
@@ -21,15 +21,25 @@ Begin VB.Form frmSuperficies
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   420
+   ScaleHeight     =   440
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   297
    ShowInTaskbar   =   0   'False
+   Begin VB.CheckBox chkAutoCompletarSuperficies 
+      BackColor       =   &H00424242&
+      Caption         =   "Auto-Completar &Superficies"
+      ForeColor       =   &H8000000B&
+      Height          =   345
+      Left            =   210
+      TabIndex        =   11
+      Top             =   4920
+      Width           =   3525
+   End
    Begin WinterMapEditor.lvButtons_H cQuitarEnTodasLasCapas 
       Height          =   375
-      Left            =   150
+      Left            =   120
       TabIndex        =   8
-      Top             =   5460
+      Top             =   5760
       Width           =   2175
       _ExtentX        =   3836
       _ExtentY        =   661
@@ -56,9 +66,9 @@ Begin VB.Form frmSuperficies
    End
    Begin WinterMapEditor.lvButtons_H cQuitarEnEstaCapa 
       Height          =   405
-      Left            =   150
+      Left            =   120
       TabIndex        =   7
-      Top             =   5040
+      Top             =   5340
       Width           =   2175
       _ExtentX        =   3836
       _ExtentY        =   714
@@ -85,9 +95,9 @@ Begin VB.Form frmSuperficies
    End
    Begin WinterMapEditor.lvButtons_H cSeleccionarSuperficie 
       Height          =   795
-      Left            =   2490
+      Left            =   2460
       TabIndex        =   6
-      Top             =   5040
+      Top             =   5340
       Width           =   1875
       _ExtentX        =   3307
       _ExtentY        =   1402
@@ -148,9 +158,9 @@ Begin VB.Form frmSuperficies
    End
    Begin WinterMapEditor.lvButtons_H LvBEditarIndice 
       Height          =   375
-      Left            =   210
+      Left            =   180
       TabIndex        =   9
-      Top             =   5880
+      Top             =   6180
       Width           =   4095
       _ExtentX        =   7223
       _ExtentY        =   661

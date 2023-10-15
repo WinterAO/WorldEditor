@@ -826,9 +826,6 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuLineEdicion1 
          Caption         =   "-"
       End
-      Begin VB.Menu mnuAutoCompletarSuperficies 
-         Caption         =   "Auto-Completar &Superficies"
-      End
       Begin VB.Menu mnuAutoCapturarSuperficie 
          Caption         =   "Auto-C&apturar información de la Superficie"
       End
@@ -1155,15 +1152,6 @@ Private Sub mnuAcerca_Click()
     frmAcercade.Show , frmMain
 End Sub
 
-Private Sub mnuAutoCompletarSuperficies_Click()
-    '*************************************************
-    'Author: Lorwik
-    'Last modified: 27/04/2021
-    '*************************************************
-    mnuAutoCompletarSuperficies.Checked = (mnuAutoCompletarSuperficies.Checked = False)
-    
-End Sub
-
 Private Sub mnuBloquearBordes_Click()
     '*************************************************
     'Author: ^[GS]^
@@ -1228,16 +1216,16 @@ End Sub
 
 Private Sub mnuEliminarZona_Click()
     Dim zonaDel As Integer
-    Dim X, y As Integer
+    Dim X, Y As Integer
     zonaDel = InputBox("Por favor, ingrese el número de la zona a borrar:")
     
     For X = XMinMapSize To XMaxMapSize
     
-        For y = YMinMapSize To YMaxMapSize
+        For Y = YMinMapSize To YMaxMapSize
         
-            If MapData(X, y).ZonaIndex = zonaDel Then MapData(X, y).ZonaIndex = 0
+            If MapData(X, Y).ZonaIndex = zonaDel Then MapData(X, Y).ZonaIndex = 0
         
-        Next y
+        Next Y
         
     Next X
 
@@ -1518,25 +1506,25 @@ End Sub
 Private Sub MainViewPic_MouseMove(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
-                                  y As Single)
+                                  Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 27/04/2021
     '*************************************************
 
-    Call Form_MouseMove(Button, Shift, X, y)
+    Call Form_MouseMove(Button, Shift, X, Y)
 End Sub
 
 Private Sub MainViewPic_MouseDown(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
-                                  y As Single)
+                                  Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 27/04/2021
     '*************************************************
 
-    Call Form_MouseDown(Button, Shift, X, y)
+    Call Form_MouseDown(Button, Shift, X, Y)
 End Sub
 
 Private Sub MainViewPic_DblClick()
@@ -1650,7 +1638,7 @@ Private Sub Form_DblClick()
     End If
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -1661,7 +1649,7 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y A
     
     If Not MapaCargado Then Exit Sub
     
-    Call ConvertCPtoTP(X, y, tX, tY)
+    Call ConvertCPtoTP(X, Y, tX, tY)
     
     If EstadoSelect > 0 And Button = 2 Then
         EstadoSelect = 0
@@ -1683,7 +1671,7 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y A
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -1695,7 +1683,7 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y A
     If Not MapaCargado Then Exit Sub
     HotKeysAllow = True
 
-    Call ConvertCPtoTP(X, y, tX, tY)
+    Call ConvertCPtoTP(X, Y, tX, tY)
     
     MousePos = "X: " & tX & " - Y: " & tY
     
@@ -1803,18 +1791,18 @@ End Sub
 
 Private Sub mnuzonanula_Click()
     Dim X As Integer
-    Dim y As Integer
+    Dim Y As Integer
     
     For X = XMinMapSize To XMaxMapSize
     
-        For y = YMinMapSize To YMaxMapSize
+        For Y = YMinMapSize To YMaxMapSize
         
-            If MapData(X, y).ZonaIndex = 0 Then
-                MsgBox "Se ha encontrado una zona nula en la posicion X: " & X & " Y: " & y
+            If MapData(X, Y).ZonaIndex = 0 Then
+                MsgBox "Se ha encontrado una zona nula en la posicion X: " & X & " Y: " & Y
                 Exit Sub
             End If
         
-        Next y
+        Next Y
     
     Next X
     

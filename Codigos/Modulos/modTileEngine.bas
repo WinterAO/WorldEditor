@@ -672,7 +672,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
     
                         End If
     
-                        If frmMain.mnuAutoCompletarSuperficies.Checked = False Then
+                        If frmSuperficies.chkAutoCompletarSuperficies.value = vbUnchecked Then
                             aux = Val(frmSuperficies.cGrh.Text) + (((Y + dy) Mod frmConfigSup.mLargo.Text) * frmConfigSup.mAncho.Text) + ((X + dX) Mod frmConfigSup.mAncho.Text)
     
                             If MapData(X, Y).Graphic(bCapa).GrhIndex <> aux Then

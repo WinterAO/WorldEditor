@@ -211,7 +211,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
 
                         End If
                             
-                        If frmMain.mnuAutoCompletarSuperficies.Checked = False Then
+                        If frmSuperficies.chkAutoCompletarSuperficies.value = vbUnchecked Then
                             MapInfo.Changed = 1 'Set changed flag
                             aux = Val(frmSuperficies.cGrh.Text) + (((tY + dy) Mod frmConfigSup.mLargo.Text) * frmConfigSup.mAncho.Text) + ((tX + dX) Mod frmConfigSup.mAncho.Text)
                             
