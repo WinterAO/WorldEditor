@@ -480,6 +480,123 @@ Public Sub CargarMinimapa()
     
 End Sub
 
+Public Sub CargarCabezas()
+'*************************************
+'Autor: Lorwik
+'Fecha: ???
+'Descripción: Carga el index de Cabezas
+'*************************************
+On Error GoTo errhandler:
+
+    Dim buffer()    As Byte
+    Dim InfoHead    As INFOHEADER
+    Dim i           As Integer
+    Dim NumHeads As Integer
+    Dim LaCabecera  As tCabecera
+    Dim fileBuff  As clsByteBuffer
+    
+    InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Head.ind"))
+    
+    If InfoHead.lngFileSize <> 0 Then
+    
+        Extract_File_Memory Scripts, LCase$("Head.ind"), buffer()
+        
+        Set fileBuff = New clsByteBuffer
+        
+        fileBuff.initializeReader buffer
+        
+        LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
+        LaCabecera.CRC = fileBuff.getLong
+        LaCabecera.MagicWord = fileBuff.getLong
+        
+        NumHeads = fileBuff.getInteger()  'cantidad de cabezas
+    
+        ReDim heads(0 To NumHeads) As tHead
+                
+        For i = 1 To NumHeads
+            heads(i).Std = fileBuff.getByte()
+            heads(i).Texture = fileBuff.getInteger()
+            heads(i).startX = fileBuff.getInteger()
+            heads(i).startY = fileBuff.getInteger()
+        Next i
+        
+        Erase buffer
+    End If
+    
+    Set fileBuff = Nothing
+    
+errhandler:
+    
+    If Err.Number <> 0 Then
+        
+        If Err.Number = 53 Then
+            Call MsgBox("El archivo Head.ind no existe. Por favor, reinstale el juego.", , Form_Caption)
+            Call CloseMapEditor
+        End If
+        
+    End If
+    
+End Sub
+
+Public Sub CargarCascos()
+'*************************************
+'Autor: Lorwik
+'Fecha: ???
+'Descripción: Carga el index de Cascos
+'*************************************
+On Error GoTo errhandler:
+
+    Dim buffer()    As Byte
+    Dim dLen        As Long
+    Dim InfoHead    As INFOHEADER
+    Dim i           As Integer
+    Dim NumCascos As Integer
+    Dim LaCabecera  As tCabecera
+    Dim fileBuff  As clsByteBuffer
+    
+    InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Helmet.ind"))
+    
+    If InfoHead.lngFileSize <> 0 Then
+    
+        Extract_File_Memory Scripts, LCase$("Helmet.ind"), buffer()
+        
+        Set fileBuff = New clsByteBuffer
+        
+        fileBuff.initializeReader buffer
+        
+        LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
+        LaCabecera.CRC = fileBuff.getLong
+        LaCabecera.MagicWord = fileBuff.getLong
+    
+        NumCascos = fileBuff.getInteger()   'cantidad de cascos
+             
+        ReDim Cascos(0 To NumCascos) As tHead
+             
+        For i = 1 To NumCascos
+            Cascos(i).Std = fileBuff.getByte()
+            Cascos(i).Texture = fileBuff.getInteger()
+            Cascos(i).startX = fileBuff.getInteger()
+            Cascos(i).startY = fileBuff.getInteger()
+        Next i
+         
+        Erase buffer
+    End If
+    
+    Set fileBuff = Nothing
+    
+errhandler:
+    
+    If Err.Number <> 0 Then
+        
+        If Err.Number = 53 Then
+            Call MsgBox("El archivo Helmet.ind no existe. Por favor, reinstale el juego.", , Form_Caption)
+            Call CloseMapEditor
+        End If
+        
+    End If
+    
+End Sub
+
 Sub CargarCuerpos()
 '*************************************
 'Autor: Lorwik
@@ -515,9 +632,8 @@ On Error GoTo errhandler:
         NumCuerpos = fileBuff.getInteger()
     
         'Resize array
-        ReDim BodyData(0 To NumCuerpos) As tBodyData
+        ReDim BodyData(0 To NumCuerpos) As BodyData
         ReDim MisCuerpos(0 To NumCuerpos) As tIndiceCuerpo
-        
     
         For i = 1 To NumCuerpos
             MisCuerpos(i).Body(1) = fileBuff.getLong()
@@ -534,7 +650,7 @@ On Error GoTo errhandler:
                 Call InitGrh(BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0)
                 
                 BodyData(i).HeadOffset.X = MisCuerpos(i).HeadOffsetX
-                BodyData(i).HeadOffset.y = MisCuerpos(i).HeadOffsetY
+                BodyData(i).HeadOffset.Y = MisCuerpos(i).HeadOffsetY
             End If
         Next i
     
@@ -548,13 +664,155 @@ errhandler:
     If Err.Number <> 0 Then
         
         If Err.Number = 53 Then
-            Call MsgBox("El archivo Personajes.ind no existe. ")
+            Call MsgBox("El archivo Personajes.ind no existe. Por favor, reinstale el juego.", , Form_Caption)
             Call CloseMapEditor
         End If
         
     End If
     
 End Sub
+
+Sub CargarAnimArmas()
+'*************************************
+'Autor: Lorwik
+'Fecha: ???
+'Descripción: Carga el index de Armas
+'*************************************
+On Error GoTo errhandler:
+
+    Dim buffer()    As Byte
+    Dim dLen        As Long
+    Dim InfoHead    As INFOHEADER
+    Dim i As Long
+    Dim NumWeaponAnims As Integer
+    Dim LaCabecera As tCabecera
+    Dim fileBuff  As clsByteBuffer
+    
+    InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Armas.ind"))
+    
+    If InfoHead.lngFileSize <> 0 Then
+    
+        Extract_File_Memory Scripts, LCase$("Armas.ind"), buffer()
+        
+        Set fileBuff = New clsByteBuffer
+        
+        fileBuff.initializeReader buffer
+        
+        LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
+        LaCabecera.CRC = fileBuff.getLong
+        LaCabecera.MagicWord = fileBuff.getLong
+    
+        'num de armas
+        NumWeaponAnims = fileBuff.getInteger()
+        
+        'Resize array
+        ReDim WeaponAnimData(1 To NumWeaponAnims) As WeaponAnimData
+        ReDim Weapons(1 To NumWeaponAnims) As tIndiceArmas
+        
+        For i = 1 To NumWeaponAnims
+            Weapons(i).weapon(1) = fileBuff.getLong()
+            Weapons(i).weapon(2) = fileBuff.getLong()
+            Weapons(i).weapon(3) = fileBuff.getLong()
+            Weapons(i).weapon(4) = fileBuff.getLong()
+            
+            If Weapons(i).weapon(1) Then
+            
+                Call InitGrh(WeaponAnimData(i).WeaponWalk(1), Weapons(i).weapon(1), 0)
+                Call InitGrh(WeaponAnimData(i).WeaponWalk(2), Weapons(i).weapon(2), 0)
+                Call InitGrh(WeaponAnimData(i).WeaponWalk(3), Weapons(i).weapon(3), 0)
+                Call InitGrh(WeaponAnimData(i).WeaponWalk(4), Weapons(i).weapon(4), 0)
+            
+            End If
+        Next i
+    
+        Erase buffer
+    End If
+    
+    Set fileBuff = Nothing
+
+errhandler:
+    
+    If Err.Number <> 0 Then
+        
+        If Err.Number = 53 Then
+            Call MsgBox("El archivo Armas.ind no existe. Por favor, reinstale el juego.", , Form_Caption)
+            Call CloseMapEditor
+        End If
+        
+    End If
+
+End Sub
+
+Sub CargarAnimEscudos()
+'*************************************
+'Autor: Lorwik
+'Fecha: ???
+'Descripción: Carga el index de Escudos
+'*************************************
+On Error GoTo errhandler:
+
+    Dim buffer()    As Byte
+    Dim InfoHead    As INFOHEADER
+    Dim i As Long
+    Dim NumEscudosAnims As Integer
+    Dim LaCabecera As tCabecera
+    Dim fileBuff  As clsByteBuffer
+    
+    InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Escudos.ind"))
+    
+    If InfoHead.lngFileSize <> 0 Then
+    
+        Extract_File_Memory Scripts, LCase$("Escudos.ind"), buffer()
+        
+        Set fileBuff = New clsByteBuffer
+        
+        fileBuff.initializeReader buffer
+        
+        LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
+        LaCabecera.CRC = fileBuff.getLong
+        LaCabecera.MagicWord = fileBuff.getLong
+    
+        'num de escudos
+        NumEscudosAnims = fileBuff.getInteger()
+        
+        'Resize array
+        ReDim ShieldAnimData(1 To NumEscudosAnims) As ShieldAnimData
+        ReDim Shields(1 To NumEscudosAnims) As tIndiceEscudos
+        
+        For i = 1 To NumEscudosAnims
+            Shields(i).shield(1) = fileBuff.getLong()
+            Shields(i).shield(2) = fileBuff.getLong()
+            Shields(i).shield(3) = fileBuff.getLong()
+            Shields(i).shield(4) = fileBuff.getLong()
+            
+            If Shields(i).shield(1) Then
+            
+                Call InitGrh(ShieldAnimData(i).ShieldWalk(1), Shields(i).shield(1), 0)
+                Call InitGrh(ShieldAnimData(i).ShieldWalk(2), Shields(i).shield(2), 0)
+                Call InitGrh(ShieldAnimData(i).ShieldWalk(3), Shields(i).shield(3), 0)
+                Call InitGrh(ShieldAnimData(i).ShieldWalk(4), Shields(i).shield(4), 0)
+            
+            End If
+        Next i
+    
+        Erase buffer
+    End If
+    
+    Set fileBuff = Nothing
+
+errhandler:
+    
+    If Err.Number <> 0 Then
+        
+        If Err.Number = 53 Then
+            Call MsgBox("El archivo Escudos.ind no existe. Por favor, reinstale el juego.", , Form_Caption)
+            Call CloseMapEditor
+        End If
+        
+    End If
+    
+End Sub
+
 
 Private Function Grh_Check(ByVal grh_index As Long) As Boolean
 '**************************************************************
@@ -670,6 +928,9 @@ On Error Resume Next
             
             .Body = Val(Leer.GetValue("NPC" & NPC, "Body"))
             .Head = Val(Leer.GetValue("NPC" & NPC, "Head"))
+            .WeaponAnim = Val(Leer.GetValue("NPC" & NPC, "WeaponAnim"))
+            .CascoAnim = Val(Leer.GetValue("NPC" & NPC, "CascoAnim"))
+            .ShieldAnim = Val(Leer.GetValue("NPC" & NPC, "ShieldAnim"))
             .Heading = Val(Leer.GetValue("NPC" & NPC, "Heading"))
             
             frmNPCs.LynxNPCs.AddItem NPC

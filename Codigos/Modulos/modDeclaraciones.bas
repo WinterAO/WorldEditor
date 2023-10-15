@@ -96,12 +96,14 @@ Public ClienteWidth As Integer
 'Contador de tiles
 Public ContadorTiles As Long
 
-'Heading Constants
-Public Enum eDireccion
-    NORTH = 1
-    EAST = 2
-    SOUTH = 3
-    WEST = 4
+Public Const OFFSET_HEAD As Integer = -34
+
+'Direcciones
+Public Enum E_Heading
+    SOUTH = 1
+    NORTH = 2
+    WEST = 3
+    EAST = 4
 End Enum
 
 'apunta a una estructura grhdata y mantiene la animacion
@@ -141,37 +143,73 @@ End Type
 'Posicion en un mapa
 Public Type Position
     X As Integer
-    y As Integer
+    Y As Integer
+End Type
+
+'Lista de cuerpos
+Public Type BodyData
+    Walk(E_Heading.SOUTH To E_Heading.EAST) As Grh
+    HeadOffset As Position
+End Type
+
+'Lista de cabezas
+Public Type HeadData
+    Head(E_Heading.SOUTH To E_Heading.EAST) As Grh
+    offset As Position
+End Type
+
+'Lista de las animaciones de las armas
+Type WeaponAnimData
+    WeaponWalk(E_Heading.SOUTH To E_Heading.EAST) As Grh
+End Type
+
+'Lista de las animaciones de los escudos
+Type ShieldAnimData
+    ShieldWalk(E_Heading.SOUTH To E_Heading.EAST) As Grh
 End Type
 
 'Holds a world position
 Public Type WorldPos
     Map As Integer
     X As Integer
-    y As Integer
+    Y As Integer
 End Type
 
-' Cuerpos body.dat
+'Lista de cabezas
+Public Type tHead
+    Std As Byte
+    Texture As Integer
+    startX As Integer
+    startY As Integer
+End Type
+
+Public heads() As tHead
+Public Cascos() As tHead
+
 Public Type tIndiceCuerpo
     Body(1 To 4) As Long
     HeadOffsetX As Integer
     HeadOffsetY As Integer
 End Type
 
-' Lista de Cuerpos body.dat
-Public Type tBodyData
-    Walk(1 To 4) As Grh
-    HeadOffset As Position
+Public Type tIndiceAtaque
+    Body(1 To 4) As Long
+    HeadOffsetX As Integer
+    HeadOffsetY As Integer
 End Type
 
-'Lista de cabezas
-Public Type tIndiceCabeza
-    Head(1 To 4) As Long
+Public Type tIndiceFx
+    Animacion As Long
+    OffsetX As Integer
+    OffsetY As Integer
 End Type
 
-'Heads list
-Public Type tHeadData
-    Head(0 To 4) As Grh
+Public Type tIndiceArmas
+    weapon(1 To 4) As Long
+End Type
+
+Public Type tIndiceEscudos
+    shield(1 To 4) As Long
 End Type
 
 'Holds info about a object
@@ -241,8 +279,11 @@ Public Type Char
     Heading As Byte
     Pos As Position
 
-    Body As tBodyData
-    Head As tHeadData
+    Body As BodyData
+    Head As Integer
+    Casco As Integer
+    Arma As WeaponAnimData
+    Escudo As ShieldAnimData
     
     Moving As Byte
     MoveOffset As Position
@@ -270,6 +311,9 @@ Public Type NpcData
     Hostile As Byte
     Body As Integer
     Head As Integer
+    WeaponAnim As Integer
+    CascoAnim As Integer
+    ShieldAnim As Integer
     Heading As Byte
     NpcType As Byte
 End Type
@@ -288,10 +332,13 @@ End Type
 
 '**********Arrays Publicas************
 Public GrhData() As GrhData 'Holds all the grh data
-Public BodyData() As tBodyData
-Public HeadData() As tHeadData
+Public BodyData() As BodyData
+Public HeadData() As HeadData
+Public WeaponAnimData() As WeaponAnimData
+Public ShieldAnimData() As ShieldAnimData
+Public CascoAnimData() As HeadData
+
 Public MapData() As MapBlock 'Holds map data for current map
-Public SuperMapData() As MapBlock
 Public CharList(1 To 10000) As Char 'Holds info about all characters on map
 Public MapZonas() As tMapInfo
 Public SupData() As SupData

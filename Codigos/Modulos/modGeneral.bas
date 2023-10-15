@@ -57,11 +57,27 @@ Sub Main()
     
     frmCarga.lblStatus.Caption = "Cargando Minimapa."
     DoEvents
-    'Call modCarga.CargarMinimapa
+    Call modCarga.CargarMinimapa
+    
+    frmCarga.lblStatus.Caption = "Cargando Cabezas."
+    DoEvents
+    Call modCarga.CargarCabezas
+    
+    frmCarga.lblStatus.Caption = "Cargando Cascos."
+    DoEvents
+    Call modCarga.CargarCascos
     
     frmCarga.lblStatus.Caption = "Cargando Cuerpos."
     DoEvents
     Call modCarga.CargarCuerpos
+    
+    frmCarga.lblStatus.Caption = "Cargando Cabezas."
+    DoEvents
+    Call modCarga.CargarAnimArmas
+    
+    frmCarga.lblStatus.Caption = "Cargando Cabezas."
+    DoEvents
+    Call modCarga.CargarAnimEscudos
     
     frmCarga.lblStatus.Caption = "Cargando Indice de NPC's."
     DoEvents
@@ -178,15 +194,15 @@ Public Sub CheckKeys()
     '[/Loopzer]
     
     If GetKeyState(vbKeyUp) < 0 Then
-        If UserPos.y < YMinMapSize Then Exit Sub ' 10
-        If LegalPos(UserPos.X, UserPos.y - 1) And WalkMode = True Then
+        If UserPos.Y < YMinMapSize Then Exit Sub ' 10
+        If LegalPos(UserPos.X, UserPos.Y - 1) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.y = UserPos.y - 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
+            UserPos.Y = UserPos.Y - 1
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
             dLastWalk = GetTickCount
             
         ElseIf WalkMode = False Then
-            UserPos.y = UserPos.y - 1
+            UserPos.Y = UserPos.Y - 1
 
         End If
         
@@ -198,10 +214,10 @@ Public Sub CheckKeys()
 
     If GetKeyState(vbKeyRight) < 0 Then
         If UserPos.X > XMaxMapSize Then Exit Sub ' 89
-        If LegalPos(UserPos.X + 1, UserPos.y) And WalkMode = True Then
+        If LegalPos(UserPos.X + 1, UserPos.Y) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
             UserPos.X = UserPos.X + 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
             dLastWalk = GetTickCount
             
         ElseIf WalkMode = False Then
@@ -216,16 +232,16 @@ Public Sub CheckKeys()
     End If
 
     If GetKeyState(vbKeyDown) < 0 Then
-        If UserPos.y > YMaxMapSize Then Exit Sub ' 92
+        If UserPos.Y > YMaxMapSize Then Exit Sub ' 92
         
-        If LegalPos(UserPos.X, UserPos.y + 1) And WalkMode = True Then
+        If LegalPos(UserPos.X, UserPos.Y + 1) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.y = UserPos.y + 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
+            UserPos.Y = UserPos.Y + 1
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
             dLastWalk = GetTickCount
             
         ElseIf WalkMode = False Then
-            UserPos.y = UserPos.y + 1
+            UserPos.Y = UserPos.Y + 1
             
         End If
         
@@ -237,10 +253,10 @@ Public Sub CheckKeys()
 
     If GetKeyState(vbKeyLeft) < 0 Then
         If UserPos.X < XMinMapSize Then Exit Sub ' 12
-        If LegalPos(UserPos.X - 1, UserPos.y) And WalkMode = True Then
+        If LegalPos(UserPos.X - 1, UserPos.Y) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
             UserPos.X = UserPos.X - 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
             dLastWalk = GetTickCount
         ElseIf WalkMode = False Then
             UserPos.X = UserPos.X - 1
@@ -274,13 +290,13 @@ Public Sub ToggleWalkMode()
     If Not WalkMode Then
         'Erase character
         Call EraseChar(UserCharIndex)
-        MapData(UserPos.X, UserPos.y).CharIndex = 0
+        MapData(UserPos.X, UserPos.Y).CharIndex = 0
         
     Else
         'MakeCharacter
-        If LegalPos(UserPos.X, UserPos.y) Then
-            Call MakeChar(NextOpenChar(), 1, 1, SOUTH, UserPos.X, UserPos.y)
-            UserCharIndex = MapData(UserPos.X, UserPos.y).CharIndex
+        If LegalPos(UserPos.X, UserPos.Y) Then
+            Call MakeChar(NextOpenChar(), 107, 1, SOUTH, UserPos.X, UserPos.Y, 1, 11, 81)
+            UserCharIndex = MapData(UserPos.X, UserPos.Y).CharIndex
             frmMain.mnuModoCaminata.Checked = True
             
         Else
@@ -308,10 +324,10 @@ Public Sub ObtenerCuadrante(ByRef Cuadrante As Integer, ByRef tX As Integer, ByR
     Dim cY As Integer
     
     cX = Fix((UserPos.X / 100))
-    cY = Fix((UserPos.y / 100))
+    cY = Fix((UserPos.Y / 100))
     
     tX = UserPos.X - (cX * 100)
-    tY = UserPos.y - (cY * 100)
+    tY = UserPos.Y - (cY * 100)
     
     Cuadrante = cX * cY
 

@@ -37,10 +37,10 @@ Public Sub DobleClick(tX As Integer, tY As Integer)
                 
                 'modMapIO.AbrirunMapa frmMain.Dialog.filename
                 UserPos.X = tTrans.X
-                UserPos.y = tTrans.y
+                UserPos.Y = tTrans.Y
                 
                 If WalkMode = True Then
-                    MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
+                    MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
                     CharList(UserCharIndex).Heading = SOUTH
                 End If
                 
@@ -73,6 +73,12 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
     Dim Head     As Integer
 
     Dim Body     As Integer
+    
+    Dim Arma     As Integer
+    
+    Dim Escudo   As Integer
+    
+    Dim Casco    As Integer
 
     Dim Heading  As Byte
 
@@ -303,20 +309,20 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                         
                         If tX >= 90 Then ' 21 ' derecha
                             .TileExit.X = 12
-                            .TileExit.y = tY
+                            .TileExit.Y = tY
                             
                         ElseIf tX <= 11 Then ' 9 ' izquierda
                             .TileExit.X = 91
-                            .TileExit.y = tY
+                            .TileExit.Y = tY
                             
                         End If
                         
                         If tY >= 91 Then ' 94 '''' hacia abajo
-                            .TileExit.y = 11
+                            .TileExit.Y = 11
                             .TileExit.X = tX
                             
                         ElseIf tY <= 10 Then ''' hacia arriba
-                            .TileExit.y = 90
+                            .TileExit.Y = 90
                             .TileExit.X = tX
                             
                         End If
@@ -325,7 +331,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                         MapInfo.Changed = 1 'Set changed flag
                         .TileExit.Map = Val(frmTraslados.tTMapa.Text)
                         .TileExit.X = Val(frmTraslados.tTX.Text)
-                        .TileExit.y = Val(frmTraslados.tTY.Text)
+                        .TileExit.Y = Val(frmTraslados.tTY.Text)
 
                     End If
                         
@@ -333,7 +339,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                     MapInfo.Changed = 1 'Set changed flag
                     .TileExit.Map = 0
                     .TileExit.X = 0
-                    .TileExit.y = 0
+                    .TileExit.Y = 0
 
                 End If
                 
@@ -368,8 +374,11 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             MapInfo.Changed = 1 'Set changed flag
                             Body = NpcData(NPCIndex).Body
                             Head = NpcData(NPCIndex).Head
+                            Casco = NpcData(NPCIndex).CascoAnim
+                            Arma = NpcData(NPCIndex).WeaponAnim
+                            Escudo = NpcData(NPCIndex).ShieldAnim
                             Heading = NpcData(NPCIndex).Heading
-                            Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY)
+                            Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY, Arma, Escudo, Casco)
                             .NPCIndex = NPCIndex
 
                         End If
@@ -385,8 +394,11 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             MapInfo.Changed = 1 'Set changed flag
                             Body = NpcData(NPCIndex).Body
                             Head = NpcData(NPCIndex).Head
+                            Casco = NpcData(NPCIndex).CascoAnim
+                            Arma = NpcData(NPCIndex).WeaponAnim
+                            Escudo = NpcData(NPCIndex).ShieldAnim
                             Heading = NpcData(NPCIndex).Heading
-                            Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY)
+                            Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY, Arma, Escudo, Casco)
                             .NPCIndex = NPCIndex
 
                         End If
@@ -562,11 +574,11 @@ Public Sub DePegar()
 'Last modified: 21/11/07
 '*************************************************
     Dim X As Integer
-    Dim y As Integer
+    Dim Y As Integer
 
     For X = 0 To DeSeleccionAncho - 1
-        For y = 0 To DeSeleccionAlto - 1
-             MapData(X + DeSeleccionOX, y + DeSeleccionOY) = DeSeleccionMap(X, y)
+        For Y = 0 To DeSeleccionAlto - 1
+             MapData(X + DeSeleccionOX, Y + DeSeleccionOY) = DeSeleccionMap(X, Y)
         Next
     Next
 End Sub
@@ -581,7 +593,7 @@ Public Sub PegarSeleccion() '(mx As Integer, my As Integer)
     Static UltimoY As Integer
     
     Dim X As Integer
-    Dim y As Integer
+    Dim Y As Integer
     
     If UltimoX = SobreX And UltimoY = SobreY Then Exit Sub
     
@@ -598,14 +610,14 @@ Public Sub PegarSeleccion() '(mx As Integer, my As Integer)
     ReDim DeSeleccionMap(DeSeleccionAncho, DeSeleccionAlto) As MapBlock
     
     For X = 0 To DeSeleccionAncho - 1
-        For y = 0 To DeSeleccionAlto - 1
-            DeSeleccionMap(X, y) = MapData(X + SobreX, y + SobreY)
+        For Y = 0 To DeSeleccionAlto - 1
+            DeSeleccionMap(X, Y) = MapData(X + SobreX, Y + SobreY)
         Next
     Next
     
     For X = 0 To SeleccionAncho - 1
-        For y = 0 To SeleccionAlto - 1
-             MapData(X + SobreX, y + SobreY) = SeleccionMap(X, y)
+        For Y = 0 To SeleccionAlto - 1
+             MapData(X + SobreX, Y + SobreY) = SeleccionMap(X, Y)
         Next
     Next
     Seleccionando = False
@@ -617,7 +629,7 @@ Public Sub AccionSeleccion()
 'Last modified: 21/11/07
 '*************************************************
     Dim X As Integer
-    Dim y As Integer
+    Dim Y As Integer
     
     SeleccionAncho = Abs(SeleccionIX - SeleccionFX) + 1
     SeleccionAlto = Abs(SeleccionIY - SeleccionFY) + 1
@@ -629,14 +641,14 @@ Public Sub AccionSeleccion()
     ReDim DeSeleccionMap(DeSeleccionAncho, DeSeleccionAlto) As MapBlock
     
     For X = 0 To SeleccionAncho - 1
-        For y = 0 To SeleccionAlto - 1
-            DeSeleccionMap(X, y) = MapData(X + SeleccionIX, y + SeleccionIY)
+        For Y = 0 To SeleccionAlto - 1
+            DeSeleccionMap(X, Y) = MapData(X + SeleccionIX, Y + SeleccionIY)
         Next
     Next
     
     For X = 0 To SeleccionAncho - 1
-        For y = 0 To SeleccionAlto - 1
-           ClickEdit vbLeftButton, SeleccionIX + X, SeleccionIY + y
+        For Y = 0 To SeleccionAlto - 1
+           ClickEdit vbLeftButton, SeleccionIX + X, SeleccionIY + Y
         Next
     Next
     Seleccionando = False
@@ -650,7 +662,7 @@ Public Sub CortarSeleccion()
     CopiarSeleccion
     
     Dim X As Integer
-    Dim y As Integer
+    Dim Y As Integer
     Dim Vacio As MapBlock
     
     DeSeleccionAncho = SeleccionAncho
@@ -661,14 +673,14 @@ Public Sub CortarSeleccion()
     ReDim DeSeleccionMap(DeSeleccionAncho, DeSeleccionAlto) As MapBlock
     
     For X = 0 To SeleccionAncho - 1
-        For y = 0 To SeleccionAlto - 1
-            DeSeleccionMap(X, y) = MapData(X + SeleccionIX, y + SeleccionIY)
+        For Y = 0 To SeleccionAlto - 1
+            DeSeleccionMap(X, Y) = MapData(X + SeleccionIX, Y + SeleccionIY)
         Next
     Next
     
     For X = 0 To SeleccionAncho - 1
-        For y = 0 To SeleccionAlto - 1
-             MapData(X + SeleccionIX, y + SeleccionIY) = Vacio
+        For Y = 0 To SeleccionAlto - 1
+             MapData(X + SeleccionIX, Y + SeleccionIY) = Vacio
         Next
     Next
     Seleccionando = False
@@ -681,7 +693,7 @@ Public Sub CopiarSeleccion(Optional ByVal Borde As Boolean = False)
 '*************************************************
     'podria usar copy mem , pero por las dudas no XD
     Dim X As Integer
-    Dim y As Integer
+    Dim Y As Integer
     Dim i As Byte
     
     EstadoSelect = eEstadoSelect.Copiado
@@ -693,33 +705,33 @@ Public Sub CopiarSeleccion(Optional ByVal Borde As Boolean = False)
     
     If Not Borde Then
         For X = 0 To SeleccionAncho - 1
-            For y = 0 To SeleccionAlto - 1
-                SeleccionMap(X, y) = MapData(X + SeleccionIX, y + SeleccionIY)
+            For Y = 0 To SeleccionAlto - 1
+                SeleccionMap(X, Y) = MapData(X + SeleccionIX, Y + SeleccionIY)
             Next
         Next
         
     Else
     
         For X = 0 To SeleccionAncho - 1
-            For y = 0 To SeleccionAlto - 1
-                With SeleccionMap(X, y)
-                    .bLocked = MapData(X + SeleccionIX, y + SeleccionIY).bLocked
-                    .Trigger = MapData(X + SeleccionIX, y + SeleccionIY).Trigger
-                    .Particle_Index = MapData(X + SeleccionIX, y + SeleccionIY).Particle_Index
-                    .Particle_Group_Index = MapData(X + SeleccionIX, y + SeleccionIY).Particle_Group_Index
-                    .OBJInfo = MapData(X + SeleccionIX, y + SeleccionIY).OBJInfo
-                    .ObjGrh = MapData(X + SeleccionIX, y + SeleccionIY).ObjGrh
-                    .NPCIndex = MapData(X + SeleccionIX, y + SeleccionIY).NPCIndex
-                    .Light = MapData(X + SeleccionIX, y + SeleccionIY).Light
+            For Y = 0 To SeleccionAlto - 1
+                With SeleccionMap(X, Y)
+                    .bLocked = MapData(X + SeleccionIX, Y + SeleccionIY).bLocked
+                    .Trigger = MapData(X + SeleccionIX, Y + SeleccionIY).Trigger
+                    .Particle_Index = MapData(X + SeleccionIX, Y + SeleccionIY).Particle_Index
+                    .Particle_Group_Index = MapData(X + SeleccionIX, Y + SeleccionIY).Particle_Group_Index
+                    .OBJInfo = MapData(X + SeleccionIX, Y + SeleccionIY).OBJInfo
+                    .ObjGrh = MapData(X + SeleccionIX, Y + SeleccionIY).ObjGrh
+                    .NPCIndex = MapData(X + SeleccionIX, Y + SeleccionIY).NPCIndex
+                    .Light = MapData(X + SeleccionIX, Y + SeleccionIY).Light
                     For i = 1 To 4
-                        .Graphic(i) = MapData(X + SeleccionIX, y + SeleccionIY).Graphic(i)
+                        .Graphic(i) = MapData(X + SeleccionIX, Y + SeleccionIY).Graphic(i)
                     Next i
-                    .FxIndex = MapData(X + SeleccionIX, y + SeleccionIY).FxIndex
-                    .fX = MapData(X + SeleccionIX, y + SeleccionIY).fX
+                    .FxIndex = MapData(X + SeleccionIX, Y + SeleccionIY).FxIndex
+                    .fX = MapData(X + SeleccionIX, Y + SeleccionIY).fX
                     For i = 0 To 3
-                        .Engine_Light(i) = MapData(X + SeleccionIX, y + SeleccionIY).Engine_Light(i)
+                        .Engine_Light(i) = MapData(X + SeleccionIX, Y + SeleccionIY).Engine_Light(i)
                     Next i
-                    .CharIndex = MapData(X + SeleccionIX, y + SeleccionIY).CharIndex
+                    .CharIndex = MapData(X + SeleccionIX, Y + SeleccionIY).CharIndex
                 End With
             Next
         Next
