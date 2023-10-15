@@ -7,7 +7,6 @@ Begin VB.Form frmColorPicker
    ClientLeft      =   23550
    ClientTop       =   8445
    ClientWidth     =   6330
-   ControlBox      =   0   'False
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False

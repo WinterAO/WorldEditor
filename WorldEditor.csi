@@ -10,7 +10,7 @@
 9=#P0#=mb	#P1#=CharRender	#P2#=WinterMapEditor/modTileEngine/CharRender	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231015204145	#P7#=0	#P8#=57	.
 10=#P0#=mb	#P1#=Draw_GrhIndex	#P2#=WinterMapEditor/modTileEngine/Draw_GrhIndex	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231015202914	#P7#=0	#P8#=-2	.
 11=#P0#=mb	#P1#=CargarIndicesNPC	#P2#=WinterMapEditor/modCarga/CargarIndicesNPC	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231015202603	#P7#=0	#P8#=19	.
-12=#P0#=mb	#P1#=Main	#P2#=WinterMapEditor/modGeneral/Main	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231015202414	#P7#=0	#P8#=56	.
+12=#P0#=mb	#P1#=Main	#P2#=WinterMapEditor/modGeneral/Main	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231015205656	#P7#=0	#P8#=45	.
 13=#P0#=mb	#P1#=CargarAnimEscudos	#P2#=WinterMapEditor/modCarga/CargarAnimEscudos	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231015202009	#P7#=0	#P8#=1	.
 14=#P0#=mb	#P1#=Grh_Check	#P2#=WinterMapEditor/modCarga/Grh_Check	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231015201934	#P7#=0	#P8#=-2	.
 15=#P0#=mb	#P1#=CargarAnimArmas	#P2#=WinterMapEditor/modCarga/CargarAnimArmas	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231015201910	#P7#=0	#P8#=69	.
@@ -31,13 +31,13 @@
 30=#P0#=mb	#P1#=ResetearZona	#P2#=WinterMapEditor/modMapas/ResetearZona	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231008184400	#P7#=0	#P8#=13	.
 31=#P0#=mb	#P1#=CSMInfoSave	#P2#=WinterMapEditor/modMapasWAO/CSMInfoSave	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231008184355	#P7#=0	#P8#=33	.
 32=#P0#=mb	#P1#=CSMInfoCargar	#P2#=WinterMapEditor/modMapasWAO/CSMInfoCargar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231008184352	#P7#=0	#P8#=57	.
-33=#P0#=mb	#P1#=txtMapNombre_LostFocus	#P2#=WinterMapEditor/frmMapInfo/txtMapNombre_LostFocus	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231008184339	#P7#=0	#P8#=0	.
-34=#P0#=mb	#P1#=txtMapMusica_LostFocus	#P2#=WinterMapEditor/frmMapInfo/txtMapMusica_LostFocus	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231008184339	#P7#=0	#P8#=0	.
+33=#P0#=mb	#P1#=txtMapMusica_LostFocus	#P2#=WinterMapEditor/frmMapInfo/txtMapMusica_LostFocus	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231008184339	#P7#=0	#P8#=0	.
+34=#P0#=mb	#P1#=txtMapNombre_LostFocus	#P2#=WinterMapEditor/frmMapInfo/txtMapNombre_LostFocus	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231008184339	#P7#=0	#P8#=0	.
 35=#P0#=mb	#P1#=guardarInfoZona	#P2#=WinterMapEditor/frmMapInfo/guardarInfoZona	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231008184333	#P7#=0	#P8#=3	.
 36=#P0#=mb	#P1#=MapZona_Actualizar	#P2#=WinterMapEditor/modMapas/MapZona_Actualizar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231008184327	#P7#=0	#P8#=24	.
 37=#P0#=mb	#P1#=MapInfo_Actualizar	#P2#=WinterMapEditor/modMapas/MapInfo_Actualizar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231008184310	#P7#=0	#P8#=23	.
-38=#P0#=mb	#P1#=mnuMapTam_Click	#P2#=WinterMapEditor/frmMain/mnuMapTam_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231008183940	#P7#=0	#P8#=2	.
-39=#P0#=mb	#P1#=mnuQuitarSuperficieDeCapa_Click	#P2#=WinterMapEditor/frmMain/mnuQuitarSuperficieDeCapa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231008183940	#P7#=0	#P8#=-2	.
+38=#P0#=mb	#P1#=mnuQuitarSuperficieDeCapa_Click	#P2#=WinterMapEditor/frmMain/mnuQuitarSuperficieDeCapa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231008183940	#P7#=0	#P8#=-2	.
+39=#P0#=mb	#P1#=mnuMapTam_Click	#P2#=WinterMapEditor/frmMain/mnuMapTam_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231008183940	#P7#=0	#P8#=2	.
 40=#P0#=mb	#P1#=OptSound_Click	#P2#=WinterMapEditor/frmSound/OptSound_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231007210352	#P7#=0	#P8#=1	.
 41=#P0#=mb	#P1#=CreateBufferFromFile_Ex	#P2#=WinterMapEditor/clsBufferMan/CreateBufferFromFile_Ex	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231007205709	#P7#=0	#P8#=18	.
 42=#P0#=mb	#P1#=Sound_Render	#P2#=WinterMapEditor/clsSoundEngine/Sound_Render	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231007205318	#P7#=0	#P8#=24	.
