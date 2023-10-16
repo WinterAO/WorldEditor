@@ -25,6 +25,14 @@ Begin VB.Form frmMain
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   1280
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdMapConver 
+      Caption         =   "Command1"
+      Height          =   270
+      Left            =   18750
+      TabIndex        =   22
+      Top             =   240
+      Width           =   300
+   End
    Begin MSComDlg.CommonDialog Dialog 
       Left            =   120
       Top             =   750
@@ -927,6 +935,28 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Sub cmdMapConver_Click()
+    frmMain.Dialog.CancelError = True
+    
+    DeseaGuardarMapa frmMain.Dialog.filename
+    
+    frmMain.ObtenerNombreArchivo False
+    
+    If Len(frmMain.Dialog.filename) < 3 Then Exit Sub
+    
+    If WalkMode = True Then Call modGeneral.ToggleWalkMode
+        
+    Call modMapas.NuevoMapa
+        
+    Call ModMapConver.Cargar_ConverCSM(frmMain.Dialog.filename)
+        
+    DoEvents
+    frmMain.mnuReAbrirMapa.Enabled = True
+    EngineRun = True
+    
+    Exit Sub
+End Sub
+
 Private Sub LvBEdit_Click(Index As Integer)
     '*************************************************
     'Author: Lorwik
@@ -1216,16 +1246,16 @@ End Sub
 
 Private Sub mnuEliminarZona_Click()
     Dim zonaDel As Integer
-    Dim X, Y As Integer
+    Dim X, y As Integer
     zonaDel = InputBox("Por favor, ingrese el número de la zona a borrar:")
     
     For X = XMinMapSize To XMaxMapSize
     
-        For Y = YMinMapSize To YMaxMapSize
+        For y = YMinMapSize To YMaxMapSize
         
-            If MapData(X, Y).ZonaIndex = zonaDel Then MapData(X, Y).ZonaIndex = 0
+            If MapData(X, y).ZonaIndex = zonaDel Then MapData(X, y).ZonaIndex = 0
         
-        Next Y
+        Next y
         
     Next X
 
@@ -1506,25 +1536,25 @@ End Sub
 Private Sub MainViewPic_MouseMove(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
-                                  Y As Single)
+                                  y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 27/04/2021
     '*************************************************
 
-    Call Form_MouseMove(Button, Shift, X, Y)
+    Call Form_MouseMove(Button, Shift, X, y)
 End Sub
 
 Private Sub MainViewPic_MouseDown(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
-                                  Y As Single)
+                                  y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 27/04/2021
     '*************************************************
 
-    Call Form_MouseDown(Button, Shift, X, Y)
+    Call Form_MouseDown(Button, Shift, X, y)
 End Sub
 
 Private Sub MainViewPic_DblClick()
@@ -1638,7 +1668,7 @@ Private Sub Form_DblClick()
     End If
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -1649,7 +1679,7 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y A
     
     If Not MapaCargado Then Exit Sub
     
-    Call ConvertCPtoTP(X, Y, tX, tY)
+    Call ConvertCPtoTP(X, y, tX, tY)
     
     If EstadoSelect > 0 And Button = 2 Then
         EstadoSelect = 0
@@ -1671,7 +1701,7 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y A
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -1683,7 +1713,7 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
     If Not MapaCargado Then Exit Sub
     HotKeysAllow = True
 
-    Call ConvertCPtoTP(X, Y, tX, tY)
+    Call ConvertCPtoTP(X, y, tX, tY)
     
     MousePos = "X: " & tX & " - Y: " & tY
     
@@ -1791,18 +1821,18 @@ End Sub
 
 Private Sub mnuzonanula_Click()
     Dim X As Integer
-    Dim Y As Integer
+    Dim y As Integer
     
     For X = XMinMapSize To XMaxMapSize
     
-        For Y = YMinMapSize To YMaxMapSize
+        For y = YMinMapSize To YMaxMapSize
         
-            If MapData(X, Y).ZonaIndex = 0 Then
-                MsgBox "Se ha encontrado una zona nula en la posicion X: " & X & " Y: " & Y
+            If MapData(X, y).ZonaIndex = 0 Then
+                MsgBox "Se ha encontrado una zona nula en la posicion X: " & X & " Y: " & y
                 Exit Sub
             End If
         
-        Next Y
+        Next y
     
     Next X
     

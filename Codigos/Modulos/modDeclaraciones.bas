@@ -109,7 +109,6 @@ End Enum
 'apunta a una estructura grhdata y mantiene la animacion
 Public Type Grh
     GrhIndex As Long
-    GrhIndexInt As Integer
     FrameCounter As Single
     speed As Single
     Started As Byte
@@ -143,7 +142,7 @@ End Type
 'Posicion en un mapa
 Public Type Position
     X As Integer
-    Y As Integer
+    y As Integer
 End Type
 
 'Lista de cuerpos
@@ -172,7 +171,7 @@ End Type
 Public Type WorldPos
     Map As Integer
     X As Integer
-    Y As Integer
+    y As Integer
 End Type
 
 'Lista de cabezas
@@ -269,6 +268,7 @@ Public Type tMapInfo
     InvocarSinEfecto As Byte
     OcultarSinEfecto As Byte
     lvlMinimo As Byte
+    lvlMaximo As Byte
     Ambient As String
     NoEncriptarMP As Byte
 End Type

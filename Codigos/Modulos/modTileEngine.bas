@@ -629,9 +629,6 @@ Sub RenderScreen(ByVal tilex As Integer, _
     
     If screenmaxX < XMaxMapSize Then screenmaxX = screenmaxX + 1
     
-    '###################
-    'PREVIEW
-    '###################
     If Val(frmSuperficies.cCapas.Text) >= 1 And (frmSuperficies.cCapas.Text) <= 4 Then
         bCapa = Val(frmSuperficies.cCapas.Text)
         
@@ -642,73 +639,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
     
     'Draw floor layer
     For y = screenminY To screenmaxY
-    
         For X = screenminX To screenmaxX
-            
-            'Previsualización
-            '*******************************
-            If SobreX = X And SobreY = y Then
-                            
-                ' Pone Grh !
-                Sobre = -1
-    
-                If frmSuperficies.cSeleccionarSuperficie.value = True And ClientSetup.Preview = True Then
-                    Sobre = MapData(X, y).Graphic(bCapa).GrhIndex
-    
-                    If frmConfigSup.MOSAICO.value = vbChecked Then
-
-                        Dim aux As Long
-
-                        Dim dy  As Integer
-
-                        Dim dX  As Integer
-    
-                        If frmConfigSup.DespMosaic.value = vbChecked Then
-                            dy = Val(frmConfigSup.DMLargo.Text)
-                            dX = Val(frmConfigSup.DMAncho.Text)
-                        Else
-                            dy = 0
-                            dX = 0
-    
-                        End If
-    
-                        If frmSuperficies.chkAutoCompletarSuperficies.value = vbUnchecked Then
-                            aux = Val(frmSuperficies.cGrh.Text) + (((y + dy) Mod frmConfigSup.mLargo.Text) * frmConfigSup.mAncho.Text) + ((X + dX) Mod frmConfigSup.mAncho.Text)
-    
-                            If MapData(X, y).Graphic(bCapa).GrhIndex <> aux Then
-                                MapData(X, y).Graphic(bCapa).GrhIndex = aux
-                                InitGrh MapData(X, y).Graphic(bCapa), aux
-    
-                            End If
-    
-                        Else
-                            aux = Val(frmSuperficies.cGrh.Text) + (((y + dy) Mod frmConfigSup.mLargo.Text) * frmConfigSup.mAncho.Text) + ((X + dX) Mod frmConfigSup.mAncho.Text)
-    
-                            If MapData(X, y).Graphic(bCapa).GrhIndex <> aux Then
-                                MapData(X, y).Graphic(bCapa).GrhIndex = aux
-                                InitGrh MapData(X, y).Graphic(bCapa), aux
-    
-                            End If
-    
-                        End If
-    
-                    Else
-    
-                        If MapData(X, y).Graphic(bCapa).GrhIndex <> Val(frmSuperficies.cGrh.Text) Then
-                            MapData(X, y).Graphic(bCapa).GrhIndex = Val(frmSuperficies.cGrh.Text)
-                            InitGrh MapData(X, y).Graphic(bCapa), Val(frmSuperficies.cGrh.Text)
-    
-                        End If
-    
-                    End If
-    
-                End If
-    
-            Else
-                
-                Sobre = -1
-                
-            End If
 
             '###################
             'CAPAS
@@ -724,17 +655,6 @@ Sub RenderScreen(ByVal tilex As Integer, _
     
                 'Layer 2 **********************************
                 If MapData(X, y).Graphic(2).GrhIndex <> 0 And VerCapa2 Then Call Draw_Grh(MapData(X, y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, y).Engine_Light(), 1)
-                
-                If Sobre >= 0 Then
-                    If MapData(X, y).Graphic(bCapa).GrhIndex <> Sobre Then
-                        MapData(X, y).Graphic(bCapa).GrhIndex = Sobre
-                        InitGrh MapData(X, y).Graphic(bCapa), Sobre
-                            
-                        If MapData(X, y).Graphic(bCapa).GrhIndex = GRH_ERROR Then MapData(X, y).Graphic(bCapa).GrhIndex = 0
-
-                    End If
-                    
-                End If
             
             End If
         
@@ -769,7 +689,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     If .CharIndex <> 0 And VerNpcs Then Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
 
                     'Layer 3 *****************************************
-                    If .Graphic(3).GrhIndex <> 0 And VerCapa3 Then Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, y).Engine_Light(), 1)
+                    If .Graphic(3).GrhIndex <> 0 And VerCapa3 Then Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
 
                     'Particulas **************************************
                     If .Particle_Group_Index And VerParticulas Then Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
@@ -861,12 +781,14 @@ Sub RenderScreen(ByVal tilex As Integer, _
         ScreenY = ScreenY + 1
     Next y
     
+    'Preview al pegar
     If EstadoSelect = eEstadoSelect.Copiado Then
         Dim i As Byte
 
         For i = 1 To 4
             For y = 0 To SeleccionAlto - 1
                 For X = 0 To SeleccionAncho - 1
+
                     If y + SobreY > YMaxMapSize Then Exit For
                     If X + SobreX > XMaxMapSize Then Exit For
                     Call Draw_Grh(SeleccionMap(X, y).Graphic(1), (X + SobreX - UserPos.X + HalfWindowTileWidth) * 32 + PixelOffsetX, (y + SobreY - UserPos.y + HalfWindowTileHeight) * 32 + PixelOffsetY, 1, SeleccionMap(X, y).Engine_Light(), 1, True)
@@ -875,6 +797,49 @@ Sub RenderScreen(ByVal tilex As Integer, _
         Next i
                 
     End If
+    
+    'Preview al seleccionar una superficie
+    If frmSuperficies.cSeleccionarSuperficie.value = True Then
+        Dim mGrh As Grh
+        Dim aux  As Long
+        Dim dy   As Integer
+        Dim dX   As Integer
+
+        If frmConfigSup.DespMosaic.value = vbChecked Then
+            dy = Val(frmConfigSup.DMLargo.Text)
+            dX = Val(frmConfigSup.DMAncho.Text)
+        Else
+            dy = 0
+            dX = 0
+
+        End If
+        
+        If frmConfigSup.mAncho.Text = "0" Then frmConfigSup.mAncho.Text = "1"
+        If frmConfigSup.mLargo.Text = "0" Then frmConfigSup.mLargo.Text = "1"
+
+        If frmSuperficies.chkAutoCompletarSuperficies.value = vbUnchecked Then
+            aux = Val(frmSuperficies.cGrh.Text) + (((SobreY + dy) Mod frmConfigSup.mLargo.Text) * frmConfigSup.mAncho.Text) + ((SobreX + dX) Mod frmConfigSup.mAncho.Text)
+            mGrh.GrhIndex = aux
+            InitGrh mGrh, aux
+            Call Draw_Grh(mGrh, (SobreX - UserPos.X + HalfWindowTileWidth) * 32 + PixelOffsetX, (SobreY - UserPos.y + HalfWindowTileHeight) * 32 + PixelOffsetY, 1, Normal_RGBList(), 1, False)
+            
+        Else
+
+            For X = 1 To frmConfigSup.mAncho.Text
+                For y = 1 To frmConfigSup.mLargo.Text
+                    aux = Val(frmSuperficies.cGrh.Text) + (y - 1) * frmConfigSup.mAncho.Text + X - 1
+                    mGrh.GrhIndex = aux
+                    InitGrh mGrh, aux
+                    Call Draw_Grh(mGrh, (SobreX - UserPos.X + HalfWindowTileWidth + X - 1) * 32 + PixelOffsetX, (SobreY - UserPos.y + HalfWindowTileHeight + y - 1) * 32 + PixelOffsetY, 1, Normal_RGBList(), 1, False)
+            
+                Next y
+            Next X
+
+        End If
+            
+    End If
+    
+    Exit Sub
     
 RenderScreen_Err:
 
@@ -1129,9 +1094,14 @@ On Error Resume Next
     If Head > 0 Then _
         .Head = Head
         
-    .Arma = WeaponAnimData(Arma)
-    .Escudo = ShieldAnimData(Escudo)
-    .Casco = Casco
+    If Arma > 0 Then _
+        .Arma = WeaponAnimData(Arma)
+        
+    If Escudo > 0 Then _
+        .Escudo = ShieldAnimData(Escudo)
+        
+    If Casco > 0 Then _
+        .Casco = Casco
         
     .Heading = Heading
     

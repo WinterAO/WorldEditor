@@ -3,7 +3,7 @@ Begin VB.Form frmMapInfo
    BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Información de la Zona"
-   ClientHeight    =   5940
+   ClientHeight    =   6300
    ClientLeft      =   45
    ClientTop       =   435
    ClientWidth     =   4860
@@ -21,7 +21,7 @@ Begin VB.Form frmMapInfo
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   396
+   ScaleHeight     =   420
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   324
    ShowInTaskbar   =   0   'False
@@ -30,16 +30,34 @@ Begin VB.Form frmMapInfo
       BackColor       =   &H00535353&
       Caption         =   "Informacion"
       ForeColor       =   &H00FFFFFF&
-      Height          =   5745
+      Height          =   6105
       Left            =   90
       TabIndex        =   0
       Top             =   90
       Width           =   4695
+      Begin VB.TextBox txtNivelMaximo 
+         Appearance      =   0  'Flat
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Left            =   1680
+         TabIndex        =   31
+         Text            =   "0"
+         Top             =   2160
+         Width           =   2655
+      End
       Begin WinterMapEditor.lvButtons_H cmdCerrar 
          Height          =   525
          Left            =   180
          TabIndex        =   30
-         Top             =   5040
+         Top             =   5400
          Width           =   1845
          _ExtentX        =   3254
          _ExtentY        =   714
@@ -64,7 +82,7 @@ Begin VB.Form frmMapInfo
          Height          =   525
          Left            =   2400
          TabIndex        =   29
-         Top             =   5040
+         Top             =   5400
          Width           =   2055
          _ExtentX        =   3625
          _ExtentY        =   714
@@ -150,7 +168,7 @@ Begin VB.Form frmMapInfo
          Height          =   975
          Left            =   150
          TabIndex        =   22
-         Top             =   3990
+         Top             =   4350
          Width           =   2175
          Begin WinterMapEditor.lvButtons_H LvBActualizarLuces 
             Height          =   375
@@ -252,7 +270,7 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   150
          TabIndex        =   14
-         Top             =   3150
+         Top             =   3510
          Width           =   1575
       End
       Begin VB.CheckBox chkMapBackup 
@@ -271,7 +289,7 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   2430
          TabIndex        =   13
-         Top             =   3150
+         Top             =   3510
          Value           =   2  'Grayed
          Width           =   1575
       End
@@ -356,7 +374,7 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   150
          TabIndex        =   9
-         Top             =   3390
+         Top             =   3750
          Width           =   1575
       End
       Begin VB.ComboBox txtMapRestringir 
@@ -395,7 +413,7 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   150
          TabIndex        =   7
-         Top             =   2910
+         Top             =   3270
          Width           =   2055
       End
       Begin VB.CheckBox chkMapResuSinEfecto 
@@ -414,7 +432,7 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   2430
          TabIndex        =   6
-         Top             =   2910
+         Top             =   3270
          Width           =   1815
       End
       Begin VB.CheckBox ChkMapNpc 
@@ -442,7 +460,7 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   150
          TabIndex        =   5
-         Top             =   3630
+         Top             =   3990
          Width           =   2055
       End
       Begin VB.TextBox TxtlvlMinimo 
@@ -460,7 +478,7 @@ Begin VB.Form frmMapInfo
          Left            =   1680
          TabIndex        =   4
          Text            =   "0"
-         Top             =   2160
+         Top             =   2520
          Width           =   2655
       End
       Begin VB.TextBox TxtAmbient 
@@ -478,7 +496,7 @@ Begin VB.Form frmMapInfo
          Left            =   1680
          TabIndex        =   3
          Text            =   "0"
-         Top             =   2520
+         Top             =   2880
          Width           =   2655
       End
       Begin VB.CheckBox chkInvocarSin 
@@ -506,7 +524,7 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   2430
          TabIndex        =   2
-         Top             =   3390
+         Top             =   3750
          Width           =   1935
       End
       Begin VB.CheckBox chkOcultarSin 
@@ -534,8 +552,28 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   2430
          TabIndex        =   1
-         Top             =   3630
+         Top             =   3990
          Width           =   1935
+      End
+      Begin VB.Label lblNivelMaximo 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Nivel Maximo:"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   -1  'True
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   195
+         Left            =   120
+         TabIndex        =   32
+         Top             =   2160
+         Width           =   930
       End
       Begin VB.Line Line1 
          BorderColor     =   &H00FFFFFF&
@@ -663,7 +701,7 @@ Begin VB.Form frmMapInfo
          Height          =   195
          Left            =   120
          TabIndex        =   16
-         Top             =   2160
+         Top             =   2520
          Width           =   930
       End
       Begin VB.Label Label8 
@@ -683,7 +721,7 @@ Begin VB.Form frmMapInfo
          Height          =   195
          Left            =   120
          TabIndex        =   15
-         Top             =   2520
+         Top             =   2880
          Width           =   1290
       End
    End
@@ -917,6 +955,16 @@ Private Sub txtlvlminimo_LostFocus()
     'Last modified: 13/09/11
     '*************************************************
     MapInfo.lvlMinimo = TxtlvlMinimo.Text
+    MapInfo.Changed = 1
+    
+End Sub
+
+Private Sub txtnivelmaximo_LostFocus()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 13/09/11
+    '*************************************************
+    MapInfo.lvlMaximo = txtNivelMaximo.Text
     MapInfo.Changed = 1
     
 End Sub
