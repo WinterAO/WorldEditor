@@ -344,7 +344,6 @@ On Error GoTo ErrorHandler:
     Dim Grh         As Long
     Dim Frame       As Long
     Dim fileVersion As Long
-    Dim LaCabecera  As tCabecera
     Dim fileBuff    As clsByteBuffer
     Dim InfoHead    As INFOHEADER
     Dim buffer()    As Byte
@@ -358,10 +357,6 @@ On Error GoTo ErrorHandler:
         Set fileBuff = New clsByteBuffer
         
         fileBuff.initializeReader buffer
-        
-        LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
-        LaCabecera.CRC = fileBuff.getLong
-        LaCabecera.MagicWord = fileBuff.getLong
     
         fileVersion = fileBuff.getLong
         
@@ -492,7 +487,6 @@ On Error GoTo errhandler:
     Dim InfoHead    As INFOHEADER
     Dim i           As Integer
     Dim NumHeads As Integer
-    Dim LaCabecera  As tCabecera
     Dim fileBuff  As clsByteBuffer
     
     InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Head.ind"))
@@ -504,10 +498,6 @@ On Error GoTo errhandler:
         Set fileBuff = New clsByteBuffer
         
         fileBuff.initializeReader buffer
-        
-        LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
-        LaCabecera.CRC = fileBuff.getLong
-        LaCabecera.MagicWord = fileBuff.getLong
         
         NumHeads = fileBuff.getInteger()  'cantidad de cabezas
     
@@ -551,7 +541,6 @@ On Error GoTo errhandler:
     Dim InfoHead    As INFOHEADER
     Dim i           As Integer
     Dim NumCascos As Integer
-    Dim LaCabecera  As tCabecera
     Dim fileBuff  As clsByteBuffer
     
     InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Helmet.ind"))
@@ -563,10 +552,6 @@ On Error GoTo errhandler:
         Set fileBuff = New clsByteBuffer
         
         fileBuff.initializeReader buffer
-        
-        LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
-        LaCabecera.CRC = fileBuff.getLong
-        LaCabecera.MagicWord = fileBuff.getLong
     
         NumCascos = fileBuff.getInteger()   'cantidad de cascos
              
@@ -611,7 +596,6 @@ On Error GoTo errhandler:
     Dim i           As Long
     Dim NumCuerpos As Integer
     Dim MisCuerpos() As tIndiceCuerpo
-    Dim LaCabecera As tCabecera
     Dim fileBuff  As clsByteBuffer
     
     InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Personajes.ind"))
@@ -623,10 +607,6 @@ On Error GoTo errhandler:
         Set fileBuff = New clsByteBuffer
         
         fileBuff.initializeReader buffer
-        
-        LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
-        LaCabecera.CRC = fileBuff.getLong
-        LaCabecera.MagicWord = fileBuff.getLong
     
         'num de cabezas
         NumCuerpos = fileBuff.getInteger()
@@ -650,7 +630,7 @@ On Error GoTo errhandler:
                 Call InitGrh(BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0)
                 
                 BodyData(i).HeadOffset.X = MisCuerpos(i).HeadOffsetX
-                BodyData(i).HeadOffset.Y = MisCuerpos(i).HeadOffsetY
+                BodyData(i).HeadOffset.y = MisCuerpos(i).HeadOffsetY
             End If
         Next i
     
@@ -685,7 +665,6 @@ On Error GoTo errhandler:
     Dim InfoHead    As INFOHEADER
     Dim i As Long
     Dim NumWeaponAnims As Integer
-    Dim LaCabecera As tCabecera
     Dim fileBuff  As clsByteBuffer
     
     InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Armas.ind"))
@@ -697,10 +676,6 @@ On Error GoTo errhandler:
         Set fileBuff = New clsByteBuffer
         
         fileBuff.initializeReader buffer
-        
-        LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
-        LaCabecera.CRC = fileBuff.getLong
-        LaCabecera.MagicWord = fileBuff.getLong
     
         'num de armas
         NumWeaponAnims = fileBuff.getInteger()
@@ -755,7 +730,6 @@ On Error GoTo errhandler:
     Dim InfoHead    As INFOHEADER
     Dim i As Long
     Dim NumEscudosAnims As Integer
-    Dim LaCabecera As tCabecera
     Dim fileBuff  As clsByteBuffer
     
     InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Escudos.ind"))
@@ -767,10 +741,6 @@ On Error GoTo errhandler:
         Set fileBuff = New clsByteBuffer
         
         fileBuff.initializeReader buffer
-        
-        LaCabecera.Desc = fileBuff.getString(Len(LaCabecera.Desc))
-        LaCabecera.CRC = fileBuff.getLong
-        LaCabecera.MagicWord = fileBuff.getLong
     
         'num de escudos
         NumEscudosAnims = fileBuff.getInteger()
