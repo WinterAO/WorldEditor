@@ -645,6 +645,108 @@ Begin VB.Form frmMain
          Caption         =   "&Salir"
       End
    End
+   Begin VB.Menu mnuEdicion 
+      Caption         =   "Edición"
+      Begin VB.Menu mnuLineEdicion0 
+         Caption         =   "-"
+      End
+      Begin VB.Menu mnuSeleccionado 
+         Caption         =   "C&ortar Selección"
+         Index           =   0
+         Shortcut        =   ^X
+      End
+      Begin VB.Menu mnuSeleccionado 
+         Caption         =   "&Copiar Selección"
+         Index           =   1
+         Shortcut        =   ^C
+      End
+      Begin VB.Menu mnuSeleccionado 
+         Caption         =   "&Pegar Selección"
+         Index           =   2
+         Shortcut        =   ^V
+      End
+      Begin VB.Menu mnuSeleccionado 
+         Caption         =   "&Realizar Operación en Selección"
+         Index           =   3
+         Shortcut        =   ^D
+      End
+      Begin VB.Menu mnuSeleccionado 
+         Caption         =   "Deshacer P&egado de Selección"
+         Index           =   4
+         Shortcut        =   ^S
+      End
+      Begin VB.Menu mnuCopiarZonas 
+         Caption         =   "Copiar zonas en CRTL + C"
+      End
+      Begin VB.Menu mnuLineEdicion1 
+         Caption         =   "-"
+      End
+      Begin VB.Menu mnuAutoCapturarSuperficie 
+         Caption         =   "Auto-C&apturar información de la Superficie"
+      End
+      Begin VB.Menu mnuAutoCapturarTranslados 
+         Caption         =   "Auto-&Capturar información de los Translados"
+         Checked         =   -1  'True
+      End
+      Begin VB.Menu mnuAutoGuardarMapas 
+         Caption         =   "Configuración de Auto-&Guardar Mapas"
+      End
+      Begin VB.Menu mnuLineEdicion2 
+         Caption         =   "-"
+      End
+      Begin VB.Menu mnuInserDel 
+         Caption         =   "Insertar/Eliminar"
+         Begin VB.Menu mnuInsertarSuperficieEnTodo 
+            Caption         =   "Inser. Superficie en todo el mapa"
+         End
+         Begin VB.Menu mnuInsertarSuperficieEnBordes 
+            Caption         =   "Inser. Superficie en bordes del mapa"
+         End
+         Begin VB.Menu mnuBloquearBordes 
+            Caption         =   "Inser. Bloqueos en bordes"
+         End
+         Begin VB.Menu mnuBloquearMapa 
+            Caption         =   "Inser. Bloqueos en todo el mapa"
+         End
+         Begin VB.Menu mnuInsertarZonasEnBordes 
+            Caption         =   "Inser. Zonas en bordes del mapa"
+         End
+         Begin VB.Menu mnuLineInserDel0 
+            Caption         =   "-"
+         End
+         Begin VB.Menu mnuQuitarSuperficieDeCapa 
+            Caption         =   "Elim. Superficie capa seleccionada"
+         End
+         Begin VB.Menu QuitarSuperficieBordes 
+            Caption         =   "Elim. Superficie en bordes del mapa"
+         End
+         Begin VB.Menu mnuDesbloquearBordes 
+            Caption         =   "Elim. Bloqueos en bordes"
+         End
+         Begin VB.Menu mnuDesbloquearMapa 
+            Caption         =   "Elim. Bloqueos en todo el mapa"
+         End
+         Begin VB.Menu mnuEliminarZona 
+            Caption         =   "Elim. una zona del mapa"
+         End
+         Begin VB.Menu mnuEliminarNPCs 
+            Caption         =   "Elim. NPCs de todo el mapa"
+            Index           =   0
+         End
+         Begin VB.Menu mnuEliminarNPCs 
+            Caption         =   "Elim. NPC's Hostiles de todo el mapa"
+            Index           =   1
+         End
+         Begin VB.Menu mnuEliminarNPCs 
+            Caption         =   "Elim. NPC's de la zona"
+            Index           =   2
+         End
+         Begin VB.Menu mnuEliminarNPCs 
+            Caption         =   "Elim. NPC's Hostiles de la zona"
+            Index           =   3
+         End
+      End
+   End
    Begin VB.Menu mnuver 
       Caption         =   "&Ver"
       Begin VB.Menu mnuCapas 
@@ -799,105 +901,6 @@ Begin VB.Form frmMain
       End
       Begin VB.Menu saveAllMinimap 
          Caption         =   "Guardar todos los Minimapas"
-      End
-   End
-   Begin VB.Menu mnuEdicion 
-      Caption         =   "Edición"
-      Begin VB.Menu mnuLineEdicion0 
-         Caption         =   "-"
-      End
-      Begin VB.Menu mnuSeleccionado 
-         Caption         =   "C&ortar Selección"
-         Index           =   0
-         Shortcut        =   ^X
-      End
-      Begin VB.Menu mnuSeleccionado 
-         Caption         =   "&Copiar Selección"
-         Index           =   1
-         Shortcut        =   ^C
-      End
-      Begin VB.Menu mnuSeleccionado 
-         Caption         =   "&Pegar Selección"
-         Index           =   2
-         Shortcut        =   ^V
-      End
-      Begin VB.Menu mnuSeleccionado 
-         Caption         =   "&Realizar Operación en Selección"
-         Index           =   3
-         Shortcut        =   ^D
-      End
-      Begin VB.Menu mnuSeleccionado 
-         Caption         =   "Deshacer P&egado de Selección"
-         Index           =   4
-         Shortcut        =   ^S
-      End
-      Begin VB.Menu mnuLineEdicion1 
-         Caption         =   "-"
-      End
-      Begin VB.Menu mnuAutoCapturarSuperficie 
-         Caption         =   "Auto-C&apturar información de la Superficie"
-      End
-      Begin VB.Menu mnuAutoCapturarTranslados 
-         Caption         =   "Auto-&Capturar información de los Translados"
-         Checked         =   -1  'True
-      End
-      Begin VB.Menu mnuAutoGuardarMapas 
-         Caption         =   "Configuración de Auto-&Guardar Mapas"
-      End
-      Begin VB.Menu mnuLineEdicion2 
-         Caption         =   "-"
-      End
-      Begin VB.Menu mnuInserDel 
-         Caption         =   "Insertar/Eliminar"
-         Begin VB.Menu mnuInsertarSuperficieEnTodo 
-            Caption         =   "Inser. Superficie en todo el mapa"
-         End
-         Begin VB.Menu mnuInsertarSuperficieEnBordes 
-            Caption         =   "Inser. Superficie en bordes del mapa"
-         End
-         Begin VB.Menu mnuBloquearBordes 
-            Caption         =   "Inser. Bloqueos en bordes"
-         End
-         Begin VB.Menu mnuBloquearMapa 
-            Caption         =   "Inser. Bloqueos en todo el mapa"
-         End
-         Begin VB.Menu mnuInsertarZonasEnBordes 
-            Caption         =   "Inser. Zonas en bordes del mapa"
-         End
-         Begin VB.Menu mnuLineInserDel0 
-            Caption         =   "-"
-         End
-         Begin VB.Menu mnuQuitarSuperficieDeCapa 
-            Caption         =   "Elim. Superficie capa seleccionada"
-         End
-         Begin VB.Menu QuitarSuperficieBordes 
-            Caption         =   "Elim. Superficie en bordes del mapa"
-         End
-         Begin VB.Menu mnuDesbloquearBordes 
-            Caption         =   "Elim. Bloqueos en bordes"
-         End
-         Begin VB.Menu mnuDesbloquearMapa 
-            Caption         =   "Elim. Bloqueos en todo el mapa"
-         End
-         Begin VB.Menu mnuEliminarZona 
-            Caption         =   "Elim. una zona del mapa"
-         End
-         Begin VB.Menu mnuEliminarNPCs 
-            Caption         =   "Elim. NPCs de todo el mapa"
-            Index           =   0
-         End
-         Begin VB.Menu mnuEliminarNPCs 
-            Caption         =   "Elim. NPC's Hostiles de todo el mapa"
-            Index           =   1
-         End
-         Begin VB.Menu mnuEliminarNPCs 
-            Caption         =   "Elim. NPC's de la zona"
-            Index           =   2
-         End
-         Begin VB.Menu mnuEliminarNPCs 
-            Caption         =   "Elim. NPC's Hostiles de la zona"
-            Index           =   3
-         End
       End
    End
    Begin VB.Menu mnuFunciones 
@@ -1196,6 +1199,15 @@ Private Sub mnuBloquearMapa_Click()
     'Last modified: 20/05/06
     '*************************************************
     Call modEdicion.Bloqueo_Todo(1)
+End Sub
+
+Private Sub mnuCopiarZonas_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 30/10/2023
+    '*************************************************
+    
+    mnuCopiarZonas.Checked = Not mnuCopiarZonas.Checked
 End Sub
 
 Private Sub mnuDesbloquearMapa_Click()

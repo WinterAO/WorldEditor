@@ -637,6 +637,9 @@ Public Sub PegarSeleccion() '(mx As Integer, my As Integer)
              MapData(X + SobreX, y + SobreY).Particle_Index = SeleccionMap(X, y).Particle_Index
              MapData(X + SobreX, y + SobreY).TileExit = SeleccionMap(X, y).TileExit
              MapData(X + SobreX, y + SobreY).Trigger = SeleccionMap(X, y).Trigger
+             
+             If frmMain.mnuCopiarZonas.Checked Then _
+                MapData(X + SobreX, y + SobreY).ZonaIndex = SeleccionMap(X, y).ZonaIndex
         Next
     Next
     Seleccionando = False
