@@ -60,6 +60,7 @@ Begin VB.Form frmMain
       Index           =   0
       Left            =   30
       TabIndex        =   12
+      ToolTipText     =   "Superficies"
       Top             =   75
       Width           =   480
       _ExtentX        =   847
@@ -88,6 +89,7 @@ Begin VB.Form frmMain
       Index           =   1
       Left            =   540
       TabIndex        =   13
+      ToolTipText     =   "Traslados"
       Top             =   75
       Width           =   480
       _ExtentX        =   847
@@ -115,6 +117,7 @@ Begin VB.Form frmMain
       Index           =   2
       Left            =   1050
       TabIndex        =   14
+      ToolTipText     =   "Bloqueos"
       Top             =   75
       Width           =   480
       _ExtentX        =   847
@@ -143,6 +146,7 @@ Begin VB.Form frmMain
       Index           =   3
       Left            =   1560
       TabIndex        =   15
+      ToolTipText     =   "NPC's"
       Top             =   75
       Width           =   480
       _ExtentX        =   847
@@ -171,6 +175,7 @@ Begin VB.Form frmMain
       Index           =   4
       Left            =   2070
       TabIndex        =   16
+      ToolTipText     =   "Objetos"
       Top             =   75
       Width           =   480
       _ExtentX        =   847
@@ -199,6 +204,7 @@ Begin VB.Form frmMain
       Index           =   5
       Left            =   2580
       TabIndex        =   17
+      ToolTipText     =   "Trigger's"
       Top             =   75
       Width           =   480
       _ExtentX        =   847
@@ -227,6 +233,7 @@ Begin VB.Form frmMain
       Index           =   6
       Left            =   3090
       TabIndex        =   18
+      ToolTipText     =   "Particulas"
       Top             =   75
       Width           =   480
       _ExtentX        =   847
@@ -255,6 +262,7 @@ Begin VB.Form frmMain
       Index           =   7
       Left            =   3600
       TabIndex        =   19
+      ToolTipText     =   "Luces"
       Top             =   75
       Width           =   480
       _ExtentX        =   847
@@ -283,6 +291,7 @@ Begin VB.Form frmMain
       Index           =   8
       Left            =   4110
       TabIndex        =   20
+      ToolTipText     =   "Información de la zona"
       Top             =   75
       Width           =   480
       _ExtentX        =   847
@@ -311,6 +320,7 @@ Begin VB.Form frmMain
       Index           =   9
       Left            =   4620
       TabIndex        =   21
+      ToolTipText     =   "Preview"
       Top             =   75
       Width           =   480
       _ExtentX        =   847
@@ -339,6 +349,7 @@ Begin VB.Form frmMain
       Index           =   10
       Left            =   5130
       TabIndex        =   22
+      ToolTipText     =   "Editor de zonas"
       Top             =   75
       Width           =   480
       _ExtentX        =   847
@@ -367,6 +378,7 @@ Begin VB.Form frmMain
       Index           =   11
       Left            =   5640
       TabIndex        =   23
+      ToolTipText     =   "Consola"
       Top             =   75
       Width           =   480
       _ExtentX        =   847
@@ -395,6 +407,7 @@ Begin VB.Form frmMain
       Index           =   12
       Left            =   6150
       TabIndex        =   24
+      ToolTipText     =   "Rellenar Area"
       Top             =   90
       Width           =   480
       _ExtentX        =   847
@@ -423,6 +436,7 @@ Begin VB.Form frmMain
       Index           =   13
       Left            =   6660
       TabIndex        =   25
+      ToolTipText     =   "Mapa"
       Top             =   90
       Width           =   480
       _ExtentX        =   847
