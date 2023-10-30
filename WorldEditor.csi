@@ -1,7 +1,7 @@
 [History]
 1=#P0#=mb	#P1#=mnuCopiarZonas_Click	#P2#=WinterMapEditor/frmMain/mnuCopiarZonas_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231030195355	#P7#=0	#P8#=3	.
-2=#P0#=mb	#P1#=mnuBloquearBordes_Click	#P2#=WinterMapEditor/frmMain/mnuBloquearBordes_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231030195323	#P7#=0	#P8#=-2	.
-3=#P0#=mb	#P1#=mnuAcerca_Click	#P2#=WinterMapEditor/frmMain/mnuAcerca_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231030195323	#P7#=0	#P8#=7	.
+2=#P0#=mb	#P1#=mnuAcerca_Click	#P2#=WinterMapEditor/frmMain/mnuAcerca_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231030200228	#P7#=0	#P8#=7	.
+3=#P0#=mb	#P1#=mnuBloquearBordes_Click	#P2#=WinterMapEditor/frmMain/mnuBloquearBordes_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231030200228	#P7#=0	#P8#=-2	.
 4=#P0#=mb	#P1#=mnuBloquearMapa_Click	#P2#=WinterMapEditor/frmMain/mnuBloquearMapa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231030195314	#P7#=0	#P8#=5	.
 5=#P0#=mb	#P1#=PegarSeleccion	#P2#=WinterMapEditor/modEdit/PegarSeleccion	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231030194914	#P7#=0	#P8#=44	.
 6=#P0#=mb	#P1#=CopiarSeleccion	#P2#=WinterMapEditor/modEdit/CopiarSeleccion	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231030194832	#P7#=0	#P8#=14	.
@@ -15,8 +15,8 @@
 14=#P0#=mb	#P1#=CargarCabezas	#P2#=WinterMapEditor/modCarga/CargarCabezas	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231017175035	#P7#=0	#P8#=22	.
 15=#P0#=mb	#P1#=LoadGrhData	#P2#=WinterMapEditor/modCarga/LoadGrhData	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231017175030	#P7#=0	#P8#=-4	.
 16=#P0#=mb	#P1#=Cargar_CSM	#P2#=WinterMapEditor/modMapasWAO/Cargar_CSM	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231017175010	#P7#=0	#P8#=26	.
-17=#P0#=mb	#P1#=autoCompletaPath	#P2#=WinterMapEditor/modCarga/autoCompletaPath	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231017174807	#P7#=0	#P8#=19	.
-18=#P0#=mb	#P1#=guardarPerfil	#P2#=WinterMapEditor/modCarga/guardarPerfil	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231017174807	#P7#=0	#P8#=0	.
+17=#P0#=mb	#P1#=guardarPerfil	#P2#=WinterMapEditor/modCarga/guardarPerfil	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231017174807	#P7#=0	#P8#=0	.
+18=#P0#=mb	#P1#=autoCompletaPath	#P2#=WinterMapEditor/modCarga/autoCompletaPath	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231017174807	#P7#=0	#P8#=19	.
 19=#P0#=mb	#P1#=Cargar_ConverCSM	#P2#=WinterMapEditor/ModMapConver/Cargar_ConverCSM	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231017174755	#P7#=0	#P8#=38	.
 20=#P0#=mb	#P1#=Save_CSM	#P2#=WinterMapEditor/modMapasWAO/Save_CSM	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231017174727	#P7#=0	#P8#=183	.
 21=#P0#=mb	#P1#=ConvertCPtoTP	#P2#=WinterMapEditor/modTileEngine/ConvertCPtoTP	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231017010751	#P7#=0	#P8#=4	.
@@ -29,7 +29,7 @@
 28=#P0#=mb	#P1#=CSMInfoSave	#P2#=WinterMapEditor/modMapasWAO/CSMInfoSave	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231016192338	#P7#=0	#P8#=27	.
 29=#P0#=mb	#P1#=txtnivelmaximo_LostFocus	#P2#=WinterMapEditor/frmMapInfo/txtnivelmaximo_LostFocus	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231016192327	#P7#=0	#P8#=5	.
 30=#P0#=mb	#P1#=RenderScreen	#P2#=WinterMapEditor/modTileEngine/RenderScreen	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231016192310	#P7#=0	#P8#=110	.
-31=#P0#=mb	#P1#=ClickEdit	#P2#=WinterMapEditor/modEdit/ClickEdit	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231016191601	#P7#=0	#P8#=137	.
+31=#P0#=mb	#P1#=ClickEdit	#P2#=WinterMapEditor/modEdit/ClickEdit	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231030200147	#P7#=0	#P8#=58	.
 32=#P0#=mb	#P1#=NuevoMapa	#P2#=WinterMapEditor/modMapas/NuevoMapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231016191312	#P7#=0	#P8#=16	.
 33=#P0#=mb	#P1#=MakeChar	#P2#=WinterMapEditor/modTileEngine/MakeChar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231016190155	#P7#=0	#P8#=32	.
 34=#P0#=mb	#P1#=LvBEdit_Click	#P2#=WinterMapEditor/frmMain/LvBEdit_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231016160210	#P7#=0	#P8#=2	.
@@ -51,11 +51,11 @@
 50=#P0#=mb	#P1#=Buscar_Carpeta	#P2#=WinterMapEditor/modGeneral/Buscar_Carpeta	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231013214144	#P7#=0	#P8#=19	.
 51=#P0#=mb	#P1#=CargarMinimapa	#P2#=WinterMapEditor/modCarga/CargarMinimapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231012231133	#P7#=0	#P8#=4	.
 52=#P0#=mb	#P1#=ResetearZona	#P2#=WinterMapEditor/modMapas/ResetearZona	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231008184400	#P7#=0	#P8#=13	.
-53=#P0#=mb	#P1#=txtMapNombre_LostFocus	#P2#=WinterMapEditor/frmMapInfo/txtMapNombre_LostFocus	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231008184339	#P7#=0	#P8#=4	.
-54=#P0#=mb	#P1#=txtMapMusica_LostFocus	#P2#=WinterMapEditor/frmMapInfo/txtMapMusica_LostFocus	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231008184339	#P7#=0	#P8#=0	.
+53=#P0#=mb	#P1#=txtMapMusica_LostFocus	#P2#=WinterMapEditor/frmMapInfo/txtMapMusica_LostFocus	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231008184339	#P7#=0	#P8#=0	.
+54=#P0#=mb	#P1#=txtMapNombre_LostFocus	#P2#=WinterMapEditor/frmMapInfo/txtMapNombre_LostFocus	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231008184339	#P7#=0	#P8#=4	.
 55=#P0#=mb	#P1#=guardarInfoZona	#P2#=WinterMapEditor/frmMapInfo/guardarInfoZona	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231008184333	#P7#=0	#P8#=3	.
-56=#P0#=mb	#P1#=mnuQuitarSuperficieDeCapa_Click	#P2#=WinterMapEditor/frmMain/mnuQuitarSuperficieDeCapa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231008183940	#P7#=0	#P8#=-2	.
-57=#P0#=mb	#P1#=mnuMapTam_Click	#P2#=WinterMapEditor/frmMain/mnuMapTam_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231008183940	#P7#=0	#P8#=2	.
+56=#P0#=mb	#P1#=mnuMapTam_Click	#P2#=WinterMapEditor/frmMain/mnuMapTam_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231008183940	#P7#=0	#P8#=2	.
+57=#P0#=mb	#P1#=mnuQuitarSuperficieDeCapa_Click	#P2#=WinterMapEditor/frmMain/mnuQuitarSuperficieDeCapa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231008183940	#P7#=0	#P8#=-2	.
 58=#P0#=mb	#P1#=OptSound_Click	#P2#=WinterMapEditor/frmSound/OptSound_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231007210352	#P7#=0	#P8#=1	.
 59=#P0#=mb	#P1#=CreateBufferFromFile_Ex	#P2#=WinterMapEditor/clsBufferMan/CreateBufferFromFile_Ex	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231007205709	#P7#=0	#P8#=18	.
 60=#P0#=mb	#P1#=Sound_Render	#P2#=WinterMapEditor/clsSoundEngine/Sound_Render	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231007205318	#P7#=0	#P8#=24	.

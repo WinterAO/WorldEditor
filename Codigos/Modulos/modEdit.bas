@@ -108,6 +108,19 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 ' Bloqueos
                 If .bLocked = 1 Then Call AddtoRichTextBox(frmConsola.StatTxt, " (BLOQ)", 255, 255, 255, False, False, True)
                 
+                ' Translados
+                If MapData(tX, tY).TileExit.Map <> 0 Then
+                    If frmMain.mnuAutoCapturarTranslados.Checked = True Then
+                        frmTraslados.tTMapa.Text = MapData(tX, tY).TileExit.Map
+                        frmTraslados.tTX.Text = MapData(tX, tY).TileExit.X
+                        frmTraslados.tTY = MapData(tX, tY).TileExit.y
+
+                    End If
+
+                    frmConsola.StatTxt.Text = frmConsola.StatTxt.Text & " (Trans.: " & MapData(tX, tY).TileExit.Map & "," & MapData(tX, tY).TileExit.X & "," & MapData(tX, tY).TileExit.y & ")"
+
+                End If
+                
                 ' NPCs
                 If .NPCIndex > 0 Then
                     If .NPCIndex > 499 Then
