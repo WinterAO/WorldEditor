@@ -25,14 +25,6 @@ Begin VB.Form frmMain
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   1280
    StartUpPosition =   2  'CenterScreen
-   Begin VB.CommandButton cmdMapConver 
-      Caption         =   "Command1"
-      Height          =   270
-      Left            =   18750
-      TabIndex        =   22
-      Top             =   240
-      Width           =   300
-   End
    Begin MSComDlg.CommonDialog Dialog 
       Left            =   120
       Top             =   750
@@ -346,7 +338,7 @@ Begin VB.Form frmMain
       Height          =   480
       Index           =   10
       Left            =   5130
-      TabIndex        =   23
+      TabIndex        =   22
       Top             =   75
       Width           =   480
       _ExtentX        =   847
@@ -374,7 +366,7 @@ Begin VB.Form frmMain
       Height          =   480
       Index           =   11
       Left            =   5640
-      TabIndex        =   24
+      TabIndex        =   23
       Top             =   75
       Width           =   480
       _ExtentX        =   847
@@ -402,7 +394,7 @@ Begin VB.Form frmMain
       Height          =   480
       Index           =   12
       Left            =   6150
-      TabIndex        =   25
+      TabIndex        =   24
       Top             =   90
       Width           =   480
       _ExtentX        =   847
@@ -430,7 +422,7 @@ Begin VB.Form frmMain
       Height          =   480
       Index           =   13
       Left            =   6660
-      TabIndex        =   26
+      TabIndex        =   25
       Top             =   90
       Width           =   480
       _ExtentX        =   847
@@ -734,6 +726,9 @@ Begin VB.Form frmMain
          Caption         =   "&Abrir Mapa"
          Shortcut        =   ^A
       End
+      Begin VB.Menu mnuAbrirMapaCien 
+         Caption         =   "Abrir Mapa 100 x 100"
+      End
       Begin VB.Menu mnuArchivoLine3 
          Caption         =   "-"
       End
@@ -1026,28 +1021,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Sub cmdMapConver_Click()
-    frmMain.Dialog.CancelError = True
-    
-    DeseaGuardarMapa frmMain.Dialog.filename
-    
-    frmMain.ObtenerNombreArchivo False
-    
-    If Len(frmMain.Dialog.filename) < 3 Then Exit Sub
-    
-    If WalkMode = True Then Call modGeneral.ToggleWalkMode
-        
-    Call modMapas.NuevoMapa
-        
-    Call ModMapConver.Cargar_ConverCSM(frmMain.Dialog.filename)
-        
-    DoEvents
-    frmMain.mnuReAbrirMapa.Enabled = True
-    EngineRun = True
-    
-    Exit Sub
-End Sub
-
 Private Sub LvBEdit_Click(Index As Integer)
     '*************************************************
     'Author: Lorwik
@@ -1294,6 +1267,33 @@ Private Sub mnuAbrirMapa_Click()
 
     Call AbrirMapa
     
+End Sub
+
+Private Sub mnuAbrirMapaCien_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 30/10/2023
+    '*************************************************
+    
+    frmMain.Dialog.CancelError = True
+    
+    DeseaGuardarMapa frmMain.Dialog.filename
+    
+    frmMain.ObtenerNombreArchivo False
+    
+    If Len(frmMain.Dialog.filename) < 3 Then Exit Sub
+    
+    If WalkMode = True Then Call modGeneral.ToggleWalkMode
+        
+    Call modMapas.NuevoMapa
+        
+    Call ModMapConver.Cargar_ConverCSM(frmMain.Dialog.filename)
+        
+    DoEvents
+    frmMain.mnuReAbrirMapa.Enabled = True
+    EngineRun = True
+    
+    Exit Sub
 End Sub
 
 Private Sub mnuAcerca_Click()
