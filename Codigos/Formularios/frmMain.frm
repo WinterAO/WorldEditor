@@ -930,54 +930,55 @@ Begin VB.Form frmMain
          Caption         =   "-"
       End
       Begin VB.Menu Minimap 
-         Caption         =   "Capa 1"
+         Caption         =   "Ver capa 1"
          Index           =   0
       End
       Begin VB.Menu Minimap 
-         Caption         =   "Capa 2"
+         Caption         =   "Ver capa 2"
          Index           =   1
       End
       Begin VB.Menu Minimap 
-         Caption         =   "Capa 3"
+         Caption         =   "Ver capa 3"
          Index           =   2
       End
       Begin VB.Menu Minimap 
-         Caption         =   "Capa 4"
+         Caption         =   "Ver capa 4"
          Index           =   3
       End
       Begin VB.Menu Minimap 
-         Caption         =   "NPC's"
+         Caption         =   "Ver NPC's"
          Index           =   4
       End
       Begin VB.Menu Minimap 
-         Caption         =   "Objetos"
+         Caption         =   "Ver Objetos"
          Index           =   5
       End
       Begin VB.Menu Minimap 
-         Caption         =   "Bloqueos"
+         Caption         =   "Ver Bloqueos"
          Index           =   6
       End
       Begin VB.Menu Minimap 
-         Caption         =   "Particulas"
+         Caption         =   "Ver Particulas"
          Index           =   7
       End
       Begin VB.Menu Minimap 
-         Caption         =   "Nº de mapa"
+         Caption         =   "Ver Nº de mapa"
+         Enabled         =   0   'False
          Index           =   8
       End
       Begin VB.Menu Minimap 
-         Caption         =   "Cuadrantes"
+         Caption         =   "Ver Cuadrantes"
          Index           =   9
       End
       Begin VB.Menu Minimap 
-         Caption         =   "Zonas"
+         Caption         =   "Ver Zonas"
          Index           =   10
-      End
-      Begin VB.Menu Dibujarmini 
-         Caption         =   "Dibujar"
       End
       Begin VB.Menu mnuLineMinimap 
          Caption         =   "-"
+      End
+      Begin VB.Menu Dibujarmini 
+         Caption         =   "Dibujar"
       End
       Begin VB.Menu minimapaSave 
          Caption         =   "Guardar Minimapa"
