@@ -1018,6 +1018,9 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuzonanula 
          Caption         =   "Buscar zonas nulas"
       End
+      Begin VB.Menu mnuzonasinuso 
+         Caption         =   "Buscar zonas sin uso"
+      End
    End
    Begin VB.Menu mnusobre 
       Caption         =   "Sobre..."
@@ -1402,16 +1405,16 @@ End Sub
 
 Private Sub mnuEliminarZona_Click()
     Dim zonaDel As Integer
-    Dim X, y As Integer
+    Dim X, Y As Integer
     zonaDel = InputBox("Por favor, ingrese el número de la zona a borrar:")
     
     For X = XMinMapSize To XMaxMapSize
     
-        For y = YMinMapSize To YMaxMapSize
+        For Y = YMinMapSize To YMaxMapSize
         
-            If MapData(X, y).ZonaIndex = zonaDel Then MapData(X, y).ZonaIndex = 0
+            If MapData(X, Y).ZonaIndex = zonaDel Then MapData(X, Y).ZonaIndex = 0
         
-        Next y
+        Next Y
         
     Next X
 
@@ -1495,7 +1498,7 @@ Private Sub mnuNuevoMapa_Click()
     
     DeseaGuardarMapa Dialog.filename
     
-    For LoopC = 0 To frmMain.MapPest.Count - 1
+    For LoopC = 0 To frmMain.MapPest.count - 1
         frmMain.MapPest(LoopC).Visible = False
     Next
     
@@ -1669,25 +1672,25 @@ End Sub
 Private Sub MainViewPic_MouseMove(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
-                                  y As Single)
+                                  Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 27/04/2021
     '*************************************************
 
-    Call Form_MouseMove(Button, Shift, X, y)
+    Call Form_MouseMove(Button, Shift, X, Y)
 End Sub
 
 Private Sub MainViewPic_MouseDown(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
-                                  y As Single)
+                                  Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 27/04/2021
     '*************************************************
 
-    Call Form_MouseDown(Button, Shift, X, y)
+    Call Form_MouseDown(Button, Shift, X, Y)
 End Sub
 
 Private Sub MainViewPic_DblClick()
@@ -1801,7 +1804,7 @@ Private Sub Form_DblClick()
     End If
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -1812,7 +1815,7 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y A
     
     If Not MapaCargado Then Exit Sub
     
-    Call ConvertCPtoTP(X, y, tX, tY)
+    Call ConvertCPtoTP(X, Y, tX, tY)
     
     If EstadoSelect > 0 And Button = 2 Then
         EstadoSelect = 0
@@ -1834,7 +1837,7 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y A
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -1846,7 +1849,7 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y A
     If Not MapaCargado Then Exit Sub
     HotKeysAllow = True
 
-    Call ConvertCPtoTP(X, y, tX, tY)
+    Call ConvertCPtoTP(X, Y, tX, tY)
     
     MousePos = "X: " & tX & " - Y: " & tY
     
@@ -1954,21 +1957,62 @@ End Sub
 
 Private Sub mnuzonanula_Click()
     Dim X As Integer
-    Dim y As Integer
+    Dim Y As Integer
     
     For X = XMinMapSize To XMaxMapSize
     
-        For y = YMinMapSize To YMaxMapSize
+        For Y = YMinMapSize To YMaxMapSize
         
-            If MapData(X, y).ZonaIndex = 0 Then
-                MsgBox "Se ha encontrado una zona nula en la posicion X: " & X & " Y: " & y
+            If MapData(X, Y).ZonaIndex = 0 Then
+                MsgBox "Se ha encontrado una zona nula en la posicion X: " & X & " Y: " & Y
                 Exit Sub
             End If
         
-        Next y
+        Next Y
     
     Next X
     
+End Sub
+
+Private Sub mnuzonasinuso_Click()
+    Dim X As Integer
+    Dim Y As Integer
+    Dim i As Integer
+    Dim found As Boolean
+    Dim count As Integer
+    
+    count = 0
+    
+    If Not frmConsola.Visible Then _
+        frmConsola.Show , frmMain
+    
+    For i = 1 To frmZonas.LstZona.ListCount
+    
+        For X = XMinMapSize To XMaxMapSize
+    
+            For Y = YMinMapSize To YMaxMapSize
+        
+                If MapData(X, Y).ZonaIndex = i Then
+                    found = True
+                    Exit For
+                End If
+        
+            Next Y
+            
+            If found = True Then Exit For
+        
+        Next X
+        
+        If found = False Then
+            Call AddtoRichTextBox(frmConsola.StatTxt, "La zona " & i & " no se esta usando.", 255, 0, 0)
+            count = count + 1
+        End If
+        
+        found = False
+    Next i
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Busqueda de zonas sin uso completada. Se encontraron " & count & " zonas sin usar.", 255, 0, 0)
+
 End Sub
 
 Private Sub saveAllMinimap_Click()
