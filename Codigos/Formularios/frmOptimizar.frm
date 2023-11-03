@@ -30,21 +30,29 @@ Begin VB.Form frmOptimizar
       TabIndex        =   7
       Top             =   3120
       Width           =   2085
-      _extentx        =   3678
-      _extenty        =   926
-      caption         =   "Optimizar"
-      capalign        =   2
-      backstyle       =   2
-      shape           =   1
-      font            =   "frmOptimizar.frx":0000
-      cfore           =   16777215
-      cfhover         =   16777215
-      cbhover         =   0
-      cgradient       =   0
-      gradient        =   3
-      mode            =   0
-      value           =   0   'False
-      cback           =   65280
+      _ExtentX        =   3678
+      _ExtentY        =   926
+      Caption         =   "Optimizar"
+      CapAlign        =   2
+      BackStyle       =   2
+      Shape           =   1
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
+      cGradient       =   0
+      Gradient        =   3
+      Mode            =   0
+      Value           =   0   'False
+      cBack           =   65280
    End
    Begin VB.Frame FraFuncionesDe 
       BackColor       =   &H00535353&
@@ -194,21 +202,29 @@ Begin VB.Form frmOptimizar
       TabIndex        =   8
       Top             =   3120
       Width           =   2055
-      _extentx        =   3625
-      _extenty        =   926
-      caption         =   "Cancelar"
-      capalign        =   2
-      backstyle       =   2
-      shape           =   2
-      font            =   "frmOptimizar.frx":0028
-      cfore           =   16777215
-      cfhover         =   16777215
-      cbhover         =   0
-      cgradient       =   0
-      gradient        =   3
-      mode            =   0
-      value           =   0   'False
-      cback           =   255
+      _ExtentX        =   3625
+      _ExtentY        =   926
+      Caption         =   "Cancelar"
+      CapAlign        =   2
+      BackStyle       =   2
+      Shape           =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
+      cGradient       =   0
+      Gradient        =   3
+      Mode            =   0
+      Value           =   0   'False
+      cBack           =   255
    End
 End
 Attribute VB_Name = "frmOptimizar"

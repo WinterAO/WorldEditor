@@ -394,9 +394,6 @@ Sub Cargar_CSM(ByVal Map As String)
     'Change mouse icon
     frmMain.MousePointer = 0
     
-    ' Vacio deshacer
-    '    modEdicion.Deshacer_Clear
-    
     Call CSMInfoCargar
     
     '    'Set changed flag
