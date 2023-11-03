@@ -141,8 +141,8 @@ Private Sub picMapa_MouseDown(Button As Integer, Shift As Integer, X As Single, 
     
         UserPos.X = X
         UserPos.y = y
-        ApuntadorRadar.Left = X
-        ApuntadorRadar.Top = y
+        frmMapa.ApuntadorRadar.Left = (UserPos.X) - HalfWindowTileWidth
+        frmMapa.ApuntadorRadar.Top = (UserPos.y) - HalfWindowTileHeight
     
     ElseIf Button = 2 Then
         Call AddtoRichTextBox(frmConsola.StatTxt, "Guardando Minimapa...", 255, 255, 255)
