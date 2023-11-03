@@ -226,6 +226,9 @@ End Sub
 Public Sub ChangeView()
     WindowTileHeight = Round(frmMain.MainViewPic.ScaleHeight / 32, 0)
     WindowTileWidth = Round(frmMain.MainViewPic.ScaleWidth / 32, 0)
+    
+    frmMapa.ApuntadorRadar.Height = WindowTileHeight
+    frmMapa.ApuntadorRadar.Width = WindowTileWidth
 
     HalfWindowTileHeight = WindowTileHeight \ 2
     HalfWindowTileWidth = WindowTileWidth \ 2
