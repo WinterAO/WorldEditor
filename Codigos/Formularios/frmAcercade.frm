@@ -3,7 +3,7 @@ Begin VB.Form frmAcercade
    BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Acerca del WorldEditor"
-   ClientHeight    =   1995
+   ClientHeight    =   2865
    ClientLeft      =   45
    ClientTop       =   390
    ClientWidth     =   6045
@@ -19,11 +19,28 @@ Begin VB.Form frmAcercade
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   133
+   ScaleHeight     =   191
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   403
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.Label lblAgradecimientoEspecial 
+      BackStyle       =   0  'Transparent
+      Caption         =   "Agradecimiento especial para Hide (^[GS]^) por su colaboracion, y codigos reutilizados del WorldEditor Original de Argentum Online"
+      ForeColor       =   &H00FFFFFF&
+      Height          =   585
+      Left            =   300
+      TabIndex        =   2
+      Top             =   2250
+      Width           =   5445
+   End
+   Begin VB.Line Line1 
+      BorderColor     =   &H00FFFFFF&
+      X1              =   62
+      X2              =   318
+      Y1              =   140
+      Y2              =   140
+   End
    Begin VB.Label lblLorwik 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
