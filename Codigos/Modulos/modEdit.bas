@@ -73,6 +73,12 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
     Dim Head     As Integer
 
     Dim Body     As Integer
+    
+    Dim Arma     As Integer
+    
+    Dim Escudo   As Integer
+    
+    Dim Casco    As Integer
 
     Dim Heading  As Byte
 
@@ -101,6 +107,19 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 
                 ' Bloqueos
                 If .bLocked = 1 Then Call AddtoRichTextBox(frmConsola.StatTxt, " (BLOQ)", 255, 255, 255, False, False, True)
+                
+                ' Translados
+                If MapData(tX, tY).TileExit.Map <> 0 Then
+                    If frmMain.mnuAutoCapturarTranslados.Checked = True Then
+                        frmTraslados.tTMapa.Text = MapData(tX, tY).TileExit.Map
+                        frmTraslados.tTX.Text = MapData(tX, tY).TileExit.X
+                        frmTraslados.tTY = MapData(tX, tY).TileExit.y
+
+                    End If
+
+                    frmConsola.StatTxt.Text = frmConsola.StatTxt.Text & " (Trans.: " & MapData(tX, tY).TileExit.Map & "," & MapData(tX, tY).TileExit.X & "," & MapData(tX, tY).TileExit.y & ")"
+
+                End If
                 
                 ' NPCs
                 If .NPCIndex > 0 Then
@@ -205,7 +224,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
 
                         End If
                             
-                        If frmMain.mnuAutoCompletarSuperficies.Checked = False Then
+                        If frmSuperficies.chkAutoCompletarSuperficies.value = vbUnchecked Then
                             MapInfo.Changed = 1 'Set changed flag
                             aux = Val(frmSuperficies.cGrh.Text) + (((tY + dy) Mod frmConfigSup.mLargo.Text) * frmConfigSup.mAncho.Text) + ((tX + dX) Mod frmConfigSup.mAncho.Text)
                             
@@ -368,8 +387,11 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             MapInfo.Changed = 1 'Set changed flag
                             Body = NpcData(NPCIndex).Body
                             Head = NpcData(NPCIndex).Head
+                            Casco = NpcData(NPCIndex).CascoAnim
+                            Arma = NpcData(NPCIndex).WeaponAnim
+                            Escudo = NpcData(NPCIndex).ShieldAnim
                             Heading = NpcData(NPCIndex).Heading
-                            Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY)
+                            Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY, Arma, Escudo, Casco)
                             .NPCIndex = NPCIndex
 
                         End If
@@ -385,8 +407,11 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             MapInfo.Changed = 1 'Set changed flag
                             Body = NpcData(NPCIndex).Body
                             Head = NpcData(NPCIndex).Head
+                            Casco = NpcData(NPCIndex).CascoAnim
+                            Arma = NpcData(NPCIndex).WeaponAnim
+                            Escudo = NpcData(NPCIndex).ShieldAnim
                             Heading = NpcData(NPCIndex).Heading
-                            Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY)
+                            Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY, Arma, Escudo, Casco)
                             .NPCIndex = NPCIndex
 
                         End If
@@ -605,7 +630,29 @@ Public Sub PegarSeleccion() '(mx As Integer, my As Integer)
     
     For X = 0 To SeleccionAncho - 1
         For y = 0 To SeleccionAlto - 1
-             MapData(X + SobreX, y + SobreY) = SeleccionMap(X, y)
+             MapData(X + SobreX, y + SobreY).bLocked = SeleccionMap(X, y).bLocked
+             MapData(X + SobreX, y + SobreY).CharIndex = SeleccionMap(X, y).CharIndex
+             MapData(X + SobreX, y + SobreY).Engine_Light(0) = SeleccionMap(X, y).Engine_Light(0)
+             MapData(X + SobreX, y + SobreY).Engine_Light(1) = SeleccionMap(X, y).Engine_Light(1)
+             MapData(X + SobreX, y + SobreY).Engine_Light(2) = SeleccionMap(X, y).Engine_Light(2)
+             MapData(X + SobreX, y + SobreY).Engine_Light(3) = SeleccionMap(X, y).Engine_Light(3)
+             MapData(X + SobreX, y + SobreY).fX = SeleccionMap(X, y).fX
+             MapData(X + SobreX, y + SobreY).FxIndex = SeleccionMap(X, y).FxIndex
+             MapData(X + SobreX, y + SobreY).Graphic(1) = SeleccionMap(X, y).Graphic(1)
+             MapData(X + SobreX, y + SobreY).Graphic(2) = SeleccionMap(X, y).Graphic(2)
+             MapData(X + SobreX, y + SobreY).Graphic(3) = SeleccionMap(X, y).Graphic(3)
+             MapData(X + SobreX, y + SobreY).Graphic(4) = SeleccionMap(X, y).Graphic(4)
+             MapData(X + SobreX, y + SobreY).Light = SeleccionMap(X, y).Light
+             MapData(X + SobreX, y + SobreY).NPCIndex = SeleccionMap(X, y).NPCIndex
+             MapData(X + SobreX, y + SobreY).ObjGrh = SeleccionMap(X, y).ObjGrh
+             MapData(X + SobreX, y + SobreY).OBJInfo = SeleccionMap(X, y).OBJInfo
+             MapData(X + SobreX, y + SobreY).Particle_Group_Index = SeleccionMap(X, y).Particle_Group_Index
+             MapData(X + SobreX, y + SobreY).Particle_Index = SeleccionMap(X, y).Particle_Index
+             MapData(X + SobreX, y + SobreY).TileExit = SeleccionMap(X, y).TileExit
+             MapData(X + SobreX, y + SobreY).Trigger = SeleccionMap(X, y).Trigger
+             
+             If frmMain.mnuCopiarZonas.Checked Then _
+                MapData(X + SobreX, y + SobreY).ZonaIndex = SeleccionMap(X, y).ZonaIndex
         Next
     Next
     Seleccionando = False
@@ -675,10 +722,10 @@ Public Sub CortarSeleccion()
 End Sub
 
 Public Sub CopiarSeleccion(Optional ByVal Borde As Boolean = False)
-'*************************************************
-'Author: Loopzer
-'Last modified: 21/11/07
-'*************************************************
+    '*************************************************
+    'Author: Loopzer
+    'Last modified: 21/11/07
+    '*************************************************
     'podria usar copy mem , pero por las dudas no XD
     Dim X As Integer
     Dim y As Integer
@@ -692,6 +739,7 @@ Public Sub CopiarSeleccion(Optional ByVal Borde As Boolean = False)
     ReDim SeleccionMap(SeleccionAncho, SeleccionAlto) As MapBlock
     
     If Not Borde Then
+
         For X = 0 To SeleccionAncho - 1
             For y = 0 To SeleccionAlto - 1
                 SeleccionMap(X, y) = MapData(X + SeleccionIX, y + SeleccionIY)
@@ -702,6 +750,7 @@ Public Sub CopiarSeleccion(Optional ByVal Borde As Boolean = False)
     
         For X = 0 To SeleccionAncho - 1
             For y = 0 To SeleccionAlto - 1
+
                 With SeleccionMap(X, y)
                     .bLocked = MapData(X + SeleccionIX, y + SeleccionIY).bLocked
                     .Trigger = MapData(X + SeleccionIX, y + SeleccionIY).Trigger
@@ -711,14 +760,18 @@ Public Sub CopiarSeleccion(Optional ByVal Borde As Boolean = False)
                     .ObjGrh = MapData(X + SeleccionIX, y + SeleccionIY).ObjGrh
                     .NPCIndex = MapData(X + SeleccionIX, y + SeleccionIY).NPCIndex
                     .Light = MapData(X + SeleccionIX, y + SeleccionIY).Light
+
                     For i = 1 To 4
                         .Graphic(i) = MapData(X + SeleccionIX, y + SeleccionIY).Graphic(i)
                     Next i
+
                     .FxIndex = MapData(X + SeleccionIX, y + SeleccionIY).FxIndex
                     .fX = MapData(X + SeleccionIX, y + SeleccionIY).fX
+
                     For i = 0 To 3
                         .Engine_Light(i) = MapData(X + SeleccionIX, y + SeleccionIY).Engine_Light(i)
                     Next i
+
                     .CharIndex = MapData(X + SeleccionIX, y + SeleccionIY).CharIndex
                 End With
             Next

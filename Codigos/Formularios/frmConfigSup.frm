@@ -7,7 +7,6 @@ Begin VB.Form frmConfigSup
    ClientLeft      =   13860
    ClientTop       =   6855
    ClientWidth     =   4320
-   ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25

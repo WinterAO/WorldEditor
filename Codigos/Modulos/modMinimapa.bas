@@ -133,8 +133,8 @@ Public Sub DibujarMinimapa(Optional ByVal Refrescar = False)
     
     'frmMain.UserM.Left = (UserPos.X * 2) - 2
     'frmMain.UserM.Top = (UserPos.Y * 2) - 2
-    frmMapa.ApuntadorRadar.Left = (UserPos.X) - 9
-    frmMapa.ApuntadorRadar.Top = (UserPos.y) - 8
+    frmMapa.ApuntadorRadar.Left = (UserPos.X) - HalfWindowTileWidth
+    frmMapa.ApuntadorRadar.Top = (UserPos.y) - HalfWindowTileHeight
     
     'Refrescamos
     'frmMain.Minimap.Refresh

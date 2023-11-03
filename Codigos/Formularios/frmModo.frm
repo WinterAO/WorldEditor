@@ -213,8 +213,7 @@ Private Sub cmbPerfil_Click()
             chkvSync.value = Unchecked
             
         End If
-        
-        
+           
     End If
 End Sub
 
@@ -222,8 +221,10 @@ Private Sub Form_Load()
     On Error Resume Next
     
     Dim i As Byte
+    Dim lastProfile As Byte
         
     nPerfiles = Val(GetVar(profilesFile, "INIT", "profiles"))
+    lastProfile = Val(GetVar(profilesFile, "INIT", "lastProfile"))
     
     cmbPerfil.Clear
     
@@ -236,6 +237,10 @@ Private Sub Form_Load()
     Next i
     
     ReDim Perfiles(1 To nPerfiles) As String
+    
+    If lastProfile <= nPerfiles And lastProfile > 0 Then
+        cmbPerfil.ListIndex = lastProfile - 1
+    End If
     
     cmbProcesado.ListIndex = ClientSetup.OverrideVertexProcess
     
@@ -282,6 +287,8 @@ Private Sub LvBBoton_Click(Index As Integer)
             Call WriteVar(profileFile(ProfileTag), "CONFIGURACION", "MeMode", CStr(ClientSetup.MeMode))
             Call WriteVar(profileFile(ProfileTag), "VIDEO", "VertexProcessingOverride", CByte(ClientSetup.OverrideVertexProcess))
             Call WriteVar(profileFile(ProfileTag), "VIDEO", "LimitarFPS", IIf(ClientSetup.LimiteFPS, "1", "0"))
+            ' Guarda el índice del perfil seleccionado en "lastProfile"
+            Call WriteVar(profilesFile, "INIT", "lastProfile", cmbPerfil.ListIndex + 1)
             
             Unload Me
     End Select

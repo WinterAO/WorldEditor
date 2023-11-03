@@ -58,13 +58,25 @@ Private Const MOVEMENT_SPEED As Single = 1
 Private Declare Function QueryPerformanceFrequency Lib "kernel32" (lpFrequency As Currency) As Long
 Private Declare Function QueryPerformanceCounter Lib "kernel32" (lpPerformanceCount As Currency) As Long
 
-Sub ConvertCPtoTP(ByVal viewPortX As Integer, ByVal viewPortY As Integer, ByRef tX As Integer, ByRef tY As Integer)
-'******************************************
-'Converts where the mouse is in the main window to a tile position. MUST be called eveytime the mouse moves.
-'******************************************
+Sub ConvertCPtoTP(ByVal viewPortX As Integer, _
+                  ByVal viewPortY As Integer, _
+                  ByRef tX As Integer, _
+                  ByRef tY As Integer)
+                  
+    On Error GoTo ConvertCPtoTP_Error
+    '******************************************
+    'Converts where the mouse is in the main window to a tile position. MUST be called eveytime the mouse moves.
+    '******************************************
 
     tX = (UserPos.X + viewPortX \ TilePixelWidth - WindowTileWidth \ 2)
     tY = (UserPos.y + viewPortY \ TilePixelHeight - WindowTileHeight \ 2)
+    
+    On Error GoTo 0
+    Exit Sub
+
+ConvertCPtoTP_Error:
+    Call RegistrarError(Err.Number, Err.Description, "ConvertCPtoTP", Erl)
+    Resume Next
 End Sub
 
 Public Sub InitGrh(ByRef Grh As Grh, ByVal GrhIndex As Long, Optional ByVal Started As Byte = 2)
@@ -119,19 +131,19 @@ Sub MoveCharbyPos(CharIndex As Integer, nX As Integer, nY As Integer)
         addY = nY - y
         
         If Sgn(addX) = 1 Then
-            nHeading = eDireccion.EAST
+            nHeading = E_Heading.EAST
         End If
         
         If Sgn(addX) = -1 Then
-            nHeading = eDireccion.WEST
+            nHeading = E_Heading.WEST
         End If
         
         If Sgn(addY) = -1 Then
-            nHeading = eDireccion.NORTH
+            nHeading = E_Heading.NORTH
         End If
         
         If Sgn(addY) = 1 Then
-            nHeading = eDireccion.SOUTH
+            nHeading = E_Heading.SOUTH
         End If
         
         MapData(nX, nY).CharIndex = CharIndex
@@ -214,6 +226,9 @@ End Sub
 Public Sub ChangeView()
     WindowTileHeight = Round(frmMain.MainViewPic.ScaleHeight / 32, 0)
     WindowTileWidth = Round(frmMain.MainViewPic.ScaleWidth / 32, 0)
+    
+    frmMapa.ApuntadorRadar.Height = WindowTileHeight
+    frmMapa.ApuntadorRadar.Width = WindowTileWidth
 
     HalfWindowTileHeight = WindowTileHeight \ 2
     HalfWindowTileWidth = WindowTileWidth \ 2
@@ -457,6 +472,39 @@ Error:
     End If
 End Sub
 
+Public Sub DrawHead(ByVal Head As Integer, ByVal X As Integer, ByVal y As Integer, Light() As Long, ByVal Heading As Byte, Optional ByVal EsCabeza As Boolean = True, Optional ByVal Alpha As Boolean = False, Optional ByVal angle As Single = 0, Optional ByVal ScaleX As Single = 1!, Optional ByVal ScaleY As Single = 1!)
+
+    Dim textureX1 As Integer
+    Dim textureX2 As Integer
+    Dim textureY1 As Integer
+    Dim textureY2 As Integer
+    Dim OffsetX As Integer
+    Dim OffsetY As Integer
+    Dim Texture As Long
+
+    If EsCabeza Then
+        If heads(Head).Texture <= 0 Then Exit Sub
+        Texture = heads(Head).Texture
+    Else
+        If Cascos(Head).Texture <= 0 Then Exit Sub
+        Texture = Cascos(Head).Texture
+    End If
+    
+    textureX2 = 27
+    textureY2 = 32
+ 
+    If EsCabeza Then
+        textureX1 = heads(Head).startX - textureX2
+        textureY1 = ((Heading - 2) * textureY2) + heads(Head).startY
+    Else
+        textureX1 = Cascos(Head).startX - textureX2 + 1
+        textureY1 = ((Heading - 2) * textureY2) + Cascos(Head).startY + 2
+    End If
+    
+    Device_Textured_Render X - OffsetX + 3, y - OffsetY + 4, textureX2, textureY2, (textureX2 + textureX1), (textureY2 + textureY1), Texture, Light, Alpha, angle, ScaleX, ScaleY
+
+End Sub
+
 Sub Draw_GrhIndex(ByVal GrhIndex As Long, ByVal X As Integer, ByVal y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, Optional ByVal Alpha As Boolean = False)
     Dim SourceRect As RECT
     
@@ -596,9 +644,6 @@ Sub RenderScreen(ByVal tilex As Integer, _
     
     If screenmaxX < XMaxMapSize Then screenmaxX = screenmaxX + 1
     
-    '###################
-    'PREVIEW
-    '###################
     If Val(frmSuperficies.cCapas.Text) >= 1 And (frmSuperficies.cCapas.Text) <= 4 Then
         bCapa = Val(frmSuperficies.cCapas.Text)
         
@@ -609,73 +654,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
     
     'Draw floor layer
     For y = screenminY To screenmaxY
-    
         For X = screenminX To screenmaxX
-            
-            'Previsualización
-            '*******************************
-            If SobreX = X And SobreY = y Then
-                            
-                ' Pone Grh !
-                Sobre = -1
-    
-                If frmSuperficies.cSeleccionarSuperficie.value = True And ClientSetup.Preview = True Then
-                    Sobre = MapData(X, y).Graphic(bCapa).GrhIndex
-    
-                    If frmConfigSup.MOSAICO.value = vbChecked Then
-
-                        Dim aux As Long
-
-                        Dim dy  As Integer
-
-                        Dim dX  As Integer
-    
-                        If frmConfigSup.DespMosaic.value = vbChecked Then
-                            dy = Val(frmConfigSup.DMLargo.Text)
-                            dX = Val(frmConfigSup.DMAncho.Text)
-                        Else
-                            dy = 0
-                            dX = 0
-    
-                        End If
-    
-                        If frmMain.mnuAutoCompletarSuperficies.Checked = False Then
-                            aux = Val(frmSuperficies.cGrh.Text) + (((y + dy) Mod frmConfigSup.mLargo.Text) * frmConfigSup.mAncho.Text) + ((X + dX) Mod frmConfigSup.mAncho.Text)
-    
-                            If MapData(X, y).Graphic(bCapa).GrhIndex <> aux Then
-                                MapData(X, y).Graphic(bCapa).GrhIndex = aux
-                                InitGrh MapData(X, y).Graphic(bCapa), aux
-    
-                            End If
-    
-                        Else
-                            aux = Val(frmSuperficies.cGrh.Text) + (((y + dy) Mod frmConfigSup.mLargo.Text) * frmConfigSup.mAncho.Text) + ((X + dX) Mod frmConfigSup.mAncho.Text)
-    
-                            If MapData(X, y).Graphic(bCapa).GrhIndex <> aux Then
-                                MapData(X, y).Graphic(bCapa).GrhIndex = aux
-                                InitGrh MapData(X, y).Graphic(bCapa), aux
-    
-                            End If
-    
-                        End If
-    
-                    Else
-    
-                        If MapData(X, y).Graphic(bCapa).GrhIndex <> Val(frmSuperficies.cGrh.Text) Then
-                            MapData(X, y).Graphic(bCapa).GrhIndex = Val(frmSuperficies.cGrh.Text)
-                            InitGrh MapData(X, y).Graphic(bCapa), Val(frmSuperficies.cGrh.Text)
-    
-                        End If
-    
-                    End If
-    
-                End If
-    
-            Else
-                
-                Sobre = -1
-                
-            End If
 
             '###################
             'CAPAS
@@ -691,17 +670,6 @@ Sub RenderScreen(ByVal tilex As Integer, _
     
                 'Layer 2 **********************************
                 If MapData(X, y).Graphic(2).GrhIndex <> 0 And VerCapa2 Then Call Draw_Grh(MapData(X, y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, y).Engine_Light(), 1)
-                
-                If Sobre >= 0 Then
-                    If MapData(X, y).Graphic(bCapa).GrhIndex <> Sobre Then
-                        MapData(X, y).Graphic(bCapa).GrhIndex = Sobre
-                        InitGrh MapData(X, y).Graphic(bCapa), Sobre
-                            
-                        If MapData(X, y).Graphic(bCapa).GrhIndex = GRH_ERROR Then MapData(X, y).Graphic(bCapa).GrhIndex = 0
-
-                    End If
-                    
-                End If
             
             End If
         
@@ -736,7 +704,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     If .CharIndex <> 0 And VerNpcs Then Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
 
                     'Layer 3 *****************************************
-                    If .Graphic(3).GrhIndex <> 0 And VerCapa3 Then Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(X, y).Engine_Light(), 1)
+                    If .Graphic(3).GrhIndex <> 0 And VerCapa3 Then Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
 
                     'Particulas **************************************
                     If .Particle_Group_Index And VerParticulas Then Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
@@ -828,32 +796,65 @@ Sub RenderScreen(ByVal tilex As Integer, _
         ScreenY = ScreenY + 1
     Next y
     
+    'Preview al pegar
     If EstadoSelect = eEstadoSelect.Copiado Then
-        
-        Dim sX As Long
-        Dim sY As Long
-        Dim xX As Long
-        Dim yY As Long
-                
-        For yY = 0 To SeleccionAncho - 1
-            For xX = 0 To SeleccionAlto - 1
-                            
-                ScreenX = (xX + SobreX - UserPos.X) + 21
-                ScreenY = yY + SobreY - UserPos.y + 11
-        
-                Call Draw_Grh(SeleccionMap(xX, yY).Graphic(1), (ScreenX - 1) * 32 + PixelOffsetX, (ScreenY - 1) * 32 + PixelOffsetY, 1, MapData(X, y).Engine_Light(), 1, True)
-                Call Draw_Grh(SeleccionMap(xX, yY).Graphic(2), (ScreenX - 1) * 32 + PixelOffsetX, (ScreenY - 1) * 32 + PixelOffsetY, 1, MapData(X, y).Engine_Light(), 1, True)
-                sX = sX + 32
-            Next xX
+        Dim i As Byte
 
-            sX = 0
-            sY = sY + 32
-        Next yY
-                        
-        sX = 0
-        sY = 0
+        For i = 1 To 4
+            For y = 0 To SeleccionAlto - 1
+                For X = 0 To SeleccionAncho - 1
+
+                    If y + SobreY > YMaxMapSize Then Exit For
+                    If X + SobreX > XMaxMapSize Then Exit For
+                    Call Draw_Grh(SeleccionMap(X, y).Graphic(1), (X + SobreX - UserPos.X + HalfWindowTileWidth) * 32 + PixelOffsetX, (y + SobreY - UserPos.y + HalfWindowTileHeight) * 32 + PixelOffsetY, 1, SeleccionMap(X, y).Engine_Light(), 1)
+                Next X
+            Next y
+        Next i
                 
     End If
+    
+    'Preview al seleccionar una superficie
+    If frmSuperficies.cSeleccionarSuperficie.value = True Then
+        Dim mGrh As Grh
+        Dim aux  As Long
+        Dim dy   As Integer
+        Dim dX   As Integer
+
+        If frmConfigSup.DespMosaic.value = vbChecked Then
+            dy = Val(frmConfigSup.DMLargo.Text)
+            dX = Val(frmConfigSup.DMAncho.Text)
+        Else
+            dy = 0
+            dX = 0
+
+        End If
+        
+        If frmConfigSup.mAncho.Text = "0" Then frmConfigSup.mAncho.Text = "1"
+        If frmConfigSup.mLargo.Text = "0" Then frmConfigSup.mLargo.Text = "1"
+
+        If frmSuperficies.chkAutoCompletarSuperficies.value = vbUnchecked Then
+            aux = Val(frmSuperficies.cGrh.Text) + (((SobreY + dy) Mod frmConfigSup.mLargo.Text) * frmConfigSup.mAncho.Text) + ((SobreX + dX) Mod frmConfigSup.mAncho.Text)
+            mGrh.GrhIndex = aux
+            InitGrh mGrh, aux
+            Call Draw_Grh(mGrh, (SobreX - UserPos.X + HalfWindowTileWidth) * 32 + PixelOffsetX, (SobreY - UserPos.y + HalfWindowTileHeight) * 32 + PixelOffsetY, 1, Normal_RGBList(), 1, False)
+            
+        Else
+
+            For X = 1 To frmConfigSup.mAncho.Text
+                For y = 1 To frmConfigSup.mLargo.Text
+                    aux = Val(frmSuperficies.cGrh.Text) + (y - 1) * frmConfigSup.mAncho.Text + X - 1
+                    mGrh.GrhIndex = aux
+                    InitGrh mGrh, aux
+                    Call Draw_Grh(mGrh, (SobreX - UserPos.X + HalfWindowTileWidth + X - 1) * 32 + PixelOffsetX, (SobreY - UserPos.y + HalfWindowTileHeight + y - 1) * 32 + PixelOffsetY, 1, Normal_RGBList(), 1, False)
+            
+                Next y
+            Next X
+
+        End If
+            
+    End If
+    
+    Exit Sub
     
 RenderScreen_Err:
 
@@ -864,17 +865,20 @@ RenderScreen_Err:
     
 End Sub
 
-Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, ByVal PixelOffsetY As Integer)
-'*******************************************************
-'Esto forma parte del RenderScreen.
-'Dibuja todo aquello que tenga cuerpo (por asi decirlo)
-'Bichos y PJ
-'*******************************************************
+Private Sub CharRender(ByVal CharIndex As Long, _
+                       ByVal PixelOffsetX As Integer, _
+                       ByVal PixelOffsetY As Integer)
+    '*******************************************************
+    'Esto forma parte del RenderScreen.
+    'Dibuja todo aquello que tenga cuerpo (por asi decirlo)
+    'Bichos y PJ
+    '*******************************************************
     Dim moved As Boolean
-    Dim Pos As Integer
-    Dim line As String
+    Dim Pos   As Integer
+    Dim line  As String
     
     With CharList(CharIndex)
+
         If .Moving Then
 
             'If needed, move left and right
@@ -926,11 +930,18 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
 
         'Dibujamos el cuerpo
         If .Body.Walk(.Heading).GrhIndex Then _
-            Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, Normal_RGBList(), 1, False)
-        'Dibujamos la Cabeza
-        'If .Head Then _
-            Call DrawHead(.Head, PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y, 1, 0, LightIluminado(), , X, Y)
-
+                    Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, Normal_RGBList(), 1)
+            
+        If .Head Then Call DrawHead(.Head, PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.y + OFFSET_HEAD, Normal_RGBList(), .Heading, True)
+            
+        'Draw Helmet
+        If .Casco Then Call DrawHead(.Casco, PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.y + OFFSET_HEAD, Normal_RGBList(), .Heading, False)
+                
+        'Draw Weapon
+        If .Arma.WeaponWalk(.Heading).GrhIndex Then Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, Normal_RGBList(), 1)
+                
+        'Draw Shield
+        If .Escudo.ShieldWalk(.Heading).GrhIndex Then Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, Normal_RGBList(), 1)
     End With
 End Sub
 
@@ -1069,7 +1080,16 @@ Public Sub RenderParticlePreview()
     Call DrawBuffer.PaintPicture(frmParticulas.ParticlePic.hDC, 0, 0, frmParticulas.ParticlePic.Width, frmParticulas.ParticlePic.Height, 0, 0, vbSrcCopy)
 End Sub
 
-Sub MakeChar(CharIndex As Integer, Body As Integer, Head As Integer, Heading As Byte, X As Integer, y As Integer)
+Sub MakeChar(ByVal CharIndex As Integer, _
+                     ByVal Body As Integer, _
+                     ByVal Head As Integer, _
+                     ByVal Heading As Byte, _
+                     ByVal X As Integer, _
+                     ByVal y As Integer, _
+                     ByVal Arma As Integer, _
+                     ByVal Escudo As Integer, _
+                     ByVal Casco As Integer)
+ 
 '*************************************************
 'Author: Unkwown
 'Last modified: 28/05/06 by GS
@@ -1084,10 +1104,19 @@ On Error Resume Next
     
     'Update head, body, ect.
     If Body > 0 Then _
-    .Body = BodyData(Body)
+        .Body = BodyData(Body)
     
-    'If Head > 0 Then _
-        .Head = HeadData(Head)
+    If Head > 0 Then _
+        .Head = Head
+        
+    If Arma > 0 Then _
+        .Arma = WeaponAnimData(Arma)
+        
+    If Escudo > 0 Then _
+        .Escudo = ShieldAnimData(Escudo)
+        
+    If Casco > 0 Then _
+        .Casco = Casco
         
     .Heading = Heading
     

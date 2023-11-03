@@ -46,10 +46,10 @@ Begin VB.Form frmMapa
          BorderStyle     =   6  'Inside Solid
          DrawMode        =   6  'Mask Pen Not
          FillColor       =   &H00FFFFFF&
-         Height          =   330
+         Height          =   315
          Left            =   7500
          Top             =   7500
-         Width           =   375
+         Width           =   600
       End
    End
 End
@@ -63,7 +63,7 @@ Option Explicit
 Private Declare Function BitBlt Lib "gdi32" ( _
         ByVal hDestDC As Long, _
         ByVal X As Long, _
-        ByVal Y As Long, _
+        ByVal y As Long, _
         ByVal nWidth As Long, _
         ByVal nHeight As Long, _
         ByVal hSrcDC As Long, _
@@ -132,7 +132,7 @@ Public Sub Capturar_Imagen(Control As Control, Destino As Object)
           
 End Sub
 
-Private Sub picMapa_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picMapa_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
 
     If Button = 1 And Shift = vbShiftMask Then
         Call DibujarMinimapa
@@ -140,9 +140,9 @@ Private Sub picMapa_MouseDown(Button As Integer, Shift As Integer, X As Single, 
     ElseIf Button = 1 Then
     
         UserPos.X = X
-        UserPos.Y = Y
-        ApuntadorRadar.Left = X
-        ApuntadorRadar.Top = Y
+        UserPos.y = y
+        frmMapa.ApuntadorRadar.Left = (UserPos.X) - HalfWindowTileWidth
+        frmMapa.ApuntadorRadar.Top = (UserPos.y) - HalfWindowTileHeight
     
     ElseIf Button = 2 Then
         Call AddtoRichTextBox(frmConsola.StatTxt, "Guardando Minimapa...", 255, 255, 255)

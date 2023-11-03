@@ -57,11 +57,27 @@ Sub Main()
     
     frmCarga.lblStatus.Caption = "Cargando Minimapa."
     DoEvents
-    'Call modCarga.CargarMinimapa
+    Call modCarga.CargarMinimapa
+    
+    frmCarga.lblStatus.Caption = "Cargando Cabezas."
+    DoEvents
+    Call modCarga.CargarCabezas
+    
+    frmCarga.lblStatus.Caption = "Cargando Cascos."
+    DoEvents
+    Call modCarga.CargarCascos
     
     frmCarga.lblStatus.Caption = "Cargando Cuerpos."
     DoEvents
     Call modCarga.CargarCuerpos
+    
+    frmCarga.lblStatus.Caption = "Cargando Cabezas."
+    DoEvents
+    Call modCarga.CargarAnimArmas
+    
+    frmCarga.lblStatus.Caption = "Cargando Cabezas."
+    DoEvents
+    Call modCarga.CargarAnimEscudos
     
     frmCarga.lblStatus.Caption = "Cargando Indice de NPC's."
     DoEvents
@@ -279,7 +295,7 @@ Public Sub ToggleWalkMode()
     Else
         'MakeCharacter
         If LegalPos(UserPos.X, UserPos.y) Then
-            Call MakeChar(NextOpenChar(), 1, 1, SOUTH, UserPos.X, UserPos.y)
+            Call MakeChar(NextOpenChar(), 107, 1, SOUTH, UserPos.X, UserPos.y, 1, 11, 81)
             UserCharIndex = MapData(UserPos.X, UserPos.y).CharIndex
             frmMain.mnuModoCaminata.Checked = True
             

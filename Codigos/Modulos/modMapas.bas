@@ -216,6 +216,7 @@ Public Sub MapInfo_Actualizar()
         .chkMapPK.value = IIf(MapInfo.PK = True, 1, 0)
         .TxtAmbient.Text = MapInfo.Ambient
         .TxtlvlMinimo = MapInfo.lvlMinimo
+        .txtNivelMaximo = MapInfo.lvlMaximo
         .chkMapMagiaSinEfecto.value = MapInfo.MagiaSinEfecto
         .chkMapInviSinEfecto.value = IIf(MapInfo.InviSinEfecto, vbChecked, vbUnchecked)
         .chkInvocarSin.value = MapInfo.InvocarSinEfecto
@@ -344,6 +345,7 @@ Public Sub MapZona_Actualizar(ByVal id As Integer)
         .chkMapPK.value = IIf(MapZonas(id).PK = True, 1, 0)
         .TxtAmbient.Text = MapZonas(id).Ambient
         .TxtlvlMinimo = MapZonas(id).lvlMinimo
+        .txtNivelMaximo = MapZonas(id).lvlMaximo
         .chkMapMagiaSinEfecto.value = IIf(MapZonas(id).MagiaSinEfecto, vbChecked, vbUnchecked)
         .chkMapInviSinEfecto.value = IIf(MapZonas(id).InviSinEfecto, vbChecked, vbUnchecked)
         .chkInvocarSin.value = IIf(MapZonas(id).InvocarSinEfecto, vbChecked, vbUnchecked)
