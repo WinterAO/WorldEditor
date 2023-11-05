@@ -2,6 +2,8 @@
 Errores.log
 Codigo/*.log
 Conversor/
+Render/
+Resources/
 *.vbw
 *.oca
 *.csi
