@@ -7,6 +7,7 @@ Begin VB.Form frmMapa
    ClientTop       =   390
    ClientWidth     =   15090
    ClipControls    =   0   'False
+   ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -63,7 +64,7 @@ Option Explicit
 Private Declare Function BitBlt Lib "gdi32" ( _
         ByVal hDestDC As Long, _
         ByVal X As Long, _
-        ByVal y As Long, _
+        ByVal Y As Long, _
         ByVal nWidth As Long, _
         ByVal nHeight As Long, _
         ByVal hSrcDC As Long, _
@@ -72,7 +73,7 @@ Private Declare Function BitBlt Lib "gdi32" ( _
         ByVal dwRop As Long) As Long
       
 ' Recupera la imagen del área del control
-Private Declare Function GetWindowDC Lib "user32" (ByVal hwnd As Long) As Long
+Private Declare Function GetWindowDC Lib "user32" (ByVal hWnd As Long) As Long
 
 Public Sub Capturar_Imagen(Control As Control, Destino As Object)
 '***********************************************
@@ -81,7 +82,7 @@ Public Sub Capturar_Imagen(Control As Control, Destino As Object)
 'Descripcion: copia la imagen del control en un picturebox
 '***********************************************
           
-    Dim hDC             As Long
+    Dim hdc             As Long
     Dim Escala_Anterior As Integer
     Dim Ancho           As Long
     Dim Alto            As Long
@@ -111,10 +112,10 @@ Public Sub Capturar_Imagen(Control As Control, Destino As Object)
     On Error GoTo 0
 
     ' Captura el área de pantalla correspondiente al control
-    hDC = GetWindowDC(Control.hwnd)
+    hdc = GetWindowDC(Control.hWnd)
     
     ' Copia esa área al picturebox
-    Call BitBlt(Destino.hDC, 0, 0, 3000, 3000, hDC, 0, 0, vbSrcCopy)
+    Call BitBlt(Destino.hdc, 0, 0, 3000, 3000, hdc, 0, 0, vbSrcCopy)
     
     ' Convierte la imagen anterior en un Mapa de bits
     Destino.Picture = Destino.Image
@@ -132,7 +133,7 @@ Public Sub Capturar_Imagen(Control As Control, Destino As Object)
           
 End Sub
 
-Private Sub picMapa_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub picMapa_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If Button = 1 And Shift = vbShiftMask Then
         Call DibujarMinimapa
@@ -140,9 +141,9 @@ Private Sub picMapa_MouseDown(Button As Integer, Shift As Integer, X As Single, 
     ElseIf Button = 1 Then
     
         UserPos.X = X
-        UserPos.y = y
+        UserPos.Y = Y
         frmMapa.ApuntadorRadar.Left = (UserPos.X) - HalfWindowTileWidth
-        frmMapa.ApuntadorRadar.Top = (UserPos.y) - HalfWindowTileHeight
+        frmMapa.ApuntadorRadar.Top = (UserPos.Y) - HalfWindowTileHeight
     
     ElseIf Button = 2 Then
         Call AddtoRichTextBox(frmConsola.StatTxt, "Guardando Minimapa...", 255, 255, 255)

@@ -6,6 +6,7 @@ Begin VB.Form frmPreview
    ClientLeft      =   10005
    ClientTop       =   12495
    ClientWidth     =   4440
+   ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
