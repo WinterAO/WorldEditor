@@ -1012,6 +1012,9 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuLineFunciones0 
          Caption         =   "-"
       End
+      Begin VB.Menu mnuRender 
+         Caption         =   "Renderizar"
+      End
       Begin VB.Menu mnuOptimizar 
          Caption         =   "Optimizar"
       End
@@ -1272,7 +1275,7 @@ Private Sub Minimap_Click(Index As Integer)
             
     End Select
     
-    Minimap(Index).Checked = (Minimap(Index).Checked = False)
+    Minimap(Index).Checked = Not Minimap(Index).Checked
     Call DibujarMinimapa
     Call guardarPerfilMinimap
     
@@ -1387,14 +1390,14 @@ Private Sub mnuEliminarLuces_Click()
     On Error GoTo mnuEliminarLuces_Click_Err
     
     Dim X As Integer
-    Dim y As Integer
+    Dim Y As Integer
     
-    For y = SeleccionIY To SeleccionFY
+    For Y = SeleccionIY To SeleccionFY
         For X = SeleccionIX To SeleccionFX
         
-            With MapData(X, y)
+            With MapData(X, Y)
             
-                Call Engine_Long_To_RGB_List(MapData(X, y).Engine_Light(), -1)
+                Call Engine_Long_To_RGB_List(MapData(X, Y).Engine_Light(), -1)
                 
                 .Light.active = False
                 .Light.range = 0
@@ -1409,7 +1412,7 @@ Private Sub mnuEliminarLuces_Click()
         
         Next X
         
-    Next y
+    Next Y
     
     Exit Sub
     
@@ -1450,16 +1453,16 @@ End Sub
 
 Private Sub mnuEliminarZona_Click()
     Dim zonaDel As Integer
-    Dim X, y As Integer
+    Dim X, Y As Integer
     zonaDel = InputBox("Por favor, ingrese el número de la zona a borrar:")
     
     For X = XMinMapSize To XMaxMapSize
     
-        For y = YMinMapSize To YMaxMapSize
+        For Y = YMinMapSize To YMaxMapSize
         
-            If MapData(X, y).ZonaIndex = zonaDel Then MapData(X, y).ZonaIndex = 0
+            If MapData(X, Y).ZonaIndex = zonaDel Then MapData(X, Y).ZonaIndex = 0
         
-        Next y
+        Next Y
         
     Next X
 
@@ -1633,6 +1636,54 @@ mnuReAbrirMapa_Click_Err:
     Resume Next
 End Sub
 
+Private Sub mnuRender_Click()
+    On Error GoTo mnuRender_Click_Err
+    
+    Dim tmpPic As StdPicture
+    Dim picNr As Long
+    Dim sFileName As String
+    Dim maxCx As Long, maxCy As Long
+    Dim picWidth As Long, picHeight As Long
+    
+   
+    frmRenderer.Show
+   
+    frmRenderer.PicGrande.ScaleMode = vbPixels
+    frmRenderer.PicGrande.AutoRedraw = True
+    frmRenderer.PicGrande.BorderStyle = 0&
+    Dim x2 As Integer
+    Dim y2 As Integer
+    
+    
+     maxCy = YMaxMapSize * 4
+     maxCx = XMaxMapSize * 4
+     
+     
+    For y2 = 0 To ((YMaxMapSize - 1) \ 100)
+       For x2 = 0 To ((XMaxMapSize - 1) \ 100)
+       
+         Call MapCapture(False, True, x2 * 100, y2 * 100)
+         
+      Next x2
+    Next y2
+    
+    frmRenderer.PicGrande.AutoRedraw = False
+    
+    Unload frmRenderer
+    
+    Shell (App.Path & "\UnirMinimapa.exe " & UserMap)
+    DoEvents
+    Sleep 1000
+    DoEvents
+    'CargarMinimap
+
+    Exit Sub
+
+mnuRender_Click_Err:
+    Call RegistrarError(Err.Number, Err.Description, "FrmMain. mnuRender_Click", Erl)
+    Resume Next
+End Sub
+
 Private Sub mnuSalir_Click()
     Call CloseMapEditor
     
@@ -1717,25 +1768,25 @@ End Sub
 Private Sub MainViewPic_MouseMove(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
-                                  y As Single)
+                                  Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 27/04/2021
     '*************************************************
 
-    Call Form_MouseMove(Button, Shift, X, y)
+    Call Form_MouseMove(Button, Shift, X, Y)
 End Sub
 
 Private Sub MainViewPic_MouseDown(Button As Integer, _
                                   Shift As Integer, _
                                   X As Single, _
-                                  y As Single)
+                                  Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 27/04/2021
     '*************************************************
 
-    Call Form_MouseDown(Button, Shift, X, y)
+    Call Form_MouseDown(Button, Shift, X, Y)
 End Sub
 
 Private Sub MainViewPic_DblClick()
@@ -1849,7 +1900,7 @@ Private Sub Form_DblClick()
     End If
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -1860,7 +1911,7 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y A
     
     If Not MapaCargado Then Exit Sub
     
-    Call ConvertCPtoTP(X, y, tX, tY)
+    Call ConvertCPtoTP(X, Y, tX, tY)
     
     If EstadoSelect > 0 And Button = 2 Then
         EstadoSelect = 0
@@ -1882,7 +1933,7 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, y A
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -1894,7 +1945,7 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, y A
     If Not MapaCargado Then Exit Sub
     HotKeysAllow = True
 
-    Call ConvertCPtoTP(X, y, tX, tY)
+    Call ConvertCPtoTP(X, Y, tX, tY)
     
     MousePos = "X: " & tX & " - Y: " & tY
     
@@ -1926,22 +1977,22 @@ End Sub
 
 Private Sub mnuVerCapa1_Click()
     VerCapa1 = Not VerCapa1
-    mnuVerCapa1.Checked = (mnuVerCapa1.Checked = False)
+    mnuVerCapa1.Checked = Not mnuVerCapa1.Checked
 End Sub
 
 Private Sub mnuVerCapa2_Click()
     VerCapa2 = Not VerCapa2
-    mnuVerCapa2.Checked = (mnuVerCapa2.Checked = False)
+    mnuVerCapa2.Checked = Not mnuVerCapa2.Checked
 End Sub
 
 Private Sub mnuVerCapa3_Click()
     VerCapa3 = Not VerCapa3
-    mnuVerCapa3.Checked = (mnuVerCapa3.Checked = False)
+    mnuVerCapa3.Checked = Not mnuVerCapa3.Checked
 End Sub
 
 Private Sub mnuVerCapa4_Click()
     VerCapa4 = Not VerCapa4
-    mnuVerCapa4.Checked = (mnuVerCapa4.Checked = False)
+    mnuVerCapa4.Checked = Not mnuVerCapa4.Checked
 End Sub
 
 Private Sub mnuVerGrilla_Click()
@@ -1951,27 +2002,27 @@ End Sub
 
 Private Sub mnuVerNPCs_Click()
     VerNpcs = Not VerNpcs
-    mnuVerNPCs.Checked = (mnuVerNPCs.Checked = False)
+    mnuVerNPCs.Checked = Not mnuVerNPCs.Checked
 End Sub
 
 Private Sub mnuVerObjetos_Click()
     VerObjetos = Not VerObjetos
-    mnuVerObjetos.Checked = (mnuVerObjetos.Checked = False)
+    mnuVerObjetos.Checked = Not mnuVerObjetos.Checked
 End Sub
 
 Private Sub mnuVerParticulas_Click()
     VerParticulas = Not VerParticulas
-    mnuVerParticulas.Checked = (mnuVerParticulas.Checked = False)
+    mnuVerParticulas.Checked = Not mnuVerParticulas.Checked
 End Sub
 
 Private Sub mnuVerTranslados_Click()
     VerTranslados = Not VerTranslados
-    mnuVerTranslados.Checked = (mnuVerTranslados.Checked = False)
+    mnuVerTranslados.Checked = Not mnuVerTranslados.Checked
 End Sub
 
 Private Sub mnuVerTriggers_Click()
     VerTriggers = Not VerTriggers
-    mnuVerTriggers.Checked = (mnuVerTriggers.Checked = False)
+    mnuVerTriggers.Checked = Not mnuVerTriggers.Checked
 End Sub
 
 Private Sub mnuVerZonas_Click(Index As Integer)
@@ -2002,18 +2053,18 @@ End Sub
 
 Private Sub mnuzonanula_Click()
     Dim X As Integer
-    Dim y As Integer
+    Dim Y As Integer
     
     For X = XMinMapSize To XMaxMapSize
     
-        For y = YMinMapSize To YMaxMapSize
+        For Y = YMinMapSize To YMaxMapSize
         
-            If MapData(X, y).ZonaIndex = 0 Then
-                MsgBox "Se ha encontrado una zona nula en la posicion X: " & X & " Y: " & y
+            If MapData(X, Y).ZonaIndex = 0 Then
+                MsgBox "Se ha encontrado una zona nula en la posicion X: " & X & " Y: " & Y
                 Exit Sub
             End If
         
-        Next y
+        Next Y
     
     Next X
     
@@ -2021,7 +2072,7 @@ End Sub
 
 Private Sub mnuzonasinuso_Click()
     Dim X As Integer
-    Dim y As Integer
+    Dim Y As Integer
     Dim i As Integer
     Dim found As Boolean
     Dim Count As Integer
@@ -2035,14 +2086,14 @@ Private Sub mnuzonasinuso_Click()
     
         For X = XMinMapSize To XMaxMapSize
     
-            For y = YMinMapSize To YMaxMapSize
+            For Y = YMinMapSize To YMaxMapSize
         
-                If MapData(X, y).ZonaIndex = i Then
+                If MapData(X, Y).ZonaIndex = i Then
                     found = True
                     Exit For
                 End If
         
-            Next y
+            Next Y
             
             If found = True Then Exit For
         

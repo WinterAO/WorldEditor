@@ -1,6 +1,7 @@
 Attribute VB_Name = "modDeclaraciones"
 Option Explicit
 
+'Recursos
 Public Const PasswordResources = "$FlLrjB3JoliHdAPKA8&YaJR5"
 
 'Configuracion
@@ -14,8 +15,13 @@ Public Sound As clsSoundEngine
 Global NumChars As Integer
 Global LastChar As Integer
 
+'Warnings
 Public Const MSGMod As String = "Este mapa há sido modificado." & vbCrLf & "Si no lo guardas perderas todos los cambios ¿Deseas guardarlo?"
 Public Const MSGDang As String = "¡CUIDADO! Esta función podria arruinar el mapa." & vbCrLf & "¿Estas seguro que quieres continuar?"
+
+'Renderizado del mapa
+Public Radio               As Byte
+Public ToWorldMap2         As Boolean
 
 Public HotKeysAllow As Boolean
 Public PATH_Save As String
@@ -32,8 +38,10 @@ Public SupActual As Integer
 ' Objeto de Translado
 Public Cfg_TrOBJ As Integer
 
+'Bucle principal
 Public prgRun As Boolean
 
+'Seleccion
 Public SeleccionIX As Integer
 Public SeleccionFX As Integer
 Public SeleccionIY As Integer
@@ -328,6 +336,8 @@ Public Type ObjData
     WeaponAnim As Integer ' Apunta a una anim de armas
     ShieldAnim As Integer ' Apunta a una anim de escudo
     Texto As String
+    Cerrada As Byte
+    Subtipo As Byte
 End Type
 
 '**********Arrays Publicas************

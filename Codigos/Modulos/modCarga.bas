@@ -962,19 +962,21 @@ On Error GoTo Fallo
         DoEvents
         
         With ObjData(Obj)
-
-        .name = Leer.GetValue("OBJ" & Obj, "Name")
-        .GrhIndex = Val(Leer.GetValue("OBJ" & Obj, "GrhIndex"))
-        .ObjType = Val(Leer.GetValue("OBJ" & Obj, "ObjType"))
-        .Ropaje = Val(Leer.GetValue("OBJ" & Obj, "NumRopaje"))
-        .Info = Leer.GetValue("OBJ" & Obj, "Info")
-        .WeaponAnim = Val(Leer.GetValue("OBJ" & Obj, "Anim"))
-        .Texto = Leer.GetValue("OBJ" & Obj, "Texto")
-        .GrhSecundario = Val(Leer.GetValue("OBJ" & Obj, "GrhSec"))
-        
-        frmOBJs.LynxOBJs.AddItem Obj
-        K = frmOBJs.LynxOBJs.Rows - 1
-        frmOBJs.LynxOBJs.CellText(K, 1) = .name
+    
+            .name = Leer.GetValue("OBJ" & Obj, "Name")
+            .GrhIndex = Val(Leer.GetValue("OBJ" & Obj, "GrhIndex"))
+            .ObjType = Val(Leer.GetValue("OBJ" & Obj, "ObjType"))
+            .Ropaje = Val(Leer.GetValue("OBJ" & Obj, "NumRopaje"))
+            .Info = Leer.GetValue("OBJ" & Obj, "Info")
+            .WeaponAnim = Val(Leer.GetValue("OBJ" & Obj, "Anim"))
+            .Texto = Leer.GetValue("OBJ" & Obj, "Texto")
+            .GrhSecundario = Val(Leer.GetValue("OBJ" & Obj, "GrhSec"))
+            .Cerrada = Val(Leer.GetValue("OBJ" & Obj, "Cerrada"))
+            .Subtipo = Val(Leer.GetValue("OBJ" & Obj, "Subtipo"))
+            
+            frmOBJs.LynxOBJs.AddItem Obj
+            K = frmOBJs.LynxOBJs.Rows - 1
+            frmOBJs.LynxOBJs.CellText(K, 1) = .name
         
         End With
     Next Obj

@@ -121,7 +121,7 @@ Begin VB.Form frmTraslados
          Strikethrough   =   0   'False
       EndProperty
       cGradient       =   0
-      Mode            =   2
+      Mode            =   1
       Value           =   0   'False
       cBack           =   -2147483633
    End
