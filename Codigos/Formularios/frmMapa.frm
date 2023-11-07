@@ -5,7 +5,7 @@ Begin VB.Form frmMapa
    ClientHeight    =   14985
    ClientLeft      =   45
    ClientTop       =   390
-   ClientWidth     =   15090
+   ClientWidth     =   15000
    ClipControls    =   0   'False
    ControlBox      =   0   'False
    BeginProperty Font 
@@ -22,7 +22,7 @@ Begin VB.Form frmMapa
    MinButton       =   0   'False
    ScaleHeight     =   999
    ScaleMode       =   0  'User
-   ScaleWidth      =   999.007
+   ScaleWidth      =   993.049
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows Default
    Begin VB.PictureBox picMapa 
@@ -36,11 +36,11 @@ Begin VB.Form frmMapa
       Left            =   0
       ScaleHeight     =   1000
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   1007
+      ScaleWidth      =   1000
       TabIndex        =   0
       TabStop         =   0   'False
       Top             =   0
-      Width           =   15105
+      Width           =   14999
       Begin VB.Shape ApuntadorRadar 
          BackColor       =   &H00FFFFFF&
          BorderColor     =   &H00FFFFFF&
