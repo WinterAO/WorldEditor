@@ -1030,6 +1030,9 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuzonasinuso 
          Caption         =   "Buscar zonas sin uso"
       End
+      Begin VB.Menu mnuGrhList 
+         Caption         =   "Lista de todos los Grh's"
+      End
       Begin VB.Menu mnuline0 
          Caption         =   "-"
       End
@@ -1479,6 +1482,22 @@ End Sub
 
 Private Sub mnuFormatos_Click()
     frmFormatos.Show , frmMain
+End Sub
+
+Private Sub mnuGrhList_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 08/11/2023
+    '*************************************************
+    On Error GoTo mnuGrhList_Click_Err
+    
+        frmGrh.Show , frmMain
+    
+    Exit Sub
+
+mnuGrhList_Click_Err:
+    Call RegistrarError(Err.Number, Err.Description, "frmMain.mnuGrhList_Click", Erl)
+    Resume Next
 End Sub
 
 Private Sub mnuGrhtoPNG_Click()

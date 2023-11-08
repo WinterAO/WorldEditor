@@ -342,6 +342,7 @@ Public Sub LoadGrhData()
 On Error GoTo ErrorHandler:
 
     Dim Grh         As Long
+    Dim K           As Long
     Dim Frame       As Long
     Dim fileVersion As Long
     Dim fileBuff    As clsByteBuffer
@@ -351,6 +352,16 @@ On Error GoTo ErrorHandler:
     InfoHead = File_Find(DirRecursos & "Scripts" & Formato, LCase$("graficos.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
+    
+        With frmGrh.LynxGrh
+        
+            .Clear
+            .Redraw = False
+            .Visible = False
+            .AddColumn "Grh", 0
+            .AddColumn "Tipo", 0
+        
+        End With
     
         Extract_File_Memory Scripts, LCase$("graficos.ind"), buffer()
         
@@ -365,7 +376,12 @@ On Error GoTo ErrorHandler:
         ReDim GrhData(0 To grhCount) As GrhData
         
         While Grh <> grhCount
+        
             Grh = fileBuff.getLong
+            
+            frmGrh.LynxGrh.AddItem Grh
+            K = frmGrh.LynxGrh.Rows - 1
+            frmGrh.LynxGrh.CellText(K, 1) = Grh
 
             With GrhData(Grh)
             
@@ -376,6 +392,8 @@ On Error GoTo ErrorHandler:
                 ReDim .Frames(1 To .NumFrames)
                 
                 If .NumFrames > 1 Then
+                
+                    frmGrh.LynxGrh.CellText(K, 1) = "ANIMACION"
                 
                     For Frame = 1 To .NumFrames
                         .Frames(Frame) = fileBuff.getLong
@@ -398,6 +416,8 @@ On Error GoTo ErrorHandler:
                     If .TileHeight <= 0 Then GoTo ErrorHandler
                     
                 Else
+                
+                    frmGrh.LynxGrh.CellText(K, 1) = ""
                     
                     .FileNum = fileBuff.getLong
                     If .FileNum <= 0 Then GoTo ErrorHandler
@@ -430,6 +450,12 @@ On Error GoTo ErrorHandler:
     
     Set fileBuff = Nothing
     
+    With frmGrh.LynxGrh
+        .Visible = True
+        .Redraw = True
+        .ColForceFit
+    End With
+    
 Exit Sub
 
 ErrorHandler:
@@ -442,6 +468,14 @@ ErrorHandler:
         End If
         
     End If
+    
+    With frmGrh.LynxGrh
+        .Visible = True
+        .Redraw = True
+        .ColForceFit
+    End With
+    
+    Erase buffer
     
 End Sub
 
@@ -630,7 +664,7 @@ On Error GoTo errhandler:
                 Call InitGrh(BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0)
                 
                 BodyData(i).HeadOffset.X = MisCuerpos(i).HeadOffsetX
-                BodyData(i).HeadOffset.y = MisCuerpos(i).HeadOffsetY
+                BodyData(i).HeadOffset.Y = MisCuerpos(i).HeadOffsetY
             End If
         Next i
     
