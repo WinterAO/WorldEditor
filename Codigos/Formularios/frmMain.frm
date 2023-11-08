@@ -1030,8 +1030,14 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuzonasinuso 
          Caption         =   "Buscar zonas sin uso"
       End
+      Begin VB.Menu mnuline0 
+         Caption         =   "-"
+      End
       Begin VB.Menu mnuGrhtoPNG 
          Caption         =   "Grh -> PNG"
+      End
+      Begin VB.Menu mnuPNGtoGrh 
+         Caption         =   "PNG -> Grh"
       End
    End
    Begin VB.Menu mnusobre 
@@ -1546,6 +1552,42 @@ End Sub
 
 Private Sub mnuMapTam_Click(Index As Integer)
 
+End Sub
+
+Private Sub mnuPNGtoGrh_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 08/11/2023
+    '*************************************************
+    
+    On Error GoTo mnuPNGtoGrh_Click_Err
+    
+    Dim PNGIndex As Long
+    Dim GrhIndex As Long
+    Dim Count As Long
+    
+    PNGIndex = InputBox("Numero de PNG")
+    Count = 1
+    
+    If IsNumeric(grhCount) = True Then
+    
+        Do While Count < grhCount
+        
+            If GrhData(Count).FileNum = PNGIndex Then Exit Do
+        
+            Count = Count + 1
+        
+        Loop
+    
+        MsgBox Count, vbInformation
+
+    End If
+
+    Exit Sub
+
+mnuPNGtoGrh_Click_Err:
+    Call RegistrarError(Err.Number, Err.Description, "frmMain.mnuPNGtoGrh_Click", Erl)
+    Resume Next
 End Sub
 
 Private Sub mnuQuitarSuperficieDeCapa_Click()
