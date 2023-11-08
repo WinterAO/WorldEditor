@@ -1030,6 +1030,9 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuzonasinuso 
          Caption         =   "Buscar zonas sin uso"
       End
+      Begin VB.Menu mnuGrhtoPNG 
+         Caption         =   "Grh -> PNG"
+      End
    End
    Begin VB.Menu mnusobre 
       Caption         =   "Sobre..."
@@ -1184,7 +1187,7 @@ Private Sub LvBEdit_Click(Index As Integer)
                 frmMapa.Show , frmMain
                 
             Else
-                frmMapa.Visible = True
+                frmMapa.Visible = False
             End If
     
     End Select
@@ -1470,6 +1473,33 @@ End Sub
 
 Private Sub mnuFormatos_Click()
     frmFormatos.Show , frmMain
+End Sub
+
+Private Sub mnuGrhtoPNG_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 08/11/2023
+    '*************************************************
+    
+    On Error GoTo mnuGrhtoPNG_Click_Err
+    
+    Dim GrhIndex As Long
+    
+    GrhIndex = InputBox("Numero de Grh")
+    
+    If IsNumeric(grhCount) = True Then
+        If GrhIndex > grhCount Then Exit Sub
+        If GrhIndex < 1 Then Exit Sub
+        MsgBox GrhData(GrhIndex).FileNum, vbInformation
+
+    End If
+
+    Exit Sub
+
+mnuGrhtoPNG_Click_Err:
+    Call RegistrarError(Err.Number, Err.Description, "frmMain.mnuGrhtoPNG_Click", Erl)
+    Resume Next
+    
 End Sub
 
 Private Sub mnuInformes_Click()

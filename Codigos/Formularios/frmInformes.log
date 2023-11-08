@@ -1,0 +1,88 @@
+Línea 18: la clase Nexus_MapEditor.lvButtons_H del control lvButtons_H2 no era una clase de control cargada.
+Línea 35: la clase Nexus_MapEditor.lvButtons_H del control cmdNPCs no era una clase de control cargada.
+Línea 52: la clase Nexus_MapEditor.lvButtons_H del control cmdTranslados no era una clase de control cargada.
+Línea 69: la clase Nexus_MapEditor.lvButtons_H del control LvBCmdObjetos no era una clase de control cargada.
+Línea 98: la clase Nexus_MapEditor.lvButtons_H del control lvButtons_H1 no era una clase de control cargada.
+Línea 115: la clase Nexus_MapEditor.lvButtons_H del control lvButtons_H3 no era una clase de control cargada.
+Línea 132: la clase Nexus_MapEditor.lvButtons_H del control lvButtons_H4 no era una clase de control cargada.
+Línea 149: la clase Nexus_MapEditor.lvButtons_H del control cmdCerrar no era una clase de control cargada.
+Línea 24: el nombre de la propiedad _extentx de lvButtons_H2 no es válido.
+Línea 25: el nombre de la propiedad _extenty de lvButtons_H2 no es válido.
+Línea 26: el nombre de la propiedad caption de lvButtons_H2 no es válido.
+Línea 27: el nombre de la propiedad capalign de lvButtons_H2 no es válido.
+Línea 28: el nombre de la propiedad backstyle de lvButtons_H2 no es válido.
+Línea 30: el nombre de la propiedad cgradient de lvButtons_H2 no es válido.
+Línea 31: el nombre de la propiedad mode de lvButtons_H2 no es válido.
+Línea 32: el nombre de la propiedad value de lvButtons_H2 no es válido.
+Línea 33: el nombre de la propiedad cback de lvButtons_H2 no es válido.
+Línea 18: no se pudo establecer la propiedad Font de lvButtons_H2.
+Línea 41: el nombre de la propiedad _extentx de cmdNPCs no es válido.
+Línea 42: el nombre de la propiedad _extenty de cmdNPCs no es válido.
+Línea 43: el nombre de la propiedad caption de cmdNPCs no es válido.
+Línea 44: el nombre de la propiedad capalign de cmdNPCs no es válido.
+Línea 45: el nombre de la propiedad backstyle de cmdNPCs no es válido.
+Línea 47: el nombre de la propiedad cgradient de cmdNPCs no es válido.
+Línea 48: el nombre de la propiedad mode de cmdNPCs no es válido.
+Línea 49: el nombre de la propiedad value de cmdNPCs no es válido.
+Línea 50: el nombre de la propiedad cback de cmdNPCs no es válido.
+Línea 35: no se pudo establecer la propiedad Font de cmdNPCs.
+Línea 58: el nombre de la propiedad _extentx de cmdTranslados no es válido.
+Línea 59: el nombre de la propiedad _extenty de cmdTranslados no es válido.
+Línea 60: el nombre de la propiedad caption de cmdTranslados no es válido.
+Línea 61: el nombre de la propiedad capalign de cmdTranslados no es válido.
+Línea 62: el nombre de la propiedad backstyle de cmdTranslados no es válido.
+Línea 64: el nombre de la propiedad cgradient de cmdTranslados no es válido.
+Línea 65: el nombre de la propiedad mode de cmdTranslados no es válido.
+Línea 66: el nombre de la propiedad value de cmdTranslados no es válido.
+Línea 67: el nombre de la propiedad cback de cmdTranslados no es válido.
+Línea 52: no se pudo establecer la propiedad Font de cmdTranslados.
+Línea 75: el nombre de la propiedad _extentx de LvBCmdObjetos no es válido.
+Línea 76: el nombre de la propiedad _extenty de LvBCmdObjetos no es válido.
+Línea 77: el nombre de la propiedad caption de LvBCmdObjetos no es válido.
+Línea 78: el nombre de la propiedad capalign de LvBCmdObjetos no es válido.
+Línea 79: el nombre de la propiedad backstyle de LvBCmdObjetos no es válido.
+Línea 81: el nombre de la propiedad cgradient de LvBCmdObjetos no es válido.
+Línea 82: el nombre de la propiedad mode de LvBCmdObjetos no es válido.
+Línea 83: el nombre de la propiedad value de LvBCmdObjetos no es válido.
+Línea 84: el nombre de la propiedad cback de LvBCmdObjetos no es válido.
+Línea 69: no se pudo establecer la propiedad Font de LvBCmdObjetos.
+Línea 104: el nombre de la propiedad _extentx de lvButtons_H1 no es válido.
+Línea 105: el nombre de la propiedad _extenty de lvButtons_H1 no es válido.
+Línea 106: el nombre de la propiedad caption de lvButtons_H1 no es válido.
+Línea 107: el nombre de la propiedad capalign de lvButtons_H1 no es válido.
+Línea 108: el nombre de la propiedad backstyle de lvButtons_H1 no es válido.
+Línea 110: el nombre de la propiedad cgradient de lvButtons_H1 no es válido.
+Línea 111: el nombre de la propiedad mode de lvButtons_H1 no es válido.
+Línea 112: el nombre de la propiedad value de lvButtons_H1 no es válido.
+Línea 113: el nombre de la propiedad cback de lvButtons_H1 no es válido.
+Línea 98: no se pudo establecer la propiedad Font de lvButtons_H1.
+Línea 121: el nombre de la propiedad _extentx de lvButtons_H3 no es válido.
+Línea 122: el nombre de la propiedad _extenty de lvButtons_H3 no es válido.
+Línea 123: el nombre de la propiedad caption de lvButtons_H3 no es válido.
+Línea 124: el nombre de la propiedad capalign de lvButtons_H3 no es válido.
+Línea 125: el nombre de la propiedad backstyle de lvButtons_H3 no es válido.
+Línea 127: el nombre de la propiedad cgradient de lvButtons_H3 no es válido.
+Línea 128: el nombre de la propiedad mode de lvButtons_H3 no es válido.
+Línea 129: el nombre de la propiedad value de lvButtons_H3 no es válido.
+Línea 130: el nombre de la propiedad cback de lvButtons_H3 no es válido.
+Línea 115: no se pudo establecer la propiedad Font de lvButtons_H3.
+Línea 138: el nombre de la propiedad _extentx de lvButtons_H4 no es válido.
+Línea 139: el nombre de la propiedad _extenty de lvButtons_H4 no es válido.
+Línea 140: el nombre de la propiedad caption de lvButtons_H4 no es válido.
+Línea 141: el nombre de la propiedad capalign de lvButtons_H4 no es válido.
+Línea 142: el nombre de la propiedad backstyle de lvButtons_H4 no es válido.
+Línea 144: el nombre de la propiedad cgradient de lvButtons_H4 no es válido.
+Línea 145: el nombre de la propiedad mode de lvButtons_H4 no es válido.
+Línea 146: el nombre de la propiedad value de lvButtons_H4 no es válido.
+Línea 147: el nombre de la propiedad cback de lvButtons_H4 no es válido.
+Línea 132: no se pudo establecer la propiedad Font de lvButtons_H4.
+Línea 155: el nombre de la propiedad _extentx de cmdCerrar no es válido.
+Línea 156: el nombre de la propiedad _extenty de cmdCerrar no es válido.
+Línea 157: el nombre de la propiedad caption de cmdCerrar no es válido.
+Línea 158: el nombre de la propiedad capalign de cmdCerrar no es válido.
+Línea 159: el nombre de la propiedad backstyle de cmdCerrar no es válido.
+Línea 161: el nombre de la propiedad cgradient de cmdCerrar no es válido.
+Línea 162: el nombre de la propiedad mode de cmdCerrar no es válido.
+Línea 163: el nombre de la propiedad value de cmdCerrar no es válido.
+Línea 164: el nombre de la propiedad cback de cmdCerrar no es válido.
+Línea 149: no se pudo establecer la propiedad Font de cmdCerrar.
