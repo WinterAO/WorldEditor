@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmModo 
    BackColor       =   &H00424242&
    BorderStyle     =   0  'None
-   Caption         =   "Form1"
+   Caption         =   "Selección de Perfil"
    ClientHeight    =   3495
    ClientLeft      =   0
    ClientTop       =   0
