@@ -25,15 +25,24 @@ Begin VB.Form frmSuperficies
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   297
    ShowInTaskbar   =   0   'False
+   Begin VB.CheckBox chkBloquear 
+      BackColor       =   &H00424242&
+      Caption         =   "Bloquear"
+      Height          =   285
+      Left            =   3210
+      TabIndex        =   12
+      Top             =   4980
+      Width           =   975
+   End
    Begin VB.CheckBox chkAutoCompletarSuperficies 
       BackColor       =   &H00424242&
-      Caption         =   "Auto-Completar &Superficies"
+      Caption         =   "Auto-Completar"
       ForeColor       =   &H8000000B&
       Height          =   345
-      Left            =   210
+      Left            =   180
       TabIndex        =   11
       Top             =   4920
-      Width           =   3525
+      Width           =   1485
    End
    Begin WinterMapEditor.lvButtons_H cQuitarEnTodasLasCapas 
       Height          =   375
@@ -187,7 +196,7 @@ Begin VB.Form frmSuperficies
    End
    Begin WinterMapEditor.LynxGrid LynxSuperficies 
       Height          =   3975
-      Left            =   60
+      Left            =   90
       TabIndex        =   10
       Top             =   90
       Width           =   4305
@@ -424,6 +433,8 @@ Private Sub CargarInfo()
         
     'Obtiene el numero del Grh
     cGrh.Text = DameGrhIndex(SupActual)
+    
+    chkBloquear.value = SupData(SupActual).Block
 
     'TODO: Faltan movidas aqui
     If SupData(SupActual).Capa <> 0 Then
