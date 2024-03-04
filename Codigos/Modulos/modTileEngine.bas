@@ -413,8 +413,8 @@ Sub Draw_Grh(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Cen
 On Error GoTo Error
 
     If Grh.GrhIndex > grhCount Or GrhData(Grh.GrhIndex).NumFrames = 0 And GrhData(Grh.GrhIndex).FileNum = 0 Then
+        Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Grh" & Grh.GrhIndex & ". Posicion: X:" & X & " Y:" & Y, 255, 0, 0)
         Call InitGrh(Grh, GRH_ERROR) ' 23829
-        Call AddtoRichTextBox(frmConsola.StatTxt, "Error en Grh. Posicion: X:" & X & " Y:" & Y, 255, 0, 0)
     End If
 
     If Animate Then
