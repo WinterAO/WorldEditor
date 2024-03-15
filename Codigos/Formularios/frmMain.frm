@@ -1304,35 +1304,17 @@ Private Sub mnuAbrirMapa_Click()
     'Last modified: 25/04/2020
     '*************************************************
 
-    Call AbrirMapa
+    Call AbrirMapa(True)
     
 End Sub
 
 Private Sub mnuAbrirMapaCien_Click()
     '*************************************************
     'Author: Lorwik
-    'Last modified: 30/10/2023
+    'Last modified: 25/04/2020
     '*************************************************
-    
-    frmMain.Dialog.CancelError = True
-    
-    DeseaGuardarMapa frmMain.Dialog.filename
-    
-    frmMain.ObtenerNombreArchivo False
-    
-    If Len(frmMain.Dialog.filename) < 3 Then Exit Sub
-    
-    If WalkMode = True Then Call modGeneral.ToggleWalkMode
-        
-    Call modMapas.NuevoMapa
-        
-    Call ModMapConver.Cargar_ConverCSM(frmMain.Dialog.filename)
-        
-    DoEvents
-    frmMain.mnuReAbrirMapa.Enabled = True
-    EngineRun = True
-    
-    Exit Sub
+
+    Call AbrirMapa(False)
 End Sub
 
 Private Sub mnuAcerca_Click()

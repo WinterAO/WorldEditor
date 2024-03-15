@@ -9,7 +9,7 @@ Public UserMap As Integer
 'otras funciones relacionadas con mapas en general
 '/////////////////////////////////////////////////////////////////////
 
-Public Sub AbrirMapa()
+Public Sub AbrirMapa(ByVal bBig As Boolean)
 
     frmMain.Dialog.CancelError = True
 
@@ -24,9 +24,26 @@ Public Sub AbrirMapa()
     If WalkMode = True Then _
         Call modGeneral.ToggleWalkMode
         
+'    If bBig Then
+'        Call setMapSize(1000, 1000)
+'
+'    Else
+'        Call setMapSize(100, 100)
+'
+'    End If
+        
     Call modMapas.NuevoMapa
         
-    Call abrirCargarMapa(frmMain.Dialog.filename)
+    If bBig Then
+        Call abrirCargarMapa(frmMain.Dialog.filename)
+        
+    Else
+        Call ModMapConver.Cargar_ConverCSM(frmMain.Dialog.filename)
+        
+        UserPos.X = 50
+        UserPos.Y = 50
+    
+    End If
         
     DoEvents
     frmMain.mnuReAbrirMapa.Enabled = True

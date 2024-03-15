@@ -181,6 +181,7 @@ Public Sub InitTileEngine(ByVal setTilePixelHeight As Integer, _
     
     Call ChangeView
 
+    'Tamaño del mapa por defecto 1000 x 1000 ("mundo continuo")
     Call setMapSize(1000, 1000)
     
     'Set scroll pixels per frame
