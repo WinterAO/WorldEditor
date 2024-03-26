@@ -1,5 +1,5 @@
 [History]
-1=#P0#=mb	#P1#=AbrirMapa	#P2#=WinterMapEditor/modMapas/AbrirMapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240314161944	#P7#=0	#P8#=0	.
+1=#P0#=mb	#P1#=AbrirMapa	#P2#=WinterMapEditor/modMapas/AbrirMapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240314161944	#P7#=0	#P8#=-3	.
 2=#P0#=mb	#P1#=mnuAbrirMapaCien_Click	#P2#=WinterMapEditor/frmMain/mnuAbrirMapaCien_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240311203930	#P7#=0	#P8#=6	.
 3=#P0#=mb	#P1#=mnuAbrirMapa_Click	#P2#=WinterMapEditor/frmMain/mnuAbrirMapa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20240311203905	#P7#=0	#P8#=1	.
 4=#P0#=mb	#P1#=mnuAcerca_Click	#P2#=WinterMapEditor/frmMain/mnuAcerca_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20240311203818	#P7#=0	#P8#=-2	.
@@ -22,8 +22,8 @@
 21=#P0#=mb	#P1#=guardarPerfilMinimap	#P2#=WinterMapEditor/modCarga/guardarPerfilMinimap	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231113162455	#P7#=0	#P8#=0	.
 22=#P0#=mb	#P1#=mnuGrhList_Click	#P2#=WinterMapEditor/frmMain/mnuGrhList_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231108012630	#P7#=0	#P8#=5	.
 23=#P0#=mb	#P1#=LoadGrhData	#P2#=WinterMapEditor/modCarga/LoadGrhData	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231108012510	#P7#=0	#P8#=5	.
-24=#P0#=mb	#P1#=mnuPNGtoGrh_Click	#P2#=WinterMapEditor/frmMain/mnuPNGtoGrh_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20231108011710	#P7#=0	#P8#=13	.
-25=#P0#=mb	#P1#=mnuGrhtoPNG_Click	#P2#=WinterMapEditor/frmMain/mnuGrhtoPNG_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231108010553	#P7#=0	#P8#=6	.
+24=#P0#=mb	#P1#=mnuPNGtoGrh_Click	#P2#=WinterMapEditor/frmMain/mnuPNGtoGrh_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240326174201	#P7#=0	#P8#=1	.
+25=#P0#=mb	#P1#=mnuGrhtoPNG_Click	#P2#=WinterMapEditor/frmMain/mnuGrhtoPNG_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20240326174050	#P7#=0	#P8#=1	.
 26=#P0#=mb	#P1#=LvBEdit_Click	#P2#=WinterMapEditor/frmMain/LvBEdit_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231108005937	#P7#=0	#P8#=128	.
 27=#P0#=mb	#P1#=mnuVerCapa1_Click	#P2#=WinterMapEditor/frmMain/mnuVerCapa1_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231105065315	#P7#=0	#P8#=1	.
 28=#P0#=mb	#P1#=mnuVerCapa2_Click	#P2#=WinterMapEditor/frmMain/mnuVerCapa2_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20231105065314	#P7#=0	#P8#=2	.
