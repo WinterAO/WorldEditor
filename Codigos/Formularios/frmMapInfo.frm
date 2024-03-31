@@ -945,7 +945,7 @@ Private Sub txtMapNombre_LostFocus()
     '*************************************************
     MapInfo.name = txtMapNombre.Text
     MapInfo.Changed = 1
-    Call AddtoRichTextBox(frmConsola.StatTxt, "Nombre de mapa cambiado a:  " & MapInfo.name, 255, 255, 255, False, True, True)
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Nombre de mapa cambiado a:  " & MapInfo.name, 255, 255, 255, False, True, True, , True)
     
 End Sub
 

@@ -414,7 +414,7 @@ Sub Draw_Grh(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Cen
 On Error GoTo Error
 
     If Grh.GrhIndex > grhCount Or GrhData(Grh.GrhIndex).NumFrames = 0 And GrhData(Grh.GrhIndex).FileNum = 0 Then
-        Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Grh" & Grh.GrhIndex & ". Posicion: X:" & X & " Y:" & Y, 255, 0, 0)
+        Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Grh" & Grh.GrhIndex & ". Posicion: X:" & X & " Y:" & Y, 255, 0, 0, , , True)
         Call InitGrh(Grh, GRH_ERROR) ' 23829
     End If
 
@@ -1038,11 +1038,11 @@ Public Sub RenderPreview(Optional ByVal SinMosaico As Boolean = False)
 
     Call Engine_EndScene(DestRect, frmPreview.PreviewGrh.hWnd)
 
-    Call DrawBuffer.LoadPictureBlt(frmPreview.PreviewGrh.hdc)
+    Call DrawBuffer.LoadPictureBlt(frmPreview.PreviewGrh.hDC)
 
     frmPreview.PreviewGrh.AutoRedraw = True
 
-    Call DrawBuffer.PaintPicture(frmPreview.PreviewGrh.hdc, 0, 0, frmPreview.PreviewGrh.Width, frmPreview.PreviewGrh.Height, 0, 0, vbSrcCopy)
+    Call DrawBuffer.PaintPicture(frmPreview.PreviewGrh.hDC, 0, 0, frmPreview.PreviewGrh.Width, frmPreview.PreviewGrh.Height, 0, 0, vbSrcCopy)
 
 End Sub
 
@@ -1074,11 +1074,11 @@ Public Sub RenderParticlePreview()
 
     Call Engine_EndScene(DestRect, frmParticulas.ParticlePic.hWnd)
 
-    Call DrawBuffer.LoadPictureBlt(frmParticulas.ParticlePic.hdc)
+    Call DrawBuffer.LoadPictureBlt(frmParticulas.ParticlePic.hDC)
 
     frmParticulas.ParticlePic.AutoRedraw = True
 
-    Call DrawBuffer.PaintPicture(frmParticulas.ParticlePic.hdc, 0, 0, frmParticulas.ParticlePic.Width, frmParticulas.ParticlePic.Height, 0, 0, vbSrcCopy)
+    Call DrawBuffer.PaintPicture(frmParticulas.ParticlePic.hDC, 0, 0, frmParticulas.ParticlePic.Width, frmParticulas.ParticlePic.Height, 0, 0, vbSrcCopy)
 End Sub
 
 Sub MakeChar(ByVal CharIndex As Integer, _

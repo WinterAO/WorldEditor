@@ -54,6 +54,15 @@ Begin VB.Form frmMain
       TabStop         =   0   'False
       Top             =   675
       Width           =   19200
+      Begin VB.Shape ShpScreen 
+         BackColor       =   &H80000008&
+         BorderColor     =   &H80000005&
+         BorderWidth     =   2
+         Height          =   9240
+         Left            =   3990
+         Top             =   420
+         Width           =   11070
+      End
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -460,6 +469,35 @@ Begin VB.Form frmMain
       ImgSize         =   32
       cBack           =   -2147483633
    End
+   Begin WinterMapEditor.lvButtons_H LvBFoto 
+      Height          =   480
+      Index           =   14
+      Left            =   8490
+      TabIndex        =   26
+      ToolTipText     =   "Captura de pantalla"
+      Top             =   90
+      Width           =   480
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   0
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":2D7930
+      ImgSize         =   32
+      cBack           =   -2147483633
+   End
    Begin VB.Label MapPest 
       Alignment       =   2  'Center
       Appearance      =   0  'Flat
@@ -762,6 +800,12 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuArchivoLine5 
          Caption         =   "-"
       End
+      Begin VB.Menu mnuConfig 
+         Caption         =   "Configuración"
+      End
+      Begin VB.Menu mnuArchivoLine6 
+         Caption         =   "-"
+      End
       Begin VB.Menu mnuSalir 
          Caption         =   "&Salir"
       End
@@ -1047,6 +1091,7 @@ Begin VB.Form frmMain
       Caption         =   "Sobre..."
       Begin VB.Menu mnuFormatos 
          Caption         =   "Formatos de Mapa"
+         Enabled         =   0   'False
       End
       Begin VB.Menu mnuAcerca 
          Caption         =   "Acerca de..."
@@ -1203,6 +1248,16 @@ Private Sub LvBEdit_Click(Index As Integer)
 
 End Sub
 
+Private Sub LvBFoto_Click(Index As Integer)
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 31/03/2024
+    '*************************************************
+    
+    Call modGeneral.Client_Screenshot(MainViewPic.hDC, MainViewPic.ScaleWidth, MainViewPic.ScaleHeight)
+    
+End Sub
+
 Private Sub MapPest_Click(Index As Integer)
     '*************************************************
     'Author: ^[GS]^
@@ -1340,6 +1395,15 @@ Private Sub mnuBloquearMapa_Click()
     'Last modified: 20/05/06
     '*************************************************
     Call modEdicion.Bloqueo_Todo(1)
+End Sub
+
+Private Sub mnuConfig_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 31/03/2024
+    '*************************************************
+    
+    frmConfiguracion.Show , frmMain
 End Sub
 
 Private Sub mnuConfigAvanzadaSup_Click(Index As Integer)

@@ -82,7 +82,7 @@ Public Sub Capturar_Imagen(Control As Control, Destino As Object)
 'Descripcion: copia la imagen del control en un picturebox
 '***********************************************
           
-    Dim hdc             As Long
+    Dim hDC             As Long
     Dim Escala_Anterior As Integer
     Dim Ancho           As Long
     Dim Alto            As Long
@@ -112,10 +112,10 @@ Public Sub Capturar_Imagen(Control As Control, Destino As Object)
     On Error GoTo 0
 
     ' Captura el área de pantalla correspondiente al control
-    hdc = GetWindowDC(Control.hWnd)
+    hDC = GetWindowDC(Control.hWnd)
     
     ' Copia esa área al picturebox
-    Call BitBlt(Destino.hdc, 0, 0, 3000, 3000, hdc, 0, 0, vbSrcCopy)
+    Call BitBlt(Destino.hDC, 0, 0, 3000, 3000, hDC, 0, 0, vbSrcCopy)
     
     ' Convierte la imagen anterior en un Mapa de bits
     Destino.Picture = Destino.Image
@@ -146,9 +146,9 @@ Private Sub picMapa_MouseDown(Button As Integer, Shift As Integer, X As Single, 
         frmMapa.ApuntadorRadar.Top = (UserPos.Y) - HalfWindowTileHeight
     
     ElseIf Button = 2 Then
-        Call AddtoRichTextBox(frmConsola.StatTxt, "Guardando Minimapa...", 255, 255, 255)
+        Call AddtoRichTextBox(frmConsola.StatTxt, "Guardando Minimapa...", 255, 255, 255, , , True)
         Call Capturar_Imagen(frmMapa.picMapa, frmMapa.picMapa)
         Call SavePicture(frmMapa.picMapa, App.Path & "\Render\Minimapa\" & NumMap_Save & ".bmp")
-        Call AddtoRichTextBox(frmConsola.StatTxt, "Minimapa guardado.", 0, 255, 0)
+        Call AddtoRichTextBox(frmConsola.StatTxt, "Minimapa guardado.", 0, 255, 0, , , True)
     End If
 End Sub

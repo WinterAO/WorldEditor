@@ -1,12 +1,30 @@
 Attribute VB_Name = "modGeneral"
 Option Explicit
 
+Private m_Jpeg     As clsJpeg
+
+Private m_FileName As String
+
 'Escribe y Lee archivos de texto plano
-Private Declare Function writeprivateprofilestring Lib "kernel32" Alias "WritePrivateProfileStringA" (ByVal lpApplicationname As String, ByVal lpKeyname As Any, ByVal lpString As String, ByVal lpFileName As String) As Long
-Private Declare Function getprivateprofilestring Lib "kernel32" Alias "GetPrivateProfileStringA" (ByVal lpApplicationname As String, ByVal lpKeyname As Any, ByVal lpdefault As String, ByVal lpreturnedstring As String, ByVal nSize As Long, ByVal lpFileName As String) As Long
+Private Declare Function writeprivateprofilestring _
+                Lib "kernel32" _
+                Alias "WritePrivateProfileStringA" (ByVal lpApplicationname As String, _
+                                                    ByVal lpKeyname As Any, _
+                                                    ByVal lpString As String, _
+                                                    ByVal lpFileName As String) As Long
+
+Private Declare Function getprivateprofilestring _
+                Lib "kernel32" _
+                Alias "GetPrivateProfileStringA" (ByVal lpApplicationname As String, _
+                                                  ByVal lpKeyname As Any, _
+                                                  ByVal lpdefault As String, _
+                                                  ByVal lpreturnedstring As String, _
+                                                  ByVal nSize As Long, _
+                                                  ByVal lpFileName As String) As Long
 
 Public Function Form_Caption() As String
     Form_Caption = "WorldEditor versión: " & App.Major & "." & App.Minor & "." & App.Revision
+
 End Function
 
 Sub Main()
@@ -16,7 +34,7 @@ Sub Main()
 
     'Call modCarga.pre_leerConfiguracion 'Leemos la config basica para elegir un modo
     
-    frmModo.Show
+    frmPerfil.Show
     
     Do While ModoElegido = False
         DoEvents
@@ -44,7 +62,7 @@ Sub Main()
     DoEvents
     Set Sound = New clsSoundEngine
 
-    If Not Sound.Initialize_Engine(frmMain.hwnd, DirRecursos, False, True, True, ClientSetup.SoundVolume, ClientSetup.MusicVolume, ClientSetup.Invertido) Then
+    If Not Sound.Initialize_Engine(frmMain.hWnd, DirRecursos, False, True, True, ClientSetup.SoundVolume, ClientSetup.MusicVolume, ClientSetup.Invertido) Then
         MsgBox "¡No se ha logrado iniciar el engine de DirectSound! Reinstale los últimos controladores de DirectX. No habrá soporte de audio en el editor.", vbCritical, "Advertencia"
         
     End If
@@ -118,6 +136,7 @@ Sub Main()
             Call CheckKeys
             
             If CurrentGrh.GrhIndex = 0 Then InitGrh CurrentGrh, 1
+
         End If
     
         DoEvents
@@ -129,10 +148,10 @@ Sub Main()
 End Sub
 
 Public Sub CloseMapEditor()
-'************************************
-'Author: Lorwik
-'Last Modify Date: 26/04/2021
-'************************************
+    '************************************
+    'Author: Lorwik
+    'Last Modify Date: 26/04/2021
+    '************************************
 
     On Error Resume Next
 
@@ -160,12 +179,14 @@ Public Sub CloseMapEditor()
     Set SurfaceDB = Nothing
 
     For Each mifrm In Forms
+
         Unload mifrm
     Next
     
     'Allow MainLoop to close program
     If prgRun = True Then
         prgRun = False
+
     End If
     
     End
@@ -194,15 +215,15 @@ Public Sub CheckKeys()
     '[/Loopzer]
     
     If GetKeyState(vbKeyUp) < 0 Then
-        If UserPos.y < YMinMapSize Then Exit Sub ' 10
-        If LegalPos(UserPos.X, UserPos.y - 1) And WalkMode = True Then
+        If UserPos.Y < YMinMapSize Then Exit Sub ' 10
+        If LegalPos(UserPos.X, UserPos.Y - 1) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.y = UserPos.y - 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
+            UserPos.Y = UserPos.Y - 1
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
             dLastWalk = GetTickCount
             
         ElseIf WalkMode = False Then
-            UserPos.y = UserPos.y - 1
+            UserPos.Y = UserPos.Y - 1
 
         End If
         
@@ -214,10 +235,10 @@ Public Sub CheckKeys()
 
     If GetKeyState(vbKeyRight) < 0 Then
         If UserPos.X > XMaxMapSize Then Exit Sub ' 89
-        If LegalPos(UserPos.X + 1, UserPos.y) And WalkMode = True Then
+        If LegalPos(UserPos.X + 1, UserPos.Y) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
             UserPos.X = UserPos.X + 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
             dLastWalk = GetTickCount
             
         ElseIf WalkMode = False Then
@@ -232,16 +253,16 @@ Public Sub CheckKeys()
     End If
 
     If GetKeyState(vbKeyDown) < 0 Then
-        If UserPos.y > YMaxMapSize Then Exit Sub ' 92
+        If UserPos.Y > YMaxMapSize Then Exit Sub ' 92
         
-        If LegalPos(UserPos.X, UserPos.y + 1) And WalkMode = True Then
+        If LegalPos(UserPos.X, UserPos.Y + 1) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.y = UserPos.y + 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
+            UserPos.Y = UserPos.Y + 1
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
             dLastWalk = GetTickCount
             
         ElseIf WalkMode = False Then
-            UserPos.y = UserPos.y + 1
+            UserPos.Y = UserPos.Y + 1
             
         End If
         
@@ -253,10 +274,10 @@ Public Sub CheckKeys()
 
     If GetKeyState(vbKeyLeft) < 0 Then
         If UserPos.X < XMinMapSize Then Exit Sub ' 12
-        If LegalPos(UserPos.X - 1, UserPos.y) And WalkMode = True Then
+        If LegalPos(UserPos.X - 1, UserPos.Y) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
             UserPos.X = UserPos.X - 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
             dLastWalk = GetTickCount
         ElseIf WalkMode = False Then
             UserPos.X = UserPos.X - 1
@@ -272,10 +293,11 @@ Public Sub CheckKeys()
 End Sub
 
 Public Sub ToggleWalkMode()
-'*************************************************
-'Author: Unkwown
-'Last modified: 28/05/06 - GS
-'*************************************************
+
+    '*************************************************
+    'Author: Unkwown
+    'Last modified: 28/05/06 - GS
+    '*************************************************
     On Error GoTo ToggleWalkMode_Err
 
     If WalkMode = False Then
@@ -290,13 +312,14 @@ Public Sub ToggleWalkMode()
     If Not WalkMode Then
         'Erase character
         Call EraseChar(UserCharIndex)
-        MapData(UserPos.X, UserPos.y).CharIndex = 0
+        MapData(UserPos.X, UserPos.Y).CharIndex = 0
         
     Else
+
         'MakeCharacter
-        If LegalPos(UserPos.X, UserPos.y) Then
-            Call MakeChar(NextOpenChar(), 107, 1, SOUTH, UserPos.X, UserPos.y, 1, 11, 81)
-            UserCharIndex = MapData(UserPos.X, UserPos.y).CharIndex
+        If LegalPos(UserPos.X, UserPos.Y) Then
+            Call MakeChar(NextOpenChar(), 107, 1, SOUTH, UserPos.X, UserPos.Y, 1, 11, 81)
+            UserCharIndex = MapData(UserPos.X, UserPos.Y).CharIndex
             frmMain.mnuModoCaminata.Checked = True
             
         Else
@@ -304,62 +327,87 @@ Public Sub ToggleWalkMode()
             WalkMode = False
             
         End If
+
     End If
     
     Exit Sub
     
 ToggleWalkMode_Err:
     Call RegistrarError(Err.Number, Err.Description, "modGeneral.ToggleWalkMode", Erl)
+
     Resume Next
+
 End Sub
 
-Public Sub ObtenerCuadrante(ByRef Cuadrante As Integer, ByRef tX As Integer, ByRef tY As Integer)
-'*****************************************************
-'Autor: Lorwik
-'Fecha: 03/04/2021
-'Descripción: Actualiza las coordenadas ya sean totales o por cuadrantes
-'*****************************************************
+Public Sub ObtenerCuadrante(ByRef Cuadrante As Integer, _
+                            ByRef tX As Integer, _
+                            ByRef tY As Integer)
+    '*****************************************************
+    'Autor: Lorwik
+    'Fecha: 03/04/2021
+    'Descripción: Actualiza las coordenadas ya sean totales o por cuadrantes
+    '*****************************************************
 
     Dim cX As Integer
+
     Dim cY As Integer
     
     cX = Fix((UserPos.X / 100))
-    cY = Fix((UserPos.y / 100))
+    cY = Fix((UserPos.Y / 100))
     
     tX = UserPos.X - (cX * 100)
-    tY = UserPos.y - (cY * 100)
+    tY = UserPos.Y - (cY * 100)
     
     Cuadrante = cX * cY
 
 End Sub
 
 Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
-                    ByVal Text As String, _
-                    Optional ByVal Red As Integer = -1, _
-                    Optional ByVal Green As Integer, _
-                    Optional ByVal Blue As Integer, _
-                    Optional ByVal bold As Boolean = False, _
-                    Optional ByVal italic As Boolean = False, _
-                    Optional ByVal bCrLf As Boolean = True, _
-                    Optional ByVal Alignment As Byte = rtfLeft)
+                     ByVal Text As String, _
+                     Optional ByVal Red As Integer = -1, _
+                     Optional ByVal Green As Integer, _
+                     Optional ByVal Blue As Integer, _
+                     Optional ByVal bold As Boolean = False, _
+                     Optional ByVal italic As Boolean = False, _
+                     Optional ByVal bCrLf As Boolean = True, _
+                     Optional ByVal Alignment As Byte = rtfLeft, _
+                     Optional ByVal bFecha As Boolean = True)
     
-'****************************************************
-'Adds text to a Richtext box at the bottom.
-'Automatically scrolls to new text.
-'Text box MUST be multiline and have a 3D apperance!
-'****************************************************
-'Pablo (ToxicWaste) 01/26/2007 : Now the list refeshes properly.
-'Juan Martin Sotuyo Dodero (Maraxus) 03/29/2007 : Replaced ToxicWaste's code for extra performance.
-'Jopi 17/08/2019 : Consola transparente.
-'Jopi 17/08/2019 : Ahora podes especificar el alineamiento del texto.
-'****************************************************
+    '****************************************************
+    'Adds text to a Richtext box at the bottom.
+    'Automatically scrolls to new text.
+    'Text box MUST be multiline and have a 3D apperance!
+    '****************************************************
+    'Pablo (ToxicWaste) 01/26/2007 : Now the list refeshes properly.
+    'Juan Martin Sotuyo Dodero (Maraxus) 03/29/2007 : Replaced ToxicWaste's code for extra performance.
+    'Jopi 17/08/2019 : Consola transparente.
+    'Jopi 17/08/2019 : Ahora podes especificar el alineamiento del texto.
+    'Lorwik 20/03/2024: Ahora puedes mostrar la hora en la que se imprimio el mensaje
+    '****************************************************
+
+    Dim horaActual As String
+
+    Dim hora       As Integer
+
+    Dim minutos    As Integer
+    
+    ' Obtener la hora actual en formato de cadena de caracteres
+    horaActual = Time
+    
+    ' Extraer la hora y los minutos
+    hora = Hour(horaActual)
+    minutos = Minute(horaActual)
+
     With RichTextBox
+    
+        If bFecha Then Text = hora & ":" & minutos & "> " & Text
         
         If Len(.Text) > 1000 Then
             'Get rid of first line
             .SelStart = InStr(1, .Text, vbCrLf) + 1
             .SelLength = Len(.Text) - .SelStart + 2
             .TextRTF = .SelRTF
+
         End If
         
         .SelStart = Len(.Text)
@@ -382,20 +430,25 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
         If Not RichTextBox = frmConsola.StatTxt Then RichTextBox.Refresh
 
     End With
+
 End Sub
 
-Sub WriteVar(ByVal File As String, ByVal Main As String, ByVal Var As String, ByVal value As String)
-'*****************************************************************
-'Escribe en un archivo de texto plano
-'*****************************************************************
+Sub WriteVar(ByVal File As String, _
+             ByVal Main As String, _
+             ByVal Var As String, _
+             ByVal value As String)
+    '*****************************************************************
+    'Escribe en un archivo de texto plano
+    '*****************************************************************
     writeprivateprofilestring Main, Var, value, File
     
 End Sub
 
 Function GetVar(ByVal File As String, ByVal Main As String, ByVal Var As String) As String
-'*****************************************************************
-'Lee de un archivo de texto plano
-'*****************************************************************
+
+    '*****************************************************************
+    'Lee de un archivo de texto plano
+    '*****************************************************************
     Dim sSpaces As String ' This will hold the input that the program will retrieve
     
     sSpaces = Space$(500) ' This tells the computer how long the longest string can be. If you want, you can change the number 100 to any number you wish
@@ -408,22 +461,28 @@ Function GetVar(ByVal File As String, ByVal Main As String, ByVal Var As String)
 End Function
 
 Function FileExist(ByVal File As String, ByVal FileType As VbFileAttribute) As Boolean
-'*****************************************************************
-'Comprueba si existe el archivo o directorio
-'*****************************************************************
+    '*****************************************************************
+    'Comprueba si existe el archivo o directorio
+    '*****************************************************************
 
     FileExist = (Dir$(File, FileType) <> "")
+
 End Function
 
 Public Function ReadField(Pos As Integer, Text As String, SepASCII As Integer) As String
-'*************************************************
-'Author: Unkwown
-'Last modified: 20/05/06
-'*************************************************
-    Dim i As Integer
-    Dim lastPos As Integer
-    Dim CurChar As String * 1
-    Dim FieldNum As Integer
+
+    '*************************************************
+    'Author: Unkwown
+    'Last modified: 20/05/06
+    '*************************************************
+    Dim i         As Integer
+
+    Dim lastPos   As Integer
+
+    Dim CurChar   As String * 1
+
+    Dim FieldNum  As Integer
+
     Dim Seperator As String
     
     Seperator = Chr(SepASCII)
@@ -432,19 +491,27 @@ Public Function ReadField(Pos As Integer, Text As String, SepASCII As Integer) A
     
     For i = 1 To Len(Text)
         CurChar = mid(Text, i, 1)
+
         If CurChar = Seperator Then
             FieldNum = FieldNum + 1
+
             If FieldNum = Pos Then
                 ReadField = mid(Text, lastPos + 1, (InStr(lastPos + 1, Text, Seperator, vbTextCompare) - 1) - (lastPos))
                 Exit Function
+
             End If
+
             lastPos = i
+
         End If
+
     Next i
+
     FieldNum = FieldNum + 1
     
     If FieldNum = Pos Then
         ReadField = mid(Text, lastPos + 1)
+
     End If
 
 End Function
@@ -452,26 +519,25 @@ End Function
 Function Buscar_Carpeta(Optional Titulo As String, _
                         Optional Path_Inicial As Variant) As String
                         
-'******************************************************************
-' Funcción que abre el cuadro de dialogo y retorna la ruta
-'******************************************************************
+    '******************************************************************
+    ' Funcción que abre el cuadro de dialogo y retorna la ruta
+    '******************************************************************
   
-On Local Error GoTo errFunction
+    On Local Error GoTo errFunction
       
-    Dim objShell As Object
+    Dim objShell  As Object
+
     Dim objFolder As Object
+
     Dim o_Carpeta As Object
       
     ' Nuevo objeto Shell.Application
     Set objShell = CreateObject("Shell.Application")
       
     On Error Resume Next
+
     'Abre el cuadro de diálogo para seleccionar
-    Set objFolder = objShell.BrowseForFolder( _
-                            0, _
-                            Titulo, _
-                            0, _
-                            Path_Inicial)
+    Set objFolder = objShell.BrowseForFolder(0, Titulo, 0, Path_Inicial)
       
     ' Devuelve solo el nombre de carpeta
     Set o_Carpeta = objFolder.Self
@@ -479,8 +545,8 @@ On Local Error GoTo errFunction
     ' Devuelve la ruta completa seleccionada en el diálogo
     Buscar_Carpeta = o_Carpeta.Path
   
-Exit Function
-'Error
+    Exit Function
+    'Error
 errFunction:
     MsgBox Err.Description, vbCritical
     Buscar_Carpeta = vbNullString
@@ -488,13 +554,68 @@ errFunction:
   
 End Function
 
-Public Function RandomNumber(ByVal LowerBound As Variant, ByVal UpperBound As Variant) As Single
-'*************************************************
-'Author: Unkwown
-'Last modified: 20/05/06
-'*************************************************
+Public Function RandomNumber(ByVal LowerBound As Variant, _
+                             ByVal UpperBound As Variant) As Single
+    '*************************************************
+    'Author: Unkwown
+    'Last modified: 20/05/06
+    '*************************************************
     Randomize Timer
     
     RandomNumber = (UpperBound - LowerBound + 1) * Rnd + LowerBound
+
     If RandomNumber > UpperBound Then RandomNumber = UpperBound
+
 End Function
+
+Public Sub Client_Screenshot(ByVal hDC As Long, ByVal Width As Long, ByVal Height As Long)
+    '*******************************
+    'Autor: ???
+    'Fecha: ???
+    '*******************************
+
+    On Error GoTo ErrorHandler
+
+    Dim i     As Long
+
+    Dim Index As Long
+
+    i = 1
+    
+    Set m_Jpeg = New clsJpeg
+    
+    '80 Quality
+    m_Jpeg.Quality = 100
+    
+    'Sample the cImage by hDC
+    m_Jpeg.SampleHDC hDC, Width, Height
+    
+    m_FileName = App.Path & "\Render\Fotos\WinterME_Foto"
+    
+    If Dir$(App.Path & "\Render\Fotos", vbDirectory) = vbNullString Then
+        MkDir (App.Path & "\Render\Fotos")
+
+    End If
+    
+    Do While Dir$(m_FileName & Trim$(str$(i)) & ".jpg") <> vbNullString
+        i = i + 1
+        DoEvents
+    Loop
+    
+    Index = i
+    
+    m_Jpeg.Comment = "WinterMapEditor" & " - " & Format$(Date, "dd/mm/yyyy") & " - " & Format$(Time, "hh:mm AM/PM")
+    
+    'Save the JPG file
+    m_Jpeg.SaveFile m_FileName & Trim$(str$(Index)) & ".jpg"
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "¡Captura realizada con exito! Se guardo en " & m_FileName & Trim$(str$(Index)) & ".jpg", 204, 193, 155, 0, 1, , , True)
+    
+    Set m_Jpeg = Nothing
+    
+    Exit Sub
+
+ErrorHandler:
+    Call AddtoRichTextBox(frmConsola.StatTxt, "¡Error en la captura!", 204, 193, 155, 0, 1, , , True)
+
+End Sub

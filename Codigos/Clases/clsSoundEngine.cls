@@ -646,7 +646,7 @@ Public Function Music_Load(ByVal file_str As String, Optional ByVal Volume As Lo
     Exit Function
 
 Error_Handl:
-    Call AddtoRichTextBox(frmConsola.StatTxt, "No se pudo cargar el archivo de musica. Es posible que no exista.", 255, 0, 0)
+    Call AddtoRichTextBox(frmConsola.StatTxt, "No se pudo cargar el archivo de musica. Es posible que no exista.", 255, 0, 0, , , True)
     Music_Load = False
 End Function
 

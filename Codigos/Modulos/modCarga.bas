@@ -37,6 +37,7 @@ Public Type tSetupMods
     
     'CONFIGURACION
     MeMode As Byte
+    CampoVision As Boolean
 End Type
 
 Public ClientSetup As tSetupMods
@@ -166,6 +167,33 @@ fileErr:
 
     If Err.Number <> 0 Then
         MsgBox ("Ha ocurrido un error al guardar la configuracion del editor. Error " & Err.Number & " : " & Err.Description)
+    End If
+End Function
+
+Public Function guardarPerfilVideo() As Boolean
+
+    On Local Error GoTo fileErr:
+    
+    If Not FileExist(profileFile(ProfileTag), vbArchive) Then
+        Exit Function
+    End If
+    
+    Set Lector = New clsIniManager
+    Call Lector.Initialize(profileFile(ProfileTag))
+    
+    Call Lector.ChangeValue("VIDEO", "VertexProcessingOverride", CByte(ClientSetup.OverrideVertexProcess))
+    Call Lector.ChangeValue("VIDEO", "LimitarFPS", IIf(ClientSetup.LimiteFPS, "1", "0"))
+    Call Lector.ChangeValue("VIDEO", "TilesBuffer", Val(ClientSetup.TilesBuffer))
+    Call Lector.ChangeValue("VIDEO", "DynamicMemory", Val(ClientSetup.byMemory))
+    
+    Call Lector.DumpFile(profileFile(ProfileTag))
+    
+    Exit Function
+    
+fileErr:
+
+    If Err.Number <> 0 Then
+        MsgBox ("Ha ocurrido un error al guardar la configuracion de video del editor. Error " & Err.Number & " : " & Err.Description)
     End If
 End Function
 
@@ -342,7 +370,7 @@ Public Sub LoadGrhData()
 On Error GoTo ErrorHandler:
 
     Dim Grh         As Long
-    Dim K           As Long
+    Dim k           As Long
     Dim Frame       As Long
     Dim fileVersion As Long
     Dim fileBuff    As clsByteBuffer
@@ -380,8 +408,8 @@ On Error GoTo ErrorHandler:
             Grh = fileBuff.getLong
             
             frmGrh.LynxGrh.AddItem Grh
-            K = frmGrh.LynxGrh.Rows - 1
-            frmGrh.LynxGrh.CellText(K, 1) = Grh
+            k = frmGrh.LynxGrh.Rows - 1
+            frmGrh.LynxGrh.CellText(k, 1) = Grh
 
             With GrhData(Grh)
             
@@ -393,7 +421,7 @@ On Error GoTo ErrorHandler:
                 
                 If .NumFrames > 1 Then
                 
-                    frmGrh.LynxGrh.CellText(K, 1) = "ANIMACION"
+                    frmGrh.LynxGrh.CellText(k, 1) = "ANIMACION"
                 
                     For Frame = 1 To .NumFrames
                         .Frames(Frame) = fileBuff.getLong
@@ -417,7 +445,7 @@ On Error GoTo ErrorHandler:
                     
                 Else
                 
-                    frmGrh.LynxGrh.CellText(K, 1) = ""
+                    frmGrh.LynxGrh.CellText(k, 1) = ""
                     
                     .FileNum = fileBuff.getLong
                     If .FileNum <= 0 Then GoTo ErrorHandler
@@ -840,7 +868,7 @@ Public Sub CargarIndicesSuperficie()
 On Error GoTo Fallo
     Dim Leer As New clsIniManager
     Dim i As Integer
-    Dim K As Long
+    Dim k As Long
     
     If FileExist(IniPath & INITDIR & "indices.ini", vbArchive) = False Then
         MsgBox "Falta el archivo 'indices.ini'", vbCritical
@@ -869,9 +897,9 @@ On Error GoTo Fallo
         SupData(i).Capa = Val(Leer.GetValue("REFERENCIA" & i, "Capa"))
         
         frmSuperficies.LynxSuperficies.AddItem i
-        K = frmSuperficies.LynxSuperficies.Rows - 1
-        frmSuperficies.LynxSuperficies.CellText(K, 1) = SupData(i).Grh
-        frmSuperficies.LynxSuperficies.CellText(K, 2) = SupData(i).name
+        k = frmSuperficies.LynxSuperficies.Rows - 1
+        frmSuperficies.LynxSuperficies.CellText(k, 1) = SupData(i).Grh
+        frmSuperficies.LynxSuperficies.CellText(k, 2) = SupData(i).name
     Next
     
     frmSuperficies.LynxSuperficies.Visible = True
@@ -906,7 +934,7 @@ On Error Resume Next
     Dim NPC As Long
     Dim Hostil As String
     Dim Leer As New clsIniManager
-    Dim K As Long
+    Dim k As Long
     
     Call Leer.Initialize(DirDats & "NPCs.dat")
     NumNPCs = Val(Leer.GetValue("INIT", "NumNPCs"))
@@ -939,12 +967,12 @@ On Error Resume Next
             
             frmNPCs.LynxNPCs.AddItem NPC
             
-            K = frmNPCs.LynxNPCs.Rows - 1
-            frmNPCs.LynxNPCs.CellText(K, 1) = .name
-            frmNPCs.LynxNPCs.CellText(K, 2) = .ELV
+            k = frmNPCs.LynxNPCs.Rows - 1
+            frmNPCs.LynxNPCs.CellText(k, 1) = .name
+            frmNPCs.LynxNPCs.CellText(k, 2) = .ELV
             
             Hostil = IIf(.Hostile = 1, "SI", "NO")
-            frmNPCs.LynxNPCs.CellText(K, 3) = Hostil
+            frmNPCs.LynxNPCs.CellText(k, 3) = Hostil
             
         End With
     Next
@@ -971,7 +999,7 @@ Public Sub CargarIndicesOBJ()
 On Error GoTo Fallo
 
     Dim Obj As Integer
-    Dim K As Long
+    Dim k As Long
     Dim Leer As New clsIniManager
 
     If FileExist(DirDats & "\OBJ.dat", vbArchive) = False Then
@@ -1009,8 +1037,8 @@ On Error GoTo Fallo
             .Subtipo = Val(Leer.GetValue("OBJ" & Obj, "Subtipo"))
             
             frmOBJs.LynxOBJs.AddItem Obj
-            K = frmOBJs.LynxOBJs.Rows - 1
-            frmOBJs.LynxOBJs.CellText(K, 1) = .name
+            k = frmOBJs.LynxOBJs.Rows - 1
+            frmOBJs.LynxOBJs.CellText(k, 1) = .name
         
         End With
     Next Obj
@@ -1038,7 +1066,7 @@ Public Sub CargarIndicesTriggers()
 
 On Error GoTo Fallo
 
-    Dim K As Long
+    Dim k As Long
 
     If FileExist(IniPath & INITDIR & "Triggers.ini", vbArchive) = False Then
         MsgBox "Falta el archivo 'Triggers.ini' en " & IniPath & INITDIR & "Triggers.ini", vbCritical
@@ -1046,7 +1074,7 @@ On Error GoTo Fallo
     End If
     
     Dim NumT As Integer
-    Dim T As Integer
+    Dim t As Integer
     Dim Leer As New clsIniManager
     
     Call Leer.Initialize(IniPath & INITDIR & "Triggers.ini")
@@ -1059,11 +1087,11 @@ On Error GoTo Fallo
     frmTriggers.LynxTriggers.AddColumn "Nombre", 2
     
     NumT = Val(Leer.GetValue("INIT", "NumTriggers"))
-    For T = 1 To NumT
-        frmTriggers.LynxTriggers.AddItem T
-        K = frmTriggers.LynxTriggers.Rows - 1
-        frmTriggers.LynxTriggers.CellText(K, 1) = Leer.GetValue("Trig" & T, "Name")
-    Next T
+    For t = 1 To NumT
+        frmTriggers.LynxTriggers.AddItem t
+        k = frmTriggers.LynxTriggers.Rows - 1
+        frmTriggers.LynxTriggers.CellText(k, 1) = Leer.GetValue("Trig" & t, "Name")
+    Next t
 
     frmTriggers.LynxTriggers.Visible = True
     frmTriggers.LynxTriggers.Redraw = True
@@ -1075,6 +1103,6 @@ On Error GoTo Fallo
     Exit Sub
     
 Fallo:
-    MsgBox "Error al intentar cargar el Trigger " & T & " de Triggers.ini en " & IniPath & INITDIR & "Triggers.ini" & vbCrLf & "Err: " & Err.Number & " - " & Err.Description, vbCritical + vbOKOnly
+    MsgBox "Error al intentar cargar el Trigger " & t & " de Triggers.ini en " & IniPath & INITDIR & "Triggers.ini" & vbCrLf & "Err: " & Err.Number & " - " & Err.Description, vbCritical + vbOKOnly
 
 End Sub
