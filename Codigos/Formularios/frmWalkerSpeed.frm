@@ -77,6 +77,15 @@ Private Sub HScSpeed_Change()
 
 End Sub
 
+Private Sub HScSpeed_LostFocus()
+'*************************************************
+'Author: Lorwik
+'Fecha: 31/03/2024
+'*************************************************
+
+    HotKeysAllow = True
+End Sub
+
 Private Sub txtSpeed_Change()
 '***************************************************
 'Author: Lorwik
