@@ -173,7 +173,7 @@ Public Sub NuevoMapa()
                 .Light.range = 0
                 .Light.map_x = 0
                 .Light.map_y = 0
-                .Light.RGBCOLOR.a = 0
+                .Light.RGBCOLOR.A = 0
                 .Light.RGBCOLOR.R = 0
                 .Light.RGBCOLOR.G = 0
                 .Light.RGBCOLOR.B = 0
@@ -213,6 +213,9 @@ Public Sub NuevoMapa()
     'Set changed flag
     MapInfo.Changed = 0
     frmMain.MousePointer = 0
+    
+    'Vaciamos la cola de movimiento
+    keysMovementPressedQueue.Clear
     
     MapaCargado = True
     EngineRun = True

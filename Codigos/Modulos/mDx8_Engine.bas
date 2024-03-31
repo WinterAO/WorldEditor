@@ -51,7 +51,7 @@ Public MainScreenRect As RECT
 
 Public Type TLVERTEX
     X As Single
-    y As Single
+    Y As Single
     Z As Single
     rhw As Single
     color As Long
@@ -167,7 +167,7 @@ On Error GoTo ErrorDevice:
         .BackBufferFormat = DispMode.Format
         .BackBufferWidth = ScreenWidth
         .BackBufferHeight = ScreenHeight
-        .hDeviceWindow = frmMain.MainViewPic.hwnd
+        .hDeviceWindow = frmMain.MainViewPic.hWnd
     End With
     
     If Not DirectDevice Is Nothing Then
@@ -294,7 +294,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
     FramesPerSecCounter = 101
 
     TileBufferSize = ClientSetup.TilesBuffer
-    Engine_BaseSpeed = 0.018
+    Engine_BaseSpeed = 0.5
     
     With MainScreenRect
         .Bottom = frmMain.MainViewPic.ScaleHeight
@@ -401,14 +401,14 @@ Engine_PixelPosX_Err:
 
 End Function
 
-Public Function Engine_PixelPosY(ByVal y As Long) As Long
+Public Function Engine_PixelPosY(ByVal Y As Long) As Long
 '*****************************************************************
 'Converts a tile position to a screen position
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosY
 '*****************************************************************
     On Error GoTo Engine_PixelPosY_Err
 
-    Engine_PixelPosY = (y - 1) * 32
+    Engine_PixelPosY = (Y - 1) * 32
     
     Exit Function
     
@@ -435,7 +435,7 @@ Engine_TPtoSPX_Err:
 
 End Function
 
-Public Function Engine_TPtoSPY(ByVal y As Integer) As Long
+Public Function Engine_TPtoSPY(ByVal Y As Integer) As Long
 '************************************************************
 'Tile Position to Screen Position
 'Takes the tile position and returns the pixel location on the screen
@@ -443,7 +443,7 @@ Public Function Engine_TPtoSPY(ByVal y As Integer) As Long
 '************************************************************
 On Error GoTo Engine_TPtoSPY_Err
 
-    Engine_TPtoSPY = Engine_PixelPosY(y - ((UserPos.y - HalfWindowTileHeight) - TileBufferSize)) + OffsetCounterY - 272 + ((10 - TileBufferSize) * 32)
+    Engine_TPtoSPY = Engine_PixelPosY(Y - ((UserPos.Y - HalfWindowTileHeight) - TileBufferSize)) + OffsetCounterY - 272 + ((10 - TileBufferSize) * 32)
     
     Exit Function
     
@@ -453,7 +453,7 @@ Engine_TPtoSPY_Err:
 
 End Function
 
-Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal y As Integer, ByVal Width As Integer, ByVal Height As Integer, color As Long)
+Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width As Integer, ByVal Height As Integer, color As Long)
 '***************************************************
 'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 29/12/10
@@ -464,7 +464,7 @@ Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal y As Integer, ByVal Width A
     Call Engine_Long_To_RGB_List(temp_rgb(), color)
 
     Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(X, y, Width, ByVal Height, temp_rgb())
+    Call SpriteBatch.Draw(X, Y, Width, ByVal Height, temp_rgb())
     
     Exit Sub
     
@@ -790,12 +790,12 @@ Public Sub Engine_Get_ARGB(color As Long, Data As D3DCOLORVALUE)
 '**************************************************************
     On Error GoTo Engine_Get_ARGB_Err
     
-    Dim a As Long, R As Long, G As Long, B As Long
+    Dim A As Long, R As Long, G As Long, B As Long
         
     If color < 0 Then
-        a = ((color And (&H7F000000)) / (2 ^ 24)) Or &H80&
+        A = ((color And (&H7F000000)) / (2 ^ 24)) Or &H80&
     Else
-        a = color / (2 ^ 24)
+        A = color / (2 ^ 24)
     End If
     
     R = (color And &HFF0000) / (2 ^ 16)
@@ -803,7 +803,7 @@ Public Sub Engine_Get_ARGB(color As Long, Data As D3DCOLORVALUE)
     B = (color And &HFF&)
     
     With Data
-        .a = a
+        .A = A
         .R = R
         .G = G
         .B = B

@@ -242,38 +242,46 @@ End Sub
 
 Sub ShowNextFrame()
 
-On Error GoTo ErrorHandler:
+    On Error GoTo ErrorHandler:
 
     If EngineRun Then
     
-        Dim cX As Integer
-        Dim cY As Integer
+        Dim cX        As Integer
+
+        Dim cY        As Integer
+
         Dim Cuadrante As Integer
         
         Call Engine_BeginScene
         
-        '****** Move screen Left and Right if needed ******
-        If AddtoUserPos.X <> 0 Then
-            OffsetCounterX = OffsetCounterX - ScrollPixelsPerFrameX * AddtoUserPos.X * timerTicksPerFrame
+        If UserMoving Then
+        
+            '****** Move screen Left and Right if needed ******
+            If AddtoUserPos.X <> 0 Then
+                OffsetCounterX = OffsetCounterX - ScrollPixelsPerFrameX * AddtoUserPos.X * timerTicksPerFrame
     
-            If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.X) Then
-                OffsetCounterX = 0
-                AddtoUserPos.X = 0
-    
-            End If
+                If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.X) Then
+                    OffsetCounterX = 0
+                    AddtoUserPos.X = 0
+                    UserMoving = False
                     
-        End If
-                
-        '****** Move screen Up and Down if needed ******
-        If AddtoUserPos.Y <> 0 Then
-            OffsetCounterY = OffsetCounterY - ScrollPixelsPerFrameY * AddtoUserPos.Y * timerTicksPerFrame
-    
-            If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.Y) Then
-                OffsetCounterY = 0
-                AddtoUserPos.Y = 0
-                        
+                End If
+                    
             End If
+                
+            '****** Move screen Up and Down if needed ******
+            If AddtoUserPos.Y <> 0 Then
+                OffsetCounterY = OffsetCounterY - ScrollPixelsPerFrameY * AddtoUserPos.Y * timerTicksPerFrame
     
+                If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.Y) Then
+                    OffsetCounterY = 0
+                    AddtoUserPos.Y = 0
+                    UserMoving = False
+                    
+                End If
+    
+            End If
+
         End If
         
         '****** Update screen ******
@@ -287,14 +295,14 @@ On Error GoTo ErrorHandler:
         Call ObtenerCuadrante(Cuadrante, cX, cY)
         Call DrawText(10, 35, "Cuadrante: " & Cuadrante & " X:" & cX & " Y: " & cY, -1, False)
         
-        If ContadorTiles > 0 Then _
-            Call DrawText(10, 50, "Tiles: " & ContadorTiles, -1, False)
+        If ContadorTiles > 0 Then Call DrawText(10, 50, "Tiles: " & ContadorTiles, -1, False)
         
         'Get timing info
         timerElapsedTime = GetElapsedTime()
         timerTicksPerFrame = timerElapsedTime * Engine_BaseSpeed
             
         Call Engine_EndScene(MainScreenRect, 0)
+
     End If
 
 ErrorHandler:
@@ -306,6 +314,7 @@ ErrorHandler:
         Call LoadGraphics
     
     End If
+
 End Sub
 
 Public Function GetElapsedTime() As Single

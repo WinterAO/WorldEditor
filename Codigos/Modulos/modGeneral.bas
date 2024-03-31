@@ -5,6 +5,8 @@ Private m_Jpeg     As clsJpeg
 
 Private m_FileName As String
 
+Public keysMovementPressedQueue As clsArrayList
+
 'Escribe y Lee archivos de texto plano
 Private Declare Function writeprivateprofilestring _
                 Lib "kernel32" _
@@ -116,6 +118,14 @@ Sub Main()
     frmCarga.lblStatus.Caption = "Cargando Indice de Superficies."
     DoEvents
     Call modCarga.CargarIndicesSuperficie
+    
+    frmCarga.lblStatus.Caption = "Iniciando movimiento sensual."
+    DoEvents
+    'Esto es para el movimiento suave de pjs, para que el pj termine de hacer el movimiento antes de empezar otro
+    Set keysMovementPressedQueue = New clsArrayList
+    Call keysMovementPressedQueue.Initialize(1, 4)
+    
+    Set MainTimer = New clsTimer
     '------------------------
      
     Call modMapas.NuevoMapa
@@ -123,6 +133,9 @@ Sub Main()
     frmMain.Show
     
     prgRun = True
+    
+    ' Intervals
+    LoadTimerIntervals
     
     Do While prgRun
         
@@ -177,6 +190,7 @@ Public Sub CloseMapEditor()
 
     'Destruimos los objetos publicos creados
     Set SurfaceDB = Nothing
+    Set MainTimer = Nothing
 
     For Each mifrm In Forms
 
@@ -193,102 +207,148 @@ Public Sub CloseMapEditor()
 
 End Sub
 
-Public Sub CheckKeys()
+Private Sub AddMovementToKeysMovementPressedQueue()
+    If GetKeyState(vbKeyUp) < 0 Then
+        If keysMovementPressedQueue.itemExist(vbKeyUp) = False Then keysMovementPressedQueue.Add (vbKeyUp) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(vbKeyUp) Then keysMovementPressedQueue.Remove (vbKeyUp) ' Remueve la tecla que teniamos presionada
+    End If
+
+    If GetKeyState(vbKeyDown) < 0 Then
+        If keysMovementPressedQueue.itemExist(vbKeyDown) = False Then keysMovementPressedQueue.Add (vbKeyDown) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(vbKeyDown) Then keysMovementPressedQueue.Remove (vbKeyDown) ' Remueve la tecla que teniamos presionada
+    End If
+
+    If GetKeyState(vbKeyLeft) < 0 Then
+        If keysMovementPressedQueue.itemExist(vbKeyLeft) = False Then keysMovementPressedQueue.Add (vbKeyLeft) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(vbKeyLeft) Then keysMovementPressedQueue.Remove (vbKeyLeft) ' Remueve la tecla que teniamos presionada
+    End If
+
+    If GetKeyState(vbKeyRight) < 0 Then
+        If keysMovementPressedQueue.itemExist(vbKeyRight) = False Then keysMovementPressedQueue.Add (vbKeyRight) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(vbKeyRight) Then keysMovementPressedQueue.Remove (vbKeyRight) ' Remueve la tecla que teniamos presionada
+    End If
+End Sub
+
+Private Sub CheckKeys()
     '*************************************************
     'Author: ^[GS]^
     'Last modified: 01/11/08
     '*************************************************
 
     If HotKeysAllow = False Then Exit Sub
-    '[Loopzer]
-    'If GetKeyState(vbKeyControl) < 0 Then
-    '    If Seleccionando Then
-    '        If GetKeyState(vbKeyC) < 0 Then CopiarSeleccion
-    '        If GetKeyState(vbKeyX) < 0 Then CortarSeleccion
-    '        If GetKeyState(vbKeyB) < 0 Then BlockearSeleccion
-    '        If GetKeyState(vbKeyD) < 0 Then AccionSeleccion
-    ''    Else
-    '        If GetKeyState(vbKeyS) < 0 Then DePegar ' GS
-    '        If GetKeyState(vbKeyV) < 0 Then PegarSeleccion
-    '    End If
-    'End If
-    '[/Loopzer]
     
-    If GetKeyState(vbKeyUp) < 0 Then
-        If UserPos.Y < YMinMapSize Then Exit Sub ' 10
-        If LegalPos(UserPos.X, UserPos.Y - 1) And WalkMode = True Then
-            If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.Y = UserPos.Y - 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
-            dLastWalk = GetTickCount
-            
-        ElseIf WalkMode = False Then
-            UserPos.Y = UserPos.Y - 1
-
+    'No input allowed while Argentum is not the active window
+    If Not Application.IsAppActive() Then Exit Sub
+    
+    If UserMoving = 0 Then
+        Call AddMovementToKeysMovementPressedQueue
+        
+        'Move Up
+        If keysMovementPressedQueue.GetLastItem() = vbKeyUp Then
+            Call Map_MoveTo(NORTH)
+            Call Char_UserPos
         End If
-        
-        Call DibujarMinimapa(True)
-        frmMain.SetFocus
-        Exit Sub
-
-    End If
-
-    If GetKeyState(vbKeyRight) < 0 Then
-        If UserPos.X > XMaxMapSize Then Exit Sub ' 89
-        If LegalPos(UserPos.X + 1, UserPos.Y) And WalkMode = True Then
-            If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.X = UserPos.X + 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
-            dLastWalk = GetTickCount
-            
-        ElseIf WalkMode = False Then
-            UserPos.X = UserPos.X + 1
-            
+                
+        'Move Right
+        If keysMovementPressedQueue.GetLastItem() = vbKeyRight Then
+            Call Map_MoveTo(EAST)
+            Call Char_UserPos
         End If
-        
-        Call DibujarMinimapa(True)
-        frmMain.SetFocus
-        Exit Sub
-
-    End If
-
-    If GetKeyState(vbKeyDown) < 0 Then
-        If UserPos.Y > YMaxMapSize Then Exit Sub ' 92
-        
-        If LegalPos(UserPos.X, UserPos.Y + 1) And WalkMode = True Then
-            If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.Y = UserPos.Y + 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
-            dLastWalk = GetTickCount
             
-        ElseIf WalkMode = False Then
-            UserPos.Y = UserPos.Y + 1
+        'Move down
+        If keysMovementPressedQueue.GetLastItem() = vbKeyDown Then
+            Call Map_MoveTo(SOUTH)
+            Call Char_UserPos
+        End If
             
+        'Move left
+        If keysMovementPressedQueue.GetLastItem() = vbKeyLeft Then
+            Call Map_MoveTo(WEST)
+            Call Char_UserPos
         End If
-        
-        Call DibujarMinimapa(True)
-        frmMain.SetFocus
-        Exit Sub
-        
     End If
-
-    If GetKeyState(vbKeyLeft) < 0 Then
-        If UserPos.X < XMinMapSize Then Exit Sub ' 12
-        If LegalPos(UserPos.X - 1, UserPos.Y) And WalkMode = True Then
-            If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.X = UserPos.X - 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
-            dLastWalk = GetTickCount
-        ElseIf WalkMode = False Then
-            UserPos.X = UserPos.X - 1
-
-        End If
-
-        Call DibujarMinimapa(True)
-        frmMain.SetFocus
-        Exit Sub
-
-    End If
+    '    If GetKeyState(vbKeyUp) < 0 Then
+    '        If UserPos.Y < YMinMapSize Then Exit Sub ' 10
+    '
+    '        If LegalPos(UserPos.X, UserPos.Y - 1) And WalkMode = True Then
+    '            If dLastWalk + 50 > GetTickCount Then Exit Sub
+    '            UserPos.Y = UserPos.Y - 1
+    '            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+    '            dLastWalk = GetTickCount
+    '
+    '        ElseIf WalkMode = False Then
+    '            UserPos.Y = UserPos.Y - 1
+    '
+    '        End If
+    '
+    '        Call DibujarMinimapa(True)
+    '        frmMain.SetFocus
+    '        Exit Sub
+    '
+    '    End If
+    '
+    '    If GetKeyState(vbKeyRight) < 0 Then
+    '        If UserPos.X > XMaxMapSize Then Exit Sub ' 89
+    '
+    '        If LegalPos(UserPos.X + 1, UserPos.Y) And WalkMode = True Then
+    '            If dLastWalk + 50 > GetTickCount Then Exit Sub
+    '            UserPos.X = UserPos.X + 1
+    '            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+    '            dLastWalk = GetTickCount
+    '
+    '        ElseIf WalkMode = False Then
+    '            UserPos.X = UserPos.X + 1
+    '
+    '        End If
+    '
+    '        Call DibujarMinimapa(True)
+    '        frmMain.SetFocus
+    '        Exit Sub
+    '
+    '    End If
+    '
+    '    If GetKeyState(vbKeyDown) < 0 Then
+    '        If UserPos.Y > YMaxMapSize Then Exit Sub ' 92
+    '
+    '        If LegalPos(UserPos.X, UserPos.Y + 1) And WalkMode = True Then
+    '            If dLastWalk + 50 > GetTickCount Then Exit Sub
+    '            UserPos.Y = UserPos.Y + 1
+    '            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+    '            dLastWalk = GetTickCount
+    '
+    '        ElseIf WalkMode = False Then
+    '            UserPos.Y = UserPos.Y + 1
+    '
+    '        End If
+    '
+    '        Call DibujarMinimapa(True)
+    '        frmMain.SetFocus
+    '        Exit Sub
+    '
+    '    End If
+    '
+    '    If GetKeyState(vbKeyLeft) < 0 Then
+    '        If UserPos.X < XMinMapSize Then Exit Sub ' 12
+    '
+    '        If LegalPos(UserPos.X - 1, UserPos.Y) And WalkMode = True Then
+    '            If dLastWalk + 50 > GetTickCount Then Exit Sub
+    '            UserPos.X = UserPos.X - 1
+    '            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+    '            dLastWalk = GetTickCount
+    '        ElseIf WalkMode = False Then
+    '            UserPos.X = UserPos.X - 1
+    '
+    '        End If
+    '
+    '        Call DibujarMinimapa(True)
+    '        frmMain.SetFocus
+    '        Exit Sub
+    '
+    '    End If
     
 End Sub
 
@@ -302,10 +362,12 @@ Public Sub ToggleWalkMode()
 
     If WalkMode = False Then
         WalkMode = True
+        Engine_BaseSpeed = 0.018
         
     Else
         frmMain.mnuModoCaminata.Checked = False
         WalkMode = False
+        Engine_BaseSpeed = 0.5
         
     End If
     
@@ -567,6 +629,24 @@ Public Function RandomNumber(ByVal LowerBound As Variant, _
     If RandomNumber > UpperBound Then RandomNumber = UpperBound
 
 End Function
+
+Private Sub LoadTimerIntervals()
+    '***************************************************
+    'Author: Lorwik
+    'Last Modification: 31/03/2024
+    'Set the intervals of timers
+    '***************************************************
+    
+    With MainTimer
+    
+        Call .SetInterval(TimersIndex.ChangeHeading, eIntervalos.INT_CHANGE_HEADING)
+    
+        'Init timers
+        Call .Start(TimersIndex.ChangeHeading)
+    
+    End With
+
+End Sub
 
 Public Sub Client_Screenshot(ByVal hDC As Long, ByVal Width As Long, ByVal Height As Long)
     '*******************************

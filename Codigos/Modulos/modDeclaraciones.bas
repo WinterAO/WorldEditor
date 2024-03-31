@@ -12,6 +12,9 @@ Public ProfileTag        As String ' Perfil seleccionado
 'Objetos publicos
 Public Sound             As clsSoundEngine
 
+'The main timer of the Carga.
+Public MainTimer         As clsTimer
+
 'Totals
 Global NumChars          As Integer
 
@@ -155,6 +158,13 @@ Public ClienteWidth      As Integer
 Public ContadorTiles     As Long
 
 Public Const OFFSET_HEAD As Integer = -34
+
+'###########################
+' Constantes de intervalo
+'###########################
+Public Enum eIntervalos
+    INT_CHANGE_HEADING = 300
+End Enum
 
 'Direcciones
 Public Enum E_Heading
@@ -463,6 +473,8 @@ Public ObjData()            As ObjData
 '************************************
 
 Public CantZonas            As Integer
+
+Public UserMoving           As Byte
 
 Public UserPos              As Position 'Posicion
 

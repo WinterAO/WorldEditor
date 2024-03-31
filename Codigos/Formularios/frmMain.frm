@@ -498,6 +498,35 @@ Begin VB.Form frmMain
       ImgSize         =   32
       cBack           =   -2147483633
    End
+   Begin WinterMapEditor.lvButtons_H LvBEdit 
+      Height          =   480
+      Index           =   14
+      Left            =   7170
+      TabIndex        =   27
+      ToolTipText     =   "Mapa"
+      Top             =   90
+      Width           =   480
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":2DA730
+      ImgSize         =   32
+      cBack           =   -2147483633
+   End
    Begin VB.Label MapPest 
       Alignment       =   2  'Center
       Appearance      =   0  'Flat
@@ -1105,6 +1134,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Sub Command1_Click()
+    frmWalkerSpeed.Show , frmMain
+End Sub
+
 Private Sub LvBEdit_Click(Index As Integer)
     '*************************************************
     'Author: Lorwik
@@ -1242,6 +1275,14 @@ Private Sub LvBEdit_Click(Index As Integer)
                 
             Else
                 frmMapa.Visible = False
+            End If
+            
+        Case 14 ' Velocidad
+            If LvBEdit(Index).value Then
+                frmWalkerSpeed.Show , frmMain
+                
+            Else
+                frmWalkerSpeed.Visible = False
             End If
     
     End Select
@@ -1461,7 +1502,7 @@ Private Sub mnuEliminarLuces_Click()
                 .Light.range = 0
                 .Light.map_x = 0
                 .Light.map_y = 0
-                .Light.RGBCOLOR.a = 0
+                .Light.RGBCOLOR.A = 0
                 .Light.RGBCOLOR.R = 0
                 .Light.RGBCOLOR.G = 0
                 .Light.RGBCOLOR.B = 0

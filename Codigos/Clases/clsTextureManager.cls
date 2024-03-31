@@ -181,7 +181,7 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
                 
                 Else
                     Call MsgBox("No se ha podido cargar el grafico con indice: " & Graphic)
-                    Call CloseClient
+                    Call CloseMapEditor
                 
                 End If
                 
