@@ -1,6 +1,18 @@
 # WinterMapEditor
 
-Editor de Mapas oficial de Comunidad Winter
+Editor de Mapas desarrollado por Lorwik para WinterAO & Argentum Online - 2020 / 2024
+
+## Agradecimientos Especiales:
+
+- Hide (^[GS]^) por su colaboracion, y codigos reutilizados de su WorldEditor de Argentum Online
+
+- Howell, NeoSefirot y Sensui por sus consejos, criticas y tests. Ayudaron a hacer una herramienta mas completa y comoda.
+
+Y a todos los que directa e indirectamente han participado en el desarrollo de este editor de mapas ya sea con sus codigos o con sus sugerencias. WinterMapEditor fue programado desde 0 en base al motor grafico DX8 de AOLibre y reutilizando algunos de los codigos de otros WorldEditor aportados por la comunidad.
+
+# ScreenShot
+
+![image](https://github.com/WinterAO/WorldEditor/assets/1338437/c0a8d78d-5e30-4b2a-aac5-86892e9fc1d3)
 
 # Como usar las Capas
 
