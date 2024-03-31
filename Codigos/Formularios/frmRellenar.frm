@@ -7,6 +7,7 @@ Begin VB.Form frmRellenar
    ClientLeft      =   16905
    ClientTop       =   9480
    ClientWidth     =   4185
+   ControlBox      =   0   'False
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -539,34 +540,34 @@ Public Sub Superficie_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long,
 
     If EditWarning Then Exit Sub
     
-    Dim y As Long
+    Dim Y As Long
     Dim X As Long
     
     If Not MapaCargado Then
         Exit Sub
     End If
 
-    For y = y1 To y2
+    For Y = y1 To y2
         For X = x1 To x2
             If Poner = True Then
                 If frmConfigSup.MOSAICO.value = vbChecked Then
                     Dim aux As Long
                     aux = Val(frmSuperficies.cGrh.Text) + _
-                    ((y Mod frmConfigSup.mLargo) * frmConfigSup.mAncho) + (X Mod frmConfigSup.mAncho)
-                     MapData(X, y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = aux
+                    ((Y Mod frmConfigSup.mLargo) * frmConfigSup.mAncho) + (X Mod frmConfigSup.mAncho)
+                     MapData(X, Y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = aux
                     'Setup GRH
-                    InitGrh MapData(X, y).Graphic(Val(frmSuperficies.cCapas.Text)), aux
+                    InitGrh MapData(X, Y).Graphic(Val(frmSuperficies.cCapas.Text)), aux
                 Else
                     'Else Place graphic
-                    MapData(X, y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = Val(frmSuperficies.cGrh.Text)
+                    MapData(X, Y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = Val(frmSuperficies.cGrh.Text)
                     'Setup GRH
-                    InitGrh MapData(X, y).Graphic(Val(frmSuperficies.cCapas.Text)), Val(frmSuperficies.cGrh.Text)
+                    InitGrh MapData(X, Y).Graphic(Val(frmSuperficies.cCapas.Text)), Val(frmSuperficies.cGrh.Text)
                 End If
             Else
-                MapData(X, y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = 0
+                MapData(X, Y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = 0
             End If
         Next X
-    Next y
+    Next Y
     
     'Set changed flag
     MapInfo.Changed = 1
@@ -581,23 +582,23 @@ Public Sub Bloqueos_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long, B
 
     If EditWarning Then Exit Sub
     
-    Dim y As Long
+    Dim Y As Long
     Dim X As Long
     
     If Not MapaCargado Then
         Exit Sub
     End If
 
-    For y = y1 To y2
+    For Y = y1 To y2
         For X = x1 To x2
     
-            If y > YMinMapSize Or y < YMaxMapSize Then
+            If Y > YMinMapSize Or Y < YMaxMapSize Then
                 If X > XMinMapSize Or X < XMaxMapSize Then
     
                     If Inserta = True Then
-                        MapData(X, y).bLocked = 1
+                        MapData(X, Y).bLocked = 1
                     Else
-                        MapData(X, y).bLocked = 0
+                        MapData(X, Y).bLocked = 0
                     End If
                     
                 End If
@@ -605,7 +606,7 @@ Public Sub Bloqueos_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long, B
             
     
         Next X
-    Next y
+    Next Y
     
     'Set changed flag
     MapInfo.Changed = 1
@@ -620,32 +621,32 @@ Public Sub Triggers_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long, B
 
     If EditWarning Then Exit Sub
     
-    Dim y As Long
+    Dim Y As Long
     Dim X As Long
     
     If Not MapaCargado Then
         Exit Sub
     End If
 
-    For y = y1 To y2
+    For Y = y1 To y2
         For X = x1 To x2
             If Poner = True Then
                 If frmConfigSup.MOSAICO.value = vbChecked Then
                     MapInfo.Changed = 1 'Set changed flag
-                    MapData(X, y).Trigger = frmTriggers.LynxTriggers.CellText(, 0)
+                    MapData(X, Y).Trigger = frmTriggers.LynxTriggers.CellText(, 0)
                 Else
                     MapInfo.Changed = 1
                     'Else Place trigger
-                    MapData(X, y).Trigger = 0
+                    MapData(X, Y).Trigger = 0
 
                 End If
             Else
                 MapInfo.Changed = 1
-                MapData(X, y).Trigger = 0
+                MapData(X, Y).Trigger = 0
                 
             End If
         Next X
-    Next y
+    Next Y
     
     'Set changed flag
     MapInfo.Changed = 1
@@ -660,34 +661,34 @@ Public Sub Zonas_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long, ByVa
 
     If EditWarning Then Exit Sub
     
-    Dim y As Long
+    Dim Y As Long
     Dim X As Long
     
     If Not MapaCargado Then
         Exit Sub
     End If
 
-    For y = y1 To y2
+    For Y = y1 To y2
         For X = x1 To x2
             If Poner = True Then
                 If frmConfigSup.MOSAICO.value = vbChecked Then
                     MapInfo.Changed = 1 'Set changed flag
-                    MapData(X, y).ZonaIndex = frmZonas.LstZona.ListIndex + 1
+                    MapData(X, Y).ZonaIndex = frmZonas.LstZona.ListIndex + 1
                     Debug.Print "Inserto"
                 Else
                     MapInfo.Changed = 1
                     'Else Place Zona
-                    MapData(X, y).ZonaIndex = 0
+                    MapData(X, Y).ZonaIndex = 0
                     Debug.Print "Quito"
                 End If
             Else
                 MapInfo.Changed = 1
-                MapData(X, y).ZonaIndex = 0
+                MapData(X, Y).ZonaIndex = 0
                 Debug.Print "Quito 2"
                 
             End If
         Next X
-    Next y
+    Next Y
     
     'Set changed flag
     MapInfo.Changed = 1

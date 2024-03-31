@@ -2,13 +2,14 @@ Attribute VB_Name = "modMapas"
 Option Explicit
 
 Public colorZona() As Long
+Public UserMap As Integer
 
 '/////////////////////////////////////////////////////////////////////
 'Lectura, guardado y otras features del formato de mapas Argentum y
 'otras funciones relacionadas con mapas en general
 '/////////////////////////////////////////////////////////////////////
 
-Public Sub AbrirMapa()
+Public Sub AbrirMapa(ByVal bBig As Boolean)
 
     frmMain.Dialog.CancelError = True
 
@@ -23,9 +24,26 @@ Public Sub AbrirMapa()
     If WalkMode = True Then _
         Call modGeneral.ToggleWalkMode
         
+'    If bBig Then
+'        Call setMapSize(1000, 1000)
+'
+'    Else
+'        Call setMapSize(100, 100)
+'
+'    End If
+        
     Call modMapas.NuevoMapa
         
-    Call abrirCargarMapa(frmMain.Dialog.filename)
+    If bBig Then
+        Call abrirCargarMapa(frmMain.Dialog.filename)
+        
+    Else
+        Call ModMapConver.Cargar_ConverCSM(frmMain.Dialog.filename)
+        
+        UserPos.X = 50
+        UserPos.Y = 50
+    
+    End If
         
     DoEvents
     frmMain.mnuReAbrirMapa.Enabled = True
@@ -39,6 +57,10 @@ AbrirMapa_Err:
 End Sub
 
 Public Sub abrirCargarMapa(ByVal Path As String)
+    
+    Dim ind As Integer
+    ind = InStrRev(Path, "\") + 5
+    UserMap = mid$(Path, ind, Len(Path) - ind - 3)
     
     Call modMapasWAO.Cargar_CSM(frmMain.Dialog.filename)
 
@@ -93,7 +115,7 @@ Public Sub NuevoMapa()
     'Descripcion: Limpia todo el mapa a uno nuevo
     '***************************************************
     
-    Dim y     As Integer
+    Dim Y     As Integer
 
     Dim X     As Integer
 
@@ -111,10 +133,10 @@ Public Sub NuevoMapa()
     
     frmMain.MousePointer = 11
         
-    For y = YMinMapSize To YMaxMapSize
+    For Y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
         
-            With MapData(X, y)
+            With MapData(X, Y)
             
                 .Graphic(1).GrhIndex = 1
                 
@@ -137,7 +159,7 @@ Public Sub NuevoMapa()
                 ' Translados
                 .TileExit.Map = 0
                 .TileExit.X = 0
-                .TileExit.y = 0
+                .TileExit.Y = 0
                 
                 ' Triggers
                 .Trigger = 0
@@ -145,7 +167,7 @@ Public Sub NuevoMapa()
                 .Particle_Group_Index = 0
                 .Particle_Index = 0
                 
-                Call Engine_Long_To_RGB_List(MapData(X, y).Engine_Light(), -1)
+                Call Engine_Long_To_RGB_List(MapData(X, Y).Engine_Light(), -1)
                 
                 .Light.active = False
                 .Light.range = 0
@@ -167,7 +189,7 @@ Public Sub NuevoMapa()
             End With
             
         Next X
-    Next y
+    Next Y
     
     'Borramos todas las luces
     Call LightRemoveAll

@@ -1,8 +1,8 @@
 VERSION 5.00
-Begin VB.Form frmModo 
+Begin VB.Form frmPerfil 
    BackColor       =   &H00424242&
    BorderStyle     =   0  'None
-   Caption         =   "Form1"
+   Caption         =   "Selección de Perfil"
    ClientHeight    =   3495
    ClientLeft      =   0
    ClientTop       =   0
@@ -183,7 +183,7 @@ Begin VB.Form frmModo
       Width           =   2295
    End
 End
-Attribute VB_Name = "frmModo"
+Attribute VB_Name = "frmPerfil"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
@@ -197,6 +197,7 @@ Private nPerfiles As Byte
 Private Sub cmbPerfil_Click()
     Dim tag As String
     tag = cmbPerfil.Text
+    
     If LenB(tag) > 0 And FileExist(profileFile(tag), vbArchive) Then
         Dim v As Byte
         v = CByte(Val(GetVar(profileFile(tag), "CONFIGURACION", "MeMode")))
@@ -279,15 +280,16 @@ Private Sub LvBBoton_Click(Index As Integer)
             End If
         
             ProfileTag = cmbPerfil.List(cmbPerfil.ListIndex)
-        
+            
+            'Lorwik> Esto por ahora no se usa y no se sabe si se volvera a usar.
             ModoElegido = True
+            'Call WriteVar(profileFile(ProfileTag), "CONFIGURACION", "MeMode", CStr(ClientSetup.MeMode))
+            ' Guarda el índice del perfil seleccionado en "lastProfile"
             
             ClientSetup.OverrideVertexProcess = cmbProcesado.ListIndex
-            
-            Call WriteVar(profileFile(ProfileTag), "CONFIGURACION", "MeMode", CStr(ClientSetup.MeMode))
             Call WriteVar(profileFile(ProfileTag), "VIDEO", "VertexProcessingOverride", CByte(ClientSetup.OverrideVertexProcess))
             Call WriteVar(profileFile(ProfileTag), "VIDEO", "LimitarFPS", IIf(ClientSetup.LimiteFPS, "1", "0"))
-            ' Guarda el índice del perfil seleccionado en "lastProfile"
+            
             Call WriteVar(profilesFile, "INIT", "lastProfile", cmbPerfil.ListIndex + 1)
             
             Unload Me
@@ -295,6 +297,7 @@ Private Sub LvBBoton_Click(Index As Integer)
 End Sub
 
 Private Sub LvBNuevo_Click(Index As Integer)
+
     ProfileTag = InputBox("Introduce el nombre para el perfil.")
     
     If ProfileTag = vbNullString Then Exit Sub
@@ -310,4 +313,5 @@ Private Sub LvBNuevo_Click(Index As Integer)
     ReDim Perfiles(1 To nPerfiles) As String
     
     cmbPerfil.AddItem (ProfileTag)
+    
 End Sub

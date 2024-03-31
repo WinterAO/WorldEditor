@@ -2,12 +2,17 @@
 Errores.log
 Codigo/*.log
 Conversor/
+Render/
+Render/Fotos/
+Render/Minimapa/
+Render/Partials/
+Resources/
 *.vbw
 *.oca
 *.csi
 *.lvw
 *.OBJ
-WorldEditor.exe
+WinterMapEditor.exe
 
 # System Files.
 .DS_Store
