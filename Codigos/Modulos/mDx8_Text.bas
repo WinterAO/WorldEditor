@@ -2,7 +2,7 @@ Attribute VB_Name = "mDx8_Text"
 Option Explicit
 
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" _
-    (Destination As Any, Source As Any, ByVal Length As Long)
+    (destination As Any, source As Any, ByVal length As Long)
     
 Private Type CharVA
     X As Integer
@@ -60,7 +60,7 @@ Public Sub Text_Render_Special(ByVal intX As Integer, ByVal intY As Integer, ByR
     Dim i As Long
     If LenB(strText) <> 0 Then
 
-        Call Engine_Long_To_RGB_List(temp_rgb(), lngColor)
+        Call Long_2_RGBAList(temp_rgb(), lngColor)
 
         Call Engine_Render_Text(SpriteBatch, cfonts(Font), strText, intX, intY, temp_rgb(), bolCentred, , , Font)
         
@@ -83,7 +83,7 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
                                 ByVal Text As String, _
                                 ByVal X As Long, _
                                 ByVal Y As Long, _
-                                ByRef color() As Long, _
+                                ByRef color() As RGBA, _
                                 Optional ByVal Center As Boolean = False, _
                                 Optional ByVal Alpha As Byte = 255, _
                                 Optional ByVal ParseEmoticons As Boolean = False, _
@@ -312,7 +312,7 @@ Sub Engine_Init_FontSettings()
     '*****************************************************************
     Dim LoopChar As Long
     
-    Dim n        As Integer
+    Dim N        As Integer
 
     Dim Row      As Single
 
@@ -368,10 +368,10 @@ Sub Engine_Init_FontSettings()
             
         Else
 
-            n = FreeFile
-            Open dirRecursos_Uncompressed & "Fuentes\font" & i & ".dat" For Binary As #n
-                Get #n, , cfonts(i).HeaderInfo
-            Close #n
+            N = FreeFile
+            Open dirRecursos_Uncompressed & "Fuentes\font" & i & ".dat" For Binary As #N
+                Get #N, , cfonts(i).HeaderInfo
+            Close #N
         
         End If
             
@@ -409,18 +409,11 @@ End Sub
 Public Sub DrawText(ByVal X As Integer, _
                     ByVal Y As Integer, _
                     ByVal Text As String, _
-                    ByVal color As Long, _
+                    ByRef color() As RGBA, _
                     Optional Center As Boolean = False, _
                     Optional Font As Integer = 1)
 
-    Dim aux(3) As Long
-
-    Call Engine_Long_To_RGB_List(aux(), color)
-    Call Engine_Render_Text(SpriteBatch, cfonts(Font), Text, X, Y, aux(), Center, , , Font)
+    Call Engine_Render_Text(SpriteBatch, cfonts(Font), Text, X, Y, color(), Center, , , Font)
 
 End Sub
-
-
-
-
 

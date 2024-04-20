@@ -620,3 +620,46 @@ ErrorHandler:
     Call AddtoRichTextBox(frmConsola.StatTxt, "¡Error en la captura!", 204, 193, 155, 0, 1, , , True)
 
 End Sub
+
+Public Function Max(ByVal A As Variant, ByVal B As Variant) As Variant
+    
+    On Error GoTo max_Err
+    
+
+    If A > B Then
+        Max = A
+    Else
+        Max = B
+
+    End If
+
+    
+    Exit Function
+
+max_Err:
+    Call RegistrarError(Err.Number, Err.Description, "Mod_General.max", Erl)
+    Resume Next
+    
+End Function
+
+Public Function Min(ByVal A As Double, ByVal B As Double) As Variant
+    
+    On Error GoTo min_Err
+    
+
+    If A < B Then
+        Min = A
+    Else
+        Min = B
+
+    End If
+
+    
+    Exit Function
+
+min_Err:
+    Call RegistrarError(Err.Number, Err.Description, "Mod_General.min", Erl)
+    Resume Next
+    
+End Function
+

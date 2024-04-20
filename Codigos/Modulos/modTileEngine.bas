@@ -254,6 +254,8 @@ Sub ShowNextFrame()
         
         Call Engine_BeginScene
         
+        Call DesvanecimientoMsg
+        
         If UserMoving Then
         
             '****** Move screen Left and Right if needed ******
@@ -289,13 +291,13 @@ Sub ShowNextFrame()
         
         ' Calculamos los FPS y los mostramos
         Call Engine_Update_FPS
-        Call DrawText(10, 5, "FPS: " & modTileEngine.FPS, -1, False)
-        Call DrawText(10, 20, "Mouse: " & MousePos, -1, False)
+        Call DrawText(10, 5, "FPS: " & modTileEngine.FPS, COLOR_WHITE, False)
+        Call DrawText(10, 20, "Mouse: " & MousePos, COLOR_WHITE, False)
         
         Call ObtenerCuadrante(Cuadrante, cX, cY)
-        Call DrawText(10, 35, "Cuadrante: " & Cuadrante & " X:" & cX & " Y: " & cY, -1, False)
+        Call DrawText(10, 35, "Cuadrante: " & Cuadrante & " X:" & cX & " Y: " & cY, COLOR_WHITE, False)
         
-        If ContadorTiles > 0 Then Call DrawText(10, 50, "Tiles: " & ContadorTiles, -1, False)
+        If ContadorTiles > 0 Then Call DrawText(10, 50, "Tiles: " & ContadorTiles, COLOR_WHITE, False)
         
         'Get timing info
         timerElapsedTime = GetElapsedTime()
@@ -346,7 +348,7 @@ Public Sub Device_Textured_Render(ByVal X As Single, ByVal Y As Single, _
                                   ByVal Width As Integer, ByVal Height As Integer, _
                                   ByVal sX As Integer, ByVal sY As Integer, _
                                   ByVal tex As Long, _
-                                  ByRef color() As Long, _
+                                  ByRef color() As RGBA, _
                                   Optional ByVal Alpha As Boolean = False, _
                                   Optional ByVal angle As Single = 0, _
                                   Optional ByVal ScaleX As Single = 1!, _
@@ -412,7 +414,7 @@ Function InMapBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean
     InMapBounds = True
 End Function
 
-Sub Draw_Grh(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, ByVal Animate As Byte, Optional ByVal Alpha As Boolean = False, Optional ByVal angle As Single = 0, Optional ByVal ScaleX As Single = 1!, Optional ByVal ScaleY As Single = 1!)
+Sub Draw_Grh(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As RGBA, ByVal Animate As Byte, Optional ByVal Alpha As Boolean = False, Optional ByVal angle As Single = 0, Optional ByVal ScaleX As Single = 1!, Optional ByVal ScaleY As Single = 1!)
 '*****************************************************************
 'Draws a GRH transparently to a X and Y position
 '*****************************************************************
@@ -421,12 +423,7 @@ Sub Draw_Grh(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Cen
     If Grh.GrhIndex = 0 Then Exit Sub
     
 On Error GoTo Error
-
-    If Grh.GrhIndex > grhCount Or GrhData(Grh.GrhIndex).NumFrames = 0 And GrhData(Grh.GrhIndex).FileNum = 0 Then
-        Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Grh" & Grh.GrhIndex & ". Posicion: X:" & X & " Y:" & Y, 255, 0, 0, , , True)
-        Call InitGrh(Grh, GRH_ERROR) ' 23829
-    End If
-
+    
     If Animate Then
         If Grh.Started = 1 Then
             Grh.FrameCounter = Grh.FrameCounter + (timerElapsedTime * GrhData(Grh.GrhIndex).NumFrames / Grh.speed) * MOVEMENT_SPEED
@@ -471,18 +468,13 @@ Error:
         Grh.FrameCounter = 1
         Resume
     Else
-        #If Desarrollo = 0 Then
-            Call RegistrarError(Err.Number, "Error in Draw_Grh, " & Err.Description, "Draw_Grh", Erl)
-            MsgBox "Error en el Engine Grafico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
-            Call CloseMapEditor
-        
-        #Else
-            Debug.Print "Error en Draw_Grh en el grh" & CurrentGrhIndex & ", " & Err.Description & ", (" & Err.Number & ")"
-        #End If
+        'Call Log_Engine("Error in Draw_Grh, " & Err.Description & ", (" & Err.number & ")")
+        MsgBox "Error en el Engine Grafico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log.", vbCritical
+        Call CloseMapEditor
     End If
 End Sub
 
-Public Sub DrawHead(ByVal Head As Integer, ByVal X As Integer, ByVal Y As Integer, Light() As Long, ByVal Heading As Byte, Optional ByVal EsCabeza As Boolean = True, Optional ByVal Alpha As Boolean = False, Optional ByVal angle As Single = 0, Optional ByVal ScaleX As Single = 1!, Optional ByVal ScaleY As Single = 1!)
+Public Sub DrawHead(ByVal Head As Integer, ByVal X As Integer, ByVal Y As Integer, Light() As RGBA, ByVal Heading As Byte, Optional ByVal EsCabeza As Boolean = True, Optional ByVal Alpha As Boolean = False, Optional ByVal angle As Single = 0, Optional ByVal ScaleX As Single = 1!, Optional ByVal ScaleY As Single = 1!)
 
     Dim textureX1 As Integer
     Dim textureX2 As Integer
@@ -515,7 +507,7 @@ Public Sub DrawHead(ByVal Head As Integer, ByVal X As Integer, ByVal Y As Intege
 
 End Sub
 
-Sub Draw_GrhIndex(ByVal GrhIndex As Long, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As Long, Optional ByVal Alpha As Boolean = False)
+Sub Draw_GrhIndex(ByVal GrhIndex As Long, ByVal X As Integer, ByVal Y As Integer, ByVal Center As Byte, ByRef Color_List() As RGBA, Optional ByVal angle As Single = 0, Optional ByVal Alpha As Boolean = False)
     Dim SourceRect As RECT
     
     With GrhData(GrhIndex)
@@ -529,7 +521,7 @@ Sub Draw_GrhIndex(ByVal GrhIndex As Long, ByVal X As Integer, ByVal Y As Integer
                 Y = Y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
             End If
         End If
-        
+
         'Draw
         Call Device_Textured_Render(X, Y, .pixelWidth, .pixelHeight, .sX, .sY, .FileNum, Color_List(), Alpha)
     End With
@@ -748,7 +740,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 Grh.GrhIndex = 3
                 Grh.FrameCounter = 1
                 Grh.Started = 0
-                Call Draw_Grh(Grh, PixelOffsetXTemp, PixelOffsetYTemp, 1, Normal_RGBList(), 1)
+                Call Draw_Grh(Grh, PixelOffsetXTemp, PixelOffsetYTemp, 1, COLOR_WHITE(), 1)
                         
             End If
                 
@@ -758,7 +750,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 Grh.FrameCounter = 1
                 Grh.Started = 0
                     
-                Call Draw_Grh(Grh, PixelOffsetXTemp, PixelOffsetYTemp, 1, Normal_RGBList(), 1)
+                Call Draw_Grh(Grh, PixelOffsetXTemp, PixelOffsetYTemp, 1, COLOR_WHITE(), 1)
                         
             End If
                 
@@ -767,19 +759,20 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 Grh.FrameCounter = 1
                 Grh.Started = 0
                     
-                Call Draw_Grh(Grh, PixelOffsetXTemp, PixelOffsetYTemp, 1, Normal_RGBList(), 0)
+                Call Draw_Grh(Grh, PixelOffsetXTemp, PixelOffsetYTemp, 1, COLOR_WHITE(), 0)
                         
             End If
 
-            If VerTriggers Then If MapData(X, Y).Trigger > 0 Then Call DrawText(PixelOffsetXTemp + 5, PixelOffsetYTemp - 13, MapData(X, Y).Trigger, -1, False, 2)
+            If VerTriggers Then If MapData(X, Y).Trigger > 0 Then Call DrawText(PixelOffsetXTemp + 5, PixelOffsetYTemp - 13, MapData(X, Y).Trigger, COLOR_WHITE, False, 2)
                 
             If frmMain.mnuverZonas(0).Checked Then 'Zona actual
-                If MapData(X, Y).ZonaIndex = frmZonas.LstZona.ListIndex + 1 And MapData(X, Y).ZonaIndex > 0 Then Call DrawText(PixelOffsetXTemp + 7, PixelOffsetYTemp + 7, "z" & MapData(X, Y).ZonaIndex, -1, False, 1)
+                If MapData(X, Y).ZonaIndex = frmZonas.LstZona.ListIndex + 1 And MapData(X, Y).ZonaIndex > 0 Then Call DrawText(PixelOffsetXTemp + 7, PixelOffsetYTemp + 7, "z" & MapData(X, Y).ZonaIndex, COLOR_WHITE, False, 1)
                             
             ElseIf frmMain.mnuverZonas(1).Checked Then 'Todas las zonas
                     
                 If MapData(X, Y).ZonaIndex > 0 Then
-                    Call DrawText(PixelOffsetXTemp + 7, PixelOffsetYTemp + 7, "z" & MapData(X, Y).ZonaIndex, colorZona(MapData(X, Y).ZonaIndex), False, 1)
+                    Call RGBA_ToList(temp_rgb(), colorZona(MapData(X, Y).ZonaIndex))
+                    Call DrawText(PixelOffsetXTemp + 7, PixelOffsetYTemp + 7, "z" & MapData(X, Y).ZonaIndex, temp_rgb(), False, 1)
                 End If
 
             End If
@@ -846,7 +839,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
             aux = Val(frmSuperficies.cGrh.Text) + (((SobreY + dy) Mod frmConfigSup.mLargo.Text) * frmConfigSup.mAncho.Text) + ((SobreX + dX) Mod frmConfigSup.mAncho.Text)
             mGrh.GrhIndex = aux
             InitGrh mGrh, aux
-            Call Draw_Grh(mGrh, (SobreX - UserPos.X + HalfWindowTileWidth) * 32 + PixelOffsetX, (SobreY - UserPos.Y + HalfWindowTileHeight) * 32 + PixelOffsetY, 1, Normal_RGBList(), 1, False)
+            Call Draw_Grh(mGrh, (SobreX - UserPos.X + HalfWindowTileWidth) * 32 + PixelOffsetX, (SobreY - UserPos.Y + HalfWindowTileHeight) * 32 + PixelOffsetY, 1, COLOR_WHITE(), 1, False)
             
         Else
 
@@ -855,7 +848,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     aux = Val(frmSuperficies.cGrh.Text) + (Y - 1) * frmConfigSup.mAncho.Text + X - 1
                     mGrh.GrhIndex = aux
                     InitGrh mGrh, aux
-                    Call Draw_Grh(mGrh, (SobreX - UserPos.X + HalfWindowTileWidth + X - 1) * 32 + PixelOffsetX, (SobreY - UserPos.Y + HalfWindowTileHeight + Y - 1) * 32 + PixelOffsetY, 1, Normal_RGBList(), 1, False)
+                    Call Draw_Grh(mGrh, (SobreX - UserPos.X + HalfWindowTileWidth + X - 1) * 32 + PixelOffsetX, (SobreY - UserPos.Y + HalfWindowTileHeight + Y - 1) * 32 + PixelOffsetY, 1, COLOR_WHITE(), 1, False)
             
                 Next Y
             Next X
@@ -865,8 +858,8 @@ Sub RenderScreen(ByVal tilex As Integer, _
     End If
     
     If colorRender <> 240 Then
-        Call Draw_GrhIndex(34027, 352, 110, 1, render_msg())
-        Call DrawText(372, 80, renderText, render_msg(), True, 5)
+        Call Draw_GrhIndex(34027, frmMain.MainViewPic.ScaleHeight - 64, 150, 1, render_msg())
+        Call DrawText(frmMain.MainViewPic.ScaleHeight - 64, 105, renderText, render_msg(), True, 2)
     End If
     
     Exit Sub
@@ -945,18 +938,18 @@ Private Sub CharRender(ByVal CharIndex As Long, _
 
         'Dibujamos el cuerpo
         If .Body.Walk(.Heading).GrhIndex Then _
-                    Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, Normal_RGBList(), 1)
+                    Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX, PixelOffsetY, 1, COLOR_WHITE(), 1)
             
-        If .Head Then Call DrawHead(.Head, PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, Normal_RGBList(), .Heading, True)
+        If .Head Then Call DrawHead(.Head, PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, COLOR_WHITE(), .Heading, True)
             
         'Draw Helmet
-        If .Casco Then Call DrawHead(.Casco, PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, Normal_RGBList(), .Heading, False)
+        If .Casco Then Call DrawHead(.Casco, PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + .Body.HeadOffset.Y + OFFSET_HEAD, COLOR_WHITE(), .Heading, False)
                 
         'Draw Weapon
-        If .Arma.WeaponWalk(.Heading).GrhIndex Then Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, Normal_RGBList(), 1)
+        If .Arma.WeaponWalk(.Heading).GrhIndex Then Call Draw_Grh(.Arma.WeaponWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, COLOR_WHITE(), 1)
                 
         'Draw Shield
-        If .Escudo.ShieldWalk(.Heading).GrhIndex Then Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, Normal_RGBList(), 1)
+        If .Escudo.ShieldWalk(.Heading).GrhIndex Then Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffsetX, PixelOffsetY, 1, COLOR_WHITE(), 1)
     End With
 End Sub
 
@@ -988,7 +981,7 @@ Public Sub fPreviewGrh(ByVal GrhIn As Long)
     Exit Sub
 
 fPreviewGrh_Err:
-    'Call LogError(Err.Number, Err.Description, "modPaneles.fPreviewGrh", Erl)
+    'Call RegistrarError(Err.Number, Err.Description, "modPaneles.fPreviewGrh", Erl)
 
     Resume Next
     
@@ -1027,7 +1020,7 @@ Public Sub RenderPreview(Optional ByVal SinMosaico As Boolean = False)
     Call Engine_BeginScene
     
     If frmConfigSup.MOSAICO = vbUnchecked Or SinMosaico Then
-        Call Draw_GrhIndex(CurrentGrh.GrhIndex, frmPreview.PreviewGrh.Height / 2, frmPreview.PreviewGrh.Width - 100, 1, Normal_RGBList(), 0)
+        Call Draw_GrhIndex(CurrentGrh.GrhIndex, frmPreview.PreviewGrh.Height / 2, frmPreview.PreviewGrh.Width - 100, 1, COLOR_WHITE(), 0)
         
     Else
     
@@ -1037,7 +1030,7 @@ Public Sub RenderPreview(Optional ByVal SinMosaico As Boolean = False)
         For i = 1 To hh
             For j = 1 To ww
             
-                Call Draw_GrhIndex(CurrentGrh.GrhIndex, j * 32, i * 32, 0, Normal_RGBList())
+                Call Draw_GrhIndex(CurrentGrh.GrhIndex, j * 32, i * 32, 0, COLOR_WHITE())
 
                 If Cont < hh * ww Then Cont = Cont + 1
                 CurrentGrh.GrhIndex = CurrentGrh.GrhIndex + 1
@@ -1322,4 +1315,51 @@ MapCapture_Err:
     Call RegistrarError(Err.Number, Err.Description, "clsDX8Engine.MapCapture", Erl)
     Resume Next
     
+End Sub
+
+Public Sub DesvanecimientoMsg()
+'*****************************************************************
+'Author: FrankoH
+'Last Modify Date: 04/09/2019
+'DESVANECIMIENTO DE LOS TEXTOS DEL RENDER
+'*****************************************************************
+    Static lastmovement As Long
+    
+    If GetTickCount - lastmovement > 1 Then
+        lastmovement = GetTickCount
+    Else
+        Exit Sub
+    End If
+
+    If LenB(renderText) Then
+        If Not Val(colorRender) = 0 Then colorRender = colorRender - 1
+    ElseIf LenB(renderText) = 0 Then
+        Exit Sub
+    Else
+        If Not Val(colorRender) = 240 Then colorRender = colorRender + 1
+    End If
+    
+    If Not Val(colorRender) = 240 Then
+        Call RGBAList(render_msg(), 255, 255, 255, colorRender)
+    End If
+    
+    If colorRender = 0 Then renderMsgReset
+    
+End Sub
+
+Public Sub renderMsgReset()
+
+    renderFont = 1
+    renderText = vbNullString
+    renderTextPk = vbNullString
+
+End Sub
+
+Public Sub ShowMessageScreen(ByVal Message As String)
+
+    Call renderMsgReset
+
+    renderText = Message
+    colorRender = 240
+
 End Sub

@@ -308,7 +308,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
     If Not prgRun Then
         
         ' Seteamos algunos colores por adelantado y unica vez.
-        Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
+        Call RGBAList(COLOR_WHITE(), 255, 255, 255, 255)
         
         ' Inicializamos otros sistemas.
         Call mDx8_Text.Engine_Init_FontSettings
@@ -331,7 +331,7 @@ Public Sub Engine_Draw_Line(x1 As Single, y1 As Single, x2 As Single, y2 As Sing
 
 On Error GoTo Error
     
-    Call Engine_Long_To_RGB_List(temp_rgb(), color)
+    Call Long_2_RGBAList(temp_rgb(), color)
     
     Call SpriteBatch.SetTexture(Nothing)
     Call SpriteBatch.Draw(x1, y1, x2, y2, temp_rgb())
@@ -347,7 +347,7 @@ Public Sub Engine_Draw_Point(x1 As Single, y1 As Single, Optional color As Long 
 
 On Error GoTo Error
     
-    Call Engine_Long_To_RGB_List(temp_rgb(), color)
+    Call Long_2_RGBAList(temp_rgb(), color)
     
     Call SpriteBatch.SetTexture(Nothing)
     Call SpriteBatch.Draw(x1, y1, 0, 1, temp_rgb(), 0, 0)
@@ -462,7 +462,7 @@ Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width A
 '***************************************************
     On Error GoTo Engine_Draw_Box_Err
 
-    Call Engine_Long_To_RGB_List(temp_rgb(), color)
+    Call Long_2_RGBAList(temp_rgb(), color)
 
     Call SpriteBatch.SetTexture(Nothing)
     Call SpriteBatch.Draw(X, Y, Width, ByVal Height, temp_rgb())

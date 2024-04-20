@@ -1497,7 +1497,7 @@ Private Sub mnuEliminarLuces_Click()
         
             With MapData(X, Y)
             
-                Call Engine_Long_To_RGB_List(MapData(X, Y).Engine_Light(), -1)
+                Call Long_2_RGBAList(MapData(X, Y).Engine_Light(), -1)
                 
                 .Light.active = False
                 .Light.range = 0
@@ -2142,51 +2142,111 @@ End Sub
 Private Sub mnuVerCapa1_Click()
     VerCapa1 = Not VerCapa1
     mnuVerCapa1.Checked = Not mnuVerCapa1.Checked
+    
+    If VerCapa1 Then
+        Call ShowMessageScreen("Capa 1 visible")
+    Else
+        Call ShowMessageScreen("Capa 1 oculto")
+    End If
 End Sub
 
 Private Sub mnuVerCapa2_Click()
     VerCapa2 = Not VerCapa2
     mnuVerCapa2.Checked = Not mnuVerCapa2.Checked
+    
+    If VerCapa2 Then
+        Call ShowMessageScreen("Capa 2 visible")
+    Else
+        Call ShowMessageScreen("Capa 2 oculto")
+    End If
 End Sub
 
 Private Sub mnuVerCapa3_Click()
     VerCapa3 = Not VerCapa3
     mnuVerCapa3.Checked = Not mnuVerCapa3.Checked
+    
+    If VerCapa3 Then
+        Call ShowMessageScreen("Capa 3 visible")
+    Else
+        Call ShowMessageScreen("Capa 3 oculto")
+    End If
 End Sub
 
 Private Sub mnuVerCapa4_Click()
     VerCapa4 = Not VerCapa4
     mnuVerCapa4.Checked = Not mnuVerCapa4.Checked
+    
+    If VerCapa1 Then
+        Call ShowMessageScreen("Capa 4 visible")
+    Else
+        Call ShowMessageScreen("Capa 4 oculto")
+    End If
 End Sub
 
 Private Sub mnuVerGrilla_Click()
     VerGrilla = Not VerGrilla
     mnuVerGrilla.Checked = VerGrilla
+    
+    If VerGrilla Then
+        Call ShowMessageScreen("Grilla visible")
+    Else
+        Call ShowMessageScreen("Grilla oculto")
+    End If
 End Sub
 
 Private Sub mnuVerNPCs_Click()
     VerNpcs = Not VerNpcs
     mnuVerNPCs.Checked = Not mnuVerNPCs.Checked
+    
+    If VerNpcs Then
+        Call ShowMessageScreen("NPC's visible")
+    Else
+        Call ShowMessageScreen("NPC's ocultos")
+    End If
 End Sub
 
 Private Sub mnuVerObjetos_Click()
     VerObjetos = Not VerObjetos
     mnuVerObjetos.Checked = Not mnuVerObjetos.Checked
+    
+    If VerObjetos Then
+        Call ShowMessageScreen("Objetos visible")
+    Else
+        Call ShowMessageScreen("Objetos ocultos")
+    End If
 End Sub
 
 Private Sub mnuVerParticulas_Click()
     VerParticulas = Not VerParticulas
     mnuVerParticulas.Checked = Not mnuVerParticulas.Checked
+    
+    If VerParticulas Then
+        Call ShowMessageScreen("Particulas visible")
+    Else
+        Call ShowMessageScreen("Particulas ocultas")
+    End If
 End Sub
 
 Private Sub mnuVerTranslados_Click()
     VerTranslados = Not VerTranslados
     mnuVerTranslados.Checked = Not mnuVerTranslados.Checked
+    
+    If VerTranslados Then
+        Call ShowMessageScreen("Traslados visible")
+    Else
+        Call ShowMessageScreen("Traslados ocultos")
+    End If
 End Sub
 
 Private Sub mnuVerTriggers_Click()
     VerTriggers = Not VerTriggers
     mnuVerTriggers.Checked = Not mnuVerTriggers.Checked
+    
+    If VerTriggers Then
+        Call ShowMessageScreen("Triggers visible")
+    Else
+        Call ShowMessageScreen("Triggers ocultos")
+    End If
 End Sub
 
 Private Sub mnuVerZonas_Click(Index As Integer)

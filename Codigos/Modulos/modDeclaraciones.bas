@@ -342,7 +342,7 @@ Public Type MapBlock
     
     Trigger As Integer
     
-    Engine_Light(0 To 3) As Long
+    Engine_Light(3) As RGBA
     Light As tLight
     
     Particle_Index As Integer

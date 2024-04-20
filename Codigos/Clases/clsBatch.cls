@@ -24,7 +24,7 @@ Private Type TYPE_VERTEX
     Y       As Single
     Z       As Single
  
-    Colour  As Long
+    Colour  As RGBA
    
     tX      As Single
     tY      As Single
@@ -101,11 +101,11 @@ Public Sub SetTexture(ByRef Texture As Direct3DTexture8)
  
 End Sub
  
-Public Sub Draw(ByVal X As Long, _
+Friend Sub Draw(ByVal X As Long, _
                 ByVal Y As Long, _
                 ByVal Width As Long, _
                 ByVal Height As Long, _
-                ByRef color() As Long, _
+                ByRef color() As RGBA, _
                 Optional ByVal Tx1 As Single = 0, _
                 Optional ByVal Ty1 As Single = 0, _
                 Optional ByVal Tx2 As Single = 1, _
@@ -279,8 +279,6 @@ Public Sub Initialise(ByVal Capacity As Long)
     Call D3DIndexBuffer8SetData(m_IBuffer, 0, UBound(lpIndices), 0, lpIndices(0))
        
 End Sub
-
-
 
 
 

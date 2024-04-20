@@ -1,7 +1,7 @@
 Attribute VB_Name = "modMapas"
 Option Explicit
 
-Public colorZona() As Long
+Public colorZona() As RGBA
 Public UserMap As Integer
 
 '/////////////////////////////////////////////////////////////////////
@@ -167,7 +167,7 @@ Public Sub NuevoMapa()
                 .Particle_Group_Index = 0
                 .Particle_Index = 0
                 
-                Call Engine_Long_To_RGB_List(MapData(X, Y).Engine_Light(), -1)
+                Call Long_2_RGBAList(MapData(X, Y).Engine_Light(), -1)
                 
                 .Light.active = False
                 .Light.range = 0
@@ -181,7 +181,10 @@ Public Sub NuevoMapa()
                 .ZonaIndex = 0
                 
                 For i = 0 To 3
-                    .Engine_Light(i) = 0
+                    .Engine_Light(i).A = 0
+                    .Engine_Light(i).R = 0
+                    .Engine_Light(i).G = 0
+                    .Engine_Light(i).B = 0
                 Next i
 
                 InitGrh .Graphic(1), 1
@@ -192,7 +195,7 @@ Public Sub NuevoMapa()
     Next Y
     
     'Borramos todas las luces
-    Call LightRemoveAll
+    Call LightRemoveAll(False)
     
     CantZonas = 0
     ReDim MapZonas(CantZonas) As tMapInfo
@@ -268,9 +271,9 @@ Public Sub NuevaZona(ByVal id As Integer)
     
     frmZonas.LstZona.AddItem (CantZonas & "- " & MapZonas(CantZonas).name)
     
-    ReDim Preserve colorZona(CantZonas) As Long
+    ReDim Preserve colorZona(CantZonas) As RGBA
     
-    colorZona(CantZonas) = D3DColorARGB(255, Int(Rnd * 256), Int(Rnd * 256), Int(Rnd * 256))
+    colorZona(CantZonas) = RGBA_From_Comp(Int(Rnd * 256), Int(Rnd * 256), Int(Rnd * 256), 255)
 
 End Sub
 
@@ -326,7 +329,7 @@ Public Sub EliminarZona()
     CantZonas = CantZonas - 1
     
     ReDim Preserve MapZonas(CantZonas) As tMapInfo
-    ReDim Preserve colorZona(CantZonas) As Long
+    ReDim Preserve colorZona(CantZonas) As RGBA
     
 End Sub
 
@@ -413,7 +416,7 @@ Public Sub coloresZona()
         GreenValue = Int(Rnd * 256)
         BlueValue = Int(Rnd * 256)
     
-        colorZona(i) = D3DColorARGB(255, RedValue, GreenValue, BlueValue)
+        colorZona(i) = RGBA_From_Comp(RedValue, GreenValue, BlueValue, 255)
     Next i
     
 End Sub
