@@ -959,39 +959,50 @@ Begin VB.Form frmMain
          Begin VB.Menu mnuVerCapa1 
             Caption         =   "Capa &1 (Piso)"
             Checked         =   -1  'True
+            Shortcut        =   ^{F1}
          End
          Begin VB.Menu mnuVerCapa2 
             Caption         =   "Capa &2 (costas, etc)"
             Checked         =   -1  'True
+            Shortcut        =   ^{F2}
          End
          Begin VB.Menu mnuVerCapa3 
             Caption         =   "Capa &3 (arboles, etc)"
             Checked         =   -1  'True
+            Shortcut        =   ^{F3}
          End
          Begin VB.Menu mnuVerCapa4 
             Caption         =   "Capa &4 (techos, etc)"
+            Shortcut        =   ^{F4}
          End
       End
       Begin VB.Menu mnuVerTranslados 
          Caption         =   "...&Translados"
+         Shortcut        =   ^{F5}
       End
       Begin VB.Menu mnuVerBloqueos 
          Caption         =   "...&Bloqueos"
+         Shortcut        =   ^{F6}
       End
       Begin VB.Menu mnuVerNPCs 
          Caption         =   "...&NPC's"
+         Shortcut        =   ^{F7}
       End
       Begin VB.Menu mnuVerObjetos 
          Caption         =   "...&Objetos"
+         Shortcut        =   ^{F8}
       End
       Begin VB.Menu mnuVerTriggers 
          Caption         =   "...Tri&gger's"
+         Shortcut        =   ^{F9}
       End
       Begin VB.Menu mnuVerGrilla 
          Caption         =   "...Gri&lla"
+         Shortcut        =   ^{F11}
       End
       Begin VB.Menu mnuVerParticulas 
          Caption         =   "...Parti&culas"
+         Shortcut        =   ^{F12}
       End
       Begin VB.Menu mnuvZonas 
          Caption         =   "Zonas"
@@ -1087,7 +1098,7 @@ Begin VB.Form frmMain
       End
       Begin VB.Menu mnuScreenshot 
          Caption         =   "Captura de pantalla"
-         Shortcut        =   ^{F12}
+         Shortcut        =   {F12}
       End
       Begin VB.Menu mnuRender 
          Caption         =   "Renderizar"
@@ -1592,7 +1603,7 @@ Private Sub mnuGrhtoPNG_Click()
     If IsNumeric(grhCount) = True Then
         If GrhIndex > grhCount Then Exit Sub
         If GrhIndex < 1 Then Exit Sub
-        MsgBox GrhData(GrhIndex).fileNum, vbInformation
+        MsgBox GrhData(GrhIndex).FileNum, vbInformation
 
     End If
 
@@ -1669,7 +1680,7 @@ Private Sub mnuPNGtoGrh_Click()
     
         Do While Count < grhCount
         
-            If GrhData(Count).fileNum = PNGIndex Then Exit Do
+            If GrhData(Count).FileNum = PNGIndex Then Exit Do
         
             Count = Count + 1
         
