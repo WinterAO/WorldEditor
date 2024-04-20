@@ -25,14 +25,6 @@ Begin VB.Form frmMain
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   1280
    StartUpPosition =   2  'CenterScreen
-   Begin VB.CommandButton Command1 
-      Caption         =   "Command1"
-      Height          =   360
-      Left            =   8280
-      TabIndex        =   28
-      Top             =   180
-      Width           =   390
-   End
    Begin MSComDlg.CommonDialog Dialog 
       Left            =   120
       Top             =   750
@@ -873,6 +865,7 @@ Begin VB.Form frmMain
       End
       Begin VB.Menu mnuSalir 
          Caption         =   "&Salir"
+         Shortcut        =   +{DEL}
       End
    End
    Begin VB.Menu mnuEdicion 
@@ -1975,30 +1968,6 @@ ObtenerNombreArchivo_Err:
     Resume Next
 End Sub
 
-Private Sub MainViewPic_MouseMove(Button As Integer, _
-                                  Shift As Integer, _
-                                  X As Single, _
-                                  Y As Single)
-    '*************************************************
-    'Author: Lorwik
-    'Last modified: 27/04/2021
-    '*************************************************
-
-    Call Form_MouseMove(Button, Shift, X, Y)
-End Sub
-
-Private Sub MainViewPic_MouseDown(Button As Integer, _
-                                  Shift As Integer, _
-                                  X As Single, _
-                                  Y As Single)
-    '*************************************************
-    'Author: Lorwik
-    'Last modified: 27/04/2021
-    '*************************************************
-
-    Call Form_MouseDown(Button, Shift, X, Y)
-End Sub
-
 Private Sub MainViewPic_DblClick()
     '*************************************************
     'Author: Lorwik
@@ -2110,7 +2079,7 @@ Private Sub Form_DblClick()
     End If
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -2143,7 +2112,7 @@ Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y A
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub MainViewPic_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021

@@ -393,19 +393,44 @@ Private Sub chkvSync_Click()
 End Sub
 
 Private Sub LvBBorrar_Click(Index As Integer)
-
     Dim confirmacion As String
+    Dim perfilAEliminar As String
+    Dim filePath As String
+    Dim i As Integer
+    Dim perfilIndex As Integer
 
-    confirmacion = InputBox("¡Cuidado! ¡Estás apunto de eliminar el perfil " & cmbPerfil.List(cmbPerfil.ListIndex) & "! ¿Estás seguro de que quieres borrarlo? Se perdera toda la configuración de este perfil. Escribe el nombre del perfil para confirmar.")
-    
-    If confirmacion = cmbPerfil.List(cmbPerfil.ListIndex) Then
-        MsgBox "Siento decirte que esto aun no esta programado."
-        Exit Sub
+    confirmacion = InputBox("¡Cuidado! ¡Estás a punto de eliminar el perfil " & cmbPerfil.List(cmbPerfil.ListIndex) & "! ¿Estás seguro de que quieres borrarlo? Se perderá toda la configuración de este perfil. Escribe el nombre del perfil para confirmar.")
+
+    perfilAEliminar = cmbPerfil.List(cmbPerfil.ListIndex)
+
+    If confirmacion = perfilAEliminar Then
+        filePath = profileFile(perfilAEliminar)
+
+        If Dir(filePath) <> "" Then ' Verificar si el archivo existe antes de intentar eliminarlo
+            Kill filePath ' Eliminar el archivo
+
+            ' Actualizar el archivo de configuración eliminando el perfil
+            Call WriteVar(profilesFile, "PROFILE" & cmbPerfil.ListIndex, "name", vbNullString)
+            nPerfiles = nPerfiles - 1
+            Call WriteVar(profilesFile, "INIT", "profiles", nPerfiles)
+
+            ' Reordenar los perfiles restantes en el archivo
+            For i = cmbPerfil.ListIndex + 1 To nPerfiles + 1
+                perfilIndex = i
+                Call WriteVar(profilesFile, "PROFILE" & perfilIndex, "name", cmbPerfil.List(i))
+            Next i
+
+            ' Reordenar el ComboBox
+            cmbPerfil.RemoveItem cmbPerfil.ListIndex ' Eliminar el perfil seleccionado
+            cmbPerfil.ListIndex = -1 ' Reiniciar el índice seleccionado
+
+            MsgBox "El perfil fue eliminado correctamente.", vbInformation
+        Else
+            MsgBox "Error al eliminar el perfil, el archivo no existe.", vbExclamation
+        End If
     Else
-        MsgBox "El nombre que escribiste no coincide con el del perfil. El perfil no se eliminara."
-        Exit Sub
+        MsgBox "El nombre que escribiste no coincide con el del perfil. El perfil no se eliminará."
     End If
-    
 End Sub
 
 Private Sub LvBBoton_Click(Index As Integer)

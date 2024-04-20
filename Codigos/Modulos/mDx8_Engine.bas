@@ -258,14 +258,11 @@ On Error GoTo EngineHandler:
     Call Particle_Group_Remove_All
     
     '   Clean Texture
-    Call DirectDevice.SetTexture(0, Nothing)
+    If Not DirectDevice Is Nothing Then _
+        Call DirectDevice.SetTexture(0, Nothing)
     
     '   Borrar DBI Surface
     Call CleanDrawBuffer
-    
-    '   Erase Data
-    Erase MapData()
-    Erase CharList()
     
     Set DirectD3D8 = Nothing
     Set DirectD3D = Nothing
@@ -273,6 +270,10 @@ On Error GoTo EngineHandler:
     Set DirectDevice = Nothing
     Set SpriteBatch = Nothing
     Set Sound = Nothing
+    
+    '   Erase Data
+    Erase MapData()
+    Erase CharList()
     
     Exit Sub
     
