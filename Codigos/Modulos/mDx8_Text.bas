@@ -218,6 +218,7 @@ Public Function Engine_AnchoTexto(ByVal Font As Byte, ByVal Text As String) As I
 End Function
 
 Sub Engine_Init_FontTextures()
+
     '*****************************************************************
     'Init the custom font textures
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Init_FontTextures
@@ -225,8 +226,11 @@ Sub Engine_Init_FontTextures()
     On Error GoTo eDebug:
     
     Dim i       As Long
+
     Dim TexInfo As D3DXIMAGE_INFO_A
+
     Dim InfoHead As INFOHEADER
+
     Dim Data() As Byte
         
     'Check if we have the device
@@ -235,28 +239,50 @@ Sub Engine_Init_FontTextures()
     '*** Default font ***
     For i = 1 To UBound(cfonts)
 
-        InfoHead = File_Find(DirRecursos & "Fuentes" & modCompression.Formato, "font" & CStr(i) & ".png")
-        
-        If InfoHead.lngFileSize <> 0 Then
+        If ClientSetup.useCompression Then
 
-            Extract_File_Memory Fuentes, "font" & LCase$(CStr(i) & ".png"), Data()
-                
-            'Set the texture
-            Set cfonts(i).Texture = DirectD3D8.CreateTextureFromFileInMemoryEx(DirectDevice, _
-                                                                       Data(0), UBound(Data) + 1, _
-                                                                       D3DX_DEFAULT, _
-                                                                       D3DX_DEFAULT, _
-                                                                       0, _
-                                                                       0, _
-                                                                       D3DFMT_UNKNOWN, _
-                                                                       D3DPOOL_MANAGED, _
-                                                                       D3DX_FILTER_POINT, _
-                                                                       D3DX_FILTER_POINT, _
-                                                                       &HFF000000, _
-                                                                       ByVal 0, _
-                                                                       ByVal 0)
+            InfoHead = File_Find(dirRecursos_Compressed & "Fuentes" & modCompression.Formato, "font" & CStr(i) & ".png")
         
-            Erase Data
+            If InfoHead.lngFileSize <> 0 Then
+
+                Extract_File_Memory Fuentes, "font" & LCase$(CStr(i) & ".png"), Data()
+                
+                'Set the texture
+                Set cfonts(i).Texture = DirectD3D8.CreateTextureFromFileInMemoryEx(DirectDevice, _
+                   Data(0), UBound(Data) + 1, _
+                   D3DX_DEFAULT, _
+                   D3DX_DEFAULT, _
+                   0, _
+                   0, _
+                   D3DFMT_UNKNOWN, _
+                   D3DPOOL_MANAGED, _
+                   D3DX_FILTER_POINT, _
+                   D3DX_FILTER_POINT, _
+                   &HFF000000, _
+                   ByVal 0, _
+                   ByVal 0)
+        
+                Erase Data
+
+            End If
+        
+        Else
+        
+            'Set the texture
+            Set cfonts(i).Texture = DirectD3D8.CreateTextureFromFileEx(DirectDevice, _
+               dirRecursos_Uncompressed & "\Fuentes\font" & i & ".png", _
+               D3DX_DEFAULT, _
+               D3DX_DEFAULT, _
+               0, _
+               0, _
+               D3DFMT_UNKNOWN, _
+               D3DPOOL_MANAGED, _
+               D3DX_FILTER_POINT, _
+               D3DX_FILTER_POINT, _
+               &HFF000000, _
+               ByVal 0, _
+               ByVal 0)
+        
         End If
         
         'Store the size of the texture
@@ -269,8 +295,9 @@ Sub Engine_Init_FontTextures()
 eDebug:
 
     If Err.Number = "-2005529767" Then
-        MsgBox "Error en la textura de fuente utilizada " & DirRecursos & "Font.png.", vbCritical
+        MsgBox "Error en la textura de fuente utilizada " & dirRecursos_Compressed & "Font.png.", vbCritical
         End
+
     End If
     
     End
@@ -278,47 +305,75 @@ eDebug:
 End Sub
 
 Sub Engine_Init_FontSettings()
+
     '*****************************************************************
     'Init the custom font settings
     'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Init_FontSettings
     '*****************************************************************
-    Dim LoopChar  As Long
-    Dim Row       As Single
-    Dim u         As Single
-    Dim v         As Single
-    Dim i         As Long
-    Dim j         As Integer
-    Dim fileBuff  As clsByteBuffer
-    Dim InfoHead  As INFOHEADER
-    Dim buffer()  As Byte
+    Dim LoopChar As Long
+    
+    Dim n        As Integer
+
+    Dim Row      As Single
+
+    Dim u        As Single
+
+    Dim v        As Single
+
+    Dim i        As Long
+
+    Dim j        As Integer
+
+    Dim fileBuff As clsByteBuffer
+
+    Dim InfoHead As INFOHEADER
+
+    Dim buffer() As Byte
     
     '*** Default font ***
     
     For i = 1 To UBound(cfonts)
     
-        'Load the header information
-        InfoHead = File_Find(DirRecursos & "\Fuentes" & modCompression.Formato, LCase$("Font" & i & ".dat"))
+        If ClientSetup.useCompression Then
     
-        If InfoHead.lngFileSize <> 0 Then
+            'Load the header information
+            InfoHead = File_Find(dirRecursos_Compressed & "\Fuentes" & modCompression.Formato, LCase$("font" & i & ".dat"))
+    
+            If InfoHead.lngFileSize <> 0 Then
         
-            Extract_File_Memory srcFileType.Fuentes, LCase$("Font" & i & ".dat"), buffer()
+                Extract_File_Memory srcFileType.Fuentes, LCase$("font" & i & ".dat"), buffer()
         
-            Set fileBuff = New clsByteBuffer
+                Set fileBuff = New clsByteBuffer
             
-            fileBuff.initializeReader buffer
+                fileBuff.initializeReader buffer
         
-            With cfonts(i).HeaderInfo
-                .BitmapWidth = fileBuff.getLong()
-                .BitmapHeight = fileBuff.getLong()
-                .CellWidth = fileBuff.getLong()
-                .CellHeight = fileBuff.getLong()
-                .BaseCharOffset = fileBuff.getByte()
+                With cfonts(i).HeaderInfo
+                    .BitmapWidth = fileBuff.getLong()
+                    .BitmapHeight = fileBuff.getLong()
+                    .CellWidth = fileBuff.getLong()
+                    .CellHeight = fileBuff.getLong()
+                    .BaseCharOffset = fileBuff.getByte()
                 
-                For j = 0 To 255
-                    .CharWidth(j) = fileBuff.getByte()
-                Next j
+                    For j = 0 To 255
+                        .CharWidth(j) = fileBuff.getByte()
+                    Next j
             
-            End With
+                End With
+            
+                Erase buffer
+            
+                Set fileBuff = Nothing
+            
+            End If
+            
+        Else
+
+            n = FreeFile
+            Open dirRecursos_Uncompressed & "Fuentes\font" & i & ".dat" For Binary As #n
+                Get #n, , cfonts(i).HeaderInfo
+            Close #n
+        
+        End If
             
             'Calculate some common values
             cfonts(i).CharHeight = cfonts(i).HeaderInfo.CellHeight - 4
@@ -344,15 +399,11 @@ Sub Engine_Init_FontSettings()
                     .Ty1 = v
                     .Tx2 = u + cfonts(i).ColFactor
                     .Ty2 = v + cfonts(i).RowFactor
+
                 End With
                 
             Next LoopChar
-            
-            Erase buffer
-            
-            Set fileBuff = Nothing
-        End If
-    Next i
+        Next i
 End Sub
 
 Public Sub DrawText(ByVal X As Integer, _

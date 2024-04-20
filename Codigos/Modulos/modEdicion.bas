@@ -216,7 +216,7 @@ Public Sub Quitar_Bordes()
                 
                  'Erase NPCs
                 If MapData(X, Y).NPCIndex > 0 Then
-                    EraseChar MapData(X, Y).CharIndex
+                    Char_Erase MapData(X, Y).CharIndex
                     MapData(X, Y).NPCIndex = 0
                 End If
     
@@ -293,7 +293,7 @@ Public Sub Superficie_Bordes()
             End If
                  'Erase NPCs
                 If MapData(X, Y).NPCIndex > 0 Then
-                    EraseChar MapData(X, Y).CharIndex
+                    Char_Erase MapData(X, Y).CharIndex
                     MapData(X, Y).NPCIndex = 0
                 End If
     
@@ -378,14 +378,14 @@ Public Sub Quitar_NPCs(ByVal Hostiles As Boolean, ByVal Zona As Boolean)
                 
                 If Not Hostiles Then
                     If MapData(X, Y).NPCIndex > 0 Then
-                        Call EraseChar(MapData(X, Y).CharIndex)
+                        Call Char_Erase(MapData(X, Y).CharIndex)
                         MapData(X, Y).NPCIndex = 0
         
                     End If
                 Else
 
                     If MapData(X, Y).NPCIndex > 500 Then
-                        Call EraseChar(MapData(X, Y).CharIndex)
+                        Call Char_Erase(MapData(X, Y).CharIndex)
                         MapData(X, Y).NPCIndex = 0
         
                     End If
@@ -406,7 +406,7 @@ Public Sub Quitar_NPCs(ByVal Hostiles As Boolean, ByVal Zona As Boolean)
                 If Not Hostiles Then
                     If zonaNumber = MapData(X, Y).ZonaIndex Then
                         If MapData(X, Y).NPCIndex > 0 Then
-                            Call EraseChar(MapData(X, Y).CharIndex)
+                            Call Char_Erase(MapData(X, Y).CharIndex)
                             MapData(X, Y).NPCIndex = 0
         
                         End If
@@ -415,7 +415,7 @@ Public Sub Quitar_NPCs(ByVal Hostiles As Boolean, ByVal Zona As Boolean)
 
                     If zonaNumber = MapData(X, Y).ZonaIndex Then
                         If MapData(X, Y).NPCIndex > 500 Then
-                            Call EraseChar(MapData(X, Y).CharIndex)
+                            Call Char_Erase(MapData(X, Y).CharIndex)
                             MapData(X, Y).NPCIndex = 0
         
                         End If
@@ -486,7 +486,6 @@ Public Sub DobleClick(tX As Integer, tY As Integer)
                 
                 Call abrirCargarMapa(frmMain.Dialog.filename)
                 
-                'modMapIO.AbrirunMapa frmMain.Dialog.filename
                 UserPos.X = tTrans.X
                 UserPos.Y = tTrans.Y
                 
@@ -857,7 +856,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             Arma = NpcData(NPCIndex).WeaponAnim
                             Escudo = NpcData(NPCIndex).ShieldAnim
                             Heading = NpcData(NPCIndex).Heading
-                            Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY, Arma, Escudo, Casco)
+                            Call Char_Make(NextOpenChar(), Body, Head, Heading, tX, tY, Arma, Escudo, Casco)
                             .NPCIndex = NPCIndex
 
                         End If
@@ -878,7 +877,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             Arma = NpcData(NPCIndex).WeaponAnim
                             Escudo = NpcData(NPCIndex).ShieldAnim
                             Heading = NpcData(NPCIndex).Heading
-                            Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY, Arma, Escudo, Casco)
+                            Call Char_Make(NextOpenChar(), Body, Head, Heading, tX, tY, Arma, Escudo, Casco)
                             .NPCIndex = NPCIndex
 
                         End If
@@ -891,7 +890,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
 
                         MapInfo.Changed = 1 'Set changed flag
                         .NPCIndex = 0
-                        Call EraseChar(.CharIndex)
+                        Call Char_Erase(.CharIndex)
 
                     End If
 
@@ -987,7 +986,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                     With MapData(tX, tY).Light
                         .active = True
                         .range = frmLuces.cRango
-                        .RGBCOLOR.a = 255
+                        .RGBCOLOR.A = 255
                         .RGBCOLOR.R = Val(frmLuces.R)
                         .RGBCOLOR.G = Val(frmLuces.G)
                         .RGBCOLOR.B = Val(frmLuces.B)
@@ -1000,7 +999,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 
                     With MapData(tX, tY).Light
                         .range = 0
-                        .RGBCOLOR.a = 255
+                        .RGBCOLOR.A = 255
                         .RGBCOLOR.R = Val(frmLuces.R)
                         .RGBCOLOR.G = Val(frmLuces.G)
                         .RGBCOLOR.B = Val(frmLuces.B)

@@ -119,30 +119,30 @@ Sub MoveCharbyPos(CharIndex As Integer, nX As Integer, nY As Integer)
 '*************************************************
     Dim X As Integer
     Dim Y As Integer
-    Dim addX As Integer
-    Dim addY As Integer
+    Dim addx As Integer
+    Dim addy As Integer
     Dim nHeading As Byte
     
     With CharList(CharIndex)
         X = .Pos.X
         Y = .Pos.Y
         
-        addX = nX - X
-        addY = nY - Y
+        addx = nX - X
+        addy = nY - Y
         
-        If Sgn(addX) = 1 Then
+        If Sgn(addx) = 1 Then
             nHeading = E_Heading.EAST
         End If
         
-        If Sgn(addX) = -1 Then
+        If Sgn(addx) = -1 Then
             nHeading = E_Heading.WEST
         End If
         
-        If Sgn(addY) = -1 Then
+        If Sgn(addy) = -1 Then
             nHeading = E_Heading.NORTH
         End If
         
-        If Sgn(addY) = 1 Then
+        If Sgn(addy) = 1 Then
             nHeading = E_Heading.SOUTH
         End If
         
@@ -151,14 +151,14 @@ Sub MoveCharbyPos(CharIndex As Integer, nX As Integer, nY As Integer)
         .Pos.Y = nY
         MapData(X, Y).CharIndex = 0
         
-        .MoveOffset.X = -1 * (TilePixelWidth * addX)
-        .MoveOffset.Y = -1 * (TilePixelHeight * addY)
+        .MoveOffset.X = -1 * (TilePixelWidth * addx)
+        .MoveOffset.Y = -1 * (TilePixelHeight * addy)
         
         .Moving = 1
         .Heading = nHeading
         
-        .scrollDirectionX = Sgn(addX)
-        .scrollDirectionY = Sgn(addY)
+        .scrollDirectionX = Sgn(addx)
+        .scrollDirectionY = Sgn(addy)
     End With
 
 End Sub
@@ -1088,89 +1088,6 @@ Public Sub RenderParticlePreview()
     frmParticulas.ParticlePic.AutoRedraw = True
 
     Call DrawBuffer.PaintPicture(frmParticulas.ParticlePic.hDC, 0, 0, frmParticulas.ParticlePic.Width, frmParticulas.ParticlePic.Height, 0, 0, vbSrcCopy)
-End Sub
-
-Sub MakeChar(ByVal CharIndex As Integer, _
-                     ByVal Body As Integer, _
-                     ByVal Head As Integer, _
-                     ByVal Heading As Byte, _
-                     ByVal X As Integer, _
-                     ByVal Y As Integer, _
-                     ByVal Arma As Integer, _
-                     ByVal Escudo As Integer, _
-                     ByVal Casco As Integer)
- 
-'*************************************************
-'Author: Unkwown
-'Last modified: 28/05/06 by GS
-'*************************************************
-On Error Resume Next
-
-    'Update LastChar
-    If CharIndex > LastChar Then LastChar = CharIndex
-    NumChars = NumChars + 1
-    
-    With CharList(CharIndex)
-    
-    'Update head, body, ect.
-    If Body > 0 Then _
-        .Body = BodyData(Body)
-    
-    If Head > 0 Then _
-        .Head = Head
-        
-    If Arma > 0 Then _
-        .Arma = WeaponAnimData(Arma)
-        
-    If Escudo > 0 Then _
-        .Escudo = ShieldAnimData(Escudo)
-        
-    If Casco > 0 Then _
-        .Casco = Casco
-        
-    .Heading = Heading
-    
-    'Reset moving stats
-    .Moving = 0
-    .MoveOffset.X = 0
-    .MoveOffset.Y = 0
-    
-    'Update position
-    .Pos.X = X
-    .Pos.Y = Y
-    
-    'Make active
-    .active = 1
-    
-    End With
-    
-    'Plot on map
-    MapData(X, Y).CharIndex = CharIndex
-
-End Sub
-
-Sub EraseChar(CharIndex As Integer)
-'*************************************************
-'Author: Unkwown
-'Last modified: 28/05/06 by GS
-'*************************************************
-    If CharIndex = 0 Then Exit Sub
-    'Make un-active
-    CharList(CharIndex).active = 0
-    
-    'Update lastchar
-    If CharIndex = LastChar Then
-        Do Until CharList(LastChar).active = 1
-            LastChar = LastChar - 1
-            If LastChar = 0 Then Exit Do
-        Loop
-    End If
-    
-    MapData(CharList(CharIndex).Pos.X, CharList(CharIndex).Pos.Y).CharIndex = 0
-    
-    'Update NumChars
-    NumChars = NumChars - 1
-
 End Sub
 
 Function NextOpenChar() As Integer

@@ -25,6 +25,14 @@ Begin VB.Form frmMain
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   1280
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton Command1 
+      Caption         =   "Command1"
+      Height          =   360
+      Left            =   8280
+      TabIndex        =   28
+      Top             =   180
+      Width           =   390
+   End
    Begin MSComDlg.CommonDialog Dialog 
       Left            =   120
       Top             =   750
@@ -52,7 +60,7 @@ Begin VB.Form frmMain
       ScaleWidth      =   1278
       TabIndex        =   11
       TabStop         =   0   'False
-      Top             =   675
+      Top             =   660
       Width           =   19200
       Begin VB.Shape ShpScreen 
          BackColor       =   &H80000008&
@@ -472,10 +480,10 @@ Begin VB.Form frmMain
    Begin WinterMapEditor.lvButtons_H LvBFoto 
       Height          =   480
       Index           =   14
-      Left            =   8490
+      Left            =   8910
       TabIndex        =   26
       ToolTipText     =   "Captura de pantalla"
-      Top             =   90
+      Top             =   75
       Width           =   480
       _ExtentX        =   847
       _ExtentY        =   847
@@ -527,6 +535,34 @@ Begin VB.Form frmMain
       ImgSize         =   32
       cBack           =   -2147483633
    End
+   Begin VB.Line Line4 
+      BorderColor     =   &H80000004&
+      X1              =   702
+      X2              =   702
+      Y1              =   4
+      Y2              =   42
+   End
+   Begin VB.Line Line3 
+      BorderColor     =   &H80000004&
+      X1              =   698
+      X2              =   698
+      Y1              =   4
+      Y2              =   42
+   End
+   Begin VB.Line Line2 
+      BorderColor     =   &H80000004&
+      X1              =   520
+      X2              =   520
+      Y1              =   4
+      Y2              =   42
+   End
+   Begin VB.Line Line1 
+      BorderColor     =   &H80000004&
+      X1              =   516
+      X2              =   516
+      Y1              =   4
+      Y2              =   42
+   End
    Begin VB.Label MapPest 
       Alignment       =   2  'Center
       Appearance      =   0  'Flat
@@ -545,7 +581,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   10
-      Left            =   17910
+      Left            =   18330
       TabIndex        =   10
       Top             =   225
       Visible         =   0   'False
@@ -569,7 +605,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   0
-      Left            =   10260
+      Left            =   10680
       TabIndex        =   0
       Top             =   225
       Visible         =   0   'False
@@ -593,7 +629,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   9
-      Left            =   17145
+      Left            =   17565
       TabIndex        =   9
       Top             =   225
       Visible         =   0   'False
@@ -617,7 +653,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   8
-      Left            =   16380
+      Left            =   16800
       TabIndex        =   8
       Top             =   225
       Visible         =   0   'False
@@ -641,7 +677,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   7
-      Left            =   15615
+      Left            =   16035
       TabIndex        =   7
       Top             =   225
       Visible         =   0   'False
@@ -665,7 +701,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   6
-      Left            =   14850
+      Left            =   15270
       TabIndex        =   6
       Top             =   225
       Visible         =   0   'False
@@ -689,7 +725,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   5
-      Left            =   14085
+      Left            =   14505
       TabIndex        =   5
       Top             =   225
       Visible         =   0   'False
@@ -713,7 +749,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   4
-      Left            =   13320
+      Left            =   13740
       TabIndex        =   4
       Top             =   225
       Visible         =   0   'False
@@ -737,7 +773,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   3
-      Left            =   12555
+      Left            =   12975
       TabIndex        =   3
       Top             =   225
       Visible         =   0   'False
@@ -761,7 +797,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   2
-      Left            =   11790
+      Left            =   12210
       TabIndex        =   2
       Top             =   225
       Visible         =   0   'False
@@ -785,7 +821,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   255
       Index           =   1
-      Left            =   11025
+      Left            =   11445
       TabIndex        =   1
       Top             =   225
       Visible         =   0   'False
@@ -1133,10 +1169,6 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-
-Private Sub Command1_Click()
-    frmWalkerSpeed.Show , frmMain
-End Sub
 
 Private Sub LvBEdit_Click(Index As Integer)
     '*************************************************

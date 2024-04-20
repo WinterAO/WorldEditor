@@ -299,7 +299,7 @@ Sub Cargar_CSM(ByVal Map As String)
                 If Luces(i).X > XMinMapSize And Luces(i).X < XMaxMapSize And Luces(i).Y > YMinMapSize And Luces(i).Y < YMaxMapSize Then
                     With MapData(Luces(i).X, Luces(i).Y)
                         .Light.range = Luces(i).range
-                        .Light.RGBCOLOR.a = 255
+                        .Light.RGBCOLOR.A = 255
                         .Light.RGBCOLOR.R = Luces(i).R
                         .Light.RGBCOLOR.G = Luces(i).G
                         .Light.RGBCOLOR.B = Luces(i).B
@@ -353,7 +353,7 @@ Sub Cargar_CSM(ByVal Map As String)
 
                 If NPCs(i).NPCIndex > 0 Then
                     MapData(NPCs(i).X, NPCs(i).Y).NPCIndex = NPCs(i).NPCIndex
-                    Call MakeChar(NextOpenChar(), NpcData(NPCs(i).NPCIndex).Body, NpcData(NPCs(i).NPCIndex).Head, NpcData(NPCs(i).NPCIndex).Heading, _
+                    Call Char_Make(NextOpenChar(), NpcData(NPCs(i).NPCIndex).Body, NpcData(NPCs(i).NPCIndex).Head, NpcData(NPCs(i).NPCIndex).Heading, _
                                     NPCs(i).X, NPCs(i).Y, NpcData(NPCs(i).NPCIndex).WeaponAnim, NpcData(NPCs(i).NPCIndex).ShieldAnim, NpcData(NPCs(i).NPCIndex).CascoAnim)
 
                 End If
@@ -466,7 +466,7 @@ Private Sub CSMInfoCargar()
                 frmMapInfo.chkLuzClimatica = Checked
                 Call ConvertLongToRGB(MapDat(i).LuzBase, tR, tG, tB)
                 
-                Estado_Custom.a = 255
+                Estado_Custom.A = 255
                 Estado_Custom.R = tR
                 Estado_Custom.G = tG
                 Estado_Custom.B = tB

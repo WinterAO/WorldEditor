@@ -39,11 +39,11 @@ Public Sub AbrirMapa(ByVal bBig As Boolean)
         
     Else
         Call ModMapConver.Cargar_ConverCSM(frmMain.Dialog.filename)
-        
-        UserPos.X = 50
-        UserPos.Y = 50
     
     End If
+    
+    UserPos.X = XMaxMapSize / 2
+    UserPos.Y = YMaxMapSize / 2
         
     DoEvents
     frmMain.mnuReAbrirMapa.Enabled = True

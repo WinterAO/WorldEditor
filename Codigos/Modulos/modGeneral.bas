@@ -64,7 +64,7 @@ Sub Main()
     DoEvents
     Set Sound = New clsSoundEngine
 
-    If Not Sound.Initialize_Engine(frmMain.hWnd, DirRecursos, False, True, True, ClientSetup.SoundVolume, ClientSetup.MusicVolume, ClientSetup.Invertido) Then
+    If Not Sound.Initialize_Engine(frmMain.hWnd, dirRecursos_Compressed, False, True, True, ClientSetup.SoundVolume, ClientSetup.MusicVolume, ClientSetup.Invertido) Then
         MsgBox "¡No se ha logrado iniciar el engine de DirectSound! Reinstale los últimos controladores de DirectX. No habrá soporte de audio en el editor.", vbCritical, "Advertencia"
         
     End If
@@ -271,84 +271,6 @@ Private Sub CheckKeys()
             Call Char_UserPos
         End If
     End If
-    '    If GetKeyState(vbKeyUp) < 0 Then
-    '        If UserPos.Y < YMinMapSize Then Exit Sub ' 10
-    '
-    '        If LegalPos(UserPos.X, UserPos.Y - 1) And WalkMode = True Then
-    '            If dLastWalk + 50 > GetTickCount Then Exit Sub
-    '            UserPos.Y = UserPos.Y - 1
-    '            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
-    '            dLastWalk = GetTickCount
-    '
-    '        ElseIf WalkMode = False Then
-    '            UserPos.Y = UserPos.Y - 1
-    '
-    '        End If
-    '
-    '        Call DibujarMinimapa(True)
-    '        frmMain.SetFocus
-    '        Exit Sub
-    '
-    '    End If
-    '
-    '    If GetKeyState(vbKeyRight) < 0 Then
-    '        If UserPos.X > XMaxMapSize Then Exit Sub ' 89
-    '
-    '        If LegalPos(UserPos.X + 1, UserPos.Y) And WalkMode = True Then
-    '            If dLastWalk + 50 > GetTickCount Then Exit Sub
-    '            UserPos.X = UserPos.X + 1
-    '            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
-    '            dLastWalk = GetTickCount
-    '
-    '        ElseIf WalkMode = False Then
-    '            UserPos.X = UserPos.X + 1
-    '
-    '        End If
-    '
-    '        Call DibujarMinimapa(True)
-    '        frmMain.SetFocus
-    '        Exit Sub
-    '
-    '    End If
-    '
-    '    If GetKeyState(vbKeyDown) < 0 Then
-    '        If UserPos.Y > YMaxMapSize Then Exit Sub ' 92
-    '
-    '        If LegalPos(UserPos.X, UserPos.Y + 1) And WalkMode = True Then
-    '            If dLastWalk + 50 > GetTickCount Then Exit Sub
-    '            UserPos.Y = UserPos.Y + 1
-    '            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
-    '            dLastWalk = GetTickCount
-    '
-    '        ElseIf WalkMode = False Then
-    '            UserPos.Y = UserPos.Y + 1
-    '
-    '        End If
-    '
-    '        Call DibujarMinimapa(True)
-    '        frmMain.SetFocus
-    '        Exit Sub
-    '
-    '    End If
-    '
-    '    If GetKeyState(vbKeyLeft) < 0 Then
-    '        If UserPos.X < XMinMapSize Then Exit Sub ' 12
-    '
-    '        If LegalPos(UserPos.X - 1, UserPos.Y) And WalkMode = True Then
-    '            If dLastWalk + 50 > GetTickCount Then Exit Sub
-    '            UserPos.X = UserPos.X - 1
-    '            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
-    '            dLastWalk = GetTickCount
-    '        ElseIf WalkMode = False Then
-    '            UserPos.X = UserPos.X - 1
-    '
-    '        End If
-    '
-    '        Call DibujarMinimapa(True)
-    '        frmMain.SetFocus
-    '        Exit Sub
-    '
-    '    End If
     
 End Sub
 
@@ -356,31 +278,30 @@ Public Sub ToggleWalkMode()
 
     '*************************************************
     'Author: Unkwown
-    'Last modified: 28/05/06 - GS
+    'Last modified: 01/04/2024 - Lorwik
     '*************************************************
     On Error GoTo ToggleWalkMode_Err
 
     If WalkMode = False Then
         WalkMode = True
-        Engine_BaseSpeed = 0.018
+        If Not frmWalkerSpeed Then frmWalkerSpeed.Show , frmMain
         
     Else
         frmMain.mnuModoCaminata.Checked = False
         WalkMode = False
-        Engine_BaseSpeed = 0.5
         
     End If
     
     If Not WalkMode Then
         'Erase character
-        Call EraseChar(UserCharIndex)
+        Call Char_Erase(UserCharIndex)
         MapData(UserPos.X, UserPos.Y).CharIndex = 0
         
     Else
 
         'MakeCharacter
         If LegalPos(UserPos.X, UserPos.Y) Then
-            Call MakeChar(NextOpenChar(), 107, 1, SOUTH, UserPos.X, UserPos.Y, 1, 11, 81)
+            Call Char_Make(NextOpenChar(), 107, 1, SOUTH, UserPos.X, UserPos.Y, 1, 11, 81)
             UserCharIndex = MapData(UserPos.X, UserPos.Y).CharIndex
             frmMain.mnuModoCaminata.Checked = True
             

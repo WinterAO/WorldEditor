@@ -38,14 +38,16 @@ Public Type tSetupMods
     'CONFIGURACION
     MeMode As Byte
     CampoVision As Boolean
+    useCompression As Boolean
 End Type
 
 Public ClientSetup As tSetupMods
 
 'Path
 Public IniPath As String
-Public DirRecursos As String
-Public DirDats As String
+Public dirRecursos_Compressed As String
+Public dirRecursos_Uncompressed As String
+Public dirDats As String
 
 'Recuento de indices
 Public grhCount    As Long
@@ -235,49 +237,78 @@ On Local Error GoTo fileErr:
         
         '-------------------
         'Recursos
-        DirRecursos = autoCompletaPath(Profile.GetValue("PATH-" & .MeMode, "DirRecursos"))
-        
-        If FileExist(DirRecursos, vbDirectory) = False Or DirRecursos = "\" Then
-            MsgBox "El directorio de Recursos es incorrecto", vbCritical + vbOKOnly
+        If ClientSetup.useCompression Then
+            dirRecursos_Compressed = autoCompletaPath(Profile.GetValue("PATH-" & .MeMode, "dirRecursos_Compressed"))
             
-            NewPath = Buscar_Carpeta("Seleccione la carpeta de los recursos de graficos, scripts y fuentes", "")
-            Call WriteVar(profileFile(ProfileTag), "PATH-" & .MeMode, "DirRecursos", NewPath)
-            DirRecursos = NewPath & "\"
-        End If
-        
-        If FileExist(DirRecursos & "Graficos" & Formato, vbArchive) = False Then
-            MsgBox "No se encontro el recursos de graficos en " & DirRecursos & "Graficos" & Formato & "."
-            End
-        End If
-        
-        If FileExist(DirRecursos & "Scripts" & Formato, vbArchive) = False Then
-            MsgBox "No se encontro el recursos de Scripts."
-            End
-        End If
-        
-        If FileExist(DirRecursos & "Fuentes" & Formato, vbArchive) = False Then
-            MsgBox "No se encontro el recursos de Fuentes."
-            End
+            If FileExist(dirRecursos_Compressed, vbDirectory) = False Or dirRecursos_Compressed = "\" Then
+                MsgBox "El directorio de recursos comprimidos es incorrecto", vbCritical + vbOKOnly
+                
+                NewPath = Buscar_Carpeta("Seleccione el directorio donde se encuentran los recursos comprimidos de gráficos, scripts y fuentes", "")
+                Call WriteVar(profileFile(ProfileTag), "PATH-" & .MeMode, "dirRecursos_Compressed", NewPath)
+                dirRecursos_Compressed = NewPath & "\"
+            End If
+            
+            If FileExist(dirRecursos_Compressed & "Graficos" & Formato, vbArchive) = False Then
+                MsgBox "No se encontro el recurso de graficos en " & dirRecursos_Compressed & "Graficos" & Formato & "."
+                End
+            End If
+            
+            If FileExist(dirRecursos_Compressed & "Scripts" & Formato, vbArchive) = False Then
+                MsgBox "No se encontro el recurso de Scripts."
+                End
+            End If
+            
+            If FileExist(dirRecursos_Compressed & "Fuentes" & Formato, vbArchive) = False Then
+                MsgBox "No se encontro el recurso de Fuentes."
+                End
+            End If
+            
+        Else
+            dirRecursos_Uncompressed = autoCompletaPath(Profile.GetValue("PATH-" & .MeMode, "dirRecursos_Uncompressed"))
+            
+            If FileExist(dirRecursos_Uncompressed, vbDirectory) = False Or dirRecursos_Uncompressed = "\" Then
+                MsgBox "El directorio de recursos libres es incorrecto", vbCritical + vbOKOnly
+                
+                NewPath = Buscar_Carpeta("Seleccione el directorio donde se encuentran las carpetas de los recursos libres de gráficos, scripts y fuentes", "")
+                Call WriteVar(profileFile(ProfileTag), "PATH-" & .MeMode, "dirRecursos_Uncompressed", NewPath)
+                dirRecursos_Uncompressed = NewPath & "\"
+            End If
+            
+            If FileExist(dirRecursos_Uncompressed & "\Graficos", vbDirectory) = False Then
+                MsgBox "No se encontro el directorio de graficos en " & dirRecursos_Uncompressed & "Graficos" & Formato & "."
+                End
+            End If
+            
+            If FileExist(dirRecursos_Uncompressed & "\Scripts", vbDirectory) = False Then
+                MsgBox "No se encontro el directorio de Scripts."
+                End
+            End If
+            
+            If FileExist(dirRecursos_Uncompressed & "\Fuentes", vbDirectory) = False Then
+                MsgBox "NNo se encontro el directorio de Fuentes."
+                End
+            End If
+            
         End If
         
         '-------------------
         'Dats
-        DirDats = autoCompletaPath(Profile.GetValue("PATH-" & .MeMode, "DirDats"))
+        dirDats = autoCompletaPath(Profile.GetValue("PATH-" & .MeMode, "DirDats"))
         
-        If FileExist(DirDats, vbDirectory) = False Or DirDats = "\" Then
+        If FileExist(dirDats, vbDirectory) = False Or dirDats = "\" Then
             MsgBox "El directorio de Dats es incorrecto", vbCritical + vbOKOnly
             
             NewPath = Buscar_Carpeta("Seleccione la carpeta de los Dats", "")
             Call WriteVar(profileFile(ProfileTag), "PATH-" & .MeMode, "DirDats", NewPath)
-            DirDats = NewPath & "\"
+            dirDats = NewPath & "\"
         End If
         
-        If FileExist(DirDats & "Obj.dat", vbArchive) = False Then
+        If FileExist(dirDats & "Obj.dat", vbArchive) = False Then
             MsgBox "No se encontro el archivo Obj.dat."
             End
         End If
         
-        If FileExist(DirDats & "NPcs.dat", vbArchive) = False Then
+        If FileExist(dirDats & "NPcs.dat", vbArchive) = False Then
             MsgBox "No se encontro el archivo NPCs.dat."
             End
         End If
@@ -364,20 +395,36 @@ End Function
 Public Sub LoadGrhData()
 '*************************************
 'Autor: Lorwik
+'Fecha: 20/04/2024
+'*************************************
+
+    If ClientSetup.useCompression Then
+        Call LoadGrhData_Compressed
+        
+    Else
+        Call LoadGrhData_Uncompressed
+        
+    End If
+    
+End Sub
+
+Private Function LoadGrhData_Compressed() As Boolean
+'*************************************
+'Autor: Lorwik
 'Fecha: ???
-'Descripción: Carga el index de Graficos
+'Descripción: Carga el index de Graficos del archivo comprimido
 '*************************************
 On Error GoTo ErrorHandler:
 
     Dim Grh         As Long
-    Dim k           As Long
-    Dim Frame       As Long
+    Dim K           As Long
+    Dim frame       As Long
     Dim fileVersion As Long
     Dim fileBuff    As clsByteBuffer
     Dim InfoHead    As INFOHEADER
     Dim buffer()    As Byte
 
-    InfoHead = File_Find(DirRecursos & "Scripts" & Formato, LCase$("graficos.ind"))
+    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & Formato, LCase$("graficos.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -408,8 +455,8 @@ On Error GoTo ErrorHandler:
             Grh = fileBuff.getLong
             
             frmGrh.LynxGrh.AddItem Grh
-            k = frmGrh.LynxGrh.Rows - 1
-            frmGrh.LynxGrh.CellText(k, 1) = Grh
+            K = frmGrh.LynxGrh.Rows - 1
+            frmGrh.LynxGrh.CellText(K, 1) = Grh
 
             With GrhData(Grh)
             
@@ -421,12 +468,12 @@ On Error GoTo ErrorHandler:
                 
                 If .NumFrames > 1 Then
                 
-                    frmGrh.LynxGrh.CellText(k, 1) = "ANIMACION"
+                    frmGrh.LynxGrh.CellText(K, 1) = "ANIMACION"
                 
-                    For Frame = 1 To .NumFrames
-                        .Frames(Frame) = fileBuff.getLong
-                        If .Frames(Frame) <= 0 Or .Frames(Frame) > grhCount Then GoTo ErrorHandler
-                    Next Frame
+                    For frame = 1 To .NumFrames
+                        .Frames(frame) = fileBuff.getLong
+                        If .Frames(frame) <= 0 Or .Frames(frame) > grhCount Then GoTo ErrorHandler
+                    Next frame
                     
                     .speed = fileBuff.getSingle
                     If .speed <= 0 Then GoTo ErrorHandler
@@ -445,7 +492,7 @@ On Error GoTo ErrorHandler:
                     
                 Else
                 
-                    frmGrh.LynxGrh.CellText(k, 1) = ""
+                    frmGrh.LynxGrh.CellText(K, 1) = ""
                     
                     .FileNum = fileBuff.getLong
                     If .FileNum <= 0 Then GoTo ErrorHandler
@@ -484,7 +531,9 @@ On Error GoTo ErrorHandler:
         .ColForceFit
     End With
     
-Exit Sub
+    LoadGrhData_Compressed = True
+    
+Exit Function
 
 ErrorHandler:
     
@@ -505,16 +554,214 @@ ErrorHandler:
     
     Erase buffer
     
-End Sub
+    LoadGrhData_Compressed = False
+    
+End Function
+
+Public Function LoadGrhData_Uncompressed() As Boolean
+'*************************************
+'Autor: Lorwik
+'Fecha: ???
+'Descripción: Carga el index de Graficos
+'*************************************
+
+    On Error GoTo ErrorHandler
+    
+    Dim K           As Long
+
+    Dim Grh         As Long
+
+    Dim fileVersion As Long
+
+    Dim frame       As Long
+
+    Dim handle      As Integer
+    
+    If Not FileExist(dirRecursos_Uncompressed & "\Scripts\graficos.ind", vbArchive) Then
+        MsgBox "No se ha encontrado el archivo Graficos.ind."
+        LoadGrhData_Uncompressed = False
+        Exit Function
+
+    End If
+    
+    'Open files
+    handle = FreeFile()
+    Open dirRecursos_Uncompressed & "\Scripts\Graficos.ind" For Binary Access Read As handle
+    
+    With frmGrh.LynxGrh
+        
+        .Clear
+        .Redraw = False
+        .Visible = False
+        .AddColumn "Grh", 0
+        .AddColumn "Tipo", 0
+        
+    End With
+    
+    Get handle, , fileVersion
+        
+    Get handle, , grhCount
+
+    'Resize arrays
+    ReDim GrhData(1 To grhCount) As GrhData
+
+    While Grh <> grhCount
+    
+        Get handle, , Grh
+        
+        frmGrh.LynxGrh.AddItem Grh
+        K = frmGrh.LynxGrh.Rows - 1
+        frmGrh.LynxGrh.CellText(K, 1) = Grh
+    
+        With GrhData(Grh)
+
+            If Grh <> 0 Then
+            
+                Grh = Grh
+               
+                'Get number of frames
+                Get handle, , .NumFrames
+
+                If .NumFrames <= 0 Then GoTo ErrorHandler
+            
+                ReDim .Frames(1 To .NumFrames)
+            
+                If .NumFrames > 1 Then
+
+                    frmGrh.LynxGrh.CellText(K, 1) = "ANIMACION"
+
+                    For frame = 1 To .NumFrames
+                        Get handle, , .Frames(frame)
+
+                        If .Frames(frame) <= 0 Or .Frames(frame) > grhCount Then GoTo ErrorHandler
+                    Next frame
+                
+                    Get handle, , .speed
+
+                    If .speed <= 0 Then GoTo ErrorHandler
+                    
+                    .pixelHeight = GrhData(.Frames(1)).pixelHeight
+
+                    If .pixelHeight <= 0 Then GoTo ErrorHandler
+                    
+                    .pixelWidth = GrhData(.Frames(1)).pixelWidth
+
+                    If .pixelWidth <= 0 Then GoTo ErrorHandler
+                    
+                    .TileWidth = GrhData(.Frames(1)).TileWidth
+
+                    If .TileWidth <= 0 Then GoTo ErrorHandler
+                    
+                    .TileHeight = GrhData(.Frames(1)).TileHeight
+
+                    If .TileHeight <= 0 Then GoTo ErrorHandler
+                
+                Else
+                
+                    frmGrh.LynxGrh.CellText(K, 1) = ""
+                    
+                    'Read in normal GRH data
+                    Get handle, , .FileNum
+
+                    If .FileNum <= 0 Then GoTo ErrorHandler
+                    
+                    Get handle, , .pixelWidth
+
+                    If .pixelWidth <= 0 Then GoTo ErrorHandler
+                    
+                    Get handle, , .pixelHeight
+
+                    If .pixelHeight <= 0 Then GoTo ErrorHandler
+                    
+                    Get handle, , GrhData(Grh).sX
+
+                    If .sX < 0 Then GoTo ErrorHandler
+                    
+                    Get handle, , .sY
+
+                    If .sY < 0 Then GoTo ErrorHandler
+                
+                    'Compute width and height
+                    .TileWidth = .pixelWidth / 32
+                    .TileHeight = .pixelHeight / 32
+                
+                    .Frames(1) = Grh
+
+                End If
+
+            End If
+
+        End With
+        
+    Wend
+    
+    Close handle
+    
+    With frmGrh.LynxGrh
+        .Visible = True
+        .Redraw = True
+        .ColForceFit
+
+    End With
+    
+    DoEvents
+    
+    LoadGrhData_Uncompressed = True
+    
+    Exit Function
+
+ErrorHandler:
+    Close handle
+    
+    If Err.Number <> 0 Then
+        
+        If Err.Number = 53 Then
+            Call MsgBox("El archivo Graficos.ind no existe. Por favor, reinstale el juego.", , Form_Caption)
+            Call CloseMapEditor
+
+        End If
+        
+    End If
+    
+    With frmGrh.LynxGrh
+        .Visible = True
+        .Redraw = True
+        .ColForceFit
+
+    End With
+    
+    LoadGrhData_Uncompressed = False
+
+End Function
 
 Public Sub CargarMinimapa()
+'*************************************
+'Autor: Lorwik
+'Fecha: 20/04/2024
+'*************************************
 
+    If ClientSetup.useCompression Then
+        Call CargarMinimapa_Compressed
+    Else
+        Call CargarMinimapa_Uncompressed
+    End If
+
+End Sub
+
+Private Function CargarMinimapa_Compressed() As Boolean
+'*************************************
+'Autor: Lorwik
+'Fecha: ????
+'*************************************
+
+    On Error GoTo ErrorHandler
+    
     Dim fileBuff    As clsByteBuffer
     Dim InfoHead    As INFOHEADER
     Dim buffer()    As Byte
     Dim i           As Long
     
-    InfoHead = File_Find(DirRecursos & "Scripts" & Formato, LCase$("minimap.bin"))
+    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & Formato, LCase$("minimap.bin"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -535,9 +782,73 @@ Public Sub CargarMinimapa()
     
     Set fileBuff = Nothing
     
-End Sub
+    CargarMinimapa_Compressed = True
+    
+    Exit Function
+    
+ErrorHandler:
+
+    CargarMinimapa_Compressed = False
+    
+End Function
+
+Private Function CargarMinimapa_Uncompressed() As Boolean
+    '*************************************
+    'Autor: Lorwik
+    'Fecha: ????
+    '*************************************
+
+    On Error GoTo ErrorHandler
+    
+    Dim i As Long
+    
+    Dim n As Integer
+    
+    If Not FileExist(dirRecursos_Uncompressed & "\Scripts\minimap.bin", vbArchive) Then
+        MsgBox "No se ha encontrado el archivo minimap.bin."
+        CargarMinimapa_Uncompressed = False
+        Exit Function
+
+    End If
+    
+    n = FreeFile
+    Open dirRecursos_Uncompressed & "\Scripts\minimap.bin" For Binary Access Read As #n
+        
+    For i = 1 To grhCount
+
+        If Grh_Check(i) Then
+            Get #n, , GrhData(i).mini_map_color
+
+        End If
+        
+    Next i
+
+    Close #n
+    
+    CargarMinimapa_Uncompressed = True
+    
+    Exit Function
+    
+ErrorHandler:
+
+    CargarMinimapa_Uncompressed = False
+    
+End Function
 
 Public Sub CargarCabezas()
+'*************************************
+'Autor: Lorwik
+'Fecha: 20/04/2024
+'*************************************
+
+    If ClientSetup.useCompression Then
+        Call CargarCabezas_Compressed
+    Else
+        Call CargarCabezas_Uncompressed
+    End If
+End Sub
+
+Private Function CargarCabezas_Compressed() As Boolean
 '*************************************
 'Autor: Lorwik
 'Fecha: ???
@@ -548,10 +859,10 @@ On Error GoTo errhandler:
     Dim buffer()    As Byte
     Dim InfoHead    As INFOHEADER
     Dim i           As Integer
-    Dim NumHeads As Integer
-    Dim fileBuff  As clsByteBuffer
+    Dim NumHeads    As Integer
+    Dim fileBuff    As clsByteBuffer
     
-    InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Head.ind"))
+    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & modCompression.Formato, LCase$("Head.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -576,6 +887,7 @@ On Error GoTo errhandler:
     End If
     
     Set fileBuff = Nothing
+    CargarCabezas_Compressed = True
     
 errhandler:
     
@@ -588,9 +900,70 @@ errhandler:
         
     End If
     
-End Sub
+    CargarCabezas_Compressed = False
+    
+End Function
+
+Private Function CargarCabezas_Uncompressed() As Boolean
+    On Error GoTo ErrorHandler:
+    
+    Dim n            As Integer
+
+    Dim i            As Integer
+    
+    Dim NumHeads     As Integer
+    
+    If Not FileExist(dirRecursos_Uncompressed & "\Scripts\head.ind", vbArchive) Then
+        MsgBox "No se ha encontrado el archivo head.ind."
+        CargarCabezas_Uncompressed = False
+        Exit Function
+    End If
+
+    n = FreeFile
+    Open dirRecursos_Uncompressed & "\Scripts\head.ind" For Binary Access Read As #n
+
+    'num de cabezas
+    Get #n, , NumHeads
+
+    'Resize array
+    ReDim heads(0 To NumHeads) As tHead
+            
+        For i = 1 To NumHeads
+            Get #n, , heads(i).Std
+            Get #n, , heads(i).Texture
+            Get #n, , heads(i).startX
+            Get #n, , heads(i).startY
+            
+        Next i
+
+    Close #n
+
+    CargarCabezas_Uncompressed = True
+
+    Exit Function
+
+ErrorHandler:
+    Close #n
+    'MsgBox "Error " & Err.Number & " durante la carga de Head.ind!"
+    CargarCabezas_Uncompressed = False
+    Resume
+    
+End Function
 
 Public Sub CargarCascos()
+'*************************************
+'Autor: Lorwik
+'Fecha: 20/04/2024
+'*************************************
+
+    If ClientSetup.useCompression Then
+        Call CargarCascos_Compressed
+    Else
+        Call CargarCascos_Uncompressed
+    End If
+End Sub
+
+Private Function CargarCascos_Compressed() As Boolean
 '*************************************
 'Autor: Lorwik
 'Fecha: ???
@@ -605,7 +978,7 @@ On Error GoTo errhandler:
     Dim NumCascos As Integer
     Dim fileBuff  As clsByteBuffer
     
-    InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Helmet.ind"))
+    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & modCompression.Formato, LCase$("Helmet.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -630,6 +1003,7 @@ On Error GoTo errhandler:
     End If
     
     Set fileBuff = Nothing
+    CargarCascos_Compressed = True
     
 errhandler:
     
@@ -642,9 +1016,70 @@ errhandler:
         
     End If
     
+    CargarCascos_Compressed = False
+    
+End Function
+
+Public Function CargarCascos_Uncompressed() As Boolean
+    On Error GoTo ErrorHandler:
+    
+    Dim n          As Integer
+
+    Dim i          As Integer
+    
+    Dim NumCascos  As Integer
+
+    If Not FileExist(dirRecursos_Uncompressed & "\Scripts\helmet.ind", vbArchive) Then
+        MsgBox "No se ha encontrado el archivo helmet.ind."
+        CargarCascos_Uncompressed = False
+        Exit Function
+    End If
+
+    n = FreeFile
+    Open dirRecursos_Uncompressed & "\Scripts\helmet.ind" For Binary Access Read As #n
+
+    'num de cascos
+    Get #n, , NumCascos
+
+    'Resize array
+    ReDim Cascos(0 To NumCascos) As tHead
+    
+    For i = 1 To NumCascos
+        Get #n, , Cascos(i).Std
+        Get #n, , Cascos(i).Texture
+        Get #n, , Cascos(i).startX
+        Get #n, , Cascos(i).startY
+            
+    Next i
+         
+    Close #n
+
+    CargarCascos_Uncompressed = True
+
+    Exit Function
+
+ErrorHandler:
+    Close #n
+    'MsgBox "Error " & Err.Number & " durante la carga de Helmet.ind!"
+    CargarCascos_Uncompressed = False
+    Resume
+    
+End Function
+
+Public Sub CargarCuerpos()
+'*************************************
+'Autor: Lorwik
+'Fecha: 20/04/2024
+'*************************************
+
+    If ClientSetup.useCompression Then
+        Call CargarCuerpos_Compressed
+    Else
+        Call CargarCuerpos_Uncompressed
+    End If
 End Sub
 
-Sub CargarCuerpos()
+Private Function CargarCuerpos_Compressed() As Boolean
 '*************************************
 'Autor: Lorwik
 'Fecha: ???
@@ -660,7 +1095,7 @@ On Error GoTo errhandler:
     Dim MisCuerpos() As tIndiceCuerpo
     Dim fileBuff  As clsByteBuffer
     
-    InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Personajes.ind"))
+    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & modCompression.Formato, LCase$("Personajes.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -700,6 +1135,7 @@ On Error GoTo errhandler:
     End If
     
     Set fileBuff = Nothing
+    CargarCuerpos_Compressed = True
     
 errhandler:
     
@@ -712,13 +1148,88 @@ errhandler:
         
     End If
     
+    CargarCuerpos_Compressed = False
+    
+End Function
+
+Public Function CargarCuerpos_Uncompressed() As Boolean
+
+    On Error GoTo ErrorHandler
+
+    Dim n            As Integer
+
+    Dim i            As Long
+    
+    Dim NumCuerpos   As Integer
+
+    Dim MisCuerpos() As tIndiceCuerpo
+    
+    If Not FileExist(dirRecursos_Uncompressed & "\Scripts\personajes.ind", vbArchive) Then
+        MsgBox "No se ha encontrado el archivo Personajes.ind."
+        CargarCuerpos_Uncompressed = False
+        Exit Function
+    End If
+
+    n = FreeFile()
+    Open dirRecursos_Uncompressed & "\Scripts\Personajes.ind" For Binary Access Read As #n
+
+    'num de cabezas
+    Get #n, , NumCuerpos
+
+    'Resize array
+    ReDim BodyData(0 To NumCuerpos) As BodyData
+    ReDim MisCuerpos(0 To NumCuerpos) As tIndiceCuerpo
+
+    For i = 1 To NumCuerpos
+
+        Get #n, , MisCuerpos(i)
+        
+        If MisCuerpos(i).Body(1) Then
+            Call InitGrh(BodyData(i).Walk(1), MisCuerpos(i).Body(1), 0)
+            Call InitGrh(BodyData(i).Walk(2), MisCuerpos(i).Body(2), 0)
+            Call InitGrh(BodyData(i).Walk(3), MisCuerpos(i).Body(3), 0)
+            Call InitGrh(BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0)
+                
+            BodyData(i).HeadOffset.X = MisCuerpos(i).HeadOffsetX
+            BodyData(i).HeadOffset.Y = MisCuerpos(i).HeadOffsetY
+
+        End If
+        
+    Next i
+
+    Close #n
+    
+    CargarCuerpos_Uncompressed = True
+    
+    Exit Function
+
+ErrorHandler:
+    Close #n
+    'MsgBox "Error " & Err.Number & " durante la carga de Personajes.ind!"
+    CargarCuerpos_Uncompressed = False
+    Resume
+    
+End Function
+
+Public Sub CargarAnimArmas()
+'*************************************
+'Autor: Lorwik
+'Fecha: 20/04/2024
+'*************************************
+
+    If ClientSetup.useCompression Then
+        CargarAnimArmas_Compressed
+    Else
+        CargarAnimArmas_Uncompressed
+    End If
+
 End Sub
 
-Sub CargarAnimArmas()
+Private Function CargarAnimArmas_Compressed()
 '*************************************
 'Autor: Lorwik
 'Fecha: ???
-'Descripción: Carga el index de Armas
+'Descripción: Carga el index de Armas del archivo comprimido
 '*************************************
 On Error GoTo errhandler:
 
@@ -729,7 +1240,7 @@ On Error GoTo errhandler:
     Dim NumWeaponAnims As Integer
     Dim fileBuff  As clsByteBuffer
     
-    InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Armas.ind"))
+    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & modCompression.Formato, LCase$("Armas.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -766,6 +1277,8 @@ On Error GoTo errhandler:
     End If
     
     Set fileBuff = Nothing
+    
+    CargarAnimArmas_Compressed = True
 
 errhandler:
     
@@ -777,10 +1290,86 @@ errhandler:
         End If
         
     End If
+    
+    CargarAnimArmas_Compressed = False
+
+End Function
+
+Private Function CargarAnimArmas_Uncompressed() As Boolean
+    '*************************************
+    'Autor: Lorwik
+    'Fecha: ???
+    'Descripción: Carga el index de Armas
+    '*************************************
+    
+    On Error GoTo errhandler:
+
+    Dim n              As Integer
+
+    Dim i              As Long
+
+    Dim NumWeaponAnims As Integer
+    
+    If Not FileExist(dirRecursos_Uncompressed & "\Scripts\armas.ind", vbArchive) Then
+        MsgBox "No se ha encontrado el archivo Armas.ind."
+        CargarAnimArmas_Uncompressed = False
+        Exit Function
+
+    End If
+    
+    n = FreeFile
+    Open dirRecursos_Uncompressed & "\Scripts\Armas.ind" For Binary Access Read As #n
+    
+    'num de armas
+    Get #n, , NumWeaponAnims
+        
+    'Resize array
+    ReDim WeaponAnimData(1 To NumWeaponAnims) As WeaponAnimData
+    ReDim Weapons(1 To NumWeaponAnims) As tIndiceArmas
+        
+    For i = 1 To NumWeaponAnims
+        Get #n, , Weapons(i)
+            
+        If Weapons(i).weapon(1) Then
+            
+            Call InitGrh(WeaponAnimData(i).WeaponWalk(1), Weapons(i).weapon(1), 0)
+            Call InitGrh(WeaponAnimData(i).WeaponWalk(2), Weapons(i).weapon(2), 0)
+            Call InitGrh(WeaponAnimData(i).WeaponWalk(3), Weapons(i).weapon(3), 0)
+            Call InitGrh(WeaponAnimData(i).WeaponWalk(4), Weapons(i).weapon(4), 0)
+
+        End If
+
+    Next i
+    
+    Close #n
+    
+    CargarAnimArmas_Uncompressed = True
+    
+    Exit Function
+
+errhandler:
+    Close #n
+    'MsgBox "Error " & Err.Number & " durante la carga de Armas.ind!"
+    CargarAnimArmas_Uncompressed = False
+    Resume
+    
+End Function
+
+Public Sub CargarAnimEscudos()
+'*************************************
+'Autor: Lorwik
+'Fecha: 20/04/2024
+'*************************************
+
+    If ClientSetup.useCompression Then
+        Call CargarAnimEscudos_Compressed
+    Else
+        Call CargarAnimEscudos_Uncompressed
+    End If
 
 End Sub
 
-Sub CargarAnimEscudos()
+Private Function CargarAnimEscudos_Compressed()
 '*************************************
 'Autor: Lorwik
 'Fecha: ???
@@ -794,7 +1383,7 @@ On Error GoTo errhandler:
     Dim NumEscudosAnims As Integer
     Dim fileBuff  As clsByteBuffer
     
-    InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Escudos.ind"))
+    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & modCompression.Formato, LCase$("Escudos.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -831,6 +1420,7 @@ On Error GoTo errhandler:
     End If
     
     Set fileBuff = Nothing
+    CargarAnimEscudos_Compressed = True
 
 errhandler:
     
@@ -843,8 +1433,69 @@ errhandler:
         
     End If
     
-End Sub
+    CargarAnimEscudos_Compressed = False
+    
+End Function
 
+Public Function CargarAnimEscudos_Uncompressed() As Boolean
+    '*************************************
+    'Autor: Lorwik
+    'Fecha: ???
+    'Descripción: Carga el index de Escudos
+    '*************************************
+    
+    On Error GoTo errhandler:
+
+    Dim n               As Integer
+
+    Dim i               As Long
+
+    Dim NumEscudosAnims As Integer
+
+    If Not FileExist(dirRecursos_Uncompressed & "\Scripts\escudos.ind", vbArchive) Then
+        MsgBox "No se ha encontrado el archivo Escudos.ind."
+        CargarAnimEscudos_Uncompressed = False
+        Exit Function
+
+    End If
+
+    n = FreeFile
+    Open dirRecursos_Uncompressed & "\Scripts\escudos.ind" For Binary Access Read As #n
+
+    'num de escudos
+    Get #n, , NumEscudosAnims
+        
+    'Resize array
+    ReDim ShieldAnimData(1 To NumEscudosAnims) As ShieldAnimData
+    ReDim Shields(1 To NumEscudosAnims) As tIndiceEscudos
+        
+    For i = 1 To NumEscudosAnims
+        Get #n, , Shields(i)
+            
+        If Shields(i).shield(1) Then
+            
+            Call InitGrh(ShieldAnimData(i).ShieldWalk(1), Shields(i).shield(1), 0)
+            Call InitGrh(ShieldAnimData(i).ShieldWalk(2), Shields(i).shield(2), 0)
+            Call InitGrh(ShieldAnimData(i).ShieldWalk(3), Shields(i).shield(3), 0)
+            Call InitGrh(ShieldAnimData(i).ShieldWalk(4), Shields(i).shield(4), 0)
+            
+        End If
+            
+    Next i
+    
+    Close #n
+    
+    CargarAnimEscudos_Uncompressed = True
+    
+    Exit Function
+
+errhandler:
+    Close #n
+    'MsgBox "Error " & Err.Number & " durante la carga de Escudos.ind!"
+    CargarAnimEscudos_Uncompressed = False
+    Resume
+    
+End Function
 
 Private Function Grh_Check(ByVal grh_index As Long) As Boolean
 '**************************************************************
@@ -868,7 +1519,7 @@ Public Sub CargarIndicesSuperficie()
 On Error GoTo Fallo
     Dim Leer As New clsIniManager
     Dim i As Integer
-    Dim k As Long
+    Dim K As Long
     
     If FileExist(IniPath & INITDIR & "indices.ini", vbArchive) = False Then
         MsgBox "Falta el archivo 'indices.ini'", vbCritical
@@ -897,9 +1548,9 @@ On Error GoTo Fallo
         SupData(i).Capa = Val(Leer.GetValue("REFERENCIA" & i, "Capa"))
         
         frmSuperficies.LynxSuperficies.AddItem i
-        k = frmSuperficies.LynxSuperficies.Rows - 1
-        frmSuperficies.LynxSuperficies.CellText(k, 1) = SupData(i).Grh
-        frmSuperficies.LynxSuperficies.CellText(k, 2) = SupData(i).name
+        K = frmSuperficies.LynxSuperficies.Rows - 1
+        frmSuperficies.LynxSuperficies.CellText(K, 1) = SupData(i).Grh
+        frmSuperficies.LynxSuperficies.CellText(K, 2) = SupData(i).name
     Next
     
     frmSuperficies.LynxSuperficies.Visible = True
@@ -925,8 +1576,8 @@ Public Sub CargarIndicesNPC()
 On Error Resume Next
 'On Error GoTo Fallo
 
-    If FileExist(DirDats & "NPCs.dat", vbArchive) = False Then
-        MsgBox "Falta el archivo 'NPCs.dat' en " & DirDats, vbCritical
+    If FileExist(dirDats & "NPCs.dat", vbArchive) = False Then
+        MsgBox "Falta el archivo 'NPCs.dat' en " & dirDats, vbCritical
         Call CloseMapEditor
     End If
 
@@ -934,9 +1585,9 @@ On Error Resume Next
     Dim NPC As Long
     Dim Hostil As String
     Dim Leer As New clsIniManager
-    Dim k As Long
+    Dim K As Long
     
-    Call Leer.Initialize(DirDats & "NPCs.dat")
+    Call Leer.Initialize(dirDats & "NPCs.dat")
     NumNPCs = Val(Leer.GetValue("INIT", "NumNPCs"))
     
     ReDim NpcData(NumNPCs) As NpcData
@@ -967,12 +1618,12 @@ On Error Resume Next
             
             frmNPCs.LynxNPCs.AddItem NPC
             
-            k = frmNPCs.LynxNPCs.Rows - 1
-            frmNPCs.LynxNPCs.CellText(k, 1) = .name
-            frmNPCs.LynxNPCs.CellText(k, 2) = .ELV
+            K = frmNPCs.LynxNPCs.Rows - 1
+            frmNPCs.LynxNPCs.CellText(K, 1) = .name
+            frmNPCs.LynxNPCs.CellText(K, 2) = .ELV
             
             Hostil = IIf(.Hostile = 1, "SI", "NO")
-            frmNPCs.LynxNPCs.CellText(k, 3) = Hostil
+            frmNPCs.LynxNPCs.CellText(K, 3) = Hostil
             
         End With
     Next
@@ -986,7 +1637,7 @@ On Error Resume Next
     Set Leer = Nothing
     Exit Sub
 Fallo:
-    MsgBox "Error al intentar cargar el NPC " & NPC & " de " & Trabajando & " en " & DirDats & vbCrLf & "Err: " & Err.Number & " - " & Err.Description, vbCritical + vbOKOnly
+    MsgBox "Error al intentar cargar el NPC " & NPC & " de " & Trabajando & " en " & dirDats & vbCrLf & "Err: " & Err.Number & " - " & Err.Description, vbCritical + vbOKOnly
 
 End Sub
 
@@ -999,15 +1650,15 @@ Public Sub CargarIndicesOBJ()
 On Error GoTo Fallo
 
     Dim Obj As Integer
-    Dim k As Long
+    Dim K As Long
     Dim Leer As New clsIniManager
 
-    If FileExist(DirDats & "\OBJ.dat", vbArchive) = False Then
-        MsgBox "Falta el archivo 'OBJ.dat' en " & DirDats, vbCritical
+    If FileExist(dirDats & "\OBJ.dat", vbArchive) = False Then
+        MsgBox "Falta el archivo 'OBJ.dat' en " & dirDats, vbCritical
         End
     End If
 
-    Call Leer.Initialize(DirDats & "\OBJ.dat")
+    Call Leer.Initialize(dirDats & "\OBJ.dat")
     
     frmOBJs.LynxOBJs.Clear
     frmOBJs.LynxOBJs.Redraw = False
@@ -1037,8 +1688,8 @@ On Error GoTo Fallo
             .Subtipo = Val(Leer.GetValue("OBJ" & Obj, "Subtipo"))
             
             frmOBJs.LynxOBJs.AddItem Obj
-            k = frmOBJs.LynxOBJs.Rows - 1
-            frmOBJs.LynxOBJs.CellText(k, 1) = .name
+            K = frmOBJs.LynxOBJs.Rows - 1
+            frmOBJs.LynxOBJs.CellText(K, 1) = .name
         
         End With
     Next Obj
@@ -1053,7 +1704,7 @@ On Error GoTo Fallo
     Exit Sub
     
 Fallo:
-    MsgBox "Error al intentar cargar el Objteto " & Obj & " de OBJ.dat en " & DirDats & vbCrLf & "Err: " & Err.Number & " - " & Err.Description, vbCritical + vbOKOnly
+    MsgBox "Error al intentar cargar el Objteto " & Obj & " de OBJ.dat en " & dirDats & vbCrLf & "Err: " & Err.Number & " - " & Err.Description, vbCritical + vbOKOnly
 
 End Sub
 
@@ -1066,7 +1717,7 @@ Public Sub CargarIndicesTriggers()
 
 On Error GoTo Fallo
 
-    Dim k As Long
+    Dim K As Long
 
     If FileExist(IniPath & INITDIR & "Triggers.ini", vbArchive) = False Then
         MsgBox "Falta el archivo 'Triggers.ini' en " & IniPath & INITDIR & "Triggers.ini", vbCritical
@@ -1089,8 +1740,8 @@ On Error GoTo Fallo
     NumT = Val(Leer.GetValue("INIT", "NumTriggers"))
     For t = 1 To NumT
         frmTriggers.LynxTriggers.AddItem t
-        k = frmTriggers.LynxTriggers.Rows - 1
-        frmTriggers.LynxTriggers.CellText(k, 1) = Leer.GetValue("Trig" & t, "Name")
+        K = frmTriggers.LynxTriggers.Rows - 1
+        frmTriggers.LynxTriggers.CellText(K, 1) = Leer.GetValue("Trig" & t, "Name")
     Next t
 
     frmTriggers.LynxTriggers.Visible = True
