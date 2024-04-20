@@ -469,40 +469,11 @@ Begin VB.Form frmMain
       ImgSize         =   32
       cBack           =   -2147483633
    End
-   Begin WinterMapEditor.lvButtons_H LvBFoto 
-      Height          =   480
-      Index           =   14
-      Left            =   8910
-      TabIndex        =   26
-      ToolTipText     =   "Captura de pantalla"
-      Top             =   75
-      Width           =   480
-      _ExtentX        =   847
-      _ExtentY        =   847
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   0
-      Value           =   0   'False
-      ImgAlign        =   4
-      Image           =   "frmMain.frx":2D7930
-      ImgSize         =   32
-      cBack           =   -2147483633
-   End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
       Index           =   14
       Left            =   7170
-      TabIndex        =   27
+      TabIndex        =   26
       ToolTipText     =   "Mapa"
       Top             =   90
       Width           =   480
@@ -523,7 +494,7 @@ Begin VB.Form frmMain
       Mode            =   1
       Value           =   0   'False
       ImgAlign        =   4
-      Image           =   "frmMain.frx":2DA730
+      Image           =   "frmMain.frx":2D7930
       ImgSize         =   32
       cBack           =   -2147483633
    End
@@ -1114,6 +1085,10 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuLineFunciones0 
          Caption         =   "-"
       End
+      Begin VB.Menu mnuScreenshot 
+         Caption         =   "Captura de pantalla"
+         Shortcut        =   ^{F12}
+      End
       Begin VB.Menu mnuRender 
          Caption         =   "Renderizar"
       End
@@ -1312,16 +1287,6 @@ Private Sub LvBEdit_Click(Index As Integer)
     
     End Select
 
-End Sub
-
-Private Sub LvBFoto_Click(Index As Integer)
-    '*************************************************
-    'Author: Lorwik
-    'Last modified: 31/03/2024
-    '*************************************************
-    
-    Call modGeneral.Client_Screenshot(MainViewPic.hDC, MainViewPic.ScaleWidth, MainViewPic.ScaleHeight)
-    
 End Sub
 
 Private Sub MapPest_Click(Index As Integer)
@@ -1627,7 +1592,7 @@ Private Sub mnuGrhtoPNG_Click()
     If IsNumeric(grhCount) = True Then
         If GrhIndex > grhCount Then Exit Sub
         If GrhIndex < 1 Then Exit Sub
-        MsgBox GrhData(GrhIndex).FileNum, vbInformation
+        MsgBox GrhData(GrhIndex).fileNum, vbInformation
 
     End If
 
@@ -1704,7 +1669,7 @@ Private Sub mnuPNGtoGrh_Click()
     
         Do While Count < grhCount
         
-            If GrhData(Count).FileNum = PNGIndex Then Exit Do
+            If GrhData(Count).fileNum = PNGIndex Then Exit Do
         
             Count = Count + 1
         
@@ -1890,6 +1855,15 @@ End Sub
 Private Sub mnuSalir_Click()
     Call CloseMapEditor
     
+End Sub
+
+Private Sub mnuScreenshot_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 31/03/2024
+    '*************************************************
+    
+    Call modGeneral.Client_Screenshot(MainViewPic.hDC, MainViewPic.ScaleWidth, MainViewPic.ScaleHeight)
 End Sub
 
 Private Sub mnuSeleccionado_Click(Index As Integer)
