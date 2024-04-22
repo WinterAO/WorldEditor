@@ -192,11 +192,11 @@ On Local Error GoTo errhandler
     
     If Midi = False Then
         'Find the Info Head of the desired file
-        SourceFilePath = DirRecursos & "Musica" & Formato
+        SourceFilePath = dirRecursos_Compressed & "Musica" & Formato
         InfoHead = File_Find(SourceFilePath, file_name & ".mp3")
     Else
         'Find the Info Head of the desired file
-        SourceFilePath = DirRecursos & "Midi" & Formato
+        SourceFilePath = dirRecursos_Compressed & "Midi" & Formato
         InfoHead = File_Find(SourceFilePath, file_name & ".mid")
     End If
     
@@ -282,31 +282,31 @@ On Local Error GoTo errhandler
     Select Case File_Type
     
         Case Graphics
-                SourceFilePath = DirRecursos & "Graficos" & Formato
+                SourceFilePath = dirRecursos_Compressed & "Graficos" & Formato
             
         Case Music
-                SourceFilePath = DirRecursos & "Musica" & Formato
+                SourceFilePath = dirRecursos_Compressed & "Musica" & Formato
                 
         Case Midi
-                SourceFilePath = DirRecursos & "Midi" & Formato
+                SourceFilePath = dirRecursos_Compressed & "Midi" & Formato
         
         Case Wav
-                SourceFilePath = DirRecursos & "Sounds" & Formato
+                SourceFilePath = dirRecursos_Compressed & "Sounds" & Formato
 
         Case Scripts
-                SourceFilePath = DirRecursos & "Scripts" & Formato
+                SourceFilePath = dirRecursos_Compressed & "Scripts" & Formato
 
         Case Map
-                SourceFilePath = DirRecursos & "Mapas" & Formato
+                SourceFilePath = dirRecursos_Compressed & "Mapas" & Formato
 
         Case Ambient
-                SourceFilePath = DirRecursos & "Ambient" & Formato
+                SourceFilePath = dirRecursos_Compressed & "Ambient" & Formato
                 
         Case Fuentes
-                SourceFilePath = DirRecursos & "Fuentes" & Formato
+                SourceFilePath = dirRecursos_Compressed & "Fuentes" & Formato
                 
         Case Minimap
-                SourceFilePath = DirRecursos & "Minimap" & Formato
+                SourceFilePath = dirRecursos_Compressed & "Minimap" & Formato
                 
         Case Else
             Exit Function

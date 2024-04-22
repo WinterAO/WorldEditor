@@ -216,7 +216,7 @@ Public Sub Quitar_Bordes()
                 
                  'Erase NPCs
                 If MapData(X, Y).NPCIndex > 0 Then
-                    EraseChar MapData(X, Y).CharIndex
+                    Char_Erase MapData(X, Y).CharIndex
                     MapData(X, Y).NPCIndex = 0
                 End If
     
@@ -293,7 +293,7 @@ Public Sub Superficie_Bordes()
             End If
                  'Erase NPCs
                 If MapData(X, Y).NPCIndex > 0 Then
-                    EraseChar MapData(X, Y).CharIndex
+                    Char_Erase MapData(X, Y).CharIndex
                     MapData(X, Y).NPCIndex = 0
                 End If
     
@@ -378,14 +378,14 @@ Public Sub Quitar_NPCs(ByVal Hostiles As Boolean, ByVal Zona As Boolean)
                 
                 If Not Hostiles Then
                     If MapData(X, Y).NPCIndex > 0 Then
-                        Call EraseChar(MapData(X, Y).CharIndex)
+                        Call Char_Erase(MapData(X, Y).CharIndex)
                         MapData(X, Y).NPCIndex = 0
         
                     End If
                 Else
 
                     If MapData(X, Y).NPCIndex > 500 Then
-                        Call EraseChar(MapData(X, Y).CharIndex)
+                        Call Char_Erase(MapData(X, Y).CharIndex)
                         MapData(X, Y).NPCIndex = 0
         
                     End If
@@ -406,7 +406,7 @@ Public Sub Quitar_NPCs(ByVal Hostiles As Boolean, ByVal Zona As Boolean)
                 If Not Hostiles Then
                     If zonaNumber = MapData(X, Y).ZonaIndex Then
                         If MapData(X, Y).NPCIndex > 0 Then
-                            Call EraseChar(MapData(X, Y).CharIndex)
+                            Call Char_Erase(MapData(X, Y).CharIndex)
                             MapData(X, Y).NPCIndex = 0
         
                         End If
@@ -415,7 +415,7 @@ Public Sub Quitar_NPCs(ByVal Hostiles As Boolean, ByVal Zona As Boolean)
 
                     If zonaNumber = MapData(X, Y).ZonaIndex Then
                         If MapData(X, Y).NPCIndex > 500 Then
-                            Call EraseChar(MapData(X, Y).CharIndex)
+                            Call Char_Erase(MapData(X, Y).CharIndex)
                             MapData(X, Y).NPCIndex = 0
         
                         End If
@@ -486,7 +486,6 @@ Public Sub DobleClick(tX As Integer, tY As Integer)
                 
                 Call abrirCargarMapa(frmMain.Dialog.filename)
                 
-                'modMapIO.AbrirunMapa frmMain.Dialog.filename
                 UserPos.X = tTrans.X
                 UserPos.Y = tTrans.Y
                 
@@ -857,7 +856,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             Arma = NpcData(NPCIndex).WeaponAnim
                             Escudo = NpcData(NPCIndex).ShieldAnim
                             Heading = NpcData(NPCIndex).Heading
-                            Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY, Arma, Escudo, Casco)
+                            Call Char_Make(NextOpenChar(), Body, Head, Heading, tX, tY, Arma, Escudo, Casco)
                             .NPCIndex = NPCIndex
 
                         End If
@@ -878,7 +877,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             Arma = NpcData(NPCIndex).WeaponAnim
                             Escudo = NpcData(NPCIndex).ShieldAnim
                             Heading = NpcData(NPCIndex).Heading
-                            Call MakeChar(NextOpenChar(), Body, Head, Heading, tX, tY, Arma, Escudo, Casco)
+                            Call Char_Make(NextOpenChar(), Body, Head, Heading, tX, tY, Arma, Escudo, Casco)
                             .NPCIndex = NPCIndex
 
                         End If
@@ -891,7 +890,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
 
                         MapInfo.Changed = 1 'Set changed flag
                         .NPCIndex = 0
-                        Call EraseChar(.CharIndex)
+                        Call Char_Erase(.CharIndex)
 
                     End If
 
@@ -981,13 +980,17 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 '########################
                 If frmLuces.cInsertarLuz.value Then
                     If Val(frmLuces.cRango = 0) Then Exit Sub
-                    Call mDx8_Luces.Create_Light_To_Map(tX, tY, frmLuces.cRango, Val(frmLuces.R), Val(frmLuces.G), Val(frmLuces.B))
-                    Call mDx8_Luces.LightRenderAll
+                    
+                    Dim tmpColor As RGBA
+                    tmpColor = RGBA_From_Comp(Val(frmLuces.R), Val(frmLuces.G), Val(frmLuces.B))
+                    
+                    Call LucesRedondas.Create_Light_To_Map(tX, tY, tmpColor, Val(frmLuces.cRango))
+                    Call LucesRedondas.LightRenderAll
                     
                     With MapData(tX, tY).Light
                         .active = True
                         .range = frmLuces.cRango
-                        .RGBCOLOR.a = 255
+                        .RGBCOLOR.A = 255
                         .RGBCOLOR.R = Val(frmLuces.R)
                         .RGBCOLOR.G = Val(frmLuces.G)
                         .RGBCOLOR.B = Val(frmLuces.B)
@@ -1000,14 +1003,14 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 
                     With MapData(tX, tY).Light
                         .range = 0
-                        .RGBCOLOR.a = 255
+                        .RGBCOLOR.A = 255
                         .RGBCOLOR.R = Val(frmLuces.R)
                         .RGBCOLOR.G = Val(frmLuces.G)
                         .RGBCOLOR.B = Val(frmLuces.B)
                         
                     End With
         
-                    mDx8_Luces.Delete_Light_To_Map tX, tY
+                    LucesRedondas.Delete_Light_To_Map tX, tY
         
                     MapInfo.Changed = 1 'Set changed flag
                     
@@ -1090,10 +1093,10 @@ Public Sub PegarSeleccion() '(mx As Integer, my As Integer)
         For Y = 0 To SeleccionAlto - 1
              MapData(X + SobreX, Y + SobreY).bLocked = SeleccionMap(X, Y).bLocked
              MapData(X + SobreX, Y + SobreY).CharIndex = SeleccionMap(X, Y).CharIndex
-             MapData(X + SobreX, Y + SobreY).Engine_Light(0) = SeleccionMap(X, Y).Engine_Light(0)
-             MapData(X + SobreX, Y + SobreY).Engine_Light(1) = SeleccionMap(X, Y).Engine_Light(1)
-             MapData(X + SobreX, Y + SobreY).Engine_Light(2) = SeleccionMap(X, Y).Engine_Light(2)
-             MapData(X + SobreX, Y + SobreY).Engine_Light(3) = SeleccionMap(X, Y).Engine_Light(3)
+             MapData(X + SobreX, Y + SobreY).Light_Value(0) = SeleccionMap(X, Y).Light_Value(0)
+             MapData(X + SobreX, Y + SobreY).Light_Value(1) = SeleccionMap(X, Y).Light_Value(1)
+             MapData(X + SobreX, Y + SobreY).Light_Value(2) = SeleccionMap(X, Y).Light_Value(2)
+             MapData(X + SobreX, Y + SobreY).Light_Value(3) = SeleccionMap(X, Y).Light_Value(3)
              MapData(X + SobreX, Y + SobreY).fX = SeleccionMap(X, Y).fX
              MapData(X + SobreX, Y + SobreY).FxIndex = SeleccionMap(X, Y).FxIndex
              MapData(X + SobreX, Y + SobreY).Graphic(1) = SeleccionMap(X, Y).Graphic(1)
@@ -1240,7 +1243,7 @@ Public Sub CopiarSeleccion(Optional ByVal Borde As Boolean = False)
                     .fX = MapData(X + SeleccionIX, Y + SeleccionIY).fX
 
                     For i = 0 To 3
-                        .Engine_Light(i) = MapData(X + SeleccionIX, Y + SeleccionIY).Engine_Light(i)
+                        .Light_Value(i) = MapData(X + SeleccionIX, Y + SeleccionIY).Light_Value(i)
                     Next i
 
                     .CharIndex = MapData(X + SeleccionIX, Y + SeleccionIY).CharIndex

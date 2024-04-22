@@ -370,10 +370,10 @@ On Error GoTo ErrorHandler
     
     If Tipo = srcFileType.Ambient Then
         file_name = file_name & ".wav"
-        InfoHead = File_Find(DirRecursos & "Sounds" & Formato, file_name)
+        InfoHead = File_Find(dirRecursos_Compressed & "Sounds" & Formato, file_name)
     Else
         file_name = file_name & ".wav"
-        InfoHead = File_Find(DirRecursos & "Sounds" & Formato, file_name)
+        InfoHead = File_Find(dirRecursos_Compressed & "Sounds" & Formato, file_name)
     End If
     
     If InfoHead.lngFileSize = 0 Then Exit Function

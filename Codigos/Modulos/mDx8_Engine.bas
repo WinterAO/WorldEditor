@@ -50,7 +50,7 @@ Public ScreenHeight As Long
 Public MainScreenRect As RECT
 
 Public Type TLVERTEX
-    X As Single
+    x As Single
     y As Single
     Z As Single
     rhw As Single
@@ -167,7 +167,7 @@ On Error GoTo ErrorDevice:
         .BackBufferFormat = DispMode.Format
         .BackBufferWidth = ScreenWidth
         .BackBufferHeight = ScreenHeight
-        .hDeviceWindow = frmMain.MainViewPic.hwnd
+        .hDeviceWindow = frmMain.MainViewPic.hWnd
     End With
     
     If Not DirectDevice Is Nothing Then
@@ -252,20 +252,17 @@ On Error GoTo EngineHandler:
     Dim i As Byte
     
     '   DeInit Lights
-    Call DeInit_LightEngine
+    Call LucesRedondas.DeInit_LightEngine
     
     '   Clean Particles
     Call Particle_Group_Remove_All
     
     '   Clean Texture
-    Call DirectDevice.SetTexture(0, Nothing)
+    If Not DirectDevice Is Nothing Then _
+        Call DirectDevice.SetTexture(0, Nothing)
     
     '   Borrar DBI Surface
     Call CleanDrawBuffer
-    
-    '   Erase Data
-    Erase MapData()
-    Erase CharList()
     
     Set DirectD3D8 = Nothing
     Set DirectD3D = Nothing
@@ -273,6 +270,11 @@ On Error GoTo EngineHandler:
     Set DirectDevice = Nothing
     Set SpriteBatch = Nothing
     Set Sound = Nothing
+    Set LucesRedondas = Nothing
+    
+    '   Erase Data
+    Erase MapData()
+    Erase CharList()
     
     Exit Sub
     
@@ -294,7 +296,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
     FramesPerSecCounter = 101
 
     TileBufferSize = ClientSetup.TilesBuffer
-    Engine_BaseSpeed = 0.018
+    Engine_BaseSpeed = 0.5
     
     With MainScreenRect
         .Bottom = frmMain.MainViewPic.ScaleHeight
@@ -306,8 +308,10 @@ Public Sub Engine_DirectX8_Aditional_Init()
     
     If Not prgRun Then
         
+        Set LucesRedondas = New clsLucesRedondas
+        
         ' Seteamos algunos colores por adelantado y unica vez.
-        Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
+        Call RGBAList(COLOR_WHITE(), 255, 255, 255, 255)
         
         ' Inicializamos otros sistemas.
         Call mDx8_Text.Engine_Init_FontSettings
@@ -330,7 +334,7 @@ Public Sub Engine_Draw_Line(x1 As Single, y1 As Single, x2 As Single, y2 As Sing
 
 On Error GoTo Error
     
-    Call Engine_Long_To_RGB_List(temp_rgb(), color)
+    Call Long_2_RGBAList(temp_rgb(), color)
     
     Call SpriteBatch.SetTexture(Nothing)
     Call SpriteBatch.Draw(x1, y1, x2, y2, temp_rgb())
@@ -346,7 +350,7 @@ Public Sub Engine_Draw_Point(x1 As Single, y1 As Single, Optional color As Long 
 
 On Error GoTo Error
     
-    Call Engine_Long_To_RGB_List(temp_rgb(), color)
+    Call Long_2_RGBAList(temp_rgb(), color)
     
     Call SpriteBatch.SetTexture(Nothing)
     Call SpriteBatch.Draw(x1, y1, 0, 1, temp_rgb(), 0, 0)
@@ -384,14 +388,14 @@ Engine_ElapsedTime_Err:
     Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_ElapsedTime", Erl)
 End Function
 
-Public Function Engine_PixelPosX(ByVal X As Long) As Long
+Public Function Engine_PixelPosX(ByVal x As Long) As Long
 '*****************************************************************
 'Converts a tile position to a screen position
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosX
 '*****************************************************************
     On Error GoTo Engine_PixelPosX_Err
 
-    Engine_PixelPosX = (X - 1) * 32
+    Engine_PixelPosX = (x - 1) * 32
     
     Exit Function
     
@@ -417,7 +421,7 @@ Engine_PixelPosY_Err:
     Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_PixelPosY", Erl)
 End Function
 
-Public Function Engine_TPtoSPX(ByVal X As Integer) As Long
+Public Function Engine_TPtoSPX(ByVal x As Integer) As Long
 '************************************************************
 'Tile Position to Screen Position
 'Takes the tile position and returns the pixel location on the screen
@@ -425,7 +429,7 @@ Public Function Engine_TPtoSPX(ByVal X As Integer) As Long
 '************************************************************
 On Error GoTo Engine_TPtoSPX_Err
 
-    Engine_TPtoSPX = Engine_PixelPosX(X - ((UserPos.X - HalfWindowTileWidth) - TileBufferSize)) + OffsetCounterX - 272 + ((10 - TileBufferSize) * 32)
+    Engine_TPtoSPX = Engine_PixelPosX(x - ((UserPos.x - HalfWindowTileWidth) - TileBufferSize)) + OffsetCounterX - 272 + ((10 - TileBufferSize) * 32)
     
     Exit Function
     
@@ -453,7 +457,7 @@ Engine_TPtoSPY_Err:
 
 End Function
 
-Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal y As Integer, ByVal Width As Integer, ByVal Height As Integer, color As Long)
+Public Sub Engine_Draw_Box(ByVal x As Integer, ByVal y As Integer, ByVal Width As Integer, ByVal Height As Integer, color As Long)
 '***************************************************
 'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 29/12/10
@@ -461,10 +465,10 @@ Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal y As Integer, ByVal Width A
 '***************************************************
     On Error GoTo Engine_Draw_Box_Err
 
-    Call Engine_Long_To_RGB_List(temp_rgb(), color)
+    Call Long_2_RGBAList(temp_rgb(), color)
 
     Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(X, y, Width, ByVal Height, temp_rgb())
+    Call SpriteBatch.Draw(x, y, Width, ByVal Height, temp_rgb())
     
     Exit Sub
     
@@ -558,7 +562,7 @@ Engine_Collision_Line_Err:
 
 End Function
 
-Public Function Engine_Collision_LineRect(ByVal sX As Long, ByVal sY As Long, ByVal SW As Long, ByVal SH As Long, ByVal x1 As Long, ByVal y1 As Long, ByVal x2 As Long, ByVal y2 As Long) As Byte
+Public Function Engine_Collision_LineRect(ByVal sX As Long, ByVal sY As Long, ByVal sW As Long, ByVal sH As Long, ByVal x1 As Long, ByVal y1 As Long, ByVal x2 As Long, ByVal y2 As Long) As Byte
 '*****************************************************************
 'Check if a line intersects with a rectangle (returns 1 if true)
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Collision_LineRect
@@ -566,25 +570,25 @@ Public Function Engine_Collision_LineRect(ByVal sX As Long, ByVal sY As Long, By
     On Error GoTo Engine_Collision_LineRect_Err
 
     'Top line
-    If Engine_Collision_Line(sX, sY, sX + SW, sY, x1, y1, x2, y2) Then
+    If Engine_Collision_Line(sX, sY, sX + sW, sY, x1, y1, x2, y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
     
     'Right line
-    If Engine_Collision_Line(sX + SW, sY, sX + SW, sY + SH, x1, y1, x2, y2) Then
+    If Engine_Collision_Line(sX + sW, sY, sX + sW, sY + sH, x1, y1, x2, y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
 
     'Bottom line
-    If Engine_Collision_Line(sX, sY + SH, sX + SW, sY + SH, x1, y1, x2, y2) Then
+    If Engine_Collision_Line(sX, sY + sH, sX + sW, sY + sH, x1, y1, x2, y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
 
     'Left line
-    If Engine_Collision_Line(sX, sY, sX, sY + SW, x1, y1, x2, y2) Then
+    If Engine_Collision_Line(sX, sY, sX, sY + sW, x1, y1, x2, y2) Then
         Engine_Collision_LineRect = 1
         Exit Function
     End If
@@ -790,12 +794,12 @@ Public Sub Engine_Get_ARGB(color As Long, Data As D3DCOLORVALUE)
 '**************************************************************
     On Error GoTo Engine_Get_ARGB_Err
     
-    Dim a As Long, R As Long, G As Long, B As Long
+    Dim A As Long, R As Long, G As Long, B As Long
         
     If color < 0 Then
-        a = ((color And (&H7F000000)) / (2 ^ 24)) Or &H80&
+        A = ((color And (&H7F000000)) / (2 ^ 24)) Or &H80&
     Else
-        a = color / (2 ^ 24)
+        A = color / (2 ^ 24)
     End If
     
     R = (color And &HFF0000) / (2 ^ 16)
@@ -803,7 +807,7 @@ Public Sub Engine_Get_ARGB(color As Long, Data As D3DCOLORVALUE)
     B = (color And &HFF&)
     
     With Data
-        .a = a
+        .A = A
         .R = R
         .G = G
         .B = B
@@ -816,4 +820,3 @@ Engine_Get_ARGB_Err:
     Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_Get_ARGB", Erl)
 
 End Sub
-

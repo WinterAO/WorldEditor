@@ -12,6 +12,11 @@ Public ProfileTag        As String ' Perfil seleccionado
 'Objetos publicos
 Public Sound             As clsSoundEngine
 
+Public LucesRedondas     As clsLucesRedondas
+
+'The main timer of the Carga.
+Public MainTimer         As clsTimer
+
 'Totals
 Global NumChars          As Integer
 
@@ -156,6 +161,13 @@ Public ContadorTiles     As Long
 
 Public Const OFFSET_HEAD As Integer = -34
 
+'###########################
+' Constantes de intervalo
+'###########################
+Public Enum eIntervalos
+    INT_CHANGE_HEADING = 300
+End Enum
+
 'Direcciones
 Public Enum E_Heading
 
@@ -206,8 +218,8 @@ End Type
 'Posicion en un mapa
 Public Type Position
 
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
 
 End Type
 
@@ -245,8 +257,8 @@ End Type
 Public Type WorldPos
 
     Map As Integer
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
 
 End Type
 
@@ -332,7 +344,7 @@ Public Type MapBlock
     
     Trigger As Integer
     
-    Engine_Light(0 To 3) As Long
+    Light_Value(3) As RGBA
     Light As tLight
     
     Particle_Index As Integer
@@ -463,6 +475,8 @@ Public ObjData()            As ObjData
 '************************************
 
 Public CantZonas            As Integer
+
+Public UserMoving           As Byte
 
 Public UserPos              As Position 'Posicion
 

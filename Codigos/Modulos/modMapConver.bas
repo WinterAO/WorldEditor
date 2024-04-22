@@ -19,14 +19,14 @@ End Type
 Private Type tDatosBloqueados
 
     X As Integer
-    y As Integer
+    Y As Integer
 
 End Type
 
 Private Type tDatosGrh
 
     X As Integer
-    y As Integer
+    Y As Integer
     GrhIndex As Long
 
 End Type
@@ -34,7 +34,7 @@ End Type
 Private Type tDatosTrigger
 
     X As Integer
-    y As Integer
+    Y As Integer
     Trigger As Integer
 
 End Type
@@ -42,7 +42,7 @@ End Type
 Private Type tDatosZonas
 
     X As Integer
-    y As Integer
+    Y As Integer
     Zona As Integer
 
 End Type
@@ -54,14 +54,14 @@ Public Type tDatosLuces
     B As Integer
     range As Byte
     X As Integer
-    y As Integer
+    Y As Integer
 
 End Type
 
 Private Type tDatosParticulas
 
     X As Integer
-    y As Integer
+    Y As Integer
     Particula As Long
 
 End Type
@@ -69,7 +69,7 @@ End Type
 Private Type tDatosNPC
 
     X As Integer
-    y As Integer
+    Y As Integer
     NPCIndex As Integer
 
 End Type
@@ -77,7 +77,7 @@ End Type
 Private Type tDatosObjs
 
     X As Integer
-    y As Integer
+    Y As Integer
     ObjIndex As Integer
     ObjAmmount As Integer
 
@@ -86,7 +86,7 @@ End Type
 Private Type tDatosTE
 
     X As Integer
-    y As Integer
+    Y As Integer
     DestM As Integer
     DestX As Integer
     DestY As Integer
@@ -217,8 +217,8 @@ Sub Cargar_ConverCSM(ByVal Map As String)
             Get #fh, , Blqs
 
             For i = 1 To .NumeroBloqueados
-                If Blqs(i).X > XMinMapSize And Blqs(i).X < XMaxMapSize And Blqs(i).y > YMinMapSize And Blqs(i).y < YMaxMapSize Then _
-                    MapData(Blqs(i).X, Blqs(i).y).bLocked = 1
+                If Blqs(i).X > XMinMapSize And Blqs(i).X < XMaxMapSize And Blqs(i).Y > YMinMapSize And Blqs(i).Y < YMaxMapSize Then _
+                    MapData(Blqs(i).X, Blqs(i).Y).bLocked = 1
             Next i
 
         End If
@@ -228,8 +228,8 @@ Sub Cargar_ConverCSM(ByVal Map As String)
             Get #fh, , L2
 
             For i = 1 To .NumeroLayers(2)
-                If L2(i).X > XMinMapSize And L2(i).X < XMaxMapSize And L2(i).y > YMinMapSize And L2(i).y < YMaxMapSize Then _
-                    InitGrh MapData(L2(i).X, L2(i).y).Graphic(2), L2(i).GrhIndex
+                If L2(i).X > XMinMapSize And L2(i).X < XMaxMapSize And L2(i).Y > YMinMapSize And L2(i).Y < YMaxMapSize Then _
+                    InitGrh MapData(L2(i).X, L2(i).Y).Graphic(2), L2(i).GrhIndex
             Next i
 
         End If
@@ -239,8 +239,8 @@ Sub Cargar_ConverCSM(ByVal Map As String)
             Get #fh, , L3
 
             For i = 1 To .NumeroLayers(3)
-                If L3(i).X > XMinMapSize And L3(i).X < XMaxMapSize And L3(i).y > YMinMapSize And L3(i).y < YMaxMapSize Then _
-                    InitGrh MapData(L3(i).X, L3(i).y).Graphic(3), L3(i).GrhIndex
+                If L3(i).X > XMinMapSize And L3(i).X < XMaxMapSize And L3(i).Y > YMinMapSize And L3(i).Y < YMaxMapSize Then _
+                    InitGrh MapData(L3(i).X, L3(i).Y).Graphic(3), L3(i).GrhIndex
             Next i
 
         End If
@@ -250,8 +250,8 @@ Sub Cargar_ConverCSM(ByVal Map As String)
             Get #fh, , L4
 
             For i = 1 To .NumeroLayers(4)
-                If L4(i).X > XMinMapSize And L4(i).X < XMaxMapSize And L4(i).y > YMinMapSize And L4(i).y < YMaxMapSize Then _
-                    InitGrh MapData(L4(i).X, L4(i).y).Graphic(4), L4(i).GrhIndex
+                If L4(i).X > XMinMapSize And L4(i).X < XMaxMapSize And L4(i).Y > YMinMapSize And L4(i).Y < YMaxMapSize Then _
+                    InitGrh MapData(L4(i).X, L4(i).Y).Graphic(4), L4(i).GrhIndex
             Next i
 
         End If
@@ -261,8 +261,8 @@ Sub Cargar_ConverCSM(ByVal Map As String)
             Get #fh, , Triggers
 
             For i = 1 To .NumeroTriggers
-                If Triggers(i).X > XMinMapSize And Triggers(i).X < XMaxMapSize And Triggers(i).y > YMinMapSize And Triggers(i).y < YMaxMapSize Then _
-                    MapData(Triggers(i).X, Triggers(i).y).Trigger = Triggers(i).Trigger
+                If Triggers(i).X > XMinMapSize And Triggers(i).X < XMaxMapSize And Triggers(i).Y > YMinMapSize And Triggers(i).Y < YMaxMapSize Then _
+                    MapData(Triggers(i).X, Triggers(i).Y).Trigger = Triggers(i).Trigger
             Next i
 
         End If
@@ -272,9 +272,9 @@ Sub Cargar_ConverCSM(ByVal Map As String)
             Get #fh, , Particulas
 
             For i = 1 To .NumeroParticulas
-                If Particulas(i).X > XMinMapSize And Particulas(i).X < XMaxMapSize And Particulas(i).y > YMinMapSize And Particulas(i).y < YMaxMapSize Then
-                    MapData(Particulas(i).X, Particulas(i).y).Particle_Index = Particulas(i).Particula
-                    Call General_Particle_Create(Particulas(i).Particula, Particulas(i).X, Particulas(i).y)
+                If Particulas(i).X > XMinMapSize And Particulas(i).X < XMaxMapSize And Particulas(i).Y > YMinMapSize And Particulas(i).Y < YMaxMapSize Then
+                    MapData(Particulas(i).X, Particulas(i).Y).Particle_Index = Particulas(i).Particula
+                    Call General_Particle_Create(Particulas(i).Particula, Particulas(i).X, Particulas(i).Y)
                 End If
             Next i
 
@@ -289,32 +289,31 @@ Sub Cargar_ConverCSM(ByVal Map As String)
 
             For i = 1 To .NumeroLuces
 
-                If Luces(i).X > XMinMapSize And Luces(i).X < XMaxMapSize And Luces(i).y > YMinMapSize And Luces(i).y < YMaxMapSize Then
-                    With MapData(Luces(i).X, Luces(i).y)
+                If Luces(i).X > XMinMapSize And Luces(i).X < XMaxMapSize And Luces(i).Y > YMinMapSize And Luces(i).Y < YMaxMapSize Then
+                    With MapData(Luces(i).X, Luces(i).Y)
                         .Light.range = Luces(i).range
-                        .Light.RGBCOLOR.a = 255
+                        .Light.RGBCOLOR.A = 255
                         .Light.RGBCOLOR.R = Luces(i).R
                         .Light.RGBCOLOR.G = Luces(i).G
                         .Light.RGBCOLOR.B = Luces(i).B
-    
+
                     End With
-    
-                    Call Create_Light_To_Map(Luces(i).X, Luces(i).y, Luces(i).range, Luces(i).R, Luces(i).G, Luces(i).B)
+
+                    Call LucesRedondas.Create_Light_To_Map(Luces(i).X, Luces(i).Y, RGBA_From_Comp(Luces(i).R, Luces(i).G, Luces(i).B), Luces(i).range)
                 End If
             Next i
 
-            Call LightRenderAll
+            Call LucesRedondas.LightRenderAll
 
         End If
 
-        '
         If .NumeroZonas > 0 Then
             ReDim Zonas(1 To .NumeroZonas)
             Get #fh, , Zonas
 
             For i = 1 To .NumeroZonas
-                If Zonas(i).X > XMinMapSize And Zonas(i).X < XMaxMapSize + 1 And Zonas(i).y > YMinMapSize And Zonas(i).y < YMaxMapSize + 1 Then _
-                    MapData(Zonas(i).X, Zonas(i).y).ZonaIndex = Zonas(i).Zona
+                If Zonas(i).X > XMinMapSize And Zonas(i).X < XMaxMapSize + 1 And Zonas(i).Y > YMinMapSize And Zonas(i).Y < YMaxMapSize + 1 Then _
+                    MapData(Zonas(i).X, Zonas(i).Y).ZonaIndex = Zonas(i).Zona
             Next i
 
         End If
@@ -324,13 +323,13 @@ Sub Cargar_ConverCSM(ByVal Map As String)
             Get #fh, , Objetos
 
             For i = 1 To .NumeroOBJs
-                MapData(Objetos(i).X, Objetos(i).y).OBJInfo.ObjIndex = Objetos(i).ObjIndex
-                MapData(Objetos(i).X, Objetos(i).y).OBJInfo.Amount = Objetos(i).ObjAmmount
+                MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.ObjIndex = Objetos(i).ObjIndex
+                MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.Amount = Objetos(i).ObjAmmount
 
-                If MapData(Objetos(i).X, Objetos(i).y).OBJInfo.ObjIndex > NumObjs Then
-                    InitGrh MapData(Objetos(i).X, Objetos(i).y).ObjGrh, 20299
+                If MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.ObjIndex > NumObjs Then
+                    InitGrh MapData(Objetos(i).X, Objetos(i).Y).ObjGrh, 20299
                 Else
-                    InitGrh MapData(Objetos(i).X, Objetos(i).y).ObjGrh, ObjData(MapData(Objetos(i).X, Objetos(i).y).OBJInfo.ObjIndex).GrhIndex
+                    InitGrh MapData(Objetos(i).X, Objetos(i).Y).ObjGrh, ObjData(MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.ObjIndex).GrhIndex
 
                 End If
 
@@ -345,9 +344,9 @@ Sub Cargar_ConverCSM(ByVal Map As String)
             For i = 1 To .NumeroNPCs
 
                 If NPCs(i).NPCIndex > 0 Then
-                    MapData(NPCs(i).X, NPCs(i).y).NPCIndex = NPCs(i).NPCIndex
-                    Call MakeChar(NextOpenChar(), NpcData(NPCs(i).NPCIndex).Body, NpcData(NPCs(i).NPCIndex).Head, NpcData(NPCs(i).NPCIndex).Heading, _
-                                    NPCs(i).X, NPCs(i).y, NpcData(NPCs(i).NPCIndex).WeaponAnim, NpcData(NPCs(i).NPCIndex).ShieldAnim, NpcData(NPCs(i).NPCIndex).CascoAnim)
+                    MapData(NPCs(i).X, NPCs(i).Y).NPCIndex = NPCs(i).NPCIndex
+                    Call Char_Make(NextOpenChar(), NpcData(NPCs(i).NPCIndex).Body, NpcData(NPCs(i).NPCIndex).Head, NpcData(NPCs(i).NPCIndex).Heading, _
+                                    NPCs(i).X, NPCs(i).Y, NpcData(NPCs(i).NPCIndex).WeaponAnim, NpcData(NPCs(i).NPCIndex).ShieldAnim, NpcData(NPCs(i).NPCIndex).CascoAnim)
 
                 End If
 
@@ -360,9 +359,9 @@ Sub Cargar_ConverCSM(ByVal Map As String)
             Get #fh, , TEs
 
             For i = 1 To .NumeroTE
-                MapData(TEs(i).X, TEs(i).y).TileExit.Map = TEs(i).DestM
-                MapData(TEs(i).X, TEs(i).y).TileExit.X = TEs(i).DestX
-                MapData(TEs(i).X, TEs(i).y).TileExit.y = TEs(i).DestY
+                MapData(TEs(i).X, TEs(i).Y).TileExit.Map = TEs(i).DestM
+                MapData(TEs(i).X, TEs(i).Y).TileExit.X = TEs(i).DestX
+                MapData(TEs(i).X, TEs(i).Y).TileExit.Y = TEs(i).DestY
             Next i
 
         End If
@@ -458,7 +457,7 @@ Private Sub CSMInfoCargar()
                 frmMapInfo.chkLuzClimatica = Checked
                 Call ConvertLongToRGB(MapDat(i).LuzBase, tR, tG, tB)
                 
-                Estado_Custom.a = 255
+                Estado_Custom.A = 255
                 Estado_Custom.R = tR
                 Estado_Custom.G = tG
                 Estado_Custom.B = tB

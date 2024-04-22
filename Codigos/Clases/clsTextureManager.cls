@@ -158,9 +158,9 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
             Formato = ".png"
 
             'TODO: No usar variable de compilacion y acceder a esto desde el config.ini
-            #If Desarrollo = 0 Then
+            If ClientSetup.useCompression Then
             
-                InfoHead = File_Find(DirRecursos & "Graficos" & modCompression.Formato, CStr(.filename) & Formato)
+                InfoHead = File_Find(dirRecursos_Compressed & "Graficos" & modCompression.Formato, CStr(.filename) & Formato)
             
                 If InfoHead.lngFileSize <> 0 Then
                     Extract_File_Memory Graphics, LCase$(CStr(.filename) & Formato), buffer()
@@ -170,10 +170,10 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
                     Erase buffer
                 End If
                 
-            #Else
+            Else
                 
                 Dim Graphic As String
-                    Graphic = Carga.Path(Graficos) & .filename
+                    Graphic = dirRecursos_Uncompressed & "\Graficos\" & .filename
                 
                 If FileExist(Graphic & Formato, vbNormal) Then
                     Set .Texture = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & Formato, D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
@@ -181,11 +181,11 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
                 
                 Else
                     Call MsgBox("No se ha podido cargar el grafico con indice: " & Graphic)
-                    Call CloseClient
+                    Call CloseMapEditor
                 
                 End If
                 
-            #End If
+            End If
  
             Call .Texture.GetLevelDesc(0, surface_desc)
             

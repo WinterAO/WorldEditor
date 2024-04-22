@@ -3,7 +3,7 @@ Begin VB.Form frmPerfil
    BackColor       =   &H00424242&
    BorderStyle     =   0  'None
    Caption         =   "Selección de Perfil"
-   ClientHeight    =   3495
+   ClientHeight    =   4065
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   5355
@@ -19,13 +19,78 @@ Begin VB.Form frmPerfil
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   233
+   ScaleHeight     =   271
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   357
    StartUpPosition =   1  'CenterOwner
+   Begin VB.Frame Frame1 
+      BackColor       =   &H00535353&
+      Caption         =   "Carga de Recursos"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   735
+      Left            =   120
+      TabIndex        =   10
+      Top             =   2640
+      Width           =   5115
+      Begin VB.OptionButton OptRecursos 
+         BackColor       =   &H00535353&
+         Caption         =   "Recursos libres"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Index           =   0
+         Left            =   240
+         TabIndex        =   12
+         Top             =   330
+         Width           =   1875
+      End
+      Begin VB.OptionButton OptRecursos 
+         BackColor       =   &H00535353&
+         Caption         =   "Recursos comprimidos"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Index           =   1
+         Left            =   2580
+         TabIndex        =   11
+         Top             =   330
+         Width           =   2295
+      End
+   End
    Begin VB.Frame FraPerfil 
       BackColor       =   &H00535353&
       Caption         =   "Perfil"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   795
       Left            =   120
@@ -45,15 +110,16 @@ Begin VB.Form frmPerfil
       Begin WinterMapEditor.lvButtons_H LvBNuevo 
          Height          =   345
          Index           =   2
-         Left            =   3270
+         Left            =   3990
          TabIndex        =   6
          Top             =   300
-         Width           =   1635
-         _ExtentX        =   2884
+         Width           =   1095
+         _ExtentX        =   1931
          _ExtentY        =   609
          Caption         =   "Nuevo"
          CapAlign        =   2
          BackStyle       =   2
+         Shape           =   1
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Tahoma"
             Size            =   8.25
@@ -66,26 +132,71 @@ Begin VB.Form frmPerfil
          cGradient       =   0
          Mode            =   0
          Value           =   0   'False
-         cBack           =   -2147483633
+         cBack           =   8454016
+      End
+      Begin WinterMapEditor.lvButtons_H LvBBorrar 
+         Height          =   345
+         Index           =   0
+         Left            =   3180
+         TabIndex        =   13
+         Top             =   300
+         Width           =   1095
+         _ExtentX        =   1931
+         _ExtentY        =   609
+         Caption         =   "Borrar"
+         CapAlign        =   2
+         BackStyle       =   2
+         Shape           =   2
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         cGradient       =   0
+         Mode            =   0
+         Value           =   0   'False
+         cBack           =   8421631
       End
    End
    Begin VB.Frame FraConfiguraciónDe 
       BackColor       =   &H00535353&
       Caption         =   "Configuración de video"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H00FFFFFF&
-      Height          =   1335
+      Height          =   1185
       Left            =   120
       TabIndex        =   0
-      Top             =   1440
+      Top             =   1410
       Width           =   5115
       Begin VB.CheckBox chkvSync 
          BackColor       =   &H00535353&
          Caption         =   "Activar sincronización vertical"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   240
          TabIndex        =   3
-         Top             =   930
+         Top             =   750
          Width           =   3015
       End
       Begin VB.ComboBox cmbProcesado 
@@ -95,7 +206,7 @@ Begin VB.Form frmPerfil
          List            =   "frmModo.frx":0014
          Style           =   2  'Dropdown List
          TabIndex        =   2
-         Top             =   400
+         Top             =   345
          Width           =   2895
       End
       Begin VB.Label lblModoDe 
@@ -106,16 +217,16 @@ Begin VB.Form frmPerfil
          Height          =   195
          Left            =   240
          TabIndex        =   1
-         Top             =   480
+         Top             =   420
          Width           =   1470
       End
    End
    Begin WinterMapEditor.lvButtons_H LvBBoton 
       Height          =   465
       Index           =   1
-      Left            =   2970
+      Left            =   3000
       TabIndex        =   7
-      Top             =   2910
+      Top             =   3450
       Width           =   2205
       _ExtentX        =   3889
       _ExtentY        =   820
@@ -139,9 +250,9 @@ Begin VB.Form frmPerfil
    Begin WinterMapEditor.lvButtons_H LvBBoton 
       Height          =   465
       Index           =   0
-      Left            =   180
+      Left            =   210
       TabIndex        =   8
-      Top             =   2910
+      Top             =   3450
       Width           =   2085
       _ExtentX        =   3678
       _ExtentY        =   820
@@ -195,6 +306,11 @@ Private Perfiles() As String
 Private nPerfiles As Byte
 
 Private Sub cmbPerfil_Click()
+'*****************************************
+'Descripción: Lee la configuración básica del perfil seleccionado.
+'
+'*****************************************
+
     Dim tag As String
     tag = cmbPerfil.Text
     
@@ -214,7 +330,7 @@ Private Sub cmbPerfil_Click()
             chkvSync.value = Unchecked
             
         End If
-           
+
     End If
 End Sub
 
@@ -224,11 +340,13 @@ Private Sub Form_Load()
     Dim i As Byte
     Dim lastProfile As Byte
         
+    'Leemos cuantos perfiles hay y cual fue el ultimo que se utilizo
     nPerfiles = Val(GetVar(profilesFile, "INIT", "profiles"))
     lastProfile = Val(GetVar(profilesFile, "INIT", "lastProfile"))
     
     cmbPerfil.Clear
     
+    'Leemos todos los perfiles y los añadimos al comboBox
     For i = 1 To nPerfiles
         Dim tag As String
         tag = GetVar(profilesFile, "PROFILE" & i, "name")
@@ -243,15 +361,25 @@ Private Sub Form_Load()
         cmbPerfil.ListIndex = lastProfile - 1
     End If
     
-    cmbProcesado.ListIndex = ClientSetup.OverrideVertexProcess
+    
+    'Configuración inicial:
+    
+    cmbProcesado.ListIndex = GetVar(profileFile(cmbPerfil.List(cmbPerfil.ListIndex)), "VIDEO", "VertexProcessingOverride")
     
     If ClientSetup.LimiteFPS Then
         chkvSync.value = Checked
-        
     Else
         chkvSync.value = Unchecked
-        
     End If
+    
+    ClientSetup.useCompression = CBool(GetVar(profileFile(cmbPerfil.List(cmbPerfil.ListIndex)), "CONFIGURACION", "useCompression"))
+    
+    If Not ClientSetup.useCompression Then
+        OptRecursos(0).value = True
+    Else
+        OptRecursos(1).value = True
+    End If
+    
 End Sub
 
 Private Sub chkvSync_Click()
@@ -261,6 +389,47 @@ Private Sub chkvSync_Click()
     Else
         ClientSetup.LimiteFPS = False
         
+    End If
+End Sub
+
+Private Sub LvBBorrar_Click(Index As Integer)
+    Dim confirmacion As String
+    Dim perfilAEliminar As String
+    Dim filePath As String
+    Dim i As Integer
+    Dim perfilIndex As Integer
+
+    confirmacion = InputBox("¡Cuidado! ¡Estás a punto de eliminar el perfil " & cmbPerfil.List(cmbPerfil.ListIndex) & "! ¿Estás seguro de que quieres borrarlo? Se perderá toda la configuración de este perfil. Escribe el nombre del perfil para confirmar.")
+
+    perfilAEliminar = cmbPerfil.List(cmbPerfil.ListIndex)
+
+    If confirmacion = perfilAEliminar Then
+        filePath = profileFile(perfilAEliminar)
+
+        If Dir(filePath) <> "" Then ' Verificar si el archivo existe antes de intentar eliminarlo
+            Kill filePath ' Eliminar el archivo
+
+            ' Actualizar el archivo de configuración eliminando el perfil
+            Call WriteVar(profilesFile, "PROFILE" & cmbPerfil.ListIndex, "name", vbNullString)
+            nPerfiles = nPerfiles - 1
+            Call WriteVar(profilesFile, "INIT", "profiles", nPerfiles)
+
+            ' Reordenar los perfiles restantes en el archivo
+            For i = cmbPerfil.ListIndex + 1 To nPerfiles + 1
+                perfilIndex = i
+                Call WriteVar(profilesFile, "PROFILE" & perfilIndex, "name", cmbPerfil.List(i))
+            Next i
+
+            ' Reordenar el ComboBox
+            cmbPerfil.RemoveItem cmbPerfil.ListIndex ' Eliminar el perfil seleccionado
+            cmbPerfil.ListIndex = -1 ' Reiniciar el índice seleccionado
+
+            MsgBox "El perfil fue eliminado correctamente.", vbInformation
+        Else
+            MsgBox "Error al eliminar el perfil, el archivo no existe.", vbExclamation
+        End If
+    Else
+        MsgBox "El nombre que escribiste no coincide con el del perfil. El perfil no se eliminará."
     End If
 End Sub
 
@@ -290,6 +459,8 @@ Private Sub LvBBoton_Click(Index As Integer)
             Call WriteVar(profileFile(ProfileTag), "VIDEO", "VertexProcessingOverride", CByte(ClientSetup.OverrideVertexProcess))
             Call WriteVar(profileFile(ProfileTag), "VIDEO", "LimitarFPS", IIf(ClientSetup.LimiteFPS, "1", "0"))
             
+            Call WriteVar(profileFile(ProfileTag), "CONFIGURACION", "useCompression", CByte(ClientSetup.useCompression))
+            
             Call WriteVar(profilesFile, "INIT", "lastProfile", cmbPerfil.ListIndex + 1)
             
             Unload Me
@@ -297,14 +468,20 @@ Private Sub LvBBoton_Click(Index As Integer)
 End Sub
 
 Private Sub LvBNuevo_Click(Index As Integer)
+'*****************************************
+'Descripción: Crea un nuevo perfil
+'
+'*****************************************
 
     ProfileTag = InputBox("Introduce el nombre para el perfil.")
     
     If ProfileTag = vbNullString Then Exit Sub
     
+    'Añadimos el nuevo perfil al archivo profile
     Call WriteVar(profilesFile, "INIT", "profiles", nPerfiles + 1)
     Call WriteVar(profilesFile, "PROFILE" & (nPerfiles + 1), "name", ProfileTag)
     
+    'Creamos un nuevo archivo profile para el nuevo perfil
     Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa1", "1")
     Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa2", "1")
     Call WriteVar(profileFile(ProfileTag), "MOSTRAR", "Capa3", "1")
@@ -314,4 +491,10 @@ Private Sub LvBNuevo_Click(Index As Integer)
     
     cmbPerfil.AddItem (ProfileTag)
     
+End Sub
+
+Private Sub OptRecursos_Click(Index As Integer)
+
+    ClientSetup.useCompression = IIf(OptRecursos(1).value, True, False)
+
 End Sub

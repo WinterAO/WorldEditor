@@ -1,7 +1,7 @@
 Attribute VB_Name = "modMapas"
 Option Explicit
 
-Public colorZona() As Long
+Public colorZona() As RGBA
 Public UserMap As Integer
 
 '/////////////////////////////////////////////////////////////////////
@@ -39,11 +39,11 @@ Public Sub AbrirMapa(ByVal bBig As Boolean)
         
     Else
         Call ModMapConver.Cargar_ConverCSM(frmMain.Dialog.filename)
-        
-        UserPos.X = 50
-        UserPos.Y = 50
     
     End If
+    
+    UserPos.x = XMaxMapSize / 2
+    UserPos.y = YMaxMapSize / 2
         
     DoEvents
     frmMain.mnuReAbrirMapa.Enabled = True
@@ -115,9 +115,9 @@ Public Sub NuevoMapa()
     'Descripcion: Limpia todo el mapa a uno nuevo
     '***************************************************
     
-    Dim Y     As Integer
+    Dim y     As Integer
 
-    Dim X     As Integer
+    Dim x     As Integer
 
     Dim i     As Byte
 
@@ -133,10 +133,10 @@ Public Sub NuevoMapa()
     
     frmMain.MousePointer = 11
         
-    For Y = YMinMapSize To YMaxMapSize
-        For X = XMinMapSize To XMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
+        For x = XMinMapSize To XMaxMapSize
         
-            With MapData(X, Y)
+            With MapData(x, y)
             
                 .Graphic(1).GrhIndex = 1
                 
@@ -158,8 +158,8 @@ Public Sub NuevoMapa()
         
                 ' Translados
                 .TileExit.Map = 0
-                .TileExit.X = 0
-                .TileExit.Y = 0
+                .TileExit.x = 0
+                .TileExit.y = 0
                 
                 ' Triggers
                 .Trigger = 0
@@ -167,13 +167,13 @@ Public Sub NuevoMapa()
                 .Particle_Group_Index = 0
                 .Particle_Index = 0
                 
-                Call Engine_Long_To_RGB_List(MapData(X, Y).Engine_Light(), -1)
+                Call Long_2_RGBAList(MapData(x, y).Light_Value(), -1)
                 
                 .Light.active = False
                 .Light.range = 0
                 .Light.map_x = 0
                 .Light.map_y = 0
-                .Light.RGBCOLOR.a = 0
+                .Light.RGBCOLOR.A = 0
                 .Light.RGBCOLOR.R = 0
                 .Light.RGBCOLOR.G = 0
                 .Light.RGBCOLOR.B = 0
@@ -181,18 +181,21 @@ Public Sub NuevoMapa()
                 .ZonaIndex = 0
                 
                 For i = 0 To 3
-                    .Engine_Light(i) = 0
+                    .Light_Value(i).A = 0
+                    .Light_Value(i).R = 0
+                    .Light_Value(i).G = 0
+                    .Light_Value(i).B = 0
                 Next i
 
                 InitGrh .Graphic(1), 1
 
             End With
             
-        Next X
-    Next Y
+        Next x
+    Next y
     
     'Borramos todas las luces
-    Call LightRemoveAll
+    Call LucesRedondas.LightRemoveAll(False)
     
     CantZonas = 0
     ReDim MapZonas(CantZonas) As tMapInfo
@@ -213,6 +216,9 @@ Public Sub NuevoMapa()
     'Set changed flag
     MapInfo.Changed = 0
     frmMain.MousePointer = 0
+    
+    'Vaciamos la cola de movimiento
+    keysMovementPressedQueue.Clear
     
     MapaCargado = True
     EngineRun = True
@@ -265,9 +271,9 @@ Public Sub NuevaZona(ByVal id As Integer)
     
     frmZonas.LstZona.AddItem (CantZonas & "- " & MapZonas(CantZonas).name)
     
-    ReDim Preserve colorZona(CantZonas) As Long
+    ReDim Preserve colorZona(CantZonas) As RGBA
     
-    colorZona(CantZonas) = D3DColorARGB(255, Int(Rnd * 256), Int(Rnd * 256), Int(Rnd * 256))
+    colorZona(CantZonas) = RGBA_From_Comp(Int(Rnd * 256), Int(Rnd * 256), Int(Rnd * 256), 255)
 
 End Sub
 
@@ -323,7 +329,7 @@ Public Sub EliminarZona()
     CantZonas = CantZonas - 1
     
     ReDim Preserve MapZonas(CantZonas) As tMapInfo
-    ReDim Preserve colorZona(CantZonas) As Long
+    ReDim Preserve colorZona(CantZonas) As RGBA
     
 End Sub
 
@@ -410,7 +416,7 @@ Public Sub coloresZona()
         GreenValue = Int(Rnd * 256)
         BlueValue = Int(Rnd * 256)
     
-        colorZona(i) = D3DColorARGB(255, RedValue, GreenValue, BlueValue)
+        colorZona(i) = RGBA_From_Comp(RedValue, GreenValue, BlueValue, 255)
     Next i
     
 End Sub

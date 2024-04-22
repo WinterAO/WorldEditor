@@ -5,6 +5,8 @@ Private m_Jpeg     As clsJpeg
 
 Private m_FileName As String
 
+Public keysMovementPressedQueue As clsArrayList
+
 'Escribe y Lee archivos de texto plano
 Private Declare Function writeprivateprofilestring _
                 Lib "kernel32" _
@@ -62,7 +64,7 @@ Sub Main()
     DoEvents
     Set Sound = New clsSoundEngine
 
-    If Not Sound.Initialize_Engine(frmMain.hWnd, DirRecursos, False, True, True, ClientSetup.SoundVolume, ClientSetup.MusicVolume, ClientSetup.Invertido) Then
+    If Not Sound.Initialize_Engine(frmMain.hWnd, dirRecursos_Compressed, False, True, True, ClientSetup.SoundVolume, ClientSetup.MusicVolume, ClientSetup.Invertido) Then
         MsgBox "¡No se ha logrado iniciar el engine de DirectSound! Reinstale los últimos controladores de DirectX. No habrá soporte de audio en el editor.", vbCritical, "Advertencia"
         
     End If
@@ -116,6 +118,14 @@ Sub Main()
     frmCarga.lblStatus.Caption = "Cargando Indice de Superficies."
     DoEvents
     Call modCarga.CargarIndicesSuperficie
+    
+    frmCarga.lblStatus.Caption = "Iniciando movimiento sensual."
+    DoEvents
+    'Esto es para el movimiento suave de pjs, para que el pj termine de hacer el movimiento antes de empezar otro
+    Set keysMovementPressedQueue = New clsArrayList
+    Call keysMovementPressedQueue.Initialize(1, 4)
+    
+    Set MainTimer = New clsTimer
     '------------------------
      
     Call modMapas.NuevoMapa
@@ -123,6 +133,9 @@ Sub Main()
     frmMain.Show
     
     prgRun = True
+    
+    ' Intervals
+    LoadTimerIntervals
     
     Do While prgRun
         
@@ -177,6 +190,7 @@ Public Sub CloseMapEditor()
 
     'Destruimos los objetos publicos creados
     Set SurfaceDB = Nothing
+    Set MainTimer = Nothing
 
     For Each mifrm In Forms
 
@@ -193,101 +207,69 @@ Public Sub CloseMapEditor()
 
 End Sub
 
-Public Sub CheckKeys()
+Private Sub AddMovementToKeysMovementPressedQueue()
+    If GetKeyState(vbKeyUp) < 0 Then
+        If keysMovementPressedQueue.itemExist(vbKeyUp) = False Then keysMovementPressedQueue.Add (vbKeyUp) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(vbKeyUp) Then keysMovementPressedQueue.Remove (vbKeyUp) ' Remueve la tecla que teniamos presionada
+    End If
+
+    If GetKeyState(vbKeyDown) < 0 Then
+        If keysMovementPressedQueue.itemExist(vbKeyDown) = False Then keysMovementPressedQueue.Add (vbKeyDown) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(vbKeyDown) Then keysMovementPressedQueue.Remove (vbKeyDown) ' Remueve la tecla que teniamos presionada
+    End If
+
+    If GetKeyState(vbKeyLeft) < 0 Then
+        If keysMovementPressedQueue.itemExist(vbKeyLeft) = False Then keysMovementPressedQueue.Add (vbKeyLeft) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(vbKeyLeft) Then keysMovementPressedQueue.Remove (vbKeyLeft) ' Remueve la tecla que teniamos presionada
+    End If
+
+    If GetKeyState(vbKeyRight) < 0 Then
+        If keysMovementPressedQueue.itemExist(vbKeyRight) = False Then keysMovementPressedQueue.Add (vbKeyRight) ' Agrega la tecla al arraylist
+    Else
+        If keysMovementPressedQueue.itemExist(vbKeyRight) Then keysMovementPressedQueue.Remove (vbKeyRight) ' Remueve la tecla que teniamos presionada
+    End If
+End Sub
+
+Private Sub CheckKeys()
     '*************************************************
     'Author: ^[GS]^
     'Last modified: 01/11/08
     '*************************************************
 
     If HotKeysAllow = False Then Exit Sub
-    '[Loopzer]
-    'If GetKeyState(vbKeyControl) < 0 Then
-    '    If Seleccionando Then
-    '        If GetKeyState(vbKeyC) < 0 Then CopiarSeleccion
-    '        If GetKeyState(vbKeyX) < 0 Then CortarSeleccion
-    '        If GetKeyState(vbKeyB) < 0 Then BlockearSeleccion
-    '        If GetKeyState(vbKeyD) < 0 Then AccionSeleccion
-    ''    Else
-    '        If GetKeyState(vbKeyS) < 0 Then DePegar ' GS
-    '        If GetKeyState(vbKeyV) < 0 Then PegarSeleccion
-    '    End If
-    'End If
-    '[/Loopzer]
     
-    If GetKeyState(vbKeyUp) < 0 Then
-        If UserPos.Y < YMinMapSize Then Exit Sub ' 10
-        If LegalPos(UserPos.X, UserPos.Y - 1) And WalkMode = True Then
-            If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.Y = UserPos.Y - 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
-            dLastWalk = GetTickCount
-            
-        ElseIf WalkMode = False Then
-            UserPos.Y = UserPos.Y - 1
-
+    'No input allowed while Argentum is not the active window
+    If Not Application.IsAppActive() Then Exit Sub
+    
+    If UserMoving = 0 Then
+        Call AddMovementToKeysMovementPressedQueue
+        
+        'Move Up
+        If keysMovementPressedQueue.GetLastItem() = vbKeyUp Then
+            Call Map_MoveTo(NORTH)
+            Call Char_UserPos
         End If
-        
-        Call DibujarMinimapa(True)
-        frmMain.SetFocus
-        Exit Sub
-
-    End If
-
-    If GetKeyState(vbKeyRight) < 0 Then
-        If UserPos.X > XMaxMapSize Then Exit Sub ' 89
-        If LegalPos(UserPos.X + 1, UserPos.Y) And WalkMode = True Then
-            If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.X = UserPos.X + 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
-            dLastWalk = GetTickCount
-            
-        ElseIf WalkMode = False Then
-            UserPos.X = UserPos.X + 1
-            
+                
+        'Move Right
+        If keysMovementPressedQueue.GetLastItem() = vbKeyRight Then
+            Call Map_MoveTo(EAST)
+            Call Char_UserPos
         End If
-        
-        Call DibujarMinimapa(True)
-        frmMain.SetFocus
-        Exit Sub
-
-    End If
-
-    If GetKeyState(vbKeyDown) < 0 Then
-        If UserPos.Y > YMaxMapSize Then Exit Sub ' 92
-        
-        If LegalPos(UserPos.X, UserPos.Y + 1) And WalkMode = True Then
-            If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.Y = UserPos.Y + 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
-            dLastWalk = GetTickCount
             
-        ElseIf WalkMode = False Then
-            UserPos.Y = UserPos.Y + 1
+        'Move down
+        If keysMovementPressedQueue.GetLastItem() = vbKeyDown Then
+            Call Map_MoveTo(SOUTH)
+            Call Char_UserPos
+        End If
             
+        'Move left
+        If keysMovementPressedQueue.GetLastItem() = vbKeyLeft Then
+            Call Map_MoveTo(WEST)
+            Call Char_UserPos
         End If
-        
-        Call DibujarMinimapa(True)
-        frmMain.SetFocus
-        Exit Sub
-        
-    End If
-
-    If GetKeyState(vbKeyLeft) < 0 Then
-        If UserPos.X < XMinMapSize Then Exit Sub ' 12
-        If LegalPos(UserPos.X - 1, UserPos.Y) And WalkMode = True Then
-            If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.X = UserPos.X - 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
-            dLastWalk = GetTickCount
-        ElseIf WalkMode = False Then
-            UserPos.X = UserPos.X - 1
-
-        End If
-
-        Call DibujarMinimapa(True)
-        frmMain.SetFocus
-        Exit Sub
-
     End If
     
 End Sub
@@ -296,12 +278,13 @@ Public Sub ToggleWalkMode()
 
     '*************************************************
     'Author: Unkwown
-    'Last modified: 28/05/06 - GS
+    'Last modified: 01/04/2024 - Lorwik
     '*************************************************
     On Error GoTo ToggleWalkMode_Err
 
     If WalkMode = False Then
         WalkMode = True
+        If Not frmWalkerSpeed Then frmWalkerSpeed.Show , frmMain
         
     Else
         frmMain.mnuModoCaminata.Checked = False
@@ -311,15 +294,15 @@ Public Sub ToggleWalkMode()
     
     If Not WalkMode Then
         'Erase character
-        Call EraseChar(UserCharIndex)
-        MapData(UserPos.X, UserPos.Y).CharIndex = 0
+        Call Char_Erase(UserCharIndex)
+        MapData(UserPos.x, UserPos.y).CharIndex = 0
         
     Else
 
         'MakeCharacter
-        If LegalPos(UserPos.X, UserPos.Y) Then
-            Call MakeChar(NextOpenChar(), 107, 1, SOUTH, UserPos.X, UserPos.Y, 1, 11, 81)
-            UserCharIndex = MapData(UserPos.X, UserPos.Y).CharIndex
+        If LegalPos(UserPos.x, UserPos.y) Then
+            Call Char_Make(NextOpenChar(), 107, 1, SOUTH, UserPos.x, UserPos.y, 1, 11, 81)
+            UserCharIndex = MapData(UserPos.x, UserPos.y).CharIndex
             frmMain.mnuModoCaminata.Checked = True
             
         Else
@@ -352,11 +335,11 @@ Public Sub ObtenerCuadrante(ByRef Cuadrante As Integer, _
 
     Dim cY As Integer
     
-    cX = Fix((UserPos.X / 100))
-    cY = Fix((UserPos.Y / 100))
+    cX = Fix((UserPos.x / 100))
+    cY = Fix((UserPos.y / 100))
     
-    tX = UserPos.X - (cX * 100)
-    tY = UserPos.Y - (cY * 100)
+    tX = UserPos.x - (cX * 100)
+    tY = UserPos.y - (cY * 100)
     
     Cuadrante = cX * cY
 
@@ -568,7 +551,25 @@ Public Function RandomNumber(ByVal LowerBound As Variant, _
 
 End Function
 
-Public Sub Client_Screenshot(ByVal hDC As Long, ByVal Width As Long, ByVal Height As Long)
+Private Sub LoadTimerIntervals()
+    '***************************************************
+    'Author: Lorwik
+    'Last Modification: 31/03/2024
+    'Set the intervals of timers
+    '***************************************************
+    
+    With MainTimer
+    
+        Call .SetInterval(TimersIndex.ChangeHeading, eIntervalos.INT_CHANGE_HEADING)
+    
+        'Init timers
+        Call .Start(TimersIndex.ChangeHeading)
+    
+    End With
+
+End Sub
+
+Public Function Client_Screenshot(ByVal hDC As Long, ByVal Width As Long, ByVal Height As Long) As Boolean
     '*******************************
     'Autor: ???
     'Fecha: ???
@@ -613,9 +614,55 @@ Public Sub Client_Screenshot(ByVal hDC As Long, ByVal Width As Long, ByVal Heigh
     
     Set m_Jpeg = Nothing
     
-    Exit Sub
+    Client_Screenshot = True
+    
+    Exit Function
 
 ErrorHandler:
     Call AddtoRichTextBox(frmConsola.StatTxt, "¡Error en la captura!", 204, 193, 155, 0, 1, , , True)
+    Client_Screenshot = False
+    
+End Function
 
-End Sub
+Public Function Max(ByVal A As Variant, ByVal B As Variant) As Variant
+    
+    On Error GoTo max_Err
+    
+
+    If A > B Then
+        Max = A
+    Else
+        Max = B
+
+    End If
+
+    
+    Exit Function
+
+max_Err:
+    Call RegistrarError(Err.Number, Err.Description, "Mod_General.max", Erl)
+    Resume Next
+    
+End Function
+
+Public Function Min(ByVal A As Double, ByVal B As Double) As Variant
+    
+    On Error GoTo min_Err
+    
+
+    If A < B Then
+        Min = A
+    Else
+        Min = B
+
+    End If
+
+    
+    Exit Function
+
+min_Err:
+    Call RegistrarError(Err.Number, Err.Description, "Mod_General.min", Erl)
+    Resume Next
+    
+End Function
+

@@ -51,7 +51,7 @@ End Type
 Private Type Particle
     friction As Single
     X As Single
-    y As Single
+    Y As Single
     vector_x As Single
     vector_y As Single
     angle As Single
@@ -134,7 +134,7 @@ Private Type Particle_Group
     move_x2 As Integer
     move_y1 As Integer
     move_y2 As Integer
-    rgb_list(0 To 3) As Long
+    rgb_list(0 To 3) As RGBA
     
     'Added by Juan Martin Sotuyo Dodero
     speed As Single
@@ -151,14 +151,36 @@ Public StreamData() As Stream
 Public Const PI As Single = 3.14159265358979
 
 Public Sub CargarParticulas()
+'*************************************
+'Autor: Lorwik
+'Fecha: 20/04/2024
+'*************************************
+
+    If ClientSetup.useCompression Then
+        Call CargarParticulas_Compressed
+    Else
+        Call CargarParticulas_Uncompressed
+    End If
+
+End Sub
+
+Private Function CargarParticulas_Compressed() As Boolean
+    '*************************************
+    'Autor: Lorwik
+    'Fecha: ????
+    'Descripción: Cargar el archivo de particulas en memoria
+    '*************************************
+    
+On Error GoTo errhandler:
+
     Dim buffer()    As Byte
     Dim InfoHead    As INFOHEADER
-    Dim LoopC As Long
+    Dim loopc As Long
     Dim i As Long
     Dim ColorSet As Long
     Dim fileBuff  As clsByteBuffer
     
-    InfoHead = File_Find(DirRecursos & "Scripts" & modCompression.Formato, LCase$("Particulas.ind"))
+    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & modCompression.Formato, LCase$("Particulas.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -180,11 +202,11 @@ Public Sub CargarParticulas()
         ReDim StreamData(1 To TotalStreams) As Stream
         
         'fill StreamData array with info from Particles.ini
-        For LoopC = 1 To TotalStreams
-            With StreamData(LoopC)
-                .name = LoopC
+        For loopc = 1 To TotalStreams
+            With StreamData(loopc)
+                .name = loopc
                 
-                frmParticulas.LynxParticulas.AddItem LoopC
+                frmParticulas.LynxParticulas.AddItem loopc
                 
                 .NumOfParticles = fileBuff.getLong
                 .NumGrhs = fileBuff.getLong
@@ -230,7 +252,7 @@ Public Sub CargarParticulas()
                 Next ColorSet
     
             End With
-        Next LoopC
+        Next loopc
     
     End If
     
@@ -241,25 +263,151 @@ Public Sub CargarParticulas()
     DoEvents
     
     Set fileBuff = Nothing
+    CargarParticulas_Compressed = True
+    
+    Exit Function
+    
+errhandler:
+    
+    CargarParticulas_Compressed = False
 
-End Sub
+End Function
+
+Private Function CargarParticulas_Uncompressed() As Boolean
+    '*************************************
+    'Autor: ????
+    'Fecha: ????
+    'Descripción: Cargar el archivo de particulas
+    '*************************************
+    
+    On Error GoTo errhandler:
+
+    Dim loopc      As Long
+
+    Dim i          As Long
+    
+    Dim N          As Integer
+
+    Dim GrhListing As String
+
+    Dim TempSet    As String
+
+    Dim ColorSet   As Long
+    
+    If Not FileExist(dirRecursos_Uncompressed & "Scripts\Particulas.ind", vbArchive) Then
+        MsgBox ("No se ha encontrado el archivo Particulas.ini en el directorio: " & dirRecursos_Uncompressed & "Scripts\Particulas.ind")
+        CargarParticulas_Uncompressed = False
+        Exit Function
+
+    End If
+    
+    '****************************************
+    frmParticulas.LynxParticulas.Clear
+    frmParticulas.LynxParticulas.Redraw = False
+    frmParticulas.LynxParticulas.Visible = False
+        
+    frmParticulas.LynxParticulas.AddColumn "Particula", 0
+    '****************************************
+
+    N = FreeFile
+    Open dirRecursos_Uncompressed & "Scripts\Particulas.ind" For Binary Access Read As #N
+    
+    'Numero de particulas
+    Get #N, , TotalStreams
+    
+    If TotalStreams < 1 Then Exit Function
+    
+    'resize StreamData array
+    ReDim StreamData(1 To TotalStreams) As Stream
+
+    'fill StreamData array with info from particle.ini
+    For loopc = 1 To TotalStreams
+        StreamData(loopc).name = loopc
+        
+        frmParticulas.LynxParticulas.AddItem loopc '& " - " & StreamData(LoopC).name
+        
+        Get #N, , StreamData(loopc).NumOfParticles
+        Get #N, , StreamData(loopc).NumGrhs
+        Get #N, , StreamData(loopc).id
+        Get #N, , StreamData(loopc).x1
+        Get #N, , StreamData(loopc).y1
+        Get #N, , StreamData(loopc).x2
+        Get #N, , StreamData(loopc).y2
+        Get #N, , StreamData(loopc).angle
+        Get #N, , StreamData(loopc).vecx1
+        Get #N, , StreamData(loopc).vecx2
+        Get #N, , StreamData(loopc).vecy1
+        Get #N, , StreamData(loopc).vecy2
+        Get #N, , StreamData(loopc).life1
+        Get #N, , StreamData(loopc).life2
+        Get #N, , StreamData(loopc).friction
+        Get #N, , StreamData(loopc).spin
+        Get #N, , StreamData(loopc).spin_speedL
+        Get #N, , StreamData(loopc).spin_speedH
+        Get #N, , StreamData(loopc).alphaBlend
+        Get #N, , StreamData(loopc).gravity
+        Get #N, , StreamData(loopc).grav_strength
+        Get #N, , StreamData(loopc).bounce_strength
+        Get #N, , StreamData(loopc).XMove
+        Get #N, , StreamData(loopc).YMove
+        Get #N, , StreamData(loopc).move_x1
+        Get #N, , StreamData(loopc).move_x2
+        Get #N, , StreamData(loopc).move_y1
+        Get #N, , StreamData(loopc).move_y2
+        Get #N, , StreamData(loopc).speed
+        Get #N, , StreamData(loopc).life_counter
+
+        ReDim StreamData(loopc).grh_list(1 To StreamData(loopc).NumGrhs) As Long
+        Get #N, , GrhListing
+
+        For i = 1 To StreamData(loopc).NumGrhs
+            Get #N, , StreamData(loopc).grh_list(i)
+        Next i
+
+        'StreamData(loopc).grh_list(i - 1) = StreamData(loopc).grh_list(i - 1)
+
+        For ColorSet = 1 To 4
+            Get #N, , StreamData(loopc).colortint(ColorSet - 1).R
+            Get #N, , StreamData(loopc).colortint(ColorSet - 1).G
+            Get #N, , StreamData(loopc).colortint(ColorSet - 1).B
+        Next ColorSet
+
+    Next loopc
+    
+    Close #N
+    
+    frmParticulas.LynxParticulas.Visible = True
+    frmParticulas.LynxParticulas.Redraw = True
+    frmParticulas.LynxParticulas.ColForceFit
+    
+    DoEvents
+    
+    CargarParticulas_Uncompressed = True
+    
+    Exit Function
+    
+errhandler:
+    Close #N
+    CargarParticulas_Uncompressed = False
+
+End Function
 
 Public Function General_Particle_Create(ByVal ParticulaInd As Long, _
                                         ByVal X As Integer, _
-                                        ByVal y As Integer, _
+                                        ByVal Y As Integer, _
                                         Optional ByVal particle_life As Long = 0) As Long
 
-    Dim rgb_list(0 To 3) As Long
+    Dim rgb_list(0 To 3) As RGBA
     
     If ParticulaInd = 0 Then Exit Function
 
     With StreamData(ParticulaInd)
-        rgb_list(0) = RGB(.colortint(0).R, .colortint(0).G, .colortint(0).B)
-        rgb_list(1) = RGB(.colortint(1).R, .colortint(1).G, .colortint(1).B)
-        rgb_list(2) = RGB(.colortint(2).R, .colortint(2).G, .colortint(2).B)
-        rgb_list(3) = RGB(.colortint(3).R, .colortint(3).G, .colortint(3).B)
+        Call SetRGBA(rgb_list(0), .colortint(0).B, .colortint(0).G, .colortint(0).R)
+        Call SetRGBA(rgb_list(1), .colortint(1).B, .colortint(1).G, .colortint(1).R)
+        Call SetRGBA(rgb_list(2), .colortint(2).B, .colortint(2).G, .colortint(2).R)
+        Call SetRGBA(rgb_list(3), .colortint(3).B, .colortint(3).G, .colortint(3).R)
     
-        General_Particle_Create = Particle_Group_Create(X, y, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, .alphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .speed, , .x1, .y1, .angle, .vecx1, .vecx2, .vecy1, .vecy2, .life1, .life2, .friction, .spin_speedL, .gravity, .grav_strength, .bounce_strength, .x2, .y2, .XMove, .move_x1, .move_x2, .move_y1, .move_y2, .YMove, .spin_speedH, .spin)
+        General_Particle_Create = Particle_Group_Create(X, Y, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, .alphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .speed, , .x1, .y1, .angle, .vecx1, .vecx2, .vecy1, .vecy2, .life1, .life2, .friction, .spin_speedL, .gravity, .grav_strength, .bounce_strength, .x2, .y2, .XMove, .move_x1, .move_x2, .move_y1, .move_y2, .YMove, .spin_speedH, .spin)
 
     End With
 
@@ -304,17 +452,12 @@ Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, ByVal scree
 'Last Modify Date: 5/15/2003
 'Renders a particle stream at a paticular screen point
 '*****************************************************************
-    Dim LoopC As Long
-    Dim temp_rgb(0 To 3) As Long
+    Dim loopc As Long
+    Dim temp_rgb(0 To 3) As RGBA
     Dim no_move As Boolean
     
     If Particle_Group_Index > UBound(particle_group_list) Then Exit Sub
     
-    'If GetTickCount - particle_group_list(Particle_Group_Index).live > (particle_group_list(Particle_Group_Index).liv1 * 25) And Not particle_group_list(Particle_Group_Index).liv1 = -1 Then
-    '    Call Particle_Group_Destroy(Particle_Group_Index)
-    '    Exit Sub
-    'End If
-        
     With particle_group_list(Particle_Group_Index)
     
         'Set colors
@@ -333,10 +476,10 @@ Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, ByVal scree
         End If
             
         'If it's still alive render all the particles inside
-        For LoopC = 1 To .Particle_Count
-
-            'Render particle
-            Particle_Render .particle_stream(LoopC), _
+        For loopc = 1 To .Particle_Count
+                
+        'Render particle
+            Particle_Render .particle_stream(loopc), _
                         screen_x, screen_y, _
                         .grh_index_list(Round(RandomNumber(1, .grh_index_count), 0)), _
                         temp_rgb(), _
@@ -353,7 +496,7 @@ Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, ByVal scree
                         .move_y1, .move_y2, _
                         .YMove, .spin_speedH, _
                         .spin
-        Next LoopC
+        Next loopc
                 
         If no_move = False Then
             'Update the group alive counter
@@ -367,7 +510,7 @@ Public Sub Particle_Group_Render(ByVal Particle_Group_Index As Long, ByVal scree
 End Sub
 
 Private Sub Particle_Render(ByRef temp_particle As Particle, ByVal screen_x As Integer, ByVal screen_y As Integer, _
-                            ByVal grh_index As Long, ByRef rgb_list() As Long, _
+                            ByVal grh_index As Long, ByRef rgb_list() As RGBA, _
                             Optional ByVal alphaBlend As Boolean, Optional ByVal no_move As Boolean, _
                             Optional ByVal x1 As Integer, Optional ByVal y1 As Integer, Optional ByVal angle As Integer, _
                             Optional ByVal vecx1 As Integer, Optional ByVal vecx2 As Integer, _
@@ -395,7 +538,7 @@ Private Sub Particle_Render(ByRef temp_particle As Particle, ByVal screen_x As I
                 'Start new particle
                 Call InitGrh(.Grh, grh_index)
                 .X = RandomNumber(x1, x2) - 16
-                .y = RandomNumber(y1, y2) - 16
+                .Y = RandomNumber(y1, y2) - 16
                 .vector_x = RandomNumber(vecx1, vecx2)
                 .vector_y = RandomNumber(vecy1, vecy2)
                 .alive_counter = RandomNumber(life1, life2)
@@ -409,7 +552,7 @@ Private Sub Particle_Render(ByRef temp_particle As Particle, ByVal screen_x As I
                     
                     .vector_y = .vector_y + grav_strength
                     
-                    If .y > 0 Then
+                    If .Y > 0 Then
                         'bounce
                         .vector_y = bounce_strength
                     End If
@@ -428,7 +571,7 @@ Private Sub Particle_Render(ByRef temp_particle As Particle, ByVal screen_x As I
             
             'Add in vector
             .X = .X + (.vector_x \ .friction)
-            .y = .y + (.vector_y \ .friction)
+            .Y = .Y + (.vector_y \ .friction)
         
             'decrement counter
              .alive_counter = .alive_counter - 1
@@ -436,13 +579,12 @@ Private Sub Particle_Render(ByRef temp_particle As Particle, ByVal screen_x As I
         
         'Draw it
         If .Grh.GrhIndex Then
-            Call Draw_Grh(.Grh, .X + screen_x, .y + screen_y, 1, rgb_list(), 1, True, .angle)
+            Call Draw_Grh(.Grh, .X + screen_x, .Y + screen_y, 1, rgb_list(), 1, True, .angle)
         End If
         
     End With
     
 End Sub
-
 Private Function Particle_Group_Next_Open() As Long
 
     '*****************************************************************
@@ -452,26 +594,26 @@ Private Function Particle_Group_Next_Open() As Long
     '*****************************************************************
     On Error GoTo ErrorHandler:
 
-    Dim LoopC As Long
+    Dim loopc As Long
     
     If particle_group_last = 0 Then
         Particle_Group_Next_Open = 1
         Exit Function
     End If
     
-    LoopC = 1
+    loopc = 1
 
-    Do Until particle_group_list(LoopC).active = False
+    Do Until particle_group_list(loopc).active = False
 
-        If LoopC = particle_group_last Then
+        If loopc = particle_group_last Then
             Particle_Group_Next_Open = particle_group_last + 1
             Exit Function
         End If
 
-        LoopC = LoopC + 1
+        loopc = loopc + 1
     Loop
     
-    Particle_Group_Next_Open = LoopC
+    Particle_Group_Next_Open = loopc
     
     Exit Function
     
@@ -497,7 +639,7 @@ Private Function Particle_Group_Check(ByVal Particle_Group_Index As Long) As Boo
 
 End Function
 
-Private Function Particle_Group_Create(ByVal map_x As Integer, ByVal map_y As Integer, ByRef grh_index_list() As Long, ByRef rgb_list() As Long, _
+Private Function Particle_Group_Create(ByVal map_x As Integer, ByVal map_y As Integer, ByRef grh_index_list() As Long, ByRef rgb_list() As RGBA, _
                                         Optional ByVal Particle_Count As Long = 20, Optional ByVal stream_type As Long = 1, _
                                         Optional ByVal alphaBlend As Boolean, Optional ByVal alive_counter As Long = -1, _
                                         Optional ByVal frame_speed As Single = 0.5, Optional ByVal id As Long, _
@@ -531,7 +673,6 @@ Private Function Particle_Group_Create(ByVal map_x As Integer, ByVal map_y As In
     End If
 
 End Function
-
 Private Function Particle_Group_Find(ByVal id As Long) As Long
 
     '*****************************************************************
@@ -541,21 +682,21 @@ Private Function Particle_Group_Find(ByVal id As Long) As Long
     '*****************************************************************
     On Error GoTo ErrorHandler:
 
-    Dim LoopC As Long
-        LoopC = 1
+    Dim loopc As Long
+        loopc = 1
 
-    Do Until particle_group_list(LoopC).id = id
+    Do Until particle_group_list(loopc).id = id
 
-        If LoopC = particle_group_last Then
+        If loopc = particle_group_last Then
             Particle_Group_Find = 0
             Exit Function
         End If
 
-        LoopC = LoopC + 1
+        loopc = loopc + 1
         
     Loop
     
-    Particle_Group_Find = LoopC
+    Particle_Group_Find = loopc
     
     Exit Function
     
@@ -622,7 +763,7 @@ Private Sub Particle_Group_Destroy(ByVal Particle_Group_Index As Long)
 End Sub
 
 Private Sub Particle_Group_Make(ByVal Particle_Group_Index As Long, ByVal map_x As Integer, ByVal map_y As Integer, _
-                                ByVal Particle_Count As Long, ByVal stream_type As Long, ByRef grh_index_list() As Long, ByRef rgb_list() As Long, _
+                                ByVal Particle_Count As Long, ByVal stream_type As Long, ByRef grh_index_list() As Long, ByRef rgb_list() As RGBA, _
                                 Optional ByVal alphaBlend As Boolean, Optional ByVal alive_counter As Long = -1, _
                                 Optional ByVal frame_speed As Single = 0.5, Optional ByVal id As Long, _
                                 Optional ByVal x1 As Integer, Optional ByVal y1 As Integer, Optional ByVal angle As Integer, _
