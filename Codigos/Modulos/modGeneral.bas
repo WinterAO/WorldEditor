@@ -295,14 +295,14 @@ Public Sub ToggleWalkMode()
     If Not WalkMode Then
         'Erase character
         Call Char_Erase(UserCharIndex)
-        MapData(UserPos.X, UserPos.Y).CharIndex = 0
+        MapData(UserPos.x, UserPos.y).CharIndex = 0
         
     Else
 
         'MakeCharacter
-        If LegalPos(UserPos.X, UserPos.Y) Then
-            Call Char_Make(NextOpenChar(), 107, 1, SOUTH, UserPos.X, UserPos.Y, 1, 11, 81)
-            UserCharIndex = MapData(UserPos.X, UserPos.Y).CharIndex
+        If LegalPos(UserPos.x, UserPos.y) Then
+            Call Char_Make(NextOpenChar(), 107, 1, SOUTH, UserPos.x, UserPos.y, 1, 11, 81)
+            UserCharIndex = MapData(UserPos.x, UserPos.y).CharIndex
             frmMain.mnuModoCaminata.Checked = True
             
         Else
@@ -335,11 +335,11 @@ Public Sub ObtenerCuadrante(ByRef Cuadrante As Integer, _
 
     Dim cY As Integer
     
-    cX = Fix((UserPos.X / 100))
-    cY = Fix((UserPos.Y / 100))
+    cX = Fix((UserPos.x / 100))
+    cY = Fix((UserPos.y / 100))
     
-    tX = UserPos.X - (cX * 100)
-    tY = UserPos.Y - (cY * 100)
+    tX = UserPos.x - (cX * 100)
+    tY = UserPos.y - (cY * 100)
     
     Cuadrante = cX * cY
 
@@ -569,7 +569,7 @@ Private Sub LoadTimerIntervals()
 
 End Sub
 
-Public Sub Client_Screenshot(ByVal hDC As Long, ByVal Width As Long, ByVal Height As Long)
+Public Function Client_Screenshot(ByVal hDC As Long, ByVal Width As Long, ByVal Height As Long) As Boolean
     '*******************************
     'Autor: ???
     'Fecha: ???
@@ -614,12 +614,15 @@ Public Sub Client_Screenshot(ByVal hDC As Long, ByVal Width As Long, ByVal Heigh
     
     Set m_Jpeg = Nothing
     
-    Exit Sub
+    Client_Screenshot = True
+    
+    Exit Function
 
 ErrorHandler:
     Call AddtoRichTextBox(frmConsola.StatTxt, "¡Error en la captura!", 204, 193, 155, 0, 1, , , True)
-
-End Sub
+    Client_Screenshot = False
+    
+End Function
 
 Public Function Max(ByVal A As Variant, ByVal B As Variant) As Variant
     

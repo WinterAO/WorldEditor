@@ -980,8 +980,12 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 '########################
                 If frmLuces.cInsertarLuz.value Then
                     If Val(frmLuces.cRango = 0) Then Exit Sub
-                    Call mDx8_Luces.Create_Light_To_Map(tX, tY, frmLuces.cRango, Val(frmLuces.R), Val(frmLuces.G), Val(frmLuces.B))
-                    Call mDx8_Luces.LightRenderAll
+                    
+                    Dim tmpColor As RGBA
+                    tmpColor = RGBA_From_Comp(Val(frmLuces.R), Val(frmLuces.G), Val(frmLuces.B))
+                    
+                    Call LucesRedondas.Create_Light_To_Map(tX, tY, tmpColor, Val(frmLuces.cRango))
+                    Call LucesRedondas.LightRenderAll
                     
                     With MapData(tX, tY).Light
                         .active = True
@@ -1006,7 +1010,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                         
                     End With
         
-                    mDx8_Luces.Delete_Light_To_Map tX, tY
+                    LucesRedondas.Delete_Light_To_Map tX, tY
         
                     MapInfo.Changed = 1 'Set changed flag
                     
@@ -1089,10 +1093,10 @@ Public Sub PegarSeleccion() '(mx As Integer, my As Integer)
         For Y = 0 To SeleccionAlto - 1
              MapData(X + SobreX, Y + SobreY).bLocked = SeleccionMap(X, Y).bLocked
              MapData(X + SobreX, Y + SobreY).CharIndex = SeleccionMap(X, Y).CharIndex
-             MapData(X + SobreX, Y + SobreY).Engine_Light(0) = SeleccionMap(X, Y).Engine_Light(0)
-             MapData(X + SobreX, Y + SobreY).Engine_Light(1) = SeleccionMap(X, Y).Engine_Light(1)
-             MapData(X + SobreX, Y + SobreY).Engine_Light(2) = SeleccionMap(X, Y).Engine_Light(2)
-             MapData(X + SobreX, Y + SobreY).Engine_Light(3) = SeleccionMap(X, Y).Engine_Light(3)
+             MapData(X + SobreX, Y + SobreY).Light_Value(0) = SeleccionMap(X, Y).Light_Value(0)
+             MapData(X + SobreX, Y + SobreY).Light_Value(1) = SeleccionMap(X, Y).Light_Value(1)
+             MapData(X + SobreX, Y + SobreY).Light_Value(2) = SeleccionMap(X, Y).Light_Value(2)
+             MapData(X + SobreX, Y + SobreY).Light_Value(3) = SeleccionMap(X, Y).Light_Value(3)
              MapData(X + SobreX, Y + SobreY).fX = SeleccionMap(X, Y).fX
              MapData(X + SobreX, Y + SobreY).FxIndex = SeleccionMap(X, Y).FxIndex
              MapData(X + SobreX, Y + SobreY).Graphic(1) = SeleccionMap(X, Y).Graphic(1)
@@ -1239,7 +1243,7 @@ Public Sub CopiarSeleccion(Optional ByVal Borde As Boolean = False)
                     .fX = MapData(X + SeleccionIX, Y + SeleccionIY).fX
 
                     For i = 0 To 3
-                        .Engine_Light(i) = MapData(X + SeleccionIX, Y + SeleccionIY).Engine_Light(i)
+                        .Light_Value(i) = MapData(X + SeleccionIX, Y + SeleccionIY).Light_Value(i)
                     Next i
 
                     .CharIndex = MapData(X + SeleccionIX, Y + SeleccionIY).CharIndex

@@ -123,7 +123,7 @@ Public Sub DibujarMinimapa(Optional ByVal Refrescar = False)
                         
                         zonaRGB = RGBA_2_Long(colorZona(MapData(map_x, map_y).ZonaIndex))
                         
-                        SetPixel picMapahDC, map_x - 1, map_y - 1, zonaRGB
+                        SetPixel picMapahDC, map_x - 1, map_y - 1, vbColor_2_Long(zonaRGB)
                     End If
                 End If
                 

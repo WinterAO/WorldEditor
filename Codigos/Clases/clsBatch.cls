@@ -20,8 +20,8 @@ Private m_Alpha   As Boolean
  
 Private Type TYPE_VERTEX
            
-    X       As Single
-    Y       As Single
+    x       As Single
+    y       As Single
     Z       As Single
  
     Colour  As RGBA
@@ -101,8 +101,8 @@ Public Sub SetTexture(ByRef Texture As Direct3DTexture8)
  
 End Sub
  
-Friend Sub Draw(ByVal X As Long, _
-                ByVal Y As Long, _
+Friend Sub Draw(ByVal x As Long, _
+                ByVal y As Long, _
                 ByVal Width As Long, _
                 ByVal Height As Long, _
                 ByRef color() As RGBA, _
@@ -123,16 +123,16 @@ Friend Sub Draw(ByVal X As Long, _
        
         RadAngle = angle * DEGREETORADIAN
    
-        CenterX = X + (Width * 0.5)
-        CenterY = Y + (Height * 0.5)
+        CenterX = x + (Width * 0.5)
+        CenterY = y + (Height * 0.5)
        
         SinRad = Sin(RadAngle)
         CosRad = Cos(RadAngle)
        
     End If
  
-    m_Data(m_Position).X = X
-    m_Data(m_Position).Y = Y
+    m_Data(m_Position).x = x
+    m_Data(m_Position).y = y
     m_Data(m_Position).Z = 0
     m_Data(m_Position).Colour = color(0)
     m_Data(m_Position).tX = Tx1
@@ -140,18 +140,18 @@ Friend Sub Draw(ByVal X As Long, _
    
     If angle > 0 And angle <= 360 Then
    
-        NewX = CenterX + (m_Data(m_Position).X - CenterX) * -CosRad - (m_Data(m_Position).Y - CenterY) * -SinRad
-        NewY = CenterY + (m_Data(m_Position).Y - CenterY) * -CosRad + (m_Data(m_Position).X - CenterX) * -SinRad
+        NewX = CenterX + (m_Data(m_Position).x - CenterX) * -CosRad - (m_Data(m_Position).y - CenterY) * -SinRad
+        NewY = CenterY + (m_Data(m_Position).y - CenterY) * -CosRad + (m_Data(m_Position).x - CenterX) * -SinRad
        
-        m_Data(m_Position).X = NewX
-        m_Data(m_Position).Y = NewY
+        m_Data(m_Position).x = NewX
+        m_Data(m_Position).y = NewY
        
     End If
    
     m_Position = m_Position + 1
    
-    m_Data(m_Position).X = X
-    m_Data(m_Position).Y = Y + Height
+    m_Data(m_Position).x = x
+    m_Data(m_Position).y = y + Height
     m_Data(m_Position).Z = 0
     m_Data(m_Position).Colour = color(1)
     m_Data(m_Position).tX = Tx1
@@ -159,18 +159,18 @@ Friend Sub Draw(ByVal X As Long, _
  
     If angle > 0 And angle <= 360 Then
    
-        NewX = CenterX + (m_Data(m_Position).X - CenterX) * -CosRad - (m_Data(m_Position).Y - CenterY) * -SinRad
-        NewY = CenterY + (m_Data(m_Position).Y - CenterY) * -CosRad + (m_Data(m_Position).X - CenterX) * -SinRad
+        NewX = CenterX + (m_Data(m_Position).x - CenterX) * -CosRad - (m_Data(m_Position).y - CenterY) * -SinRad
+        NewY = CenterY + (m_Data(m_Position).y - CenterY) * -CosRad + (m_Data(m_Position).x - CenterX) * -SinRad
        
-        m_Data(m_Position).X = NewX
-        m_Data(m_Position).Y = NewY
+        m_Data(m_Position).x = NewX
+        m_Data(m_Position).y = NewY
        
     End If
    
     m_Position = m_Position + 1
    
-    m_Data(m_Position).X = X + Width
-    m_Data(m_Position).Y = Y + Height
+    m_Data(m_Position).x = x + Width
+    m_Data(m_Position).y = y + Height
     m_Data(m_Position).Z = 0
     m_Data(m_Position).Colour = color(2)
     m_Data(m_Position).tX = Tx2
@@ -178,18 +178,18 @@ Friend Sub Draw(ByVal X As Long, _
  
     If angle > 0 And angle <= 360 Then
    
-        NewX = CenterX + (m_Data(m_Position).X - CenterX) * -CosRad - (m_Data(m_Position).Y - CenterY) * -SinRad
-        NewY = CenterY + (m_Data(m_Position).Y - CenterY) * -CosRad + (m_Data(m_Position).X - CenterX) * -SinRad
+        NewX = CenterX + (m_Data(m_Position).x - CenterX) * -CosRad - (m_Data(m_Position).y - CenterY) * -SinRad
+        NewY = CenterY + (m_Data(m_Position).y - CenterY) * -CosRad + (m_Data(m_Position).x - CenterX) * -SinRad
        
-        m_Data(m_Position).X = NewX
-        m_Data(m_Position).Y = NewY
+        m_Data(m_Position).x = NewX
+        m_Data(m_Position).y = NewY
        
     End If
    
     m_Position = m_Position + 1
    
-    m_Data(m_Position).X = X + Width
-    m_Data(m_Position).Y = Y
+    m_Data(m_Position).x = x + Width
+    m_Data(m_Position).y = y
     m_Data(m_Position).Z = 0
     m_Data(m_Position).Colour = color(3)
     m_Data(m_Position).tX = Tx2
@@ -197,11 +197,11 @@ Friend Sub Draw(ByVal X As Long, _
  
     If angle > 0 And angle <= 360 Then
    
-        NewX = CenterX + (m_Data(m_Position).X - CenterX) * -CosRad - (m_Data(m_Position).Y - CenterY) * -SinRad
-        NewY = CenterY + (m_Data(m_Position).Y - CenterY) * -CosRad + (m_Data(m_Position).X - CenterX) * -SinRad
+        NewX = CenterX + (m_Data(m_Position).x - CenterX) * -CosRad - (m_Data(m_Position).y - CenterY) * -SinRad
+        NewY = CenterY + (m_Data(m_Position).y - CenterY) * -CosRad + (m_Data(m_Position).x - CenterX) * -SinRad
        
-        m_Data(m_Position).X = NewX
-        m_Data(m_Position).Y = NewY
+        m_Data(m_Position).x = NewX
+        m_Data(m_Position).y = NewY
        
     End If
    

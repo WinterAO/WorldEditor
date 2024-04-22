@@ -303,14 +303,14 @@ Sub Cargar_CSM(ByVal Map As String)
                         .Light.RGBCOLOR.R = Luces(i).R
                         .Light.RGBCOLOR.G = Luces(i).G
                         .Light.RGBCOLOR.B = Luces(i).B
-    
+
                     End With
-    
-                    Call Create_Light_To_Map(Luces(i).X, Luces(i).Y, Luces(i).range, Luces(i).R, Luces(i).G, Luces(i).B)
+
+                    Call LucesRedondas.Create_Light_To_Map(Luces(i).X, Luces(i).Y, RGBA_From_Comp(Luces(i).R, Luces(i).G, Luces(i).B), Luces(i).range)
                 End If
             Next i
 
-            Call LightRenderAll
+            Call LucesRedondas.LightRenderAll
 
         End If
 

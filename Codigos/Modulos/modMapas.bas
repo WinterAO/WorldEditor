@@ -42,8 +42,8 @@ Public Sub AbrirMapa(ByVal bBig As Boolean)
     
     End If
     
-    UserPos.X = XMaxMapSize / 2
-    UserPos.Y = YMaxMapSize / 2
+    UserPos.x = XMaxMapSize / 2
+    UserPos.y = YMaxMapSize / 2
         
     DoEvents
     frmMain.mnuReAbrirMapa.Enabled = True
@@ -115,9 +115,9 @@ Public Sub NuevoMapa()
     'Descripcion: Limpia todo el mapa a uno nuevo
     '***************************************************
     
-    Dim Y     As Integer
+    Dim y     As Integer
 
-    Dim X     As Integer
+    Dim x     As Integer
 
     Dim i     As Byte
 
@@ -133,10 +133,10 @@ Public Sub NuevoMapa()
     
     frmMain.MousePointer = 11
         
-    For Y = YMinMapSize To YMaxMapSize
-        For X = XMinMapSize To XMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
+        For x = XMinMapSize To XMaxMapSize
         
-            With MapData(X, Y)
+            With MapData(x, y)
             
                 .Graphic(1).GrhIndex = 1
                 
@@ -158,8 +158,8 @@ Public Sub NuevoMapa()
         
                 ' Translados
                 .TileExit.Map = 0
-                .TileExit.X = 0
-                .TileExit.Y = 0
+                .TileExit.x = 0
+                .TileExit.y = 0
                 
                 ' Triggers
                 .Trigger = 0
@@ -167,7 +167,7 @@ Public Sub NuevoMapa()
                 .Particle_Group_Index = 0
                 .Particle_Index = 0
                 
-                Call Long_2_RGBAList(MapData(X, Y).Engine_Light(), -1)
+                Call Long_2_RGBAList(MapData(x, y).Light_Value(), -1)
                 
                 .Light.active = False
                 .Light.range = 0
@@ -181,21 +181,21 @@ Public Sub NuevoMapa()
                 .ZonaIndex = 0
                 
                 For i = 0 To 3
-                    .Engine_Light(i).A = 0
-                    .Engine_Light(i).R = 0
-                    .Engine_Light(i).G = 0
-                    .Engine_Light(i).B = 0
+                    .Light_Value(i).A = 0
+                    .Light_Value(i).R = 0
+                    .Light_Value(i).G = 0
+                    .Light_Value(i).B = 0
                 Next i
 
                 InitGrh .Graphic(1), 1
 
             End With
             
-        Next X
-    Next Y
+        Next x
+    Next y
     
     'Borramos todas las luces
-    Call LightRemoveAll(False)
+    Call LucesRedondas.LightRemoveAll(False)
     
     CantZonas = 0
     ReDim MapZonas(CantZonas) As tMapInfo
