@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmConfiguracion 
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Configuración del Editor"
-   ClientHeight    =   4785
+   ClientHeight    =   5145
    ClientLeft      =   14820
    ClientTop       =   8040
    ClientWidth     =   5295
@@ -20,7 +20,7 @@ Begin VB.Form frmConfiguracion
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4785
+   ScaleHeight     =   5145
    ScaleWidth      =   5295
    ShowInTaskbar   =   0   'False
    Begin VB.Frame FraMiscelanea 
@@ -34,11 +34,28 @@ Begin VB.Form frmConfiguracion
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   765
+      Height          =   1245
       Left            =   210
       TabIndex        =   5
       Top             =   3150
       Width           =   4965
+      Begin VB.TextBox txtTiempo 
+         Alignment       =   2  'Center
+         Height          =   345
+         Left            =   3720
+         TabIndex        =   14
+         Text            =   "1"
+         Top             =   690
+         Width           =   615
+      End
+      Begin VB.CheckBox chkGuardadoAutomatico 
+         Caption         =   "Guardado automatico.  Intervalo en minutos:"
+         Height          =   195
+         Left            =   180
+         TabIndex        =   13
+         Top             =   750
+         Width           =   4035
+      End
       Begin VB.CheckBox chkop 
          Caption         =   "Referencia de campo de visión del jugador"
          Enabled         =   0   'False
@@ -79,7 +96,7 @@ Begin VB.Form frmConfiguracion
       End
       Begin VB.TextBox txtDinamicMemory 
          Alignment       =   2  'Center
-         BackColor       =   &H00E0E0E0&
+         BackColor       =   &H00FFFFFF&
          Height          =   315
          Left            =   4290
          TabIndex        =   11
@@ -89,7 +106,7 @@ Begin VB.Form frmConfiguracion
       End
       Begin VB.TextBox txtBuffer 
          Alignment       =   2  'Center
-         BackColor       =   &H00E0E0E0&
+         BackColor       =   &H00FFFFFF&
          Height          =   315
          Left            =   4290
          TabIndex        =   8
@@ -160,10 +177,10 @@ Begin VB.Form frmConfiguracion
    Begin WinterMapEditor.lvButtons_H LvBCerrar 
       Height          =   480
       Index           =   13
-      Left            =   1200
+      Left            =   1140
       TabIndex        =   0
       ToolTipText     =   "Cerrar"
-      Top             =   4110
+      Top             =   4530
       Width           =   2910
       _ExtentX        =   5133
       _ExtentY        =   847
@@ -195,6 +212,43 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private isChanged As Boolean
+
+Private Sub chkGuardadoAutomatico_Click()
+'***************************************************
+'Author: Lorwik
+'Fecha: 24/04/2024
+'***************************************************
+
+    If Val(txtTiempo.Text) < 1 Or Val(txtTiempo.Text) > 60 Then
+        MsgBox "El tiempo debe ser superior a 1 minuto e inferior a 60 minutos.", vbCritical
+        txtTiempo.Text = 1
+        Exit Sub
+    End If
+    
+    ClientSetup.GuardadoAuto = CBool(chkGuardadoAutomatico.value)
+    ClientSetup.IntervaloGuardado = Val(txtTiempo.Text)
+    
+    isChanged = True
+
+End Sub
+
+Private Sub txtTiempo_Change()
+'***************************************************
+'Author: Lorwik
+'Fecha: 24/04/2024
+'***************************************************
+
+    If Val(txtTiempo.Text) < 1 Or Val(txtTiempo.Text) > 60 Then
+        MsgBox "El tiempo debe ser superior a 1 minuto e inferior a 60 minutos.", vbCritical
+        txtTiempo.Text = 1
+        Exit Sub
+    End If
+    
+    ClientSetup.IntervaloGuardado = Val(txtTiempo.Text)
+    
+    isChanged = True
+    
+End Sub
 
 Private Sub Form_Load()
 '***************************************************
@@ -248,6 +302,17 @@ Private Function leerOpciones() As Boolean
     'Memoria dinamica
     HScDinamicMemory.value = ClientSetup.byMemory
     txtDinamicMemory.Text = ClientSetup.byMemory
+    
+    'Guardado automatico
+    If ClientSetup.GuardadoAuto Then
+        chkGuardadoAutomatico.value = Checked
+        
+    Else
+        chkGuardadoAutomatico.value = Unchecked
+        
+    End If
+    
+    txtTiempo.Text = ClientSetup.IntervaloGuardado
     
     leerOpciones = True
 
@@ -381,6 +446,7 @@ Private Sub LvBCerrar_Click(Index As Integer)
         If MsgBox("Se hicieron cambios en la configuración ¿Quieres guardar estos cambios?", vbExclamation + vbYesNo) = vbYes Then
         
             Call guardarPerfilVideo
+            Call guardarPerfil
             Call AddtoRichTextBox(frmConsola.StatTxt, "La configuración se guardo satisfactoriamente.", 0, 255, 0, , , , , True)
             
         End If

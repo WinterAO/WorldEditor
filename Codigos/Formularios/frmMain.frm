@@ -25,6 +25,11 @@ Begin VB.Form frmMain
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   1280
    StartUpPosition =   2  'CenterScreen
+   Begin VB.Timer TimerMinuto 
+      Interval        =   60000
+      Left            =   690
+      Top             =   780
+   End
    Begin MSComDlg.CommonDialog Dialog 
       Left            =   120
       Top             =   750
@@ -72,18 +77,26 @@ Begin VB.Form frmMain
       ToolTipText     =   "Superficies"
       Top             =   75
       Width           =   480
-      _extentx        =   847
-      _extenty        =   847
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmMain.frx":10CA
-      cgradient       =   0
-      mode            =   1
-      value           =   0   'False
-      imgalign        =   4
-      image           =   "frmMain.frx":10F2
-      imgsize         =   32
-      cback           =   -2147483633
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":10CA
+      ImgSize         =   32
+      cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -93,17 +106,25 @@ Begin VB.Form frmMain
       ToolTipText     =   "Traslados"
       Top             =   75
       Width           =   480
-      _extentx        =   847
-      _extenty        =   847
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmMain.frx":1D44
-      cgradient       =   0
-      mode            =   1
-      value           =   0   'False
-      image           =   "frmMain.frx":1D6C
-      imgsize         =   32
-      cback           =   -2147483633
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      Image           =   "frmMain.frx":1D1C
+      ImgSize         =   32
+      cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -113,18 +134,26 @@ Begin VB.Form frmMain
       ToolTipText     =   "Bloqueos"
       Top             =   75
       Width           =   480
-      _extentx        =   847
-      _extenty        =   847
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmMain.frx":29BE
-      cgradient       =   0
-      mode            =   1
-      value           =   0   'False
-      imgalign        =   4
-      image           =   "frmMain.frx":29E6
-      imgsize         =   32
-      cback           =   -2147483633
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":296E
+      ImgSize         =   32
+      cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -134,18 +163,26 @@ Begin VB.Form frmMain
       ToolTipText     =   "NPC's"
       Top             =   75
       Width           =   480
-      _extentx        =   847
-      _extenty        =   847
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmMain.frx":3638
-      cgradient       =   0
-      mode            =   1
-      value           =   0   'False
-      imgalign        =   4
-      image           =   "frmMain.frx":3660
-      imgsize         =   32
-      cback           =   -2147483633
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":35C0
+      ImgSize         =   32
+      cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -155,18 +192,26 @@ Begin VB.Form frmMain
       ToolTipText     =   "Objetos"
       Top             =   75
       Width           =   480
-      _extentx        =   847
-      _extenty        =   847
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmMain.frx":42B2
-      cgradient       =   0
-      mode            =   1
-      value           =   0   'False
-      imgalign        =   4
-      image           =   "frmMain.frx":42DA
-      imgsize         =   32
-      cback           =   -2147483633
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":4212
+      ImgSize         =   32
+      cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -176,18 +221,26 @@ Begin VB.Form frmMain
       ToolTipText     =   "Trigger's"
       Top             =   75
       Width           =   480
-      _extentx        =   847
-      _extenty        =   847
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmMain.frx":4F2C
-      cgradient       =   0
-      mode            =   1
-      value           =   0   'False
-      imgalign        =   4
-      image           =   "frmMain.frx":4F54
-      imgsize         =   32
-      cback           =   -2147483633
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":4E64
+      ImgSize         =   32
+      cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -197,18 +250,26 @@ Begin VB.Form frmMain
       ToolTipText     =   "Particulas"
       Top             =   75
       Width           =   480
-      _extentx        =   847
-      _extenty        =   847
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmMain.frx":5BA6
-      cgradient       =   0
-      mode            =   1
-      value           =   0   'False
-      imgalign        =   4
-      image           =   "frmMain.frx":5BCE
-      imgsize         =   32
-      cback           =   -2147483633
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":5AB6
+      ImgSize         =   32
+      cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -218,18 +279,26 @@ Begin VB.Form frmMain
       ToolTipText     =   "Luces"
       Top             =   75
       Width           =   480
-      _extentx        =   847
-      _extenty        =   847
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmMain.frx":6250
-      cgradient       =   0
-      mode            =   1
-      value           =   0   'False
-      imgalign        =   4
-      image           =   "frmMain.frx":6278
-      imgsize         =   32
-      cback           =   -2147483633
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":6138
+      ImgSize         =   32
+      cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -239,18 +308,26 @@ Begin VB.Form frmMain
       ToolTipText     =   "Información de la zona"
       Top             =   75
       Width           =   480
-      _extentx        =   847
-      _extenty        =   847
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmMain.frx":671A
-      cgradient       =   0
-      mode            =   1
-      value           =   0   'False
-      imgalign        =   4
-      image           =   "frmMain.frx":6742
-      imgsize         =   32
-      cback           =   -2147483633
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":65DA
+      ImgSize         =   32
+      cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -260,18 +337,26 @@ Begin VB.Form frmMain
       ToolTipText     =   "Preview"
       Top             =   75
       Width           =   480
-      _extentx        =   847
-      _extenty        =   847
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmMain.frx":6A1C
-      cgradient       =   0
-      mode            =   1
-      value           =   0   'False
-      imgalign        =   4
-      image           =   "frmMain.frx":6A44
-      imgsize         =   32
-      cback           =   -2147483633
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":68B2
+      ImgSize         =   32
+      cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -281,18 +366,26 @@ Begin VB.Form frmMain
       ToolTipText     =   "Editor de zonas"
       Top             =   75
       Width           =   480
-      _extentx        =   847
-      _extenty        =   847
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmMain.frx":C6A96
-      cgradient       =   0
-      mode            =   1
-      value           =   0   'False
-      imgalign        =   4
-      image           =   "frmMain.frx":C6ABE
-      imgsize         =   32
-      cback           =   -2147483633
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":C6904
+      ImgSize         =   32
+      cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -302,18 +395,26 @@ Begin VB.Form frmMain
       ToolTipText     =   "Consola"
       Top             =   75
       Width           =   480
-      _extentx        =   847
-      _extenty        =   847
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmMain.frx":F6B10
-      cgradient       =   0
-      mode            =   1
-      value           =   0   'False
-      imgalign        =   4
-      image           =   "frmMain.frx":F6B38
-      imgsize         =   32
-      cback           =   -2147483633
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":F6956
+      ImgSize         =   32
+      cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -323,18 +424,26 @@ Begin VB.Form frmMain
       ToolTipText     =   "Rellenar Area"
       Top             =   90
       Width           =   480
-      _extentx        =   847
-      _extenty        =   847
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmMain.frx":1B6B8A
-      cgradient       =   0
-      mode            =   1
-      value           =   0   'False
-      imgalign        =   4
-      image           =   "frmMain.frx":1B6BB2
-      imgsize         =   32
-      cback           =   -2147483633
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":1B69A8
+      ImgSize         =   32
+      cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -344,18 +453,26 @@ Begin VB.Form frmMain
       ToolTipText     =   "Mapa"
       Top             =   90
       Width           =   480
-      _extentx        =   847
-      _extenty        =   847
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmMain.frx":1DBE28
-      cgradient       =   0
-      mode            =   1
-      value           =   0   'False
-      imgalign        =   4
-      image           =   "frmMain.frx":1DBE50
-      imgsize         =   32
-      cback           =   -2147483633
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":1DBC1E
+      ImgSize         =   32
+      cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -365,18 +482,26 @@ Begin VB.Form frmMain
       ToolTipText     =   "Mapa"
       Top             =   90
       Width           =   480
-      _extentx        =   847
-      _extenty        =   847
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmMain.frx":2D7B62
-      cgradient       =   0
-      mode            =   1
-      value           =   0   'False
-      imgalign        =   4
-      image           =   "frmMain.frx":2D7B8A
-      imgsize         =   32
-      cback           =   -2147483633
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":2D7930
+      ImgSize         =   32
+      cBack           =   -2147483633
    End
    Begin VB.Line Line4 
       BorderColor     =   &H80000004&
@@ -832,6 +957,24 @@ Begin VB.Form frmMain
          End
       End
    End
+   Begin VB.Menu mnuMapa 
+      Caption         =   "Mapa"
+      Begin VB.Menu mnuOptimizar 
+         Caption         =   "Optimizar"
+      End
+      Begin VB.Menu mnuInformes 
+         Caption         =   "Informes"
+      End
+      Begin VB.Menu mnuzonanula 
+         Caption         =   "Buscar zonas nulas"
+      End
+      Begin VB.Menu mnuzonasinuso 
+         Caption         =   "Buscar zonas sin uso"
+      End
+      Begin VB.Menu mnuMapSize 
+         Caption         =   "Tamaño de Mapa.."
+      End
+   End
    Begin VB.Menu mnuver 
       Caption         =   "&Ver"
       Begin VB.Menu mnuCapas 
@@ -907,68 +1050,71 @@ Begin VB.Form frmMain
          Caption         =   "Control &Automaticamente"
          Checked         =   -1  'True
       End
-   End
-   Begin VB.Menu mnuMinimapa 
-      Caption         =   "Minimapa"
-      Begin VB.Menu MinimapMenu 
+      Begin VB.Menu mnuLinMostrar1 
          Caption         =   "-"
       End
-      Begin VB.Menu Minimap 
-         Caption         =   "Ver capa 1"
-         Index           =   0
-      End
-      Begin VB.Menu Minimap 
-         Caption         =   "Ver capa 2"
-         Index           =   1
-      End
-      Begin VB.Menu Minimap 
-         Caption         =   "Ver capa 3"
-         Index           =   2
-      End
-      Begin VB.Menu Minimap 
-         Caption         =   "Ver capa 4"
-         Index           =   3
-      End
-      Begin VB.Menu Minimap 
-         Caption         =   "Ver NPC's"
-         Index           =   4
-      End
-      Begin VB.Menu Minimap 
-         Caption         =   "Ver Objetos"
-         Index           =   5
-      End
-      Begin VB.Menu Minimap 
-         Caption         =   "Ver Bloqueos"
-         Index           =   6
-      End
-      Begin VB.Menu Minimap 
-         Caption         =   "Ver Particulas"
-         Index           =   7
-      End
-      Begin VB.Menu Minimap 
-         Caption         =   "Ver Nº de mapa"
-         Enabled         =   0   'False
-         Index           =   8
-      End
-      Begin VB.Menu Minimap 
-         Caption         =   "Ver Cuadrantes"
-         Index           =   9
-      End
-      Begin VB.Menu Minimap 
-         Caption         =   "Ver Zonas"
-         Index           =   10
-      End
-      Begin VB.Menu mnuLineMinimap 
-         Caption         =   "-"
-      End
-      Begin VB.Menu Dibujarmini 
-         Caption         =   "Dibujar"
-      End
-      Begin VB.Menu minimapaSave 
-         Caption         =   "Guardar Minimapa"
-      End
-      Begin VB.Menu saveAllMinimap 
-         Caption         =   "Guardar todos los Minimapas"
+      Begin VB.Menu mnuMinimapa 
+         Caption         =   "Minimapa"
+         Begin VB.Menu MinimapMenu 
+            Caption         =   "-"
+         End
+         Begin VB.Menu Minimap 
+            Caption         =   "Ver capa 1"
+            Index           =   0
+         End
+         Begin VB.Menu Minimap 
+            Caption         =   "Ver capa 2"
+            Index           =   1
+         End
+         Begin VB.Menu Minimap 
+            Caption         =   "Ver capa 3"
+            Index           =   2
+         End
+         Begin VB.Menu Minimap 
+            Caption         =   "Ver capa 4"
+            Index           =   3
+         End
+         Begin VB.Menu Minimap 
+            Caption         =   "Ver NPC's"
+            Index           =   4
+         End
+         Begin VB.Menu Minimap 
+            Caption         =   "Ver Objetos"
+            Index           =   5
+         End
+         Begin VB.Menu Minimap 
+            Caption         =   "Ver Bloqueos"
+            Index           =   6
+         End
+         Begin VB.Menu Minimap 
+            Caption         =   "Ver Particulas"
+            Index           =   7
+         End
+         Begin VB.Menu Minimap 
+            Caption         =   "Ver Nº de mapa"
+            Enabled         =   0   'False
+            Index           =   8
+         End
+         Begin VB.Menu Minimap 
+            Caption         =   "Ver Cuadrantes"
+            Index           =   9
+         End
+         Begin VB.Menu Minimap 
+            Caption         =   "Ver Zonas"
+            Index           =   10
+         End
+         Begin VB.Menu mnuLineMinimap 
+            Caption         =   "-"
+         End
+         Begin VB.Menu Dibujarmini 
+            Caption         =   "Dibujar"
+         End
+         Begin VB.Menu minimapaSave 
+            Caption         =   "Guardar Minimapa"
+         End
+         Begin VB.Menu saveAllMinimap 
+            Caption         =   "Guardar todos los Minimapas"
+         End
       End
    End
    Begin VB.Menu mnuFunciones 
@@ -983,20 +1129,8 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuRender 
          Caption         =   "Renderizar"
       End
-      Begin VB.Menu mnuOptimizar 
-         Caption         =   "Optimizar"
-      End
-      Begin VB.Menu mnuInformes 
-         Caption         =   "Informes"
-      End
       Begin VB.Menu mnuModoCaminata 
          Caption         =   "Modo Caminata"
-      End
-      Begin VB.Menu mnuzonanula 
-         Caption         =   "Buscar zonas nulas"
-      End
-      Begin VB.Menu mnuzonasinuso 
-         Caption         =   "Buscar zonas sin uso"
       End
       Begin VB.Menu mnuGrhList 
          Caption         =   "Lista de todos los Grh's"
@@ -1369,15 +1503,15 @@ Private Sub mnuEliminarLuces_Click()
     '*************************************************
     On Error GoTo mnuEliminarLuces_Click_Err
     
-    Dim x As Integer
-    Dim y As Integer
+    Dim X As Integer
+    Dim Y As Integer
     
-    For y = SeleccionIY To SeleccionFY
-        For x = SeleccionIX To SeleccionFX
+    For Y = SeleccionIY To SeleccionFY
+        For X = SeleccionIX To SeleccionFX
         
-            With MapData(x, y)
+            With MapData(X, Y)
             
-                Call Long_2_RGBAList(MapData(x, y).Light_Value(), -1)
+                Call Long_2_RGBAList(MapData(X, Y).Light_Value(), -1)
                 
                 .Light.active = False
                 .Light.range = 0
@@ -1390,9 +1524,9 @@ Private Sub mnuEliminarLuces_Click()
                 
             End With
         
-        Next x
+        Next X
         
-    Next y
+    Next Y
     
     Exit Sub
     
@@ -1433,18 +1567,18 @@ End Sub
 
 Private Sub mnuEliminarZona_Click()
     Dim zonaDel As Integer
-    Dim x, y As Integer
+    Dim X, Y As Integer
     zonaDel = InputBox("Por favor, ingrese el número de la zona a borrar:")
     
-    For x = XMinMapSize To XMaxMapSize
+    For X = XMinMapSize To XMaxMapSize
     
-        For y = YMinMapSize To YMaxMapSize
+        For Y = YMinMapSize To YMaxMapSize
         
-            If MapData(x, y).ZonaIndex = zonaDel Then MapData(x, y).ZonaIndex = 0
+            If MapData(X, Y).ZonaIndex = zonaDel Then MapData(X, Y).ZonaIndex = 0
         
-        Next y
+        Next Y
         
-    Next x
+    Next X
 
 End Sub
 
@@ -1534,11 +1668,19 @@ Private Sub mnuInsertarZonasEnBordes_Click()
     'Author: Lorwik
     'Last modified: 25/05/2022
     '*************************************************
+    
     Call modEdicion.Zonas_Bordes
+    
 End Sub
 
-Private Sub mnuMapTam_Click(Index As Integer)
-
+Private Sub mnuMapSize_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 24/04/2024
+    '*************************************************
+    
+    frmMapSize.Show , frmMain
+    
 End Sub
 
 Private Sub mnuPNGtoGrh_Click()
@@ -1946,7 +2088,7 @@ Private Sub Form_DblClick()
     End If
 End Sub
 
-Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -1957,7 +2099,7 @@ Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, x As Sing
     
     If Not MapaCargado Then Exit Sub
     
-    Call ConvertCPtoTP(x, y, tX, tY)
+    Call ConvertCPtoTP(X, Y, tX, tY)
     
     If EstadoSelect > 0 And Button = 2 Then
         EstadoSelect = 0
@@ -1979,7 +2121,7 @@ Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, x As Sing
 
 End Sub
 
-Private Sub MainViewPic_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub MainViewPic_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -1991,7 +2133,7 @@ Private Sub MainViewPic_MouseMove(Button As Integer, Shift As Integer, x As Sing
     If Not MapaCargado Then Exit Sub
     HotKeysAllow = True
 
-    Call ConvertCPtoTP(x, y, tX, tY)
+    Call ConvertCPtoTP(X, Y, tX, tY)
     
     MousePos = "X: " & tX & " - Y: " & tY
     
@@ -2158,27 +2300,27 @@ Private Sub mnuVerZonas_Click(Index As Integer)
 End Sub
 
 Private Sub mnuzonanula_Click()
-    Dim x As Integer
-    Dim y As Integer
+    Dim X As Integer
+    Dim Y As Integer
     
-    For x = XMinMapSize To XMaxMapSize
+    For X = XMinMapSize To XMaxMapSize
     
-        For y = YMinMapSize To YMaxMapSize
+        For Y = YMinMapSize To YMaxMapSize
         
-            If MapData(x, y).ZonaIndex = 0 Then
-                MsgBox "Se ha encontrado una zona nula en la posicion X: " & x & " Y: " & y
+            If MapData(X, Y).ZonaIndex = 0 Then
+                MsgBox "Se ha encontrado una zona nula en la posicion X: " & X & " Y: " & Y
                 Exit Sub
             End If
         
-        Next y
+        Next Y
     
-    Next x
+    Next X
     
 End Sub
 
 Private Sub mnuzonasinuso_Click()
-    Dim x As Integer
-    Dim y As Integer
+    Dim X As Integer
+    Dim Y As Integer
     Dim i As Integer
     Dim found As Boolean
     Dim Count As Integer
@@ -2190,20 +2332,20 @@ Private Sub mnuzonasinuso_Click()
     
     For i = 1 To frmZonas.LstZona.ListCount
     
-        For x = XMinMapSize To XMaxMapSize
+        For X = XMinMapSize To XMaxMapSize
     
-            For y = YMinMapSize To YMaxMapSize
+            For Y = YMinMapSize To YMaxMapSize
         
-                If MapData(x, y).ZonaIndex = i Then
+                If MapData(X, Y).ZonaIndex = i Then
                     found = True
                     Exit For
                 End If
         
-            Next y
+            Next Y
             
             If found = True Then Exit For
         
-        Next x
+        Next X
         
         If found = False Then
             Call AddtoRichTextBox(frmConsola.StatTxt, "La zona " & i & " no se esta usando.", 255, 0, 0)
@@ -2219,4 +2361,44 @@ End Sub
 
 Private Sub saveAllMinimap_Click()
     Call RenderizarCuadrantes
+End Sub
+
+Private Sub TimerMinuto_Timer()
+'***************************************************
+'Author: Lorwik
+'Fecha: 24/04/2024
+'***************************************************
+    On Error GoTo TimerMinuto_Timer_Err
+
+    Static SaveInterval As Byte
+
+    '¿El guardado automatico esta activado? ¿El mapa se ha modificado?
+    If ClientSetup.GuardadoAuto And MapInfo.Changed = 1 Then
+    
+        '¿El intervalo llego al configurado por el usuario?
+        If ClientSetup.IntervaloGuardado = SaveInterval Then
+            Call AddtoRichTextBox(frmConsola.StatTxt, "Comenzando guardado automatico.", 0, 255, 0)
+            NoSobreescribir = True
+            Call modMapas.GuardarMapa(Dialog.filename)
+            
+            Call ShowMessageScreen("Mapa guardado automaticamente.")
+            Call AddtoRichTextBox(frmConsola.StatTxt, "Mapa guardado correctamente", 0, 255, 0)
+        
+        Else 'Si no llego sumamos 1
+            SaveInterval = SaveInterval + 1
+            
+        End If
+    
+    Else 'Si no esta activado el autosave reseteamos el intervalo.
+    
+        SaveInterval = 0
+    
+    End If
+    
+    Exit Sub
+
+TimerMinuto_Timer_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "frmMain.TimerMinuto_Timer", Erl)
+    Resume Next
 End Sub

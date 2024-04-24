@@ -39,6 +39,9 @@ Public Type tSetupMods
     MeMode As Byte
     CampoVision As Boolean
     useCompression As Boolean
+    GuardadoAuto As Boolean
+    IntervaloGuardado As Byte
+    
 End Type
 
 Public ClientSetup As tSetupMods
@@ -122,6 +125,9 @@ Public Function guardarPerfil() As Boolean
     Call Lector.ChangeValue("MOSTRAR", "Grilla", IIf(VerGrilla, "1", "0"))
     Call Lector.ChangeValue("MOSTRAR", "Particulas", IIf(VerParticulas, "1", "0"))
     Call Lector.ChangeValue("MOSTRAR", "Bloqueos", IIf(VerBlockeados, "1", "0"))
+    
+    Call Lector.ChangeValue("CONFIGURACION", "GuardadoAuto", IIf(ClientSetup.GuardadoAuto, "1", "0"))
+    Call Lector.ChangeValue("CONFIGURACION", "IntervalGuardado", ClientSetup.IntervaloGuardado)
     
     Call Lector.DumpFile(profileFile(ProfileTag))
     
@@ -223,7 +229,10 @@ On Local Error GoTo fileErr:
 
     With ClientSetup
 
+        'CONFIGURACION GENERAL
         .MeMode = Val(Profile.GetValue("CONFIGURACION", "MeMode"))
+        .GuardadoAuto = Val(Profile.GetValue("CONFIGURACION", "GuardadoAuto"))
+        .IntervaloGuardado = Val(Profile.GetValue("CONFIGURACION", "IntervalGuardado"))
         
         ' VIDEO
         .LimiteFPS = CBool(Val(Profile.GetValue("VIDEO", "LimitarFPS")))
@@ -417,7 +426,7 @@ Private Function LoadGrhData_Compressed() As Boolean
 On Error GoTo ErrorHandler:
 
     Dim Grh         As Long
-    Dim K           As Long
+    Dim k           As Long
     Dim frame       As Long
     Dim fileVersion As Long
     Dim fileBuff    As clsByteBuffer
@@ -455,8 +464,8 @@ On Error GoTo ErrorHandler:
             Grh = fileBuff.getLong
             
             frmGrh.LynxGrh.AddItem Grh
-            K = frmGrh.LynxGrh.Rows - 1
-            frmGrh.LynxGrh.CellText(K, 1) = Grh
+            k = frmGrh.LynxGrh.Rows - 1
+            frmGrh.LynxGrh.CellText(k, 1) = Grh
 
             With GrhData(Grh)
             
@@ -468,7 +477,7 @@ On Error GoTo ErrorHandler:
                 
                 If .NumFrames > 1 Then
                 
-                    frmGrh.LynxGrh.CellText(K, 1) = "ANIMACION"
+                    frmGrh.LynxGrh.CellText(k, 1) = "ANIMACION"
                 
                     For frame = 1 To .NumFrames
                         .Frames(frame) = fileBuff.getLong
@@ -492,7 +501,7 @@ On Error GoTo ErrorHandler:
                     
                 Else
                 
-                    frmGrh.LynxGrh.CellText(K, 1) = ""
+                    frmGrh.LynxGrh.CellText(k, 1) = ""
                     
                     .FileNum = fileBuff.getLong
                     If .FileNum <= 0 Then GoTo ErrorHandler
@@ -567,7 +576,7 @@ Public Function LoadGrhData_Uncompressed() As Boolean
 
     On Error GoTo ErrorHandler
     
-    Dim K           As Long
+    Dim k           As Long
 
     Dim Grh         As Long
 
@@ -610,8 +619,8 @@ Public Function LoadGrhData_Uncompressed() As Boolean
         Get handle, , Grh
         
         frmGrh.LynxGrh.AddItem Grh
-        K = frmGrh.LynxGrh.Rows - 1
-        frmGrh.LynxGrh.CellText(K, 1) = Grh
+        k = frmGrh.LynxGrh.Rows - 1
+        frmGrh.LynxGrh.CellText(k, 1) = Grh
     
         With GrhData(Grh)
 
@@ -628,7 +637,7 @@ Public Function LoadGrhData_Uncompressed() As Boolean
             
                 If .NumFrames > 1 Then
 
-                    frmGrh.LynxGrh.CellText(K, 1) = "ANIMACION"
+                    frmGrh.LynxGrh.CellText(k, 1) = "ANIMACION"
 
                     For frame = 1 To .NumFrames
                         Get handle, , .Frames(frame)
@@ -658,7 +667,7 @@ Public Function LoadGrhData_Uncompressed() As Boolean
                 
                 Else
                 
-                    frmGrh.LynxGrh.CellText(K, 1) = ""
+                    frmGrh.LynxGrh.CellText(k, 1) = ""
                     
                     'Read in normal GRH data
                     Get handle, , .FileNum
@@ -802,7 +811,7 @@ Private Function CargarMinimapa_Uncompressed() As Boolean
     
     Dim i As Long
     
-    Dim n As Integer
+    Dim N As Integer
     
     If Not FileExist(dirRecursos_Uncompressed & "\Scripts\minimap.bin", vbArchive) Then
         MsgBox "No se ha encontrado el archivo minimap.bin."
@@ -811,19 +820,19 @@ Private Function CargarMinimapa_Uncompressed() As Boolean
 
     End If
     
-    n = FreeFile
-    Open dirRecursos_Uncompressed & "\Scripts\minimap.bin" For Binary Access Read As #n
+    N = FreeFile
+    Open dirRecursos_Uncompressed & "\Scripts\minimap.bin" For Binary Access Read As #N
         
     For i = 1 To grhCount
 
         If Grh_Check(i) Then
-            Get #n, , GrhData(i).mini_map_color
+            Get #N, , GrhData(i).mini_map_color
 
         End If
         
     Next i
 
-    Close #n
+    Close #N
     
     CargarMinimapa_Uncompressed = True
     
@@ -907,7 +916,7 @@ End Function
 Private Function CargarCabezas_Uncompressed() As Boolean
     On Error GoTo ErrorHandler:
     
-    Dim n            As Integer
+    Dim N            As Integer
 
     Dim i            As Integer
     
@@ -919,31 +928,31 @@ Private Function CargarCabezas_Uncompressed() As Boolean
         Exit Function
     End If
 
-    n = FreeFile
-    Open dirRecursos_Uncompressed & "\Scripts\head.ind" For Binary Access Read As #n
+    N = FreeFile
+    Open dirRecursos_Uncompressed & "\Scripts\head.ind" For Binary Access Read As #N
 
     'num de cabezas
-    Get #n, , NumHeads
+    Get #N, , NumHeads
 
     'Resize array
     ReDim heads(0 To NumHeads) As tHead
             
         For i = 1 To NumHeads
-            Get #n, , heads(i).Std
-            Get #n, , heads(i).Texture
-            Get #n, , heads(i).startX
-            Get #n, , heads(i).startY
+            Get #N, , heads(i).Std
+            Get #N, , heads(i).Texture
+            Get #N, , heads(i).startX
+            Get #N, , heads(i).startY
             
         Next i
 
-    Close #n
+    Close #N
 
     CargarCabezas_Uncompressed = True
 
     Exit Function
 
 ErrorHandler:
-    Close #n
+    Close #N
     'MsgBox "Error " & Err.Number & " durante la carga de Head.ind!"
     CargarCabezas_Uncompressed = False
     Resume
@@ -1023,7 +1032,7 @@ End Function
 Public Function CargarCascos_Uncompressed() As Boolean
     On Error GoTo ErrorHandler:
     
-    Dim n          As Integer
+    Dim N          As Integer
 
     Dim i          As Integer
     
@@ -1035,31 +1044,31 @@ Public Function CargarCascos_Uncompressed() As Boolean
         Exit Function
     End If
 
-    n = FreeFile
-    Open dirRecursos_Uncompressed & "\Scripts\helmet.ind" For Binary Access Read As #n
+    N = FreeFile
+    Open dirRecursos_Uncompressed & "\Scripts\helmet.ind" For Binary Access Read As #N
 
     'num de cascos
-    Get #n, , NumCascos
+    Get #N, , NumCascos
 
     'Resize array
     ReDim Cascos(0 To NumCascos) As tHead
     
     For i = 1 To NumCascos
-        Get #n, , Cascos(i).Std
-        Get #n, , Cascos(i).Texture
-        Get #n, , Cascos(i).startX
-        Get #n, , Cascos(i).startY
+        Get #N, , Cascos(i).Std
+        Get #N, , Cascos(i).Texture
+        Get #N, , Cascos(i).startX
+        Get #N, , Cascos(i).startY
             
     Next i
          
-    Close #n
+    Close #N
 
     CargarCascos_Uncompressed = True
 
     Exit Function
 
 ErrorHandler:
-    Close #n
+    Close #N
     'MsgBox "Error " & Err.Number & " durante la carga de Helmet.ind!"
     CargarCascos_Uncompressed = False
     Resume
@@ -1156,7 +1165,7 @@ Public Function CargarCuerpos_Uncompressed() As Boolean
 
     On Error GoTo ErrorHandler
 
-    Dim n            As Integer
+    Dim N            As Integer
 
     Dim i            As Long
     
@@ -1170,11 +1179,11 @@ Public Function CargarCuerpos_Uncompressed() As Boolean
         Exit Function
     End If
 
-    n = FreeFile()
-    Open dirRecursos_Uncompressed & "\Scripts\Personajes.ind" For Binary Access Read As #n
+    N = FreeFile()
+    Open dirRecursos_Uncompressed & "\Scripts\Personajes.ind" For Binary Access Read As #N
 
     'num de cabezas
-    Get #n, , NumCuerpos
+    Get #N, , NumCuerpos
 
     'Resize array
     ReDim BodyData(0 To NumCuerpos) As BodyData
@@ -1182,7 +1191,7 @@ Public Function CargarCuerpos_Uncompressed() As Boolean
 
     For i = 1 To NumCuerpos
 
-        Get #n, , MisCuerpos(i)
+        Get #N, , MisCuerpos(i)
         
         If MisCuerpos(i).Body(1) Then
             Call InitGrh(BodyData(i).Walk(1), MisCuerpos(i).Body(1), 0)
@@ -1197,14 +1206,14 @@ Public Function CargarCuerpos_Uncompressed() As Boolean
         
     Next i
 
-    Close #n
+    Close #N
     
     CargarCuerpos_Uncompressed = True
     
     Exit Function
 
 ErrorHandler:
-    Close #n
+    Close #N
     'MsgBox "Error " & Err.Number & " durante la carga de Personajes.ind!"
     CargarCuerpos_Uncompressed = False
     Resume
@@ -1304,7 +1313,7 @@ Private Function CargarAnimArmas_Uncompressed() As Boolean
     
     On Error GoTo errhandler:
 
-    Dim n              As Integer
+    Dim N              As Integer
 
     Dim i              As Long
 
@@ -1317,18 +1326,18 @@ Private Function CargarAnimArmas_Uncompressed() As Boolean
 
     End If
     
-    n = FreeFile
-    Open dirRecursos_Uncompressed & "\Scripts\Armas.ind" For Binary Access Read As #n
+    N = FreeFile
+    Open dirRecursos_Uncompressed & "\Scripts\Armas.ind" For Binary Access Read As #N
     
     'num de armas
-    Get #n, , NumWeaponAnims
+    Get #N, , NumWeaponAnims
         
     'Resize array
     ReDim WeaponAnimData(1 To NumWeaponAnims) As WeaponAnimData
     ReDim Weapons(1 To NumWeaponAnims) As tIndiceArmas
         
     For i = 1 To NumWeaponAnims
-        Get #n, , Weapons(i)
+        Get #N, , Weapons(i)
             
         If Weapons(i).weapon(1) Then
             
@@ -1341,14 +1350,14 @@ Private Function CargarAnimArmas_Uncompressed() As Boolean
 
     Next i
     
-    Close #n
+    Close #N
     
     CargarAnimArmas_Uncompressed = True
     
     Exit Function
 
 errhandler:
-    Close #n
+    Close #N
     'MsgBox "Error " & Err.Number & " durante la carga de Armas.ind!"
     CargarAnimArmas_Uncompressed = False
     Resume
@@ -1446,7 +1455,7 @@ Public Function CargarAnimEscudos_Uncompressed() As Boolean
     
     On Error GoTo errhandler:
 
-    Dim n               As Integer
+    Dim N               As Integer
 
     Dim i               As Long
 
@@ -1459,18 +1468,18 @@ Public Function CargarAnimEscudos_Uncompressed() As Boolean
 
     End If
 
-    n = FreeFile
-    Open dirRecursos_Uncompressed & "\Scripts\escudos.ind" For Binary Access Read As #n
+    N = FreeFile
+    Open dirRecursos_Uncompressed & "\Scripts\escudos.ind" For Binary Access Read As #N
 
     'num de escudos
-    Get #n, , NumEscudosAnims
+    Get #N, , NumEscudosAnims
         
     'Resize array
     ReDim ShieldAnimData(1 To NumEscudosAnims) As ShieldAnimData
     ReDim Shields(1 To NumEscudosAnims) As tIndiceEscudos
         
     For i = 1 To NumEscudosAnims
-        Get #n, , Shields(i)
+        Get #N, , Shields(i)
             
         If Shields(i).shield(1) Then
             
@@ -1483,14 +1492,14 @@ Public Function CargarAnimEscudos_Uncompressed() As Boolean
             
     Next i
     
-    Close #n
+    Close #N
     
     CargarAnimEscudos_Uncompressed = True
     
     Exit Function
 
 errhandler:
-    Close #n
+    Close #N
     'MsgBox "Error " & Err.Number & " durante la carga de Escudos.ind!"
     CargarAnimEscudos_Uncompressed = False
     Resume
@@ -1519,7 +1528,7 @@ Public Sub CargarIndicesSuperficie()
 On Error GoTo Fallo
     Dim Leer As New clsIniManager
     Dim i As Integer
-    Dim K As Long
+    Dim k As Long
     
     If FileExist(IniPath & INITDIR & "indices.ini", vbArchive) = False Then
         MsgBox "Falta el archivo 'indices.ini'", vbCritical
@@ -1548,9 +1557,9 @@ On Error GoTo Fallo
         SupData(i).Capa = Val(Leer.GetValue("REFERENCIA" & i, "Capa"))
         
         frmSuperficies.LynxSuperficies.AddItem i
-        K = frmSuperficies.LynxSuperficies.Rows - 1
-        frmSuperficies.LynxSuperficies.CellText(K, 1) = SupData(i).Grh
-        frmSuperficies.LynxSuperficies.CellText(K, 2) = SupData(i).name
+        k = frmSuperficies.LynxSuperficies.Rows - 1
+        frmSuperficies.LynxSuperficies.CellText(k, 1) = SupData(i).Grh
+        frmSuperficies.LynxSuperficies.CellText(k, 2) = SupData(i).name
     Next
     
     frmSuperficies.LynxSuperficies.Visible = True
@@ -1585,7 +1594,7 @@ On Error Resume Next
     Dim NPC As Long
     Dim Hostil As String
     Dim Leer As New clsIniManager
-    Dim K As Long
+    Dim k As Long
     
     Call Leer.Initialize(dirDats & "NPCs.dat")
     NumNPCs = Val(Leer.GetValue("INIT", "NumNPCs"))
@@ -1618,12 +1627,12 @@ On Error Resume Next
             
             frmNPCs.LynxNPCs.AddItem NPC
             
-            K = frmNPCs.LynxNPCs.Rows - 1
-            frmNPCs.LynxNPCs.CellText(K, 1) = .name
-            frmNPCs.LynxNPCs.CellText(K, 2) = .ELV
+            k = frmNPCs.LynxNPCs.Rows - 1
+            frmNPCs.LynxNPCs.CellText(k, 1) = .name
+            frmNPCs.LynxNPCs.CellText(k, 2) = .ELV
             
             Hostil = IIf(.Hostile = 1, "SI", "NO")
-            frmNPCs.LynxNPCs.CellText(K, 3) = Hostil
+            frmNPCs.LynxNPCs.CellText(k, 3) = Hostil
             
         End With
     Next
@@ -1650,7 +1659,7 @@ Public Sub CargarIndicesOBJ()
 On Error GoTo Fallo
 
     Dim Obj As Integer
-    Dim K As Long
+    Dim k As Long
     Dim Leer As New clsIniManager
 
     If FileExist(dirDats & "\OBJ.dat", vbArchive) = False Then
@@ -1688,8 +1697,8 @@ On Error GoTo Fallo
             .Subtipo = Val(Leer.GetValue("OBJ" & Obj, "Subtipo"))
             
             frmOBJs.LynxOBJs.AddItem Obj
-            K = frmOBJs.LynxOBJs.Rows - 1
-            frmOBJs.LynxOBJs.CellText(K, 1) = .name
+            k = frmOBJs.LynxOBJs.Rows - 1
+            frmOBJs.LynxOBJs.CellText(k, 1) = .name
         
         End With
     Next Obj
@@ -1717,7 +1726,7 @@ Public Sub CargarIndicesTriggers()
 
 On Error GoTo Fallo
 
-    Dim K As Long
+    Dim k As Long
 
     If FileExist(IniPath & INITDIR & "Triggers.ini", vbArchive) = False Then
         MsgBox "Falta el archivo 'Triggers.ini' en " & IniPath & INITDIR & "Triggers.ini", vbCritical
@@ -1740,8 +1749,8 @@ On Error GoTo Fallo
     NumT = Val(Leer.GetValue("INIT", "NumTriggers"))
     For t = 1 To NumT
         frmTriggers.LynxTriggers.AddItem t
-        K = frmTriggers.LynxTriggers.Rows - 1
-        frmTriggers.LynxTriggers.CellText(K, 1) = Leer.GetValue("Trig" & t, "Name")
+        k = frmTriggers.LynxTriggers.Rows - 1
+        frmTriggers.LynxTriggers.CellText(k, 1) = Leer.GetValue("Trig" & t, "Name")
     Next t
 
     frmTriggers.LynxTriggers.Visible = True

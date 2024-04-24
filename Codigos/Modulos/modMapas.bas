@@ -42,8 +42,8 @@ Public Sub AbrirMapa(ByVal bBig As Boolean)
     
     End If
     
-    UserPos.x = XMaxMapSize / 2
-    UserPos.y = YMaxMapSize / 2
+    UserPos.X = XMaxMapSize / 2
+    UserPos.Y = YMaxMapSize / 2
         
     DoEvents
     frmMain.mnuReAbrirMapa.Enabled = True
@@ -115,9 +115,9 @@ Public Sub NuevoMapa()
     'Descripcion: Limpia todo el mapa a uno nuevo
     '***************************************************
     
-    Dim y     As Integer
+    Dim Y     As Integer
 
-    Dim x     As Integer
+    Dim X     As Integer
 
     Dim i     As Byte
 
@@ -133,10 +133,10 @@ Public Sub NuevoMapa()
     
     frmMain.MousePointer = 11
         
-    For y = YMinMapSize To YMaxMapSize
-        For x = XMinMapSize To XMaxMapSize
+    For Y = YMinMapSize To YMaxMapSize
+        For X = XMinMapSize To XMaxMapSize
         
-            With MapData(x, y)
+            With MapData(X, Y)
             
                 .Graphic(1).GrhIndex = 1
                 
@@ -158,8 +158,8 @@ Public Sub NuevoMapa()
         
                 ' Translados
                 .TileExit.Map = 0
-                .TileExit.x = 0
-                .TileExit.y = 0
+                .TileExit.X = 0
+                .TileExit.Y = 0
                 
                 ' Triggers
                 .Trigger = 0
@@ -167,7 +167,7 @@ Public Sub NuevoMapa()
                 .Particle_Group_Index = 0
                 .Particle_Index = 0
                 
-                Call Long_2_RGBAList(MapData(x, y).Light_Value(), -1)
+                Call Long_2_RGBAList(MapData(X, Y).Light_Value(), -1)
                 
                 .Light.active = False
                 .Light.range = 0
@@ -191,8 +191,8 @@ Public Sub NuevoMapa()
 
             End With
             
-        Next x
-    Next y
+        Next X
+    Next Y
     
     'Borramos todas las luces
     Call LucesRedondas.LightRemoveAll(False)
