@@ -174,6 +174,8 @@ Public Const OFFSET_HEAD As Integer = -34
 ' Tamaño del inventario Quick
 Public Const MAX_INVENTORY_SLOTS As Byte = 35
 
+Public Const INVENTORY_SIZE As Byte = 64
+
 '###########################
 ' Constantes de intervalo
 '###########################
@@ -374,7 +376,7 @@ End Type
 Public Type tMapInfo
 
     Music As String
-    name As String
+    Name As String
     PK As Boolean
     MagiaSinEfecto As Byte
     InviSinEfecto As Byte
@@ -421,7 +423,7 @@ End Type
 
 Type SupData
 
-    name As String
+    Name As String
     Grh As Long
     Width As Byte
     Height As Byte
@@ -432,7 +434,7 @@ End Type
 
 Public Type NpcData
 
-    name As String
+    Name As String
     ELV As Integer
     Hostile As Byte
     Body As Integer
@@ -447,7 +449,7 @@ End Type
 
 Public Type ObjData
 
-    name As String 'Nombre del obj
+    Name As String 'Nombre del obj
     OBJType As Integer 'Tipo enum que determina cuales son las caract del obj
     GrhIndex As Long ' Indice del grafico que representa el obj
     GrhSecundario As Integer
@@ -463,6 +465,7 @@ End Type
 
 'Quick Superficies
 Type Inventory
+    Name As String
     GrhIndex As Long
 End Type
 

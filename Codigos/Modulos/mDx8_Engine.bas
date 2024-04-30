@@ -323,7 +323,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
         Call PrepareDrawBuffer
         
         'Inicializamos el inventario grafico
-        Call Inventario.Initialize(DirectD3D8, frmQuick.picInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
+        Call Inventario.Initialize(DirectD3D8, frmQuick.picInv, MAX_INVENTORY_SLOTS, , INVENTORY_SIZE, INVENTORY_SIZE, , , , , True)
         
     End If
     

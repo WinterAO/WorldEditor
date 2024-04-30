@@ -25,7 +25,7 @@ Private Declare Function getprivateprofilestring _
                                                   ByVal lpFileName As String) As Long
 
 Public Function Form_Caption() As String
-    Form_Caption = "WorldEditor versión: " & App.Major & "." & App.Minor & "." & App.Revision
+    Form_Caption = "WinterMapEditor versión: " & App.Major & "." & App.Minor & "." & App.Revision
 
 End Function
 

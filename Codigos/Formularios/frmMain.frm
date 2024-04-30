@@ -537,20 +537,6 @@ Begin VB.Form frmMain
       Y1              =   4
       Y2              =   42
    End
-   Begin VB.Line Line2 
-      BorderColor     =   &H80000004&
-      X1              =   552
-      X2              =   552
-      Y1              =   2
-      Y2              =   40
-   End
-   Begin VB.Line Line1 
-      BorderColor     =   &H80000004&
-      X1              =   548
-      X2              =   548
-      Y1              =   2
-      Y2              =   40
-   End
    Begin VB.Label MapPest 
       Alignment       =   2  'Center
       Appearance      =   0  'Flat

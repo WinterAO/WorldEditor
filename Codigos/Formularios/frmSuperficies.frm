@@ -480,7 +480,7 @@ Private Sub Filtrar()
     LynxSuperficies.Visible = False
     
     For i = 0 To MaxSup
-        vDatos = SupData(i).name
+        vDatos = SupData(i).Name
         
         For j = 1 To Len(vDatos)
         

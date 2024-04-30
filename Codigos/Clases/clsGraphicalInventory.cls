@@ -207,12 +207,12 @@ Public Sub ClearAllSlots()
 
     Dim Slot As Long
     For Slot = 1 To Me.MaxObjs
-        Call SetItem(Slot, 0)
+        Call SetItem(Slot, 0, vbNullString)
     Next Slot
 
 End Sub
 
-Public Sub SetItem(ByVal Slot As Byte, ByVal eGrhIndex As Long)
+Public Sub SetItem(ByVal Slot As Byte, ByVal eGrhIndex As Long, ByVal eName As String)
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modify Date: 12/04/06
@@ -222,6 +222,7 @@ Public Sub SetItem(ByVal Slot As Byte, ByVal eGrhIndex As Long)
     
     With Inventory(Slot)
         .GrhIndex = eGrhIndex
+        .Name = eName
     End With
     
     'If InventoryWindow.Visible = False Then InventoryWindow.Visible = True
@@ -337,8 +338,8 @@ Public Sub DrawInventory()
 
     For loopc = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1 To UBound(Inventory)
             
-        startdX = ((loopc - 1) Mod (frmQuick.picInv.ScaleWidth / 32)) * 32
-        startdY = ((loopc - 1) \ (frmQuick.picInv.ScaleWidth / 32)) * 32
+        startdX = ((loopc - 1) Mod (frmQuick.picInv.ScaleWidth / INVENTORY_SIZE)) * INVENTORY_SIZE
+        startdY = ((loopc - 1) \ (frmQuick.picInv.ScaleWidth / INVENTORY_SIZE)) * INVENTORY_SIZE
 
         For i = 0 To 3
             ColorFinal(i) = COLOR_WHITE(i)
@@ -358,7 +359,7 @@ Public Sub DrawInventory()
                 End With
                 
                 If loopc = SelectedItem Then _
-                    Call Draw_GrhIndex(2, startdX, startdY, 0, COLOR_WHITE(), 0, False) 'Dibuja el fondo cuando lo seleccionamos
+                    Call Draw_GrhIndex(2, startdX, startdY, 0, COLOR_WHITE(), 0, False, 2, 2)  'Dibuja el fondo cuando lo seleccionamos
                 
                 'Numero del Grh
                 Call DrawText(startdX, startdY, Inventory(loopc).GrhIndex, COLOR_WHITE)
@@ -370,7 +371,7 @@ Public Sub DrawInventory()
     Next loopc
 
     If DragItem <> 0 And Drag = 1 And isInventory Then
-        Call Draw_GrhIndex(Inventory(DragItem).GrhIndex, MouseX - 16, MouseY - 16, 0, ColorFinal())
+        Call Draw_GrhIndex(Inventory(DragItem).GrhIndex, MouseX - (INVENTORY_SIZE / 2), MouseY - (INVENTORY_SIZE / 2), 0, ColorFinal())
         
         ' Si estamos arrastrando un item, dibujamos normal
         InventoryWindow.AutoRedraw = False
@@ -422,16 +423,19 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, x As 
     Dim TempItem As Integer
     
     'Exit if it got outside the control's areanv
-    If x < 16 Then x = 16
-    If y < 16 Then y = 16
-    If x > InventoryWindow.ScaleWidth - 16 Then x = InventoryWindow.ScaleWidth - 16
-    If y > InventoryWindow.ScaleHeight - 16 Then y = InventoryWindow.ScaleHeight - 16
+    If x < (INVENTORY_SIZE / 2) Then x = (INVENTORY_SIZE / 2)
+    If y < (INVENTORY_SIZE / 2) Then y = (INVENTORY_SIZE / 2)
+    If x > InventoryWindow.ScaleWidth - (INVENTORY_SIZE / 2) Then x = InventoryWindow.ScaleWidth - (INVENTORY_SIZE / 2)
+    If y > InventoryWindow.ScaleHeight - (INVENTORY_SIZE / 2) Then y = InventoryWindow.ScaleHeight - (INVENTORY_SIZE / 2)
         
     temp_x = x \ ownTilePixelWidth
     temp_y = y \ ownTilePixelHeight
     
-    TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ 32) + 1
+    TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ INVENTORY_SIZE) + 1
     TempSlot = TempItem
+    
+    If TempItem <= UBound(Inventory) Then _
+        InventoryWindow.ToolTipText = Inventory(TempItem).Name
 
     MouseX = CInt(x)
     MouseY = CInt(y)
@@ -446,11 +450,11 @@ Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, x As 
         Dim temp_x As Integer
         Dim temp_y As Integer
 
-        temp_x = x \ 32
-        temp_y = y \ 32
+        temp_x = x \ INVENTORY_SIZE
+        temp_y = y \ INVENTORY_SIZE
 
         'Get the currently clickced item
-        DragItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ 32) + 1
+        DragItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ INVENTORY_SIZE) + 1
 
         If Not (DragItem <= 25 And DragItem >= 1) Then
             DragItem = 0
@@ -550,10 +554,10 @@ Public Function GetPos(ByVal x As Integer, ByVal y As Integer) As Byte
     Dim temp_x As Integer
     Dim temp_y As Integer
     
-    temp_x = x \ 32
-    temp_y = y \ 32
+    temp_x = x \ INVENTORY_SIZE
+    temp_y = y \ INVENTORY_SIZE
     
-    GetPos = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ 32) + 1
+    GetPos = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ INVENTORY_SIZE) + 1
 
 End Function
 

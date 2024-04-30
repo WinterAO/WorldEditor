@@ -399,7 +399,7 @@ Public Sub Device_Textured_Render_Inv(ByVal x As Single, ByVal y As Single, _
                     
                 Call .SetAlpha(Alpha)
                 
-                Call .Draw(x, y, 32, 32, color, sX / TextureWidth, sY / TextureHeight, (sX + Width) / TextureWidth, (sY + Height) / TextureHeight, angle)
+                Call .Draw(x, y, INVENTORY_SIZE, INVENTORY_SIZE, color, sX / TextureWidth, sY / TextureHeight, (sX + Width) / TextureWidth, (sY + Height) / TextureHeight, angle)
                 
         End With
         
@@ -537,7 +537,9 @@ Public Sub DrawHead(ByVal Head As Integer, ByVal x As Integer, ByVal y As Intege
 
 End Sub
 
-Sub Draw_GrhIndex(ByVal GrhIndex As Long, ByVal x As Integer, ByVal y As Integer, ByVal Center As Byte, ByRef Color_List() As RGBA, Optional ByVal angle As Single = 0, Optional ByVal Alpha As Boolean = False)
+Sub Draw_GrhIndex(ByVal GrhIndex As Long, ByVal x As Integer, ByVal y As Integer, ByVal Center As Byte, ByRef Color_List() As RGBA, Optional ByVal angle As Single = 0, Optional ByVal Alpha As Boolean = False, _
+                    Optional ByVal ScaleX As Single = 1, Optional ByVal ScaleY As Single = 1)
+                    
     Dim SourceRect As RECT
     
     With GrhData(GrhIndex)
@@ -553,7 +555,7 @@ Sub Draw_GrhIndex(ByVal GrhIndex As Long, ByVal x As Integer, ByVal y As Integer
         End If
 
         'Draw
-        Call Device_Textured_Render(x, y, .pixelWidth, .pixelHeight, .sX, .sY, .FileNum, Color_List(), Alpha)
+        Call Device_Textured_Render(x, y, .pixelWidth, .pixelHeight, .sX, .sY, .FileNum, Color_List(), Alpha, angle, ScaleX, ScaleY)
     End With
     
 End Sub
