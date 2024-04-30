@@ -103,6 +103,8 @@ Public Sub GuardarMapa(Optional Path As String)
     End If
     
     Call Save_CSM(Path)
+    
+    Call ShowMessageScreen("Mapa guardado.")
                 
 errhandler:
 

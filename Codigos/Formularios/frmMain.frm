@@ -59,15 +59,6 @@ Begin VB.Form frmMain
       TabStop         =   0   'False
       Top             =   660
       Width           =   19200
-      Begin VB.Shape ShpScreen 
-         BackColor       =   &H80000008&
-         BorderColor     =   &H80000005&
-         BorderWidth     =   2
-         Height          =   9240
-         Left            =   3990
-         Top             =   420
-         Width           =   11070
-      End
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
@@ -503,6 +494,35 @@ Begin VB.Form frmMain
       ImgSize         =   32
       cBack           =   -2147483633
    End
+   Begin WinterMapEditor.lvButtons_H LvBEdit 
+      Height          =   480
+      Index           =   15
+      Left            =   7680
+      TabIndex        =   27
+      ToolTipText     =   "Mapa"
+      Top             =   90
+      Width           =   480
+      _ExtentX        =   847
+      _ExtentY        =   847
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cGradient       =   0
+      Mode            =   1
+      Value           =   0   'False
+      ImgAlign        =   4
+      Image           =   "frmMain.frx":2D7C36
+      ImgSize         =   32
+      cBack           =   -2147483633
+   End
    Begin VB.Line Line4 
       BorderColor     =   &H80000004&
       X1              =   702
@@ -519,17 +539,17 @@ Begin VB.Form frmMain
    End
    Begin VB.Line Line2 
       BorderColor     =   &H80000004&
-      X1              =   520
-      X2              =   520
-      Y1              =   4
-      Y2              =   42
+      X1              =   552
+      X2              =   552
+      Y1              =   2
+      Y2              =   40
    End
    Begin VB.Line Line1 
       BorderColor     =   &H80000004&
-      X1              =   516
-      X2              =   516
-      Y1              =   4
-      Y2              =   42
+      X1              =   548
+      X2              =   548
+      Y1              =   2
+      Y2              =   40
    End
    Begin VB.Label MapPest 
       Alignment       =   2  'Center
@@ -973,6 +993,7 @@ Begin VB.Form frmMain
       End
       Begin VB.Menu mnuMapSize 
          Caption         =   "Tamaño de Mapa.."
+         Enabled         =   0   'False
       End
    End
    Begin VB.Menu mnuver 
@@ -1309,6 +1330,14 @@ Private Sub LvBEdit_Click(Index As Integer)
             Else
                 frmWalkerSpeed.Visible = False
             End If
+            
+        Case 15 'Quick Superficies
+            If LvBEdit(Index).value Then
+                frmQuick.Show , frmMain
+                
+            Else
+                frmQuick.Visible = False
+            End If
     
     End Select
 
@@ -1503,15 +1532,15 @@ Private Sub mnuEliminarLuces_Click()
     '*************************************************
     On Error GoTo mnuEliminarLuces_Click_Err
     
-    Dim X As Integer
-    Dim Y As Integer
+    Dim x As Integer
+    Dim y As Integer
     
-    For Y = SeleccionIY To SeleccionFY
-        For X = SeleccionIX To SeleccionFX
+    For y = SeleccionIY To SeleccionFY
+        For x = SeleccionIX To SeleccionFX
         
-            With MapData(X, Y)
+            With MapData(x, y)
             
-                Call Long_2_RGBAList(MapData(X, Y).Light_Value(), -1)
+                Call Long_2_RGBAList(MapData(x, y).Light_Value(), -1)
                 
                 .Light.active = False
                 .Light.range = 0
@@ -1524,9 +1553,9 @@ Private Sub mnuEliminarLuces_Click()
                 
             End With
         
-        Next X
+        Next x
         
-    Next Y
+    Next y
     
     Exit Sub
     
@@ -1567,18 +1596,18 @@ End Sub
 
 Private Sub mnuEliminarZona_Click()
     Dim zonaDel As Integer
-    Dim X, Y As Integer
+    Dim x, y As Integer
     zonaDel = InputBox("Por favor, ingrese el número de la zona a borrar:")
     
-    For X = XMinMapSize To XMaxMapSize
+    For x = XMinMapSize To XMaxMapSize
     
-        For Y = YMinMapSize To YMaxMapSize
+        For y = YMinMapSize To YMaxMapSize
         
-            If MapData(X, Y).ZonaIndex = zonaDel Then MapData(X, Y).ZonaIndex = 0
+            If MapData(x, y).ZonaIndex = zonaDel Then MapData(x, y).ZonaIndex = 0
         
-        Next Y
+        Next y
         
-    Next X
+    Next x
 
 End Sub
 
@@ -1743,12 +1772,12 @@ Private Sub mnuNuevoMapa_Click()
     'Last modified: 29/04/2021
     '*************************************************
     On Error Resume Next
-    Dim LoopC As Integer
+    Dim loopc As Integer
     
     DeseaGuardarMapa Dialog.filename
     
-    For LoopC = 0 To frmMain.MapPest.Count - 1
-        frmMain.MapPest(LoopC).Visible = False
+    For loopc = 0 To frmMain.MapPest.Count - 1
+        frmMain.MapPest(loopc).Visible = False
     Next
     
     frmMain.Dialog.filename = Empty
@@ -2088,7 +2117,7 @@ Private Sub Form_DblClick()
     End If
 End Sub
 
-Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -2099,7 +2128,7 @@ Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, X As Sing
     
     If Not MapaCargado Then Exit Sub
     
-    Call ConvertCPtoTP(X, Y, tX, tY)
+    Call ConvertCPtoTP(x, y, tX, tY)
     
     If EstadoSelect > 0 And Button = 2 Then
         EstadoSelect = 0
@@ -2121,7 +2150,7 @@ Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, X As Sing
 
 End Sub
 
-Private Sub MainViewPic_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub MainViewPic_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -2133,7 +2162,7 @@ Private Sub MainViewPic_MouseMove(Button As Integer, Shift As Integer, X As Sing
     If Not MapaCargado Then Exit Sub
     HotKeysAllow = True
 
-    Call ConvertCPtoTP(X, Y, tX, tY)
+    Call ConvertCPtoTP(x, y, tX, tY)
     
     MousePos = "X: " & tX & " - Y: " & tY
     
@@ -2300,27 +2329,27 @@ Private Sub mnuVerZonas_Click(Index As Integer)
 End Sub
 
 Private Sub mnuzonanula_Click()
-    Dim X As Integer
-    Dim Y As Integer
+    Dim x As Integer
+    Dim y As Integer
     
-    For X = XMinMapSize To XMaxMapSize
+    For x = XMinMapSize To XMaxMapSize
     
-        For Y = YMinMapSize To YMaxMapSize
+        For y = YMinMapSize To YMaxMapSize
         
-            If MapData(X, Y).ZonaIndex = 0 Then
-                MsgBox "Se ha encontrado una zona nula en la posicion X: " & X & " Y: " & Y
+            If MapData(x, y).ZonaIndex = 0 Then
+                MsgBox "Se ha encontrado una zona nula en la posicion X: " & x & " Y: " & y
                 Exit Sub
             End If
         
-        Next Y
+        Next y
     
-    Next X
+    Next x
     
 End Sub
 
 Private Sub mnuzonasinuso_Click()
-    Dim X As Integer
-    Dim Y As Integer
+    Dim x As Integer
+    Dim y As Integer
     Dim i As Integer
     Dim found As Boolean
     Dim Count As Integer
@@ -2332,20 +2361,20 @@ Private Sub mnuzonasinuso_Click()
     
     For i = 1 To frmZonas.LstZona.ListCount
     
-        For X = XMinMapSize To XMaxMapSize
+        For x = XMinMapSize To XMaxMapSize
     
-            For Y = YMinMapSize To YMaxMapSize
+            For y = YMinMapSize To YMaxMapSize
         
-                If MapData(X, Y).ZonaIndex = i Then
+                If MapData(x, y).ZonaIndex = i Then
                     found = True
                     Exit For
                 End If
         
-            Next Y
+            Next y
             
             If found = True Then Exit For
         
-        Next X
+        Next x
         
         If found = False Then
             Call AddtoRichTextBox(frmConsola.StatTxt, "La zona " & i & " no se esta usando.", 255, 0, 0)

@@ -1,18 +1,26 @@
 Attribute VB_Name = "modDeclaraciones"
 Option Explicit
 
+'#######################
 'Recursos
+'#######################
 Public Const PasswordResources = "$FlLrjB3JoliHdAPKA8&YaJR5"
 
-'Configuracion
+'#######################
+'Configuración
+'#######################
 Public ModoElegido       As Boolean
 
 Public ProfileTag        As String ' Perfil seleccionado
 
+'#######################
 'Objetos publicos
+'#######################
 Public Sound             As clsSoundEngine
 
 Public LucesRedondas     As clsLucesRedondas
+
+Public Inventario        As clsGraphicalInventory
 
 'The main timer of the Carga.
 Public MainTimer         As clsTimer
@@ -22,7 +30,9 @@ Global NumChars          As Integer
 
 Global LastChar          As Integer
 
-'Warnings
+'#######################
+'Avisos
+'#######################
 Public Const MSGMod      As String = "Este mapa há sido modificado." & vbCrLf & "Si no lo guardas perderas todos los cambios ¿Deseas guardarlo?"
 
 Public Const MSGDang     As String = "¡CUIDADO! Esta función podria arruinar el mapa." & vbCrLf & "¿Estas seguro que quieres continuar?"
@@ -160,6 +170,9 @@ Public ClienteWidth      As Integer
 Public ContadorTiles     As Long
 
 Public Const OFFSET_HEAD As Integer = -34
+
+' Tamaño del inventario Quick
+Public Const MAX_INVENTORY_SLOTS As Byte = 35
 
 '###########################
 ' Constantes de intervalo
@@ -435,7 +448,7 @@ End Type
 Public Type ObjData
 
     name As String 'Nombre del obj
-    ObjType As Integer 'Tipo enum que determina cuales son las caract del obj
+    OBJType As Integer 'Tipo enum que determina cuales son las caract del obj
     GrhIndex As Long ' Indice del grafico que representa el obj
     GrhSecundario As Integer
     Info As String
@@ -446,6 +459,11 @@ Public Type ObjData
     Cerrada As Byte
     Subtipo As Byte
 
+End Type
+
+'Quick Superficies
+Type Inventory
+    GrhIndex As Long
 End Type
 
 '**********Arrays Publicas************

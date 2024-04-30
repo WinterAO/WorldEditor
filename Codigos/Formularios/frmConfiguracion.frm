@@ -58,7 +58,6 @@ Begin VB.Form frmConfiguracion
       End
       Begin VB.CheckBox chkop 
          Caption         =   "Referencia de campo de visión del jugador"
-         Enabled         =   0   'False
          Height          =   345
          Index           =   0
          Left            =   180
@@ -88,10 +87,8 @@ Begin VB.Form frmConfiguracion
          Height          =   285
          Left            =   180
          Max             =   50
-         Min             =   1
          TabIndex        =   12
          Top             =   2370
-         Value           =   5
          Width           =   3915
       End
       Begin VB.TextBox txtDinamicMemory 
@@ -121,7 +118,7 @@ Begin VB.Form frmConfiguracion
          Min             =   1
          TabIndex        =   7
          Top             =   1590
-         Value           =   5
+         Value           =   1
          Width           =   3915
       End
       Begin VB.ComboBox cmbProcesado 
@@ -339,11 +336,9 @@ Private Sub chkop_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
         
             If chkop(Index).value = vbUnchecked Then
                 ClientSetup.CampoVision = False
-                frmMain.ShpScreen.Visible = False
                 
             Else
                 ClientSetup.CampoVision = True
-                frmMain.ShpScreen.Visible = True
                 
             End If
             
@@ -444,7 +439,7 @@ Private Sub LvBCerrar_Click(Index As Integer)
 
     If isChanged Then
         If MsgBox("Se hicieron cambios en la configuración ¿Quieres guardar estos cambios?", vbExclamation + vbYesNo) = vbYes Then
-        
+
             Call guardarPerfilVideo
             Call guardarPerfil
             Call AddtoRichTextBox(frmConsola.StatTxt, "La configuración se guardo satisfactoriamente.", 0, 255, 0, , , , , True)

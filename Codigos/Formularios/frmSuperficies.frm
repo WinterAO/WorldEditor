@@ -468,7 +468,7 @@ Private Sub Filtrar()
     Dim vDatos As String
     Dim i As Integer
     Dim j As Integer
-    Dim K As Long
+    Dim k As Long
     
     If cFiltro.ListCount > 5 Then _
         cFiltro.RemoveItem 0
@@ -486,9 +486,9 @@ Private Sub Filtrar()
         
             If UCase$(mid$(vDatos & str(i), j, Len(cFiltro.Text))) = UCase$(cFiltro.Text) Or LenB(cFiltro.Text) = 0 Then
                 LynxSuperficies.AddItem i
-                K = LynxSuperficies.Rows - 1
-                LynxSuperficies.CellText(K, 1) = SupData(i).Grh
-                LynxSuperficies.CellText(K, 2) = vDatos
+                k = LynxSuperficies.Rows - 1
+                LynxSuperficies.CellText(k, 1) = SupData(i).Grh
+                LynxSuperficies.CellText(k, 2) = vDatos
                 Exit For
             End If
             

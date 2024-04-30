@@ -292,18 +292,21 @@ Sub ShowNextFrame()
         ' Calculamos los FPS y los mostramos
         Call Engine_Update_FPS
         Call DrawText(10, 5, "FPS: " & modTileEngine.FPS, COLOR_WHITE, False)
-        Call DrawText(10, 20, "Mouse: " & MousePos, COLOR_WHITE, False)
-        
+        Call DrawText(10, 20, "Coords: X:" & UserPos.x & " Y: " & UserPos.y, COLOR_WHITE, False)
         Call ObtenerCuadrante(Cuadrante, cX, cY)
         Call DrawText(10, 35, "Cuadrante: " & Cuadrante & " X:" & cX & " Y: " & cY, COLOR_WHITE, False)
         
-        If ContadorTiles > 0 Then Call DrawText(10, 50, "Tiles: " & ContadorTiles, COLOR_WHITE, False)
+        Call DrawText(10, 50, "Mouse: " & MousePos, COLOR_WHITE, False)
+        
+        If ContadorTiles > 0 Then Call DrawText(10, 65, "Tiles: " & ContadorTiles, COLOR_WHITE, False)
         
         'Get timing info
         timerElapsedTime = GetElapsedTime()
         timerTicksPerFrame = timerElapsedTime * Engine_BaseSpeed
             
         Call Engine_EndScene(MainScreenRect, 0)
+        
+        Call Inventario.DrawDragAndDrop
 
     End If
 
@@ -370,6 +373,33 @@ Public Sub Device_Textured_Render(ByVal x As Single, ByVal y As Single, _
                 Else
                     Call .Draw(x, y, TextureWidth * ScaleX, TextureHeight * ScaleY, color, , , , , angle)
                 End If
+                
+        End With
+        
+End Sub
+
+Public Sub Device_Textured_Render_Inv(ByVal x As Single, ByVal y As Single, _
+                                  ByVal Width As Integer, ByVal Height As Integer, _
+                                  ByVal sX As Integer, ByVal sY As Integer, _
+                                  ByVal tex As Long, _
+                                  ByRef color() As RGBA, _
+                                  Optional ByVal Alpha As Boolean = False, _
+                                  Optional ByVal angle As Single = 0, _
+                                  Optional ByVal ScaleX As Single = 1!, _
+                                  Optional ByVal ScaleY As Single = 1!)
+
+        Dim Texture As Direct3DTexture8
+        
+        Dim TextureWidth As Long, TextureHeight As Long
+        Set Texture = SurfaceDB.GetTexture(tex, TextureWidth, TextureHeight)
+        
+        With SpriteBatch
+
+                Call .SetTexture(Texture)
+                    
+                Call .SetAlpha(Alpha)
+                
+                Call .Draw(x, y, 32, 32, color, sX / TextureWidth, sY / TextureHeight, (sX + Width) / TextureWidth, (sY + Height) / TextureHeight, angle)
                 
         End With
         
@@ -857,6 +887,17 @@ Sub RenderScreen(ByVal tilex As Integer, _
             
     End If
     
+    If ClientSetup.CampoVision Then
+        'Barra Izquierda
+        Call Engine_Draw_Line(frmMain.MainViewPic.ScaleHeight / 2, 30, 1, 616, -1, -1)
+        'Barra Derecha
+        Call Engine_Draw_Line((frmMain.MainViewPic.ScaleHeight / 2) + 738, 30, 1, 616, -1, -1)
+        'Barra Superior
+        Call Engine_Draw_Line(frmMain.MainViewPic.ScaleHeight / 2, 30, 738, 1, -1, -1)
+        'Barra Inferior
+        Call Engine_Draw_Line(frmMain.MainViewPic.ScaleHeight / 2, 646, 738, 1, -1, -1)
+    End If
+    
     If colorRender <> 240 Then
         Call Draw_GrhIndex(34027, frmMain.MainViewPic.ScaleHeight - 64, 150, 1, render_msg())
         Call DrawText(frmMain.MainViewPic.ScaleHeight - 64, 105, renderText, render_msg(), True, 2)
@@ -1093,14 +1134,14 @@ Function NextOpenChar() As Integer
 'Author: Unkwown
 'Last modified: 20/05/06
 '*************************************************
-    Dim LoopC As Integer
+    Dim loopc As Integer
     
-    LoopC = 1
-    Do While CharList(LoopC).active
-        LoopC = LoopC + 1
+    loopc = 1
+    Do While CharList(loopc).active
+        loopc = loopc + 1
     Loop
     
-    NextOpenChar = LoopC
+    NextOpenChar = loopc
 
 End Function
 

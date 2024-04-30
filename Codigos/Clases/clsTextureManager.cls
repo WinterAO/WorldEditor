@@ -173,7 +173,7 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
             Else
                 
                 Dim Graphic As String
-                    Graphic = dirRecursos_Uncompressed & "\Graficos\" & .filename
+                    Graphic = dirRecursos_Uncompressed & "Graficos\" & .filename
                 
                 If FileExist(Graphic & Formato, vbNormal) Then
                     Set .Texture = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & Formato, D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
