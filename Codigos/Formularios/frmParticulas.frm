@@ -3,7 +3,7 @@ Begin VB.Form frmParticulas
    BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Particulas"
-   ClientHeight    =   4200
+   ClientHeight    =   4500
    ClientLeft      =   25035
    ClientTop       =   9270
    ClientWidth     =   5115
@@ -20,18 +20,40 @@ Begin VB.Form frmParticulas
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   280
+   ScaleHeight     =   300
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   341
    ShowInTaskbar   =   0   'False
+   Begin VB.ComboBox cParticula 
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000012&
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000014&
+      Height          =   315
+      ItemData        =   "frmParticulas.frx":0000
+      Left            =   1710
+      List            =   "frmParticulas.frx":0002
+      TabIndex        =   4
+      Text            =   "1"
+      Top             =   3510
+      Width           =   3255
+   End
    Begin WinterMapEditor.lvButtons_H cmdDel 
-      Height          =   555
+      Height          =   450
       Left            =   210
       TabIndex        =   3
-      Top             =   3570
+      Top             =   3930
       Width           =   2535
       _ExtentX        =   4471
-      _ExtentY        =   979
+      _ExtentY        =   794
       Caption         =   "Quitar"
       CapAlign        =   2
       BackStyle       =   2
@@ -55,13 +77,13 @@ Begin VB.Form frmParticulas
       cBack           =   255
    End
    Begin WinterMapEditor.lvButtons_H cmdAdd 
-      Height          =   555
-      Left            =   2310
+      Height          =   450
+      Left            =   2400
       TabIndex        =   2
-      Top             =   3570
+      Top             =   3930
       Width           =   2595
       _ExtentX        =   4577
-      _ExtentY        =   979
+      _ExtentY        =   794
       Caption         =   "Agregar"
       CapAlign        =   2
       BackStyle       =   2
@@ -155,6 +177,26 @@ Begin VB.Form frmParticulas
       ShowRowNumbersVary=   0   'False
       HotHeaderTracking=   0   'False
    End
+   Begin VB.Label lblParticulaActual 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "Particula Actual:"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   195
+      Left            =   330
+      TabIndex        =   5
+      Top             =   3540
+      Width           =   1170
+   End
 End
 Attribute VB_Name = "frmParticulas"
 Attribute VB_GlobalNameSpace = False
@@ -227,11 +269,10 @@ Private Sub LynxParticulas_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub CargarInfo()
-    Dim Index As Integer
     
     HotKeysAllow = False
     
-    Index = LynxParticulas.CellText(, 0)
+    cParticula.Text = LynxParticulas.CellText(, 0)
     
-    ParticlePreview = General_Particle_Create(Index, -1, -1)
+    ParticlePreview = General_Particle_Create(Val(cParticula.Text), -1, -1)
 End Sub

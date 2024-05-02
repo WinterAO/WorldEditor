@@ -222,7 +222,7 @@ Public Sub SetItem(ByVal Slot As Byte, ByVal eGrhIndex As Long, ByVal eName As S
     
     With Inventory(Slot)
         .GrhIndex = eGrhIndex
-        .Name = eName
+        .name = eName
     End With
     
     'If InventoryWindow.Visible = False Then InventoryWindow.Visible = True
@@ -435,7 +435,7 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, x As 
     TempSlot = TempItem
     
     If TempItem <= UBound(Inventory) Then _
-        InventoryWindow.ToolTipText = Inventory(TempItem).Name
+        InventoryWindow.ToolTipText = Inventory(TempItem).name
 
     MouseX = CInt(x)
     MouseY = CInt(y)

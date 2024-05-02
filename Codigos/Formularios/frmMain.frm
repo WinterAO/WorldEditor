@@ -886,16 +886,6 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuLineEdicion1 
          Caption         =   "-"
       End
-      Begin VB.Menu mnuAutoCapturarSuperficie 
-         Caption         =   "Auto-C&apturar información de la Superficie"
-      End
-      Begin VB.Menu mnuAutoCapturarTranslados 
-         Caption         =   "Auto-&Capturar información de los Translados"
-         Checked         =   -1  'True
-      End
-      Begin VB.Menu mnuAutoGuardarMapas 
-         Caption         =   "Configuración de Auto-&Guardar Mapas"
-      End
       Begin VB.Menu mnuConfigAvanzadaSup 
          Caption         =   "Configuración Avanzada de Superficies"
          Index           =   3

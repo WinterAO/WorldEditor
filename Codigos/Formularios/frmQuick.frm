@@ -56,21 +56,29 @@ Begin VB.Form frmQuick
       TabIndex        =   0
       Top             =   6825
       Width           =   1350
-      _extentx        =   2381
-      _extenty        =   609
-      caption         =   "Limpiar Todo"
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmQuick.frx":0000
-      cfore           =   16777215
-      cfhover         =   16777215
-      cbhover         =   0
-      lockhover       =   1
-      cgradient       =   0
-      gradient        =   3
-      mode            =   0
-      value           =   0   'False
-      cback           =   8388736
+      _ExtentX        =   2381
+      _ExtentY        =   609
+      Caption         =   "Limpiar Todo"
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
+      LockHover       =   1
+      cGradient       =   0
+      Gradient        =   3
+      Mode            =   0
+      Value           =   0   'False
+      cBack           =   8388736
    End
    Begin WinterMapEditor.lvButtons_H lvAdd 
       Height          =   345
@@ -78,22 +86,30 @@ Begin VB.Form frmQuick
       TabIndex        =   2
       Top             =   6825
       Width           =   1650
-      _extentx        =   2910
-      _extenty        =   609
-      caption         =   "Añadir"
-      capalign        =   2
-      backstyle       =   2
-      shape           =   1
-      font            =   "frmQuick.frx":0028
-      cfore           =   16777215
-      cfhover         =   16777215
-      cbhover         =   0
-      lockhover       =   1
-      cgradient       =   0
-      gradient        =   3
-      mode            =   0
-      value           =   0   'False
-      cback           =   65280
+      _ExtentX        =   2910
+      _ExtentY        =   609
+      Caption         =   "Añadir"
+      CapAlign        =   2
+      BackStyle       =   2
+      Shape           =   1
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
+      LockHover       =   1
+      cGradient       =   0
+      Gradient        =   3
+      Mode            =   0
+      Value           =   0   'False
+      cBack           =   65280
    End
    Begin WinterMapEditor.lvButtons_H LvBLimpiar 
       Height          =   345
@@ -101,22 +117,30 @@ Begin VB.Form frmQuick
       TabIndex        =   3
       Top             =   6825
       Width           =   1680
-      _extentx        =   2963
-      _extenty        =   609
-      caption         =   "Limpiar"
-      capalign        =   2
-      backstyle       =   2
-      shape           =   2
-      font            =   "frmQuick.frx":0050
-      cfore           =   16777215
-      cfhover         =   16777215
-      cbhover         =   0
-      lockhover       =   1
-      cgradient       =   0
-      gradient        =   3
-      mode            =   0
-      value           =   0   'False
-      cback           =   255
+      _ExtentX        =   2963
+      _ExtentY        =   609
+      Caption         =   "Limpiar"
+      CapAlign        =   2
+      BackStyle       =   2
+      Shape           =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
+      LockHover       =   1
+      cGradient       =   0
+      Gradient        =   3
+      Mode            =   0
+      Value           =   0   'False
+      cBack           =   255
    End
 End
 Attribute VB_Name = "frmQuick"
@@ -162,7 +186,7 @@ Private Sub lvAdd_Click()
     End If
     
     'Si ya tenemos el slot, añadimos la superficie
-    Call Inventario.SetItem(FreeSlot, Val(frmSuperficies.cGrh.Text), SupData(frmSuperficies.LynxSuperficies.CellText(, 0)).Name)
+    Call Inventario.SetItem(FreeSlot, Val(frmSuperficies.cGrh.Text), SupData(frmSuperficies.LynxSuperficies.CellText(, 0)).name)
     
     Exit Sub
 
@@ -208,7 +232,9 @@ Private Sub picInv_Click()
     '*********************************
     
     '¿Es un slot valido?
-    If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then _
+    If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then
         frmSuperficies.cGrh.Text = Inventario.GrhIndex(Inventario.SelectedItem)
+        frmSuperficies.cSeleccionarSuperficie.value = True
+    End If
     
 End Sub

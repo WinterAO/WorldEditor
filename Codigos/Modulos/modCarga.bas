@@ -42,6 +42,13 @@ Public Type tSetupMods
     GuardadoAuto As Boolean
     IntervaloGuardado As Byte
     
+    'AUTO CAPTURAR
+    AutoCapturarSuperficies As Boolean
+    AutoCapturarTraslados As Boolean
+    AutoCapturarNPCs As Boolean
+    AutoCapturarObjs As Boolean
+    AutoCapturarParticulas As Boolean
+    
 End Type
 
 Public ClientSetup As tSetupMods
@@ -126,8 +133,18 @@ Public Function guardarPerfil() As Boolean
     Call Lector.ChangeValue("MOSTRAR", "Particulas", IIf(VerParticulas, "1", "0"))
     Call Lector.ChangeValue("MOSTRAR", "Bloqueos", IIf(VerBlockeados, "1", "0"))
     
-    Call Lector.ChangeValue("CONFIGURACION", "GuardadoAuto", IIf(ClientSetup.GuardadoAuto, "1", "0"))
-    Call Lector.ChangeValue("CONFIGURACION", "IntervalGuardado", ClientSetup.IntervaloGuardado)
+    With ClientSetup
+    
+        Call Lector.ChangeValue("CONFIGURACION", "GuardadoAuto", IIf(ClientSetup.GuardadoAuto, "1", "0"))
+        Call Lector.ChangeValue("CONFIGURACION", "IntervalGuardado", ClientSetup.IntervaloGuardado)
+        
+        Call Lector.ChangeValue("AUTO-CAPTURAR", "Superficies", IIf(.AutoCapturarSuperficies, "1", "0"))
+        Call Lector.ChangeValue("AUTO-CAPTURAR", "Traslados", IIf(.AutoCapturarTraslados, "1", "0"))
+        Call Lector.ChangeValue("AUTO-CAPTURAR", "NPCs", IIf(.AutoCapturarNPCs, "1", "0"))
+        Call Lector.ChangeValue("AUTO-CAPTURAR", "Objetos", IIf(.AutoCapturarObjs, "1", "0"))
+        Call Lector.ChangeValue("AUTO-CAPTURAR", "Particulas", IIf(.AutoCapturarParticulas, "1", "0"))
+    
+    End With
     
     Call Lector.DumpFile(profileFile(ProfileTag))
     
@@ -377,6 +394,13 @@ On Local Error GoTo fileErr:
         .MusicVolume = CLng(Val(Profile.GetValue("AUDIO", "VOLMUSICA")))
         .SoundVolume = CLng(Val(Profile.GetValue("AUDIO", "VOLAUDIO")))
         .AmbientVol = CLng(Val(Profile.GetValue("AUDIO", "VOLAMBIENT")))
+        
+        ' AUTO-CAPTURA
+        .AutoCapturarSuperficies = CBool(Val(Profile.GetValue("AUTO-CAPTURAR", "Superficies")))
+        .AutoCapturarTraslados = CBool(Val(Profile.GetValue("AUTO-CAPTURAR", "Traslados")))
+        .AutoCapturarNPCs = CBool(Val(Profile.GetValue("AUTO-CAPTURAR", "NPCs")))
+        .AutoCapturarObjs = CBool(Val(Profile.GetValue("AUTO-CAPTURAR", "Objetos")))
+        .AutoCapturarParticulas = CBool(Val(Profile.GetValue("AUTO-CAPTURAR", "Particulas")))
         
     End With
 
@@ -1135,8 +1159,8 @@ On Error GoTo errhandler:
                 Call InitGrh(BodyData(i).Walk(3), MisCuerpos(i).Body(3), 0)
                 Call InitGrh(BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0)
                 
-                BodyData(i).HeadOffset.X = MisCuerpos(i).HeadOffsetX
-                BodyData(i).HeadOffset.Y = MisCuerpos(i).HeadOffsetY
+                BodyData(i).HeadOffset.x = MisCuerpos(i).HeadOffsetX
+                BodyData(i).HeadOffset.y = MisCuerpos(i).HeadOffsetY
             End If
         Next i
     
@@ -1199,8 +1223,8 @@ Public Function CargarCuerpos_Uncompressed() As Boolean
             Call InitGrh(BodyData(i).Walk(3), MisCuerpos(i).Body(3), 0)
             Call InitGrh(BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0)
                 
-            BodyData(i).HeadOffset.X = MisCuerpos(i).HeadOffsetX
-            BodyData(i).HeadOffset.Y = MisCuerpos(i).HeadOffsetY
+            BodyData(i).HeadOffset.x = MisCuerpos(i).HeadOffsetX
+            BodyData(i).HeadOffset.y = MisCuerpos(i).HeadOffsetY
 
         End If
         
@@ -1687,7 +1711,7 @@ On Error GoTo Fallo
     
             .name = Leer.GetValue("OBJ" & Obj, "Name")
             .GrhIndex = Val(Leer.GetValue("OBJ" & Obj, "GrhIndex"))
-            .ObjType = Val(Leer.GetValue("OBJ" & Obj, "ObjType"))
+            .OBJType = Val(Leer.GetValue("OBJ" & Obj, "ObjType"))
             .Ropaje = Val(Leer.GetValue("OBJ" & Obj, "NumRopaje"))
             .Info = Leer.GetValue("OBJ" & Obj, "Info")
             .WeaponAnim = Val(Leer.GetValue("OBJ" & Obj, "Anim"))
