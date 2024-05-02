@@ -42,8 +42,8 @@ Public Sub AbrirMapa(ByVal bBig As Boolean)
     
     End If
     
-    UserPos.X = XMaxMapSize / 2
-    UserPos.Y = YMaxMapSize / 2
+    UserPos.x = XMaxMapSize / 2
+    UserPos.y = YMaxMapSize / 2
         
     DoEvents
     frmMain.mnuReAbrirMapa.Enabled = True
@@ -117,28 +117,28 @@ Public Sub NuevoMapa()
     'Descripcion: Limpia todo el mapa a uno nuevo
     '***************************************************
     
-    Dim Y     As Integer
+    Dim y     As Integer
 
-    Dim X     As Integer
+    Dim x     As Integer
 
     Dim i     As Byte
 
-    Dim LoopC As Integer
+    Dim loopc As Integer
     
     frmMain.mnuReAbrirMapa.Enabled = False
     
     MapaCargado = False
     
-    For LoopC = 0 To frmMain.MapPest.Count - 1
-        frmMain.MapPest(LoopC).Enabled = False
+    For loopc = 0 To frmMain.MapPest.Count - 1
+        frmMain.MapPest(loopc).Enabled = False
     Next
     
     frmMain.MousePointer = 11
         
-    For Y = YMinMapSize To YMaxMapSize
-        For X = XMinMapSize To XMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
+        For x = XMinMapSize To XMaxMapSize
         
-            With MapData(X, Y)
+            With MapData(x, y)
             
                 .Graphic(1).GrhIndex = 1
                 
@@ -158,10 +158,10 @@ Public Sub NuevoMapa()
                 .CharIndex = 0
                 .NPCIndex = 0
         
-                ' Translados
+                ' Traslados
                 .TileExit.Map = 0
-                .TileExit.X = 0
-                .TileExit.Y = 0
+                .TileExit.x = 0
+                .TileExit.y = 0
                 
                 ' Triggers
                 .Trigger = 0
@@ -169,7 +169,7 @@ Public Sub NuevoMapa()
                 .Particle_Group_Index = 0
                 .Particle_Index = 0
                 
-                Call Long_2_RGBAList(MapData(X, Y).Light_Value(), -1)
+                Call Long_2_RGBAList(MapData(x, y).Light_Value(), -1)
                 
                 .Light.active = False
                 .Light.range = 0
@@ -193,8 +193,8 @@ Public Sub NuevoMapa()
 
             End With
             
-        Next X
-    Next Y
+        Next x
+    Next y
     
     'Borramos todas las luces
     Call LucesRedondas.LightRemoveAll(False)
@@ -432,12 +432,12 @@ Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".
     '*************************************************
     On Error Resume Next
 
-    Dim LoopC As Integer
+    Dim loopc As Integer
     
-    For LoopC = Len(Map) To 1 Step -1
+    For loopc = Len(Map) To 1 Step -1
 
-        If mid(Map, LoopC, 1) = "\" Then
-            PATH_Save = Left(Map, LoopC)
+        If mid(Map, loopc, 1) = "\" Then
+            PATH_Save = Left(Map, loopc)
             Exit For
 
         End If
@@ -451,25 +451,25 @@ Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".
     nMapaActual = ReadField(1, Right(Map, Len(Map) - 4), Asc("."))
     'If frmCopiarBordes.Visible Then Call frmCopiarBordes.Inicializar
     
-    For LoopC = Len(Left(Map, Len(Map) - 4)) To 1 Step -1
+    For loopc = Len(Left(Map, Len(Map) - 4)) To 1 Step -1
 
-        If IsNumeric(mid(Left(Map, Len(Map) - 4), LoopC, 1)) = False Then
-            NumMap_Save = Right(Left(Map, Len(Map) - 4), Len(Left(Map, Len(Map) - 4)) - LoopC)
-            NameMap_Save = Left(Map, LoopC)
+        If IsNumeric(mid(Left(Map, Len(Map) - 4), loopc, 1)) = False Then
+            NumMap_Save = Right(Left(Map, Len(Map) - 4), Len(Left(Map, Len(Map) - 4)) - loopc)
+            NameMap_Save = Left(Map, loopc)
             Exit For
 
         End If
 
     Next
     
-    For LoopC = (NumMap_Save - 4) To (NumMap_Save + 6)
+    For loopc = (NumMap_Save - 4) To (NumMap_Save + 6)
 
-        If FileExist(PATH_Save & NameMap_Save & LoopC & MapFormat, vbArchive) = True Then
-            frmMain.MapPest(LoopC - NumMap_Save + 4).Visible = True
-            frmMain.MapPest(LoopC - NumMap_Save + 4).Enabled = True
-            frmMain.MapPest(LoopC - NumMap_Save + 4).Caption = NameMap_Save & LoopC
+        If FileExist(PATH_Save & NameMap_Save & loopc & MapFormat, vbArchive) = True Then
+            frmMain.MapPest(loopc - NumMap_Save + 4).Visible = True
+            frmMain.MapPest(loopc - NumMap_Save + 4).Enabled = True
+            frmMain.MapPest(loopc - NumMap_Save + 4).Caption = NameMap_Save & loopc
         Else
-            frmMain.MapPest(LoopC - NumMap_Save + 4).Visible = False
+            frmMain.MapPest(loopc - NumMap_Save + 4).Visible = False
 
         End If
 

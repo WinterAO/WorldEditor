@@ -34,7 +34,18 @@ Public Type tSetupMods
     
     'MOSTRAR
     Preview As Boolean
-    
+    VerBlockeados As Boolean
+    VerTriggers As Boolean
+    VerGrilla As Boolean ' grilla
+    VerParticulas As Boolean
+    VerCapa1 As Boolean
+    VerCapa2 As Boolean
+    VerCapa3 As Boolean
+    VerCapa4 As Boolean
+    VerTraslados As Boolean
+    VerObjetos As Boolean
+    VerNpcs As Boolean
+
     'CONFIGURACION
     MeMode As Byte
     CampoVision As Boolean
@@ -120,23 +131,23 @@ Public Function guardarPerfil() As Boolean
     Set Lector = New clsIniManager
     Call Lector.Initialize(profileFile(ProfileTag))
     
-    Call Lector.ChangeValue("MOSTRAR", "Capa1", IIf(VerCapa1, "1", "0"))
-    Call Lector.ChangeValue("MOSTRAR", "Capa2", IIf(VerCapa2, "1", "0"))
-    Call Lector.ChangeValue("MOSTRAR", "Capa3", IIf(VerCapa3, "1", "0"))
-    Call Lector.ChangeValue("MOSTRAR", "Capa4", IIf(VerCapa4, "1", "0"))
-    
-    Call Lector.ChangeValue("MOSTRAR", "Translados", IIf(VerTranslados, "1", "0"))
-    Call Lector.ChangeValue("MOSTRAR", "Objetos", IIf(VerObjetos, "1", "0"))
-    Call Lector.ChangeValue("MOSTRAR", "NPCs", IIf(VerNpcs, "1", "0"))
-    Call Lector.ChangeValue("MOSTRAR", "Triggers", IIf(VerTriggers, "1", "0"))
-    Call Lector.ChangeValue("MOSTRAR", "Grilla", IIf(VerGrilla, "1", "0"))
-    Call Lector.ChangeValue("MOSTRAR", "Particulas", IIf(VerParticulas, "1", "0"))
-    Call Lector.ChangeValue("MOSTRAR", "Bloqueos", IIf(VerBlockeados, "1", "0"))
-    
     With ClientSetup
     
-        Call Lector.ChangeValue("CONFIGURACION", "GuardadoAuto", IIf(ClientSetup.GuardadoAuto, "1", "0"))
-        Call Lector.ChangeValue("CONFIGURACION", "IntervalGuardado", ClientSetup.IntervaloGuardado)
+        Call Lector.ChangeValue("MOSTRAR", "Capa1", IIf(.VerCapa1, "1", "0"))
+        Call Lector.ChangeValue("MOSTRAR", "Capa2", IIf(.VerCapa2, "1", "0"))
+        Call Lector.ChangeValue("MOSTRAR", "Capa3", IIf(.VerCapa3, "1", "0"))
+        Call Lector.ChangeValue("MOSTRAR", "Capa4", IIf(.VerCapa4, "1", "0"))
+        
+        Call Lector.ChangeValue("MOSTRAR", "Traslados", IIf(.VerTraslados, "1", "0"))
+        Call Lector.ChangeValue("MOSTRAR", "Objetos", IIf(.VerObjetos, "1", "0"))
+        Call Lector.ChangeValue("MOSTRAR", "NPCs", IIf(.VerNpcs, "1", "0"))
+        Call Lector.ChangeValue("MOSTRAR", "Triggers", IIf(.VerTriggers, "1", "0"))
+        Call Lector.ChangeValue("MOSTRAR", "Grilla", IIf(.VerGrilla, "1", "0"))
+        Call Lector.ChangeValue("MOSTRAR", "Particulas", IIf(.VerParticulas, "1", "0"))
+        Call Lector.ChangeValue("MOSTRAR", "Bloqueos", IIf(.VerBlockeados, "1", "0"))
+    
+        Call Lector.ChangeValue("CONFIGURACION", "GuardadoAuto", IIf(.GuardadoAuto, "1", "0"))
+        Call Lector.ChangeValue("CONFIGURACION", "IntervalGuardado", .IntervaloGuardado)
         
         Call Lector.ChangeValue("AUTO-CAPTURAR", "Superficies", IIf(.AutoCapturarSuperficies, "1", "0"))
         Call Lector.ChangeValue("AUTO-CAPTURAR", "Traslados", IIf(.AutoCapturarTraslados, "1", "0"))
@@ -353,17 +364,17 @@ On Local Error GoTo fileErr:
         If ClienteWidth <= 0 Then ClienteWidth = 17
         
         ' Menu Mostrar
-        VerCapa1 = Val(Profile.GetValue("MOSTRAR", "Capa1"))
-        VerCapa2 = Val(Profile.GetValue("MOSTRAR", "Capa2"))
-        VerCapa3 = Val(Profile.GetValue("MOSTRAR", "Capa3"))
-        VerCapa4 = Val(Profile.GetValue("MOSTRAR", "Capa4"))
-        VerTranslados = Val(Profile.GetValue("MOSTRAR", "Translados"))
-        VerObjetos = Val(Profile.GetValue("MOSTRAR", "Objetos"))
-        VerNpcs = Val(Profile.GetValue("MOSTRAR", "NPCs"))
-        VerTriggers = Val(Profile.GetValue("MOSTRAR", "Triggers"))
-        VerGrilla = Val(Profile.GetValue("MOSTRAR", "Grilla")) ' Grilla
-        VerParticulas = Val(Profile.GetValue("MOSTRAR", "Particulas"))
-        VerBlockeados = Val(Profile.GetValue("MOSTRAR", "Bloqueos"))
+        .VerCapa1 = Val(Profile.GetValue("MOSTRAR", "Capa1"))
+        .VerCapa2 = Val(Profile.GetValue("MOSTRAR", "Capa2"))
+        .VerCapa3 = Val(Profile.GetValue("MOSTRAR", "Capa3"))
+        .VerCapa4 = Val(Profile.GetValue("MOSTRAR", "Capa4"))
+        .VerTraslados = Val(Profile.GetValue("MOSTRAR", "Traslados"))
+        .VerObjetos = Val(Profile.GetValue("MOSTRAR", "Objetos"))
+        .VerNpcs = Val(Profile.GetValue("MOSTRAR", "NPCs"))
+        .VerTriggers = Val(Profile.GetValue("MOSTRAR", "Triggers"))
+        .VerGrilla = Val(Profile.GetValue("MOSTRAR", "Grilla")) ' Grilla
+        .VerParticulas = Val(Profile.GetValue("MOSTRAR", "Particulas"))
+        .VerBlockeados = Val(Profile.GetValue("MOSTRAR", "Bloqueos"))
         
         frmMain.Minimap(0).Checked = Val(Profile.GetValue("MINIMAPA", "Capa1"))
         frmMain.Minimap(1).Checked = Val(Profile.GetValue("MINIMAPA", "Capa2"))

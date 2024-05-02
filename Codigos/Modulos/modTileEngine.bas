@@ -700,10 +700,10 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 PixelOffsetYTemp = (ScreenY - 1) * TilePixelHeight + PixelOffsetY
                 
                 'Layer 1 **********************************
-                If MapData(x, y).Graphic(1).GrhIndex <> 0 And VerCapa1 Then Call Draw_Grh(MapData(x, y).Graphic(1), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 1)
+                If MapData(x, y).Graphic(1).GrhIndex <> 0 And ClientSetup.VerCapa1 Then Call Draw_Grh(MapData(x, y).Graphic(1), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 1)
     
                 'Layer 2 **********************************
-                If MapData(x, y).Graphic(2).GrhIndex <> 0 And VerCapa2 Then Call Draw_Grh(MapData(x, y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 1)
+                If MapData(x, y).Graphic(2).GrhIndex <> 0 And ClientSetup.VerCapa2 Then Call Draw_Grh(MapData(x, y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 1)
             
             End If
         
@@ -732,16 +732,16 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 With MapData(x, y)
                 
                     'Object Layer ***********************************
-                    If .ObjGrh.GrhIndex <> 0 And VerObjetos Then Call Draw_Grh(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Light_Value(), 1)
+                    If .ObjGrh.GrhIndex <> 0 And ClientSetup.VerObjetos Then Call Draw_Grh(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Light_Value(), 1)
 
                     'Char layer**************************************
-                    If .CharIndex <> 0 And VerNpcs Then Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
+                    If .CharIndex <> 0 And ClientSetup.VerNpcs Then Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
 
                     'Layer 3 *****************************************
-                    If .Graphic(3).GrhIndex <> 0 And VerCapa3 Then Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Light_Value(), 1)
+                    If .Graphic(3).GrhIndex <> 0 And ClientSetup.VerCapa3 Then Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Light_Value(), 1)
 
                     'Particulas **************************************
-                    If .Particle_Group_Index And VerParticulas Then Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
+                    If .Particle_Group_Index And ClientSetup.VerParticulas Then Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
                     
                 End With
                 
@@ -766,9 +766,9 @@ Sub RenderScreen(ByVal tilex As Integer, _
             PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
             
             'Layer 4
-            If VerCapa4 Then If MapData(x, y).Graphic(4).GrhIndex Then Call Draw_Grh(MapData(x, y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 1)
+            If ClientSetup.VerCapa4 Then If MapData(x, y).Graphic(4).GrhIndex Then Call Draw_Grh(MapData(x, y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 1)
             
-            If MapData(x, y).TileExit.Map <> 0 And VerTranslados Then
+            If MapData(x, y).TileExit.Map <> 0 And ClientSetup.VerTraslados Then
                 Grh.GrhIndex = 3
                 Grh.FrameCounter = 1
                 Grh.Started = 0
@@ -777,7 +777,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
             End If
                 
             'Show blocked tiles
-            If VerBlockeados And MapData(x, y).bLocked = 1 Then
+            If ClientSetup.VerBlockeados And MapData(x, y).bLocked = 1 Then
                 Grh.GrhIndex = 4
                 Grh.FrameCounter = 1
                 Grh.Started = 0
@@ -786,7 +786,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                         
             End If
                 
-            If VerGrilla Then
+            If ClientSetup.VerGrilla Then
                 Grh.GrhIndex = 2
                 Grh.FrameCounter = 1
                 Grh.Started = 0
@@ -795,7 +795,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                         
             End If
 
-            If VerTriggers Then If MapData(x, y).Trigger > 0 Then Call DrawText(PixelOffsetXTemp + 5, PixelOffsetYTemp - 13, MapData(x, y).Trigger, COLOR_WHITE, False, 2)
+            If ClientSetup.VerTriggers Then If MapData(x, y).Trigger > 0 Then Call DrawText(PixelOffsetXTemp + 5, PixelOffsetYTemp - 13, MapData(x, y).Trigger, COLOR_WHITE, False, 2)
                 
             If frmMain.mnuverZonas(0).Checked Then 'Zona actual
                 If MapData(x, y).ZonaIndex = frmZonas.LstZona.ListIndex + 1 And MapData(x, y).ZonaIndex > 0 Then Call DrawText(PixelOffsetXTemp + 7, PixelOffsetYTemp + 7, "z" & MapData(x, y).ZonaIndex, COLOR_WHITE, False, 1)
@@ -1222,7 +1222,7 @@ Public Sub MapCapture(ByRef Format As Boolean, _
             PixelOffsetYTemp = (y - 1) * 32
             
             'Layer 2 **********************************
-            If (MapData(x, y).Graphic(2).GrhIndex <> 0) And VerCapa2 Then
+            If (MapData(x, y).Graphic(2).GrhIndex <> 0) And ClientSetup.VerCapa2 Then
                 Call Draw_Grh(MapData(x, y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 1)
 
             End If
@@ -1242,7 +1242,7 @@ Public Sub MapCapture(ByRef Format As Boolean, _
             With MapData(x, y)
             
                 'Object Layer **********************************
-                If (.ObjGrh.GrhIndex <> 0) And VerObjetos Then
+                If (.ObjGrh.GrhIndex <> 0) And ClientSetup.VerObjetos Then
                     Call Draw_Grh(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 1)
 
                 End If
@@ -1250,7 +1250,7 @@ Public Sub MapCapture(ByRef Format As Boolean, _
                 '***********************************************
             
                 'Layer 3 *****************************************
-                If (.Graphic(3).GrhIndex <> 0) And VerCapa3 Then
+                If (.Graphic(3).GrhIndex <> 0) And ClientSetup.VerCapa3 Then
                     Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 1)
 
                 End If
@@ -1269,7 +1269,7 @@ Public Sub MapCapture(ByRef Format As Boolean, _
             With MapData(x, y)
             
                 'Layer 4 **********************************
-                If (.Graphic(4).GrhIndex <> 0) And VerCapa4 Then
+                If (.Graphic(4).GrhIndex <> 0) And ClientSetup.VerCapa4 Then
                     
                     'Draw
                     Call Draw_Grh(.Graphic(4), (x - MinX) * 32, (y - MinY) * 32, 1, MapData(x, y).Light_Value(), 1)
@@ -1295,7 +1295,7 @@ Public Sub MapCapture(ByRef Format As Boolean, _
                 Grh.FrameCounter = 1
                 Grh.Started = 0
 
-                If (.TileExit.Map <> 0) And VerTranslados Then
+                If (.TileExit.Map <> 0) And ClientSetup.VerTraslados Then
                     Grh.GrhIndex = 3
                 
                     Call Draw_Grh(Grh, PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 0)
@@ -1303,7 +1303,7 @@ Public Sub MapCapture(ByRef Format As Boolean, _
                 End If
             
                 'Show blocked tiles
-                If (.bLocked = 1) And VerBlockeados Then
+                If (.bLocked = 1) And ClientSetup.VerBlockeados Then
                     Grh.GrhIndex = 4
                     Call Draw_Grh(Grh, PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 0)
 

@@ -996,8 +996,8 @@ Begin VB.Form frmMain
             Shortcut        =   ^{F4}
          End
       End
-      Begin VB.Menu mnuVerTranslados 
-         Caption         =   "...&Translados"
+      Begin VB.Menu mnuVerTraslados 
+         Caption         =   "...&Traslados"
          Shortcut        =   ^{F5}
       End
       Begin VB.Menu mnuVerBloqueos 
@@ -2002,17 +2002,19 @@ Private Sub Form_Load()
 
     Me.Caption = Form_Caption
     
-    mnuVerBloqueos.Checked = VerBlockeados
-    mnuVerTranslados.Checked = VerTranslados
-    mnuVerNPCs.Checked = VerNpcs
-    mnuVerObjetos.Checked = VerObjetos
-    mnuVerTriggers.Checked = VerTriggers
-    mnuVerParticulas.Checked = VerParticulas
-    mnuVerCapa1.Checked = VerCapa1
-    mnuVerCapa2.Checked = VerCapa2
-    mnuVerCapa3.Checked = VerCapa3
-    mnuVerCapa4.Checked = VerCapa4
-    mnuVerGrilla.Checked = VerGrilla
+    With ClientSetup
+        mnuVerBloqueos.Checked = .VerBlockeados
+        mnuVerTraslados.Checked = .VerTraslados
+        mnuVerNPCs.Checked = .VerNpcs
+        mnuVerObjetos.Checked = .VerObjetos
+        mnuVerTriggers.Checked = .VerTriggers
+        mnuVerParticulas.Checked = .VerParticulas
+        mnuVerCapa1.Checked = .VerCapa1
+        mnuVerCapa2.Checked = .VerCapa2
+        mnuVerCapa3.Checked = .VerCapa3
+        mnuVerCapa4.Checked = .VerCapa4
+        mnuVerGrilla.Checked = .VerGrilla
+    End With
 
 End Sub
 
@@ -2165,14 +2167,22 @@ Private Sub MainViewPic_MouseMove(Button As Integer, Shift As Integer, x As Sing
 End Sub
 
 Private Sub mnuVerBloqueos_Click()
-    VerBlockeados = Not VerBlockeados
+    ClientSetup.VerBlockeados = Not ClientSetup.VerBlockeados
+    
+    If ClientSetup.VerBlockeados Then
+        Call ShowMessageScreen("Bloqueos visibles")
+    Else
+        Call ShowMessageScreen("Bloqueos ocultos")
+    End If
+    
 End Sub
 
 Private Sub mnuVerCapa1_Click()
-    VerCapa1 = Not VerCapa1
+
+    ClientSetup.VerCapa1 = Not ClientSetup.VerCapa1
     mnuVerCapa1.Checked = Not mnuVerCapa1.Checked
     
-    If VerCapa1 Then
+    If ClientSetup.VerCapa1 Then
         Call ShowMessageScreen("Capa 1 visible")
     Else
         Call ShowMessageScreen("Capa 1 oculto")
@@ -2180,10 +2190,11 @@ Private Sub mnuVerCapa1_Click()
 End Sub
 
 Private Sub mnuVerCapa2_Click()
-    VerCapa2 = Not VerCapa2
+
+    ClientSetup.VerCapa2 = Not ClientSetup.VerCapa2
     mnuVerCapa2.Checked = Not mnuVerCapa2.Checked
     
-    If VerCapa2 Then
+    If ClientSetup.VerCapa2 Then
         Call ShowMessageScreen("Capa 2 visible")
     Else
         Call ShowMessageScreen("Capa 2 oculto")
@@ -2191,10 +2202,11 @@ Private Sub mnuVerCapa2_Click()
 End Sub
 
 Private Sub mnuVerCapa3_Click()
-    VerCapa3 = Not VerCapa3
+
+    ClientSetup.VerCapa3 = Not ClientSetup.VerCapa3
     mnuVerCapa3.Checked = Not mnuVerCapa3.Checked
     
-    If VerCapa3 Then
+    If ClientSetup.VerCapa3 Then
         Call ShowMessageScreen("Capa 3 visible")
     Else
         Call ShowMessageScreen("Capa 3 oculto")
@@ -2202,10 +2214,11 @@ Private Sub mnuVerCapa3_Click()
 End Sub
 
 Private Sub mnuVerCapa4_Click()
-    VerCapa4 = Not VerCapa4
+
+    ClientSetup.VerCapa4 = Not ClientSetup.VerCapa4
     mnuVerCapa4.Checked = Not mnuVerCapa4.Checked
     
-    If VerCapa1 Then
+    If ClientSetup.VerCapa1 Then
         Call ShowMessageScreen("Capa 4 visible")
     Else
         Call ShowMessageScreen("Capa 4 oculto")
@@ -2213,10 +2226,11 @@ Private Sub mnuVerCapa4_Click()
 End Sub
 
 Private Sub mnuVerGrilla_Click()
-    VerGrilla = Not VerGrilla
-    mnuVerGrilla.Checked = VerGrilla
+
+    ClientSetup.VerGrilla = Not ClientSetup.VerGrilla
+    mnuVerGrilla.Checked = ClientSetup.VerGrilla
     
-    If VerGrilla Then
+    If ClientSetup.VerGrilla Then
         Call ShowMessageScreen("Grilla visible")
     Else
         Call ShowMessageScreen("Grilla oculto")
@@ -2224,10 +2238,11 @@ Private Sub mnuVerGrilla_Click()
 End Sub
 
 Private Sub mnuVerNPCs_Click()
-    VerNpcs = Not VerNpcs
+
+    ClientSetup.VerNpcs = Not ClientSetup.VerNpcs
     mnuVerNPCs.Checked = Not mnuVerNPCs.Checked
     
-    If VerNpcs Then
+    If ClientSetup.VerNpcs Then
         Call ShowMessageScreen("NPC's visible")
     Else
         Call ShowMessageScreen("NPC's ocultos")
@@ -2235,10 +2250,11 @@ Private Sub mnuVerNPCs_Click()
 End Sub
 
 Private Sub mnuVerObjetos_Click()
-    VerObjetos = Not VerObjetos
+
+    ClientSetup.VerObjetos = Not ClientSetup.VerObjetos
     mnuVerObjetos.Checked = Not mnuVerObjetos.Checked
     
-    If VerObjetos Then
+    If ClientSetup.VerObjetos Then
         Call ShowMessageScreen("Objetos visible")
     Else
         Call ShowMessageScreen("Objetos ocultos")
@@ -2246,33 +2262,37 @@ Private Sub mnuVerObjetos_Click()
 End Sub
 
 Private Sub mnuVerParticulas_Click()
-    VerParticulas = Not VerParticulas
+
+    ClientSetup.VerParticulas = Not ClientSetup.VerParticulas
     mnuVerParticulas.Checked = Not mnuVerParticulas.Checked
     
-    If VerParticulas Then
+    If ClientSetup.VerParticulas Then
         Call ShowMessageScreen("Particulas visible")
     Else
         Call ShowMessageScreen("Particulas ocultas")
     End If
 End Sub
 
-Private Sub mnuVerTranslados_Click()
-    VerTranslados = Not VerTranslados
-    mnuVerTranslados.Checked = Not mnuVerTranslados.Checked
+Private Sub mnuVerTraslados_Click()
+
+    ClientSetup.VerTraslados = Not ClientSetup.VerTraslados
+    mnuVerTraslados.Checked = Not mnuVerTraslados.Checked
     
-    If VerTranslados Then
-        Call ShowMessageScreen("Traslados visible")
+    If ClientSetup.VerTraslados Then
+        Call ShowMessageScreen("Traslados visibles")
     Else
         Call ShowMessageScreen("Traslados ocultos")
     End If
+    
 End Sub
 
 Private Sub mnuVerTriggers_Click()
-    VerTriggers = Not VerTriggers
+
+    ClientSetup.VerTriggers = Not ClientSetup.VerTriggers
     mnuVerTriggers.Checked = Not mnuVerTriggers.Checked
     
-    If VerTriggers Then
-        Call ShowMessageScreen("Triggers visible")
+    If ClientSetup.VerTriggers Then
+        Call ShowMessageScreen("Triggers visibles")
     Else
         Call ShowMessageScreen("Triggers ocultos")
     End If

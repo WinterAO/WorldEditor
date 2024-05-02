@@ -170,7 +170,7 @@ Public Sub CloseMapEditor()
 
     Dim mifrm As Form
 
-    'Call GuardarConfiguracion
+    Call guardarPerfil
 
     'Eliminamos los Array
     Erase GrhData

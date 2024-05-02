@@ -161,7 +161,7 @@ Private Sub LvBInformar_Click(Index As Integer)
             Call ActalizarObjetos
             
         Case 1 ' Traslados
-            Call ActalizarTranslados
+            Call ActalizarTraslados
         
         Case 2 ' NPC's
             Call ActalizarNPCs
@@ -186,9 +186,9 @@ Private Sub ActalizarObjetos()
     '*************************************************
     On Error Resume Next
 
-    Dim Y As Integer
+    Dim y As Integer
 
-    Dim X As Integer
+    Dim x As Integer
 
     If Not MapaCargado Then
         Exit Sub
@@ -197,16 +197,16 @@ Private Sub ActalizarObjetos()
 
     txtInfo.Text = "Informe de Objetos (X,Y)"
 
-    For Y = YMinMapSize To YMaxMapSize
-        For X = XMinMapSize To XMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
+        For x = XMinMapSize To XMaxMapSize
 
-            If MapData(X, Y).OBJInfo.ObjIndex > 0 Then
-                txtInfo.Text = txtInfo.Text & vbCrLf & X & "," & Y & " tiene " & MapData(X, Y).OBJInfo.Amount & " del Objeto " & MapData(X, Y).OBJInfo.ObjIndex & " - " & ObjData(MapData(X, Y).OBJInfo.ObjIndex).name
+            If MapData(x, y).OBJInfo.ObjIndex > 0 Then
+                txtInfo.Text = txtInfo.Text & vbCrLf & x & "," & y & " tiene " & MapData(x, y).OBJInfo.Amount & " del Objeto " & MapData(x, y).OBJInfo.ObjIndex & " - " & ObjData(MapData(x, y).OBJInfo.ObjIndex).name
 
             End If
 
-        Next X
-    Next Y
+        Next x
+    Next y
 
 End Sub
 
@@ -219,9 +219,9 @@ Private Sub ActalizarNPCs()
     '*************************************************
     On Error Resume Next
 
-    Dim Y As Integer
+    Dim y As Integer
 
-    Dim X As Integer
+    Dim x As Integer
 
     If Not MapaCargado Then
         Exit Sub
@@ -230,64 +230,64 @@ Private Sub ActalizarNPCs()
 
     txtInfo.Text = "Informe de NPCs/Hostiles (X,Y)"
 
-    For Y = YMinMapSize To YMaxMapSize
-        For X = XMinMapSize To XMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
+        For x = XMinMapSize To XMaxMapSize
 
-            If MapData(X, Y).NPCIndex > 0 Then
-                If MapData(X, Y).NPCIndex >= 500 Then
-                    txtInfo.Text = txtInfo.Text & vbCrLf & X & "," & Y & " tiene " & NpcData(MapData(X, Y).NPCIndex).name & " (Hostil)"
+            If MapData(x, y).NPCIndex > 0 Then
+                If MapData(x, y).NPCIndex >= 500 Then
+                    txtInfo.Text = txtInfo.Text & vbCrLf & x & "," & y & " tiene " & NpcData(MapData(x, y).NPCIndex).name & " (Hostil)"
                     
                 Else
-                    txtInfo.Text = txtInfo.Text & vbCrLf & X & "," & Y & " tiene " & NpcData(MapData(X, Y).NPCIndex).name
+                    txtInfo.Text = txtInfo.Text & vbCrLf & x & "," & y & " tiene " & NpcData(MapData(x, y).NPCIndex).name
 
                 End If
 
             End If
 
-        Next X
-    Next Y
+        Next x
+    Next y
 
 End Sub
 
-Private Sub ActalizarTranslados()
+Private Sub ActalizarTraslados()
 
     '*************************************************
     'Author: ^[GS]^
     'Last modified: 20/05/06
-    'Genera el informe de Translados
+    'Genera el informe de Traslados
     '*************************************************
     On Error Resume Next
 
-    Dim Y As Integer
+    Dim y As Integer
 
-    Dim X As Integer
+    Dim x As Integer
 
     If Not MapaCargado Then
         Exit Sub
 
     End If
 
-    txtInfo.Text = "Informe de Translados (X,Y)"
+    txtInfo.Text = "Informe de Traslados (X,Y)"
 
-    For Y = YMinMapSize To YMaxMapSize
-        For X = XMinMapSize To XMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
+        For x = XMinMapSize To XMaxMapSize
 
-            If MapData(X, Y).TileExit.Map > 0 Then
-                txtInfo.Text = txtInfo.Text & vbCrLf & X & "," & Y & " nos traslada a la posición " & MapData(X, Y).TileExit.X & "," & MapData(X, Y).TileExit.Y & " del Mapa " & MapData(X, Y).TileExit.Map
+            If MapData(x, y).TileExit.Map > 0 Then
+                txtInfo.Text = txtInfo.Text & vbCrLf & x & "," & y & " nos traslada a la posición " & MapData(x, y).TileExit.x & "," & MapData(x, y).TileExit.y & " del Mapa " & MapData(x, y).TileExit.Map
 
-                If ((X < 20 And MapData(X, Y).TileExit.X < 20) Or (X > 80 And MapData(X, Y).TileExit.X > 80)) And (X <> MapData(X, Y).TileExit.X) Then
+                If ((x < 20 And MapData(x, y).TileExit.x < 20) Or (x > 80 And MapData(x, y).TileExit.x > 80)) And (x <> MapData(x, y).TileExit.x) Then
                     txtInfo.Text = txtInfo.Text & " (X sospechoso)"
 
                 End If
 
-                If ((Y < 20 And MapData(X, Y).TileExit.Y < 20) Or (Y > 80 And MapData(X, Y).TileExit.Y > 80)) And (Y <> MapData(X, Y).TileExit.Y) Then
+                If ((y < 20 And MapData(x, y).TileExit.y < 20) Or (y > 80 And MapData(x, y).TileExit.y > 80)) And (y <> MapData(x, y).TileExit.y) Then
                     txtInfo.Text = txtInfo.Text & " (Y sospechoso)"
 
                 End If
 
             End If
 
-        Next X
-    Next Y
+        Next x
+    Next y
 
 End Sub

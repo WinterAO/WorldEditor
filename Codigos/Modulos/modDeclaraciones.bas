@@ -111,29 +111,6 @@ Public CopyX             As Long
 
 Public CopyY             As Long
 
-'Ver Capas/Npc/Objetos/etc
-Public VerBlockeados     As Boolean
-
-Public VerTriggers       As Boolean
-
-Public VerGrilla         As Boolean ' grilla
-
-Public VerParticulas     As Boolean
-
-Public VerCapa1          As Boolean
-
-Public VerCapa2          As Boolean
-
-Public VerCapa3          As Boolean
-
-Public VerCapa4          As Boolean
-
-Public VerTranslados     As Boolean
-
-Public VerObjetos        As Boolean
-
-Public VerNpcs           As Boolean
-
 Public SobreX            As Integer ' Posicion X bajo el Cursor
 
 Public SobreY            As Integer   ' Posicion Y bajo el Cursor
@@ -376,7 +353,7 @@ End Type
 Public Type tMapInfo
 
     Music As String
-    Name As String
+    name As String
     PK As Boolean
     MagiaSinEfecto As Byte
     InviSinEfecto As Byte
@@ -423,7 +400,7 @@ End Type
 
 Type SupData
 
-    Name As String
+    name As String
     Grh As Long
     Width As Byte
     Height As Byte
@@ -434,7 +411,7 @@ End Type
 
 Public Type NpcData
 
-    Name As String
+    name As String
     ELV As Integer
     Hostile As Byte
     Body As Integer
@@ -449,7 +426,7 @@ End Type
 
 Public Type ObjData
 
-    Name As String 'Nombre del obj
+    name As String 'Nombre del obj
     OBJType As Integer 'Tipo enum que determina cuales son las caract del obj
     GrhIndex As Long ' Indice del grafico que representa el obj
     GrhSecundario As Integer
@@ -465,7 +442,7 @@ End Type
 
 'Quick Superficies
 Type Inventory
-    Name As String
+    name As String
     GrhIndex As Long
 End Type
 

@@ -475,7 +475,7 @@ Public Sub DobleClick(tX As Integer, tY As Integer)
     
     Formato = ".csm"
     
-    ' Translados
+    ' Traslados
     Dim tTrans As WorldPos
     tTrans = MapData(tX, tY).TileExit
     If tTrans.Map > 0 Then
@@ -558,7 +558,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 ' Bloqueos
                 If .bLocked = 1 Then Call AddtoRichTextBox(frmConsola.StatTxt, " (BLOQ)", 255, 255, 255, False, False, True)
                 
-                ' Translados
+                ' Traslados
                 If MapData(tX, tY).TileExit.Map <> 0 Then
                     If ClientSetup.AutoCapturarTraslados Then
                         frmTraslados.tTMapa.Text = MapData(tX, tY).TileExit.Map
