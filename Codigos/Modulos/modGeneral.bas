@@ -322,7 +322,7 @@ ToggleWalkMode_Err:
 
 End Sub
 
-Public Sub ObtenerCuadrante(ByRef Cuadrante As Integer, _
+Public Sub ObtenerCuadranteCompleto(ByRef Cuadrante As Integer, _
                             ByRef tX As Integer, _
                             ByRef tY As Integer)
     '*****************************************************
@@ -344,6 +344,23 @@ Public Sub ObtenerCuadrante(ByRef Cuadrante As Integer, _
     Cuadrante = cX * cY
 
 End Sub
+
+Public Function CalcularCuadrante(ByVal PosX As Integer, ByVal PosY As Integer) As Integer
+    '*****************************************************
+    'Autor: Lorwik
+    'Fecha: 16/05/2024
+    'Descripción: Devuelve el numero del cuadrante actual
+    '*****************************************************
+    
+    Dim cX As Integer
+    Dim cY As Integer
+    
+    cX = Fix((PosX / 100))
+    cY = Fix((PosY / 100))
+    
+    CalcularCuadrante = cX * cY
+    
+End Function
 
 Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
                      ByVal Text As String, _

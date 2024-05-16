@@ -911,6 +911,9 @@ Begin VB.Form frmMain
          Begin VB.Menu mnuInsertarZonasEnBordes 
             Caption         =   "Inser. Zonas en bordes del mapa"
          End
+         Begin VB.Menu mnuZonasxCuadrantes 
+            Caption         =   "Inser. Zonas por cuadrantes"
+         End
          Begin VB.Menu mnuLineInserDel0 
             Caption         =   "-"
          End
@@ -2381,6 +2384,51 @@ Private Sub mnuzonasinuso_Click()
     Next i
     
     Call AddtoRichTextBox(frmConsola.StatTxt, "Busqueda de zonas sin uso completada. Se encontraron " & Count & " zonas sin usar.", 255, 0, 0)
+
+End Sub
+
+Private Sub mnuZonasxCuadrantes_Click()
+'***************************************************
+'Author: Lorwik
+'Fecha: 16/05/2024
+'***************************************************
+
+    On Error GoTo mnuZonasxCuadrantes_Click_Err
+
+    Dim x As Integer
+    Dim y As Integer
+    Dim ZonaActual As Integer
+    Dim Zona As Integer
+    
+    If MsgBox("¡ATENCIÓN! ¿Está seguro que quieres establecer zonas por cuadrantes? ¡Todas las zonas actuales se prederan!", vbExclamation + vbYesNo) = vbYes Then
+    
+        Call AddtoRichTextBox(frmConsola.StatTxt, "Comenzando a establecer zonas...", 0, 255, 0)
+    
+        For x = XMinMapSize To XMaxMapSize
+            For y = YMinMapSize To YMaxMapSize
+                
+                Zona = CalcularCuadrante(x, y)
+            
+                If Zona <> ZonaActual Then
+                    Call NuevaZona(Zona)
+                    Debug.Print "Zona: " & Zona & " Zona Actual: " & ZonaActual
+                End If
+            
+                MapData(x, y).ZonaIndex = Zona
+                ZonaActual = Zona
+            
+            Next y
+        Next x
+        
+        Call AddtoRichTextBox(frmConsola.StatTxt, "Zonas por cuadrantes establecidas.", 0, 255, 0)
+    
+    End If
+    Exit Sub
+
+mnuZonasxCuadrantes_Click_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "frmMain.mnuZonasxCuadrantes_Click", Erl)
+    Resume Next
 
 End Sub
 

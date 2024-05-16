@@ -249,7 +249,7 @@ Sub ShowNextFrame()
         Dim cX        As Integer
 
         Dim cY        As Integer
-
+        
         Dim Cuadrante As Integer
         
         Call Engine_BeginScene
@@ -293,7 +293,7 @@ Sub ShowNextFrame()
         Call Engine_Update_FPS
         Call DrawText(10, 5, "FPS: " & modTileEngine.FPS, COLOR_WHITE, False)
         Call DrawText(10, 20, "Coords: X:" & UserPos.x & " Y: " & UserPos.y, COLOR_WHITE, False)
-        Call ObtenerCuadrante(Cuadrante, cX, cY)
+        Call ObtenerCuadranteCompleto(Cuadrante, cX, cY)
         Call DrawText(10, 35, "Cuadrante: " & Cuadrante & " X:" & cX & " Y: " & cY, COLOR_WHITE, False)
         
         Call DrawText(10, 50, "Mouse: " & MousePos, COLOR_WHITE, False)

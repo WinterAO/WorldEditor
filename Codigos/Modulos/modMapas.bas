@@ -275,7 +275,7 @@ Public Sub NuevaZona(ByVal id As Integer)
     
     ReDim Preserve colorZona(CantZonas) As RGBA
     
-    colorZona(CantZonas) = RGBA_From_Comp(Int(Rnd * 256), Int(Rnd * 256), Int(Rnd * 256), 255)
+    Call coloresZona(CantZonas)
 
 End Sub
 
@@ -318,7 +318,7 @@ Public Sub EliminarZona()
     '*****************************************
     
     If CantZonas = 1 Then
-        MsgBox "El numero de zonas llego al mnimo. No puedes eliminar mas zonas."
+        MsgBox "El numero de zonas llego al minimo. No puedes eliminar mas zonas."
         Exit Sub
 
     End If
@@ -397,31 +397,50 @@ Public Sub MapZona_Actualizar(ByVal id As Integer)
     
 End Sub
 
-Public Sub coloresZona()
+Public Sub coloresZona(Optional ByVal zonaID As Long = -1)
+    '*****************************************
+    'Autor: Lorwik
+    'Fecha: 16/05/2024
+    'Descripción: Asigna colores aleatorios a zonas
+    '*****************************************
 
     Dim i As Long
 
     If CantZonas = 0 Then Exit Sub
     
-    i = CantZonas
-    
-    ReDim colorZona(CantZonas)
+    ' Redimensiona colorZona si es necesario
+    If UBound(colorZona) < CantZonas Then
+        ReDim Preserve colorZona(CantZonas) As RGBA
+    End If
 
-    ' Asigna colores aleatorios a cada número en el array MapData(X, Y).ZonaIndex
-    For i = 1 To CantZonas
-        ' Genera valores aleatorios para Red, Green y Blue
-        Dim RedValue As Integer
-        Dim GreenValue As Integer
-        Dim BlueValue As Integer
-    
-        RedValue = Int(Rnd * 256) ' Valor aleatorio entre 0 y 255
-        GreenValue = Int(Rnd * 256)
-        BlueValue = Int(Rnd * 256)
-    
-        colorZona(i) = RGBA_From_Comp(RedValue, GreenValue, BlueValue, 255)
-    Next i
-    
+    ' Asigna colores aleatorios
+    If zonaID = -1 Then
+        ' Asignar colores a todas las zonas
+        For i = 1 To CantZonas
+            colorZona(i) = GenerarColorAleatorio()
+        Next i
+    Else
+        ' Asignar color a una zona específica
+        colorZona(zonaID) = GenerarColorAleatorio()
+    End If
 End Sub
+
+Private Function GenerarColorAleatorio() As RGBA
+    '*****************************************
+    'Autor: Lorwik
+    'Fecha: 16/05/2024
+    '*****************************************
+    ' Genera un color aleatorio en formato RGBA
+    Dim RedValue As Byte
+    Dim GreenValue As Byte
+    Dim BlueValue As Byte
+    
+    RedValue = Int(Rnd * 256) ' Valor aleatorio entre 0 y 255
+    GreenValue = Int(Rnd * 256)
+    BlueValue = Int(Rnd * 256)
+    
+    GenerarColorAleatorio = RGBA_From_Comp(RedValue, GreenValue, BlueValue, 255)
+End Function
 
 Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".map")
 
