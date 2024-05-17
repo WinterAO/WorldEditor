@@ -836,13 +836,22 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuGuardarMapaComo 
          Caption         =   "Guardar Mapa &como..."
       End
+      Begin VB.Menu mnuArchivoLine6 
+         Caption         =   "-"
+      End
+      Begin VB.Menu mnuExportar 
+         Caption         =   "Exportar"
+         Begin VB.Menu mnuExportarZonas 
+            Caption         =   "Zonas"
+         End
+      End
       Begin VB.Menu mnuArchivoLine5 
          Caption         =   "-"
       End
       Begin VB.Menu mnuConfig 
          Caption         =   "Configuración"
       End
-      Begin VB.Menu mnuArchivoLine6 
+      Begin VB.Menu mnuArchivoLine7 
          Caption         =   "-"
       End
       Begin VB.Menu mnuSalir 
@@ -1049,6 +1058,7 @@ Begin VB.Form frmMain
       Begin VB.Menu mnuVerAutomatico 
          Caption         =   "Control &Automaticamente"
          Checked         =   -1  'True
+         Enabled         =   0   'False
       End
       Begin VB.Menu mnuLinMostrar1 
          Caption         =   "-"
@@ -1590,6 +1600,45 @@ Private Sub mnuEliminarZona_Click()
 
 End Sub
 
+Private Sub mnuExportarZonas_Click()
+
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 17/05/2024
+    '*************************************************
+    On Error GoTo mnuExportarZonas_Click_Err
+    
+    Dim path As String
+    
+    frmMain.Dialog.CancelError = True
+    
+    With Dialog
+        .Filter = "Zonas (*.zon)|*.zon"
+
+        .DialogTitle = "Guardar"
+        .DefaultExt = ".txt"
+        .filename = vbNullString
+        .flags = cdlOFNPathMustExist
+        .ShowSave
+
+    End With
+    
+    path = frmMain.Dialog.filename
+
+    If LenB(path) = 0 Then Exit Sub
+    
+    If modMapasWAO.Exportar_Zonas(path) Then Call ShowMessageScreen("Zonas exportadas.")
+    
+    Exit Sub
+
+mnuExportarZonas_Click_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "frmMain.mnuExportarZonas_Click", Erl)
+
+    Resume Next
+
+End Sub
+
 Private Sub mnuFormatos_Click()
     frmFormatos.Show , frmMain
 End Sub
@@ -1880,7 +1929,7 @@ Private Sub mnuRender_Click()
     
     Unload frmRenderer
     
-    Shell (App.Path & "\UnirMinimapa.exe " & UserMap)
+    Shell (App.path & "\UnirMinimapa.exe " & UserMap)
     DoEvents
     Sleep 1000
     DoEvents

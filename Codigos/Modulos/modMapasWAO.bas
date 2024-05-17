@@ -413,7 +413,7 @@ ErrorHandler:
 
     If fh <> 0 Then Close fh
     
-    Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Mapa " & Map & ", se ha generado un informe de errores en: " & App.Path & "\Logs.txt", 255, 0, 0)
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Mapa " & Map & ", se ha generado un informe de errores en: " & App.path & "\Logs.txt", 255, 0, 0)
     
     File = FreeFile
     
@@ -803,3 +803,24 @@ Private Sub CSMInfoSave()
     
 End Sub
 
+Public Function Exportar_Zonas(ByVal path As String) As Boolean
+    '**********************************
+    'Autor: Lorwik
+    'Fecha: 14/03/2021
+    'Descripcion: Guarda la informacion de los mapas de WinterAO.
+    '**********************************
+    On Error GoTo Exportar_Zonas_Err
+
+    MsgBox path
+
+    Exportar_Zonas = True
+
+    Exit Function
+
+Exportar_Zonas_Err:
+
+    Exportar_Zonas = False
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Error al exportar las zonas.", 255, 0, 0)
+    Call RegistrarError(Err.Number, Err.Description, "modMapasWAO.Exportar_Zonas", Erl)
+    Resume Next
+End Function
