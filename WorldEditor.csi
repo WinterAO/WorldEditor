@@ -1,5 +1,5 @@
 [History]
-1=#P0#=mb	#P1#=mnuZonasxCuadrantes_Click	#P2#=WinterMapEditor/frmMain/mnuZonasxCuadrantes_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20240517181450	#P7#=0	#P8#=44	.
+1=#P0#=mb	#P1#=mnuZonasxCuadrantes_Click	#P2#=WinterMapEditor/frmMain/mnuZonasxCuadrantes_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20240517181450	#P7#=0	#P8#=19	.
 2=#P0#=mb	#P1#=ClickEdit	#P2#=WinterMapEditor/modEdicion/ClickEdit	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240517180649	#P7#=0	#P8#=535	.
 3=#P0#=mb	#P1#=CSMInfoCargar	#P2#=WinterMapEditor/ModMapConver/CSMInfoCargar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240517173428	#P7#=0	#P8#=73	.
 4=#P0#=mb	#P1#=CSMInfoCargar	#P2#=WinterMapEditor/modMapasWAO/CSMInfoCargar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240517173425	#P7#=0	#P8#=74	.
@@ -12,7 +12,7 @@
 11=#P0#=mb	#P1#=EliminarZona	#P2#=WinterMapEditor/modMapas/EliminarZona	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240516192616	#P7#=0	#P8#=16	.
 12=#P0#=mb	#P1#=Form_Click	#P2#=WinterMapEditor/frmMain/Form_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20240516192543	#P7#=0	#P8#=1	.
 13=#P0#=mb	#P1#=RenderScreen	#P2#=WinterMapEditor/modTileEngine/RenderScreen	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240516192414	#P7#=0	#P8#=232	.
-14=#P0#=mb	#P1#=DibujarMinimapa	#P2#=WinterMapEditor/modMinimapa/DibujarMinimapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240516191646	#P7#=0	#P8#=101	.
+14=#P0#=mb	#P1#=DibujarMinimapa	#P2#=WinterMapEditor/modMinimapa/DibujarMinimapa	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240516191646	#P7#=0	#P8#=25	.
 15=#P0#=mb	#P1#=GenerarColorAleatorio	#P2#=WinterMapEditor/modMapas/GenerarColorAleatorio	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240516191458	#P7#=0	#P8#=3	.
 16=#P0#=mb	#P1#=coloresZona	#P2#=WinterMapEditor/modMapas/coloresZona	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240516191455	#P7#=0	#P8#=0	.
 17=#P0#=mb	#P1#=RGBA_2_Long	#P2#=WinterMapEditor/mDx8_Colores/RGBA_2_Long	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240516190028	#P7#=0	#P8#=10	.
@@ -52,7 +52,7 @@
 51=#P0#=mb	#P1#=ScrollInventory	#P2#=WinterMapEditor/clsGraphicalInventory/ScrollInventory	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240502164609	#P7#=0	#P8#=14	.
 52=#P0#=mb	#P1#=CargarInfo	#P2#=WinterMapEditor/frmParticulas/CargarInfo	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240502164455	#P7#=0	#P8#=6	.
 53=#P0#=mb	#P1#=picInv_Click	#P2#=WinterMapEditor/frmQuick/picInv_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20240502163846	#P7#=0	#P8#=1	.
-54=#P0#=mb	#P1#=leerPerfil	#P2#=WinterMapEditor/modCarga/leerPerfil	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240502163101	#P7#=0	#P8#=135	.
+54=#P0#=mb	#P1#=leerPerfil	#P2#=WinterMapEditor/modCarga/leerPerfil	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20240517182057	#P7#=0	#P8#=156	.
 55=#P0#=mb	#P1#=LynxParticulas_Click	#P2#=WinterMapEditor/frmParticulas/LynxParticulas_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20240502161747	#P7#=0	#P8#=1	.
 56=#P0#=mb	#P1#=mnuBloquearBordes_Click	#P2#=WinterMapEditor/frmMain/mnuBloquearBordes_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20240502160724	#P7#=0	#P8#=0	.
 57=#P0#=mb	#P1#=mnuAcerca_Click	#P2#=WinterMapEditor/frmMain/mnuAcerca_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20240502160724	#P7#=0	#P8#=7	.

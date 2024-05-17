@@ -397,6 +397,8 @@ On Local Error GoTo fileErr:
         MMiniMap_particulas = frmMain.Minimap(6).Checked
         MMiniMap_Bloqueos = frmMain.Minimap(7).Checked
         MMiniMap_Nombre = frmMain.Minimap(8).Checked
+        MMiniMap_cuadrantes = frmMain.Minimap(9).Checked
+        MMiniMap_Zonas = frmMain.Minimap(10).Checked
         
         ' AUDIO
         .bMusic = CByte(Val(Profile.GetValue("AUDIO", "MUSICA")))
