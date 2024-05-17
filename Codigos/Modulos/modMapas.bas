@@ -269,9 +269,9 @@ Public Sub NuevaZona(ByVal id As Integer)
     
     ReDim Preserve MapZonas(CantZonas) As tMapInfo
 
-    Call ResetearZona(id)
+    If id <= CantZonas Then Call ResetearZona(id)
     
-    frmZonas.LstZona.AddItem (CantZonas & "- " & MapZonas(CantZonas).name)
+    frmZonas.LstZona.AddItem (CantZonas & " - " & MapZonas(CantZonas).name)
     
     ReDim Preserve colorZona(CantZonas) As RGBA
     
@@ -347,7 +347,7 @@ Public Sub ActualizarZonaList(ByVal id As Integer)
     frmZonas.LstZona.Clear
         
     For i = 1 To CantZonas
-        frmZonas.LstZona.AddItem (i & "- " & MapZonas(i).name)
+        frmZonas.LstZona.AddItem (i & " - " & MapZonas(i).name)
             
     Next i
     

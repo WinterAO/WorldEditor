@@ -331,17 +331,17 @@ Public Sub ObtenerCuadranteCompleto(ByRef Cuadrante As Integer, _
     'Descripción: Actualiza las coordenadas ya sean totales o por cuadrantes
     '*****************************************************
 
-    Dim cX As Integer
+    Dim cx As Integer
 
-    Dim cY As Integer
+    Dim cy As Integer
     
-    cX = Fix((UserPos.x / 100))
-    cY = Fix((UserPos.y / 100))
+    cx = Fix((UserPos.x / 100))
+    cy = Fix((UserPos.y / 100))
     
-    tX = UserPos.x - (cX * 100)
-    tY = UserPos.y - (cY * 100)
+    tX = UserPos.x - (cx * 100)
+    tY = UserPos.y - (cy * 100)
     
-    Cuadrante = cX * cY
+    Cuadrante = cx * cy
 
 End Sub
 
@@ -351,14 +351,21 @@ Public Function CalcularCuadrante(ByVal PosX As Integer, ByVal PosY As Integer) 
     'Fecha: 16/05/2024
     'Descripción: Devuelve el numero del cuadrante actual
     '*****************************************************
+
+    ' Determina el número de cuadrantes en una fila y columna
+    Dim CuadrantesPorFila As Integer
+    Dim CuadrantesPorColumna As Integer
+    CuadrantesPorFila = XMaxMapSize \ 100
+    CuadrantesPorColumna = YMaxMapSize \ 100
     
-    Dim cX As Integer
-    Dim cY As Integer
+    ' Calcula la posición del cuadrante en el mapa
+    Dim CuadranteX As Integer
+    Dim CuadranteY As Integer
+    CuadranteX = PosX \ 100
+    CuadranteY = PosY \ 100
     
-    cX = Fix((PosX / 100))
-    cY = Fix((PosY / 100))
-    
-    CalcularCuadrante = cX * cY
+    ' Calcula el número único del cuadrante
+    CalcularCuadrante = (CuadranteY * CuadrantesPorFila) + CuadranteX + 1
     
 End Function
 

@@ -2397,36 +2397,58 @@ Private Sub mnuZonasxCuadrantes_Click()
 
     Dim x As Integer
     Dim y As Integer
-    Dim ZonaActual As Integer
+    Dim i As Integer
     Dim Zona As Integer
     
+    ' Calcular el número de cuadrantes
+    Dim CuadrantesHorizontal As Integer
+    Dim CuadrantesVertical As Integer
+
     If MsgBox("¡ATENCIÓN! ¿Está seguro que quieres establecer zonas por cuadrantes? ¡Todas las zonas actuales se prederan!", vbExclamation + vbYesNo) = vbYes Then
     
         Call AddtoRichTextBox(frmConsola.StatTxt, "Comenzando a establecer zonas...", 0, 255, 0)
-    
-        For x = XMinMapSize To XMaxMapSize
-            For y = YMinMapSize To YMaxMapSize
+        
+        'Calculamos cuantas zonas vamos a necesitar para el mapa actual
+        CuadrantesHorizontal = XMaxMapSize \ 100
+        CuadrantesVertical = YMaxMapSize \ 100
+        CantZonas = CuadrantesHorizontal * CuadrantesVertical
+        
+        'Redimensionamos el array de zonas
+        ReDim MapZonas(CantZonas) As tMapInfo
+        
+        frmZonas.LstZona.Clear
+        
+        'Seteamos la data de cada zona por defecto y la añadimos a la lista
+        For i = 1 To CantZonas
+            Call ResetearZona(i)
+            frmZonas.LstZona.AddItem (i & " - " & MapZonas(CantZonas).name)
+        Next i
+        
+        'Pintamos las zonas en el mapa
+        For x = XMinMapSize To XMaxMapSize - 1
+            For y = YMinMapSize To YMaxMapSize - 1
                 
+                'Calculamos la zona correspondiente en base a las coordenadas actuales
                 Zona = CalcularCuadrante(x, y)
-            
-                If Zona <> ZonaActual Then
-                    Call NuevaZona(Zona)
-                    Debug.Print "Zona: " & Zona & " Zona Actual: " & ZonaActual
-                End If
-            
                 MapData(x, y).ZonaIndex = Zona
-                ZonaActual = Zona
             
             Next y
         Next x
         
+        'Asignamos un color a cada zona
+        Call coloresZona
+        
+        MapInfo.Changed = 1
+        
         Call AddtoRichTextBox(frmConsola.StatTxt, "Zonas por cuadrantes establecidas.", 0, 255, 0)
     
     End If
+    
     Exit Sub
 
 mnuZonasxCuadrantes_Click_Err:
 
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Erro al establecer zonas por cuadrantes establecidas.", 255, 0, 0)
     Call RegistrarError(Err.Number, Err.Description, "frmMain.mnuZonasxCuadrantes_Click", Erl)
     Resume Next
 

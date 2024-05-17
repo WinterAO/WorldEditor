@@ -549,7 +549,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
 
         Select Case Button
         
-                'Click Derecho
+            'Click Derecho
             Case vbRightButton
             
                 ' Posicion
@@ -587,7 +587,6 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 End If
                 
                 ' OBJs
-
                 If .OBJInfo.ObjIndex > 0 Then
                     Call AddtoRichTextBox(frmConsola.StatTxt, " (Obj: " & .OBJInfo.ObjIndex & " - " & ObjData(.OBJInfo.ObjIndex).name & " - Cant.:" & .OBJInfo.Amount & ")", 255, 255, 255, False, False, True)
                     
@@ -621,13 +620,18 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 End If
                 
                 ' Particulas
-                Call AddtoRichTextBox(frmConsola.StatTxt, "Particula: " & .Particle_Index, 255, 255, 255, False, False, True)
+                If .Particle_Index > 0 Then _
+                    Call AddtoRichTextBox(frmConsola.StatTxt, "Particula: " & .Particle_Index, 255, 255, 255, False, False, True)
                 
                 If ClientSetup.AutoCapturarParticulas Then
                     If .Particle_Index > 0 Then _
                         frmParticulas.cParticula.Text = .Particle_Index
                 End If
-                
+
+                ' Zonas
+                If .ZonaIndex > 0 Then _
+                    Call AddtoRichTextBox(frmConsola.StatTxt, "Zona: " & .ZonaIndex, 255, 255, 255, False, False, True)
+                    
                 Exit Sub
             
                 'Click Izquierdo
