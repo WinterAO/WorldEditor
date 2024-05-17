@@ -294,7 +294,7 @@ Begin VB.Form frmMain
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
       Index           =   8
-      Left            =   4110
+      Left            =   4620
       TabIndex        =   20
       ToolTipText     =   "Información de la zona"
       Top             =   75
@@ -323,7 +323,7 @@ Begin VB.Form frmMain
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
       Index           =   9
-      Left            =   4620
+      Left            =   5130
       TabIndex        =   21
       ToolTipText     =   "Preview"
       Top             =   75
@@ -352,7 +352,7 @@ Begin VB.Form frmMain
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
       Index           =   10
-      Left            =   5130
+      Left            =   4110
       TabIndex        =   22
       ToolTipText     =   "Editor de zonas"
       Top             =   75
