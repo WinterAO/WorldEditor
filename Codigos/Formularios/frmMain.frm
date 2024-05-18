@@ -840,9 +840,15 @@ Begin VB.Form frmMain
          Caption         =   "-"
       End
       Begin VB.Menu mnuExportar 
-         Caption         =   "Exportar"
+         Caption         =   "Importar / Exportar"
+         Begin VB.Menu mnuImportarZonas 
+            Caption         =   "Importar zonas"
+         End
+         Begin VB.Menu mnuExportar1 
+            Caption         =   "-"
+         End
          Begin VB.Menu mnuExportarZonas 
-            Caption         =   "Zonas"
+            Caption         =   "Exportar zonas"
          End
       End
       Begin VB.Menu mnuArchivoLine5 
@@ -1600,8 +1606,34 @@ Private Sub mnuEliminarZona_Click()
 
 End Sub
 
-Private Sub mnuExportarZonas_Click()
+Private Sub mnuImportarZonas_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 18/05/2024
+    '*************************************************
+    On Error GoTo mnuImportarZonas_Click_Err
+    
+    Dim path As String
+    
+    frmMain.Dialog.CancelError = True
+    
+    ObtenerNombreArchivo False, True
+    
+    path = frmMain.Dialog.filename
 
+    If LenB(path) = 0 Then Exit Sub
+    
+    If modMapasWAO.Importar_Zonas(path) Then Call ShowMessageScreen("Zonas importadas.")
+
+    Exit Sub
+
+mnuImportarZonas_Click_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "frmMain.mnuImportarZonas_Click", Erl)
+    Resume Next
+End Sub
+
+Private Sub mnuExportarZonas_Click()
     '*************************************************
     'Author: Lorwik
     'Last modified: 17/05/2024
@@ -1612,16 +1644,7 @@ Private Sub mnuExportarZonas_Click()
     
     frmMain.Dialog.CancelError = True
     
-    With Dialog
-        .Filter = "Zonas (*.zon)|*.zon"
-
-        .DialogTitle = "Guardar"
-        .DefaultExt = ".txt"
-        .filename = vbNullString
-        .flags = cdlOFNPathMustExist
-        .ShowSave
-
-    End With
+    ObtenerNombreArchivo True, True
     
     path = frmMain.Dialog.filename
 
@@ -2002,7 +2025,9 @@ Private Sub Dibujarmini_Click()
     Call DibujarMinimapa
 End Sub
 
-Public Sub ObtenerNombreArchivo(ByVal Guardar As Boolean)
+Public Sub ObtenerNombreArchivo(ByVal Guardar As Boolean, _
+                                Optional ByVal Zonas As Boolean)
+
     '*************************************************
     'Author: Unkwown
     'Last modified: 20/05/06
@@ -2010,7 +2035,13 @@ Public Sub ObtenerNombreArchivo(ByVal Guardar As Boolean)
     On Error GoTo ObtenerNombreArchivo_Err
     
     With Dialog
-        .Filter = "Mapas del nuevo formato (*.csm)|*.csm|Mapas clasicos de Argentum Online (*.map)|*.map"
+    
+        If Not Zonas Then
+            .Filter = "Mapas del nuevo formato (*.csm)|*.csm|Mapas clasicos de Argentum Online (*.map)|*.map"
+        Else
+            .Filter = "Mapa de zonas (*.zon)|*.zon"
+
+        End If
 
         If Guardar Then
             .DialogTitle = "Guardar"
@@ -2025,13 +2056,16 @@ Public Sub ObtenerNombreArchivo(ByVal Guardar As Boolean)
             .ShowOpen
             
         End If
+
     End With
     
     Exit Sub
     
 ObtenerNombreArchivo_Err:
     Call RegistrarError(Err.Number, Err.Description, "FrmMain.ObtenerNombreArchivo", Erl)
+
     Resume Next
+
 End Sub
 
 Private Sub MainViewPic_DblClick()

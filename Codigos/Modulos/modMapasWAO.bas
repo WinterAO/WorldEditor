@@ -803,15 +803,91 @@ Private Sub CSMInfoSave()
     
 End Sub
 
-Public Function Exportar_Zonas(ByVal path As String) As Boolean
+Public Function Exportar_Zonas(ByVal MapRoute As String) As Boolean
+
     '**********************************
     'Autor: Lorwik
-    'Fecha: 14/03/2021
-    'Descripcion: Guarda la informacion de los mapas de WinterAO.
+    'Fecha: 18/05/2024
+    'Descripcion: Exporta las zonas a un archivo binario
     '**********************************
     On Error GoTo Exportar_Zonas_Err
 
-    MsgBox path
+    Dim fh           As Integer
+
+    Dim MH           As tMapHeader
+
+    Dim Zonas()      As tDatosZonas
+
+    Dim i            As Integer
+
+    Dim j            As Integer
+    
+    If NoSobreescribir = False Then
+        If FileExist(MapRoute, vbNormal) = True Then
+            If MsgBox("¿Desea sobrescribir " & MapRoute & "?", vbCritical + vbYesNo) = vbNo Then
+                Exit Function
+                
+            Else
+                'Kill MapRoute
+                
+            End If
+
+        End If
+
+    End If
+    
+    frmMain.MousePointer = 11
+    MapSize.XMax = XMaxMapSize
+    MapSize.XMin = XMinMapSize
+    MapSize.YMax = YMaxMapSize
+    MapSize.YMin = YMinMapSize
+    
+    For j = MapSize.YMin To MapSize.YMax
+        For i = MapSize.XMin To MapSize.XMax
+
+            With MapData(i, j)
+                    
+                If .ZonaIndex > 0 And .ZonaIndex <= CantZonas Then
+                    
+                    MH.NumeroZonas = MH.NumeroZonas + 1
+                    ReDim Preserve Zonas(1 To MH.NumeroZonas)
+                    Zonas(MH.NumeroZonas).x = i
+                    Zonas(MH.NumeroZonas).y = j
+                    Zonas(MH.NumeroZonas).Zona = .ZonaIndex
+
+                End If
+
+            End With
+
+        Next i
+    Next j
+ 
+    MH.NumeroData = CantZonas
+    
+    Call CSMInfoSave
+              
+    fh = FreeFile
+    Open MapRoute For Binary As fh
+        
+    Put #fh, , MiCabecera
+        
+    Put #fh, , MH
+    Put #fh, , MapSize
+    Put #fh, , MapDat
+
+    If MH.NumeroZonas > 0 Then Put #fh, , Zonas
+
+    Close fh
+    
+    Call Pestanas(MapRoute, ".csm")
+    
+    'Change mouse icon
+    frmMain.MousePointer = 0
+    MapInfo.Changed = 0
+    
+    NoSobreescribir = False
+    
+    Exit Function
 
     Exportar_Zonas = True
 
@@ -822,5 +898,86 @@ Exportar_Zonas_Err:
     Exportar_Zonas = False
     Call AddtoRichTextBox(frmConsola.StatTxt, "Error al exportar las zonas.", 255, 0, 0)
     Call RegistrarError(Err.Number, Err.Description, "modMapasWAO.Exportar_Zonas", Erl)
+
     Resume Next
+
+End Function
+
+Public Function Importar_Zonas(ByVal path As String) As Boolean
+
+    '**********************************
+    'Autor: Lorwik
+    'Fecha: 18/05/2024
+    'Descripcion: Importa zonas desde un archivo binario
+    '**********************************
+    On Error GoTo Importar_Zonas_Err
+
+    Dim fh         As Integer
+
+    Dim File       As Integer
+
+    Dim MH         As tMapHeader
+
+    Dim Zonas()    As tDatosZonas
+    
+    Dim LaCabecera As tCabecera
+    
+    Dim i          As Long
+
+    Dim j          As Long
+
+    DoEvents
+        
+    'Change mouse icon
+    frmMain.MousePointer = 11
+        
+    fh = FreeFile
+    Open path For Binary Access Read As fh
+    
+    Get #fh, , LaCabecera
+    
+    Get #fh, , MH
+    Get #fh, , MapSize
+        
+    ReDim MapDat(MH.NumeroData) As tMapDat
+    Get #fh, , MapDat
+
+    If MH.NumeroZonas > 0 Then
+        ReDim Zonas(1 To MH.NumeroZonas)
+        Get #fh, , Zonas
+
+        For i = 1 To MH.NumeroZonas
+
+            If Zonas(i).x > XMinMapSize And Zonas(i).x < XMaxMapSize + 1 And Zonas(i).y > YMinMapSize And Zonas(i).y < YMaxMapSize + 1 Then MapData(Zonas(i).x, Zonas(i).y).ZonaIndex = Zonas(i).Zona
+        
+        Next i
+
+    End If
+              
+    Close fh
+
+    'Change mouse icon
+    frmMain.MousePointer = 0
+    
+    Call CSMInfoCargar
+    
+    'Set changed flag
+    MapInfo.Changed = 0
+    
+    Call coloresZona
+
+    Importar_Zonas = True
+    
+    Call DibujarMinimapa
+
+    Exit Function
+
+Importar_Zonas_Err:
+
+    Importar_Zonas = False
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Error en la carga del mapa " & Map, 255, 0, 0, , , True)
+    Call RegistrarError(Err.Number, Err.Description, "modMapasWAO.Importar_Zonas", Erl)
+
+    Resume Next
+
 End Function
