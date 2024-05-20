@@ -543,17 +543,17 @@ On Error GoTo ErrorHandler:
                     .FileNum = fileBuff.getLong
                     If .FileNum <= 0 Then GoTo ErrorHandler
                     
-                    .pixelWidth = fileBuff.getInteger
-                    If .pixelWidth <= 0 Then GoTo ErrorHandler
-                    
-                    .pixelHeight = fileBuff.getInteger
-                    If .pixelHeight <= 0 Then GoTo ErrorHandler
-                    
                     .sX = fileBuff.getInteger
                     If .sX < 0 Then GoTo ErrorHandler
                     
                     .sY = fileBuff.getInteger
                     If .sY < 0 Then GoTo ErrorHandler
+                    
+                    .pixelWidth = fileBuff.getInteger
+                    If .pixelWidth <= 0 Then GoTo ErrorHandler
+                    
+                    .pixelHeight = fileBuff.getInteger
+                    If .pixelHeight <= 0 Then GoTo ErrorHandler
                     
                     .TileWidth = .pixelWidth / TilePixelHeight
                     .TileHeight = .pixelHeight / TilePixelWidth
@@ -711,14 +711,6 @@ Public Function LoadGrhData_Uncompressed() As Boolean
 
                     If .FileNum <= 0 Then GoTo ErrorHandler
                     
-                    Get handle, , .pixelWidth
-
-                    If .pixelWidth <= 0 Then GoTo ErrorHandler
-                    
-                    Get handle, , .pixelHeight
-
-                    If .pixelHeight <= 0 Then GoTo ErrorHandler
-                    
                     Get handle, , GrhData(Grh).sX
 
                     If .sX < 0 Then GoTo ErrorHandler
@@ -726,6 +718,15 @@ Public Function LoadGrhData_Uncompressed() As Boolean
                     Get handle, , .sY
 
                     If .sY < 0 Then GoTo ErrorHandler
+                    
+                    Get handle, , .pixelWidth
+
+                    If .pixelWidth <= 0 Then GoTo ErrorHandler
+                    
+                    Get handle, , .pixelHeight
+
+                    If .pixelHeight <= 0 Then GoTo ErrorHandler
+                
                 
                     'Compute width and height
                     .TileWidth = .pixelWidth / 32

@@ -67,7 +67,7 @@ Begin VB.Form frmMapSize
       End
       Begin WinterMapEditor.lvButtons_H LvBContinuar 
          Height          =   465
-         Left            =   1920
+         Left            =   2700
          TabIndex        =   6
          Top             =   2130
          Width           =   2205

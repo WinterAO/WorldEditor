@@ -1,0 +1,92 @@
+Línea 30: la clase Indexador_Nexus.lvButtons_H del control LvBSalir no era una clase de control cargada.
+Línea 57: la clase Indexador_Nexus.lvButtons_H del control cmdVistaPrevia no era una clase de control cargada.
+Línea 82: la clase Indexador_Nexus.lvButtons_H del control LvBReferenciaPersonaje no era una clase de control cargada.
+Línea 138: la clase Indexador_Nexus.lvButtons_H del control cmdAdd no era una clase de control cargada.
+Línea 172: la clase Indexador_Nexus.lvButtons_H del control cmdDelete no era una clase de control cargada.
+Línea 197: la clase Indexador_Nexus.lvButtons_H del control cmdLimpiar no era una clase de control cargada.
+Línea 1050: la clase Indexador_Nexus.lvButtons_H del control cmdNuevaParticula no era una clase de control cargada.
+Línea 1075: la clase Indexador_Nexus.lvButtons_H del control cmdDesaparecer no era una clase de control cargada.
+Línea 1100: la clase Indexador_Nexus.lvButtons_H del control cmdGuardarParticula no era una clase de control cargada.
+Línea 36: el nombre de la propiedad _ExtentX de LvBSalir no es válido.
+Línea 37: el nombre de la propiedad _ExtentY de LvBSalir no es válido.
+Línea 38: el nombre de la propiedad Caption de LvBSalir no es válido.
+Línea 39: el nombre de la propiedad CapAlign de LvBSalir no es válido.
+Línea 40: el nombre de la propiedad BackStyle de LvBSalir no es válido.
+Línea 50: el nombre de la propiedad cBhover de LvBSalir no es válido.
+Línea 51: el nombre de la propiedad LockHover de LvBSalir no es válido.
+Línea 52: el nombre de la propiedad cGradient de LvBSalir no es válido.
+Línea 53: el nombre de la propiedad Mode de LvBSalir no es válido.
+Línea 54: el nombre de la propiedad Value de LvBSalir no es válido.
+Línea 55: el nombre de la propiedad cBack de LvBSalir no es válido.
+Línea 63: el nombre de la propiedad _ExtentX de cmdVistaPrevia no es válido.
+Línea 64: el nombre de la propiedad _ExtentY de cmdVistaPrevia no es válido.
+Línea 65: el nombre de la propiedad Caption de cmdVistaPrevia no es válido.
+Línea 66: el nombre de la propiedad CapAlign de cmdVistaPrevia no es válido.
+Línea 67: el nombre de la propiedad BackStyle de cmdVistaPrevia no es válido.
+Línea 77: el nombre de la propiedad cGradient de cmdVistaPrevia no es válido.
+Línea 78: el nombre de la propiedad Mode de cmdVistaPrevia no es válido.
+Línea 79: el nombre de la propiedad Value de cmdVistaPrevia no es válido.
+Línea 80: el nombre de la propiedad cBack de cmdVistaPrevia no es válido.
+Línea 89: el nombre de la propiedad _ExtentX de LvBReferenciaPersonaje no es válido.
+Línea 90: el nombre de la propiedad _ExtentY de LvBReferenciaPersonaje no es válido.
+Línea 91: el nombre de la propiedad Caption de LvBReferenciaPersonaje no es válido.
+Línea 92: el nombre de la propiedad CapAlign de LvBReferenciaPersonaje no es válido.
+Línea 93: el nombre de la propiedad BackStyle de LvBReferenciaPersonaje no es válido.
+Línea 103: el nombre de la propiedad cGradient de LvBReferenciaPersonaje no es válido.
+Línea 104: el nombre de la propiedad Mode de LvBReferenciaPersonaje no es válido.
+Línea 105: el nombre de la propiedad Value de LvBReferenciaPersonaje no es válido.
+Línea 106: el nombre de la propiedad cBack de LvBReferenciaPersonaje no es válido.
+Línea 144: el nombre de la propiedad _ExtentX de cmdAdd no es válido.
+Línea 145: el nombre de la propiedad _ExtentY de cmdAdd no es válido.
+Línea 146: el nombre de la propiedad Caption de cmdAdd no es válido.
+Línea 147: el nombre de la propiedad CapAlign de cmdAdd no es válido.
+Línea 148: el nombre de la propiedad BackStyle de cmdAdd no es válido.
+Línea 158: el nombre de la propiedad cGradient de cmdAdd no es válido.
+Línea 159: el nombre de la propiedad Mode de cmdAdd no es válido.
+Línea 160: el nombre de la propiedad Value de cmdAdd no es válido.
+Línea 161: el nombre de la propiedad cBack de cmdAdd no es válido.
+Línea 178: el nombre de la propiedad _ExtentX de cmdDelete no es válido.
+Línea 179: el nombre de la propiedad _ExtentY de cmdDelete no es válido.
+Línea 180: el nombre de la propiedad Caption de cmdDelete no es válido.
+Línea 181: el nombre de la propiedad CapAlign de cmdDelete no es válido.
+Línea 182: el nombre de la propiedad BackStyle de cmdDelete no es válido.
+Línea 192: el nombre de la propiedad cGradient de cmdDelete no es válido.
+Línea 193: el nombre de la propiedad Mode de cmdDelete no es válido.
+Línea 194: el nombre de la propiedad Value de cmdDelete no es válido.
+Línea 195: el nombre de la propiedad cBack de cmdDelete no es válido.
+Línea 203: el nombre de la propiedad _ExtentX de cmdLimpiar no es válido.
+Línea 204: el nombre de la propiedad _ExtentY de cmdLimpiar no es válido.
+Línea 205: el nombre de la propiedad Caption de cmdLimpiar no es válido.
+Línea 206: el nombre de la propiedad CapAlign de cmdLimpiar no es válido.
+Línea 207: el nombre de la propiedad BackStyle de cmdLimpiar no es válido.
+Línea 217: el nombre de la propiedad cGradient de cmdLimpiar no es válido.
+Línea 218: el nombre de la propiedad Mode de cmdLimpiar no es válido.
+Línea 219: el nombre de la propiedad Value de cmdLimpiar no es válido.
+Línea 220: el nombre de la propiedad cBack de cmdLimpiar no es válido.
+Línea 1056: el nombre de la propiedad _ExtentX de cmdNuevaParticula no es válido.
+Línea 1057: el nombre de la propiedad _ExtentY de cmdNuevaParticula no es válido.
+Línea 1058: el nombre de la propiedad Caption de cmdNuevaParticula no es válido.
+Línea 1059: el nombre de la propiedad CapAlign de cmdNuevaParticula no es válido.
+Línea 1060: el nombre de la propiedad BackStyle de cmdNuevaParticula no es válido.
+Línea 1070: el nombre de la propiedad cGradient de cmdNuevaParticula no es válido.
+Línea 1071: el nombre de la propiedad Mode de cmdNuevaParticula no es válido.
+Línea 1072: el nombre de la propiedad Value de cmdNuevaParticula no es válido.
+Línea 1073: el nombre de la propiedad cBack de cmdNuevaParticula no es válido.
+Línea 1081: el nombre de la propiedad _ExtentX de cmdDesaparecer no es válido.
+Línea 1082: el nombre de la propiedad _ExtentY de cmdDesaparecer no es válido.
+Línea 1083: el nombre de la propiedad Caption de cmdDesaparecer no es válido.
+Línea 1084: el nombre de la propiedad CapAlign de cmdDesaparecer no es válido.
+Línea 1085: el nombre de la propiedad BackStyle de cmdDesaparecer no es válido.
+Línea 1095: el nombre de la propiedad cGradient de cmdDesaparecer no es válido.
+Línea 1096: el nombre de la propiedad Mode de cmdDesaparecer no es válido.
+Línea 1097: el nombre de la propiedad Value de cmdDesaparecer no es válido.
+Línea 1098: el nombre de la propiedad cBack de cmdDesaparecer no es válido.
+Línea 1106: el nombre de la propiedad _ExtentX de cmdGuardarParticula no es válido.
+Línea 1107: el nombre de la propiedad _ExtentY de cmdGuardarParticula no es válido.
+Línea 1108: el nombre de la propiedad Caption de cmdGuardarParticula no es válido.
+Línea 1109: el nombre de la propiedad CapAlign de cmdGuardarParticula no es válido.
+Línea 1110: el nombre de la propiedad BackStyle de cmdGuardarParticula no es válido.
+Línea 1120: el nombre de la propiedad cGradient de cmdGuardarParticula no es válido.
+Línea 1121: el nombre de la propiedad Mode de cmdGuardarParticula no es válido.
+Línea 1122: el nombre de la propiedad Value de cmdGuardarParticula no es válido.
+Línea 1123: el nombre de la propiedad cBack de cmdGuardarParticula no es válido.

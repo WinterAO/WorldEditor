@@ -73,10 +73,14 @@ Begin VB.Form frmMapInfo
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
+         cFore           =   16777215
+         cFHover         =   16777215
+         cBhover         =   0
          cGradient       =   0
+         Gradient        =   3
          Mode            =   0
          Value           =   0   'False
-         cBack           =   -2147483633
+         cBack           =   255
       End
       Begin WinterMapEditor.lvButtons_H LvBGuardar 
          Height          =   525
@@ -105,7 +109,7 @@ Begin VB.Form frmMapInfo
          Gradient        =   3
          Mode            =   0
          Value           =   0   'False
-         cBack           =   255
+         cBack           =   12583104
       End
       Begin WinterMapEditor.lvButtons_H cmdMusica 
          Height          =   345

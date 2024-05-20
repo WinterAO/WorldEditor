@@ -470,7 +470,7 @@ Begin VB.Form frmMain
       Index           =   14
       Left            =   7170
       TabIndex        =   26
-      ToolTipText     =   "Mapa"
+      ToolTipText     =   "Velocidad"
       Top             =   90
       Width           =   480
       _ExtentX        =   847
@@ -499,7 +499,7 @@ Begin VB.Form frmMain
       Index           =   15
       Left            =   7680
       TabIndex        =   27
-      ToolTipText     =   "Mapa"
+      ToolTipText     =   "Inventario"
       Top             =   90
       Width           =   480
       _ExtentX        =   847
@@ -524,7 +524,7 @@ Begin VB.Form frmMain
       cBack           =   -2147483633
    End
    Begin VB.Line Line4 
-      BorderColor     =   &H80000004&
+      BorderColor     =   &H00FFFFFF&
       X1              =   702
       X2              =   702
       Y1              =   4
@@ -1823,12 +1823,12 @@ Private Sub mnuNuevoMapa_Click()
     'Last modified: 29/04/2021
     '*************************************************
     On Error Resume Next
-    Dim loopc As Integer
+    Dim LoopC As Integer
     
     DeseaGuardarMapa Dialog.filename
     
-    For loopc = 0 To frmMain.MapPest.Count - 1
-        frmMain.MapPest(loopc).Visible = False
+    For LoopC = 0 To frmMain.MapPest.Count - 1
+        frmMain.MapPest(LoopC).Visible = False
     Next
     
     frmMain.Dialog.filename = Empty

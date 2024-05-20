@@ -35,6 +35,7 @@ Begin VB.Form frmPerfil
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00FFFFFF&
       Height          =   735
       Left            =   120
       TabIndex        =   10
@@ -52,6 +53,7 @@ Begin VB.Form frmPerfil
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
+         ForeColor       =   &H00FFFFFF&
          Height          =   195
          Index           =   0
          Left            =   240
@@ -71,6 +73,7 @@ Begin VB.Form frmPerfil
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
+         ForeColor       =   &H00FFFFFF&
          Height          =   195
          Index           =   1
          Left            =   2580
@@ -129,10 +132,14 @@ Begin VB.Form frmPerfil
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
+         cFore           =   16777215
+         cFHover         =   16777215
+         cBhover         =   0
          cGradient       =   0
+         Gradient        =   3
          Mode            =   0
          Value           =   0   'False
-         cBack           =   8454016
+         cBack           =   65280
       End
       Begin WinterMapEditor.lvButtons_H LvBBorrar 
          Height          =   345
@@ -156,10 +163,14 @@ Begin VB.Form frmPerfil
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
+         cFore           =   16777215
+         cFHover         =   16777215
+         cBhover         =   0
          cGradient       =   0
+         Gradient        =   3
          Mode            =   0
          Value           =   0   'False
-         cBack           =   8421631
+         cBack           =   255
       End
    End
    Begin VB.Frame FraConfiguraciónDe 
@@ -194,7 +205,7 @@ Begin VB.Form frmPerfil
          EndProperty
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   240
+         Left            =   210
          TabIndex        =   3
          Top             =   750
          Width           =   3015
@@ -242,10 +253,14 @@ Begin VB.Form frmPerfil
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
       cGradient       =   0
+      Gradient        =   3
       Mode            =   0
       Value           =   0   'False
-      cBack           =   8454016
+      cBack           =   65280
    End
    Begin WinterMapEditor.lvButtons_H LvBBoton 
       Height          =   465
@@ -268,10 +283,14 @@ Begin VB.Form frmPerfil
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
       cGradient       =   0
+      Gradient        =   3
       Mode            =   0
       Value           =   0   'False
-      cBack           =   8421631
+      cBack           =   255
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True

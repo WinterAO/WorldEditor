@@ -256,12 +256,16 @@ Begin VB.Form frmConfiguracion
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
       cGradient       =   0
+      Gradient        =   3
       Mode            =   0
       Value           =   0   'False
       ImgAlign        =   4
       ImgSize         =   32
-      cBack           =   8421631
+      cBack           =   192
    End
 End
 Attribute VB_Name = "frmConfiguracion"

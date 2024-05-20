@@ -31,15 +31,19 @@ Begin VB.Form frmUnionAdyacente
          Name            =   "MS Sans Serif"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
       cGradient       =   0
+      Gradient        =   3
       Mode            =   0
       Value           =   0   'False
-      cBack           =   -2147483633
+      cBack           =   128
    End
    Begin WinterMapEditor.lvButtons_H cmdAplicar 
       Height          =   375
@@ -56,15 +60,19 @@ Begin VB.Form frmUnionAdyacente
          Name            =   "MS Sans Serif"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
       cGradient       =   0
+      Gradient        =   3
       Mode            =   0
       Value           =   0   'False
-      cBack           =   -2147483633
+      cBack           =   32768
    End
    Begin WinterMapEditor.lvButtons_H cmdDefault 
       Height          =   375
@@ -81,15 +89,19 @@ Begin VB.Form frmUnionAdyacente
          Name            =   "MS Sans Serif"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
       cGradient       =   0
+      Gradient        =   3
       Mode            =   0
       Value           =   0   'False
-      cBack           =   -2147483633
+      cBack           =   12582912
    End
    Begin VB.CheckBox AutoMapeo 
       Appearance      =   0  'Flat
@@ -645,7 +657,7 @@ Begin VB.Form frmUnionAdyacente
       Width           =   2010
    End
    Begin VB.Line Line14 
-      BorderColor     =   &H00008000&
+      BorderColor     =   &H00FFFFFF&
       X1              =   8
       X2              =   400
       Y1              =   304
@@ -807,7 +819,7 @@ Begin VB.Form frmUnionAdyacente
       Y2              =   40
    End
    Begin VB.Line Line5 
-      BorderColor     =   &H00008000&
+      BorderColor     =   &H00FFFFFF&
       X1              =   8
       X2              =   400
       Y1              =   264

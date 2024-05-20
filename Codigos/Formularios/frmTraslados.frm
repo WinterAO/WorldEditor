@@ -45,10 +45,14 @@ Begin VB.Form frmTraslados
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
       cGradient       =   0
+      Gradient        =   3
       Mode            =   0
       Value           =   0   'False
-      cBack           =   -2147483633
+      cBack           =   8421376
    End
    Begin WinterMapEditor.lvButtons_H cInsertarTransOBJ 
       Height          =   450
@@ -58,22 +62,26 @@ Begin VB.Form frmTraslados
       Width           =   1950
       _ExtentX        =   3440
       _ExtentY        =   794
-      Caption         =   "Colorcar Obj. Automatico"
+      Caption         =   "Colorcar Obj. Auto."
       CapAlign        =   2
       BackStyle       =   2
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
       cGradient       =   0
+      Gradient        =   3
       Mode            =   1
       Value           =   0   'False
-      cBack           =   -2147483633
+      cBack           =   16711935
    End
    Begin WinterMapEditor.lvButtons_H cQuitarTrans 
       Height          =   450
@@ -90,15 +98,19 @@ Begin VB.Form frmTraslados
          Name            =   "Tahoma"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
       cGradient       =   0
+      Gradient        =   3
       Mode            =   1
       Value           =   0   'False
-      cBack           =   -2147483633
+      cBack           =   128
    End
    Begin WinterMapEditor.lvButtons_H cInsertarTrans 
       Height          =   450
@@ -120,10 +132,14 @@ Begin VB.Form frmTraslados
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
       cGradient       =   0
+      Gradient        =   3
       Mode            =   1
       Value           =   0   'False
-      cBack           =   -2147483633
+      cBack           =   32768
    End
    Begin VB.Frame FraDestino 
       BackColor       =   &H00535353&
@@ -257,10 +273,14 @@ Begin VB.Form frmTraslados
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
       cGradient       =   0
+      Gradient        =   3
       Mode            =   0
       Value           =   0   'False
-      cBack           =   -2147483633
+      cBack           =   8421376
    End
 End
 Attribute VB_Name = "frmTraslados"
