@@ -24,31 +24,31 @@ End Type
 
 Private Type tDatosBloqueados
 
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
 
 End Type
 
 Private Type tDatosGrh
 
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
     GrhIndex As Long
 
 End Type
 
 Private Type tDatosTrigger
 
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
     Trigger As Integer
 
 End Type
 
 Private Type tDatosZonas
 
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
     Zona As Integer
 
 End Type
@@ -59,31 +59,31 @@ Public Type tDatosLuces
     G As Integer
     B As Integer
     range As Byte
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
 
 End Type
 
 Private Type tDatosParticulas
 
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
     Particula As Long
 
 End Type
 
 Private Type tDatosNPC
 
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
     NPCIndex As Integer
 
 End Type
 
 Private Type tDatosObjs
 
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
     ObjIndex As Integer
     ObjAmmount As Integer
 
@@ -91,8 +91,8 @@ End Type
 
 Private Type tDatosTE
 
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
     DestM As Integer
     DestX As Integer
     DestY As Integer
@@ -224,8 +224,8 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , Blqs
 
             For i = 1 To .NumeroBloqueados
-                If Blqs(i).X > XMinMapSize And Blqs(i).X < XMaxMapSize And Blqs(i).Y > YMinMapSize And Blqs(i).Y < YMaxMapSize Then _
-                    MapData(Blqs(i).X, Blqs(i).Y).bLocked = 1
+                If Blqs(i).x > XMinMapSize And Blqs(i).x < XMaxMapSize And Blqs(i).y > YMinMapSize And Blqs(i).y < YMaxMapSize Then _
+                    MapData(Blqs(i).x, Blqs(i).y).bLocked = 1
             Next i
 
         End If
@@ -235,8 +235,8 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , L2
 
             For i = 1 To .NumeroLayers(2)
-                If L2(i).X > XMinMapSize And L2(i).X < XMaxMapSize And L2(i).Y > YMinMapSize And L2(i).Y < YMaxMapSize Then _
-                    InitGrh MapData(L2(i).X, L2(i).Y).Graphic(2), L2(i).GrhIndex
+                If L2(i).x > XMinMapSize And L2(i).x < XMaxMapSize And L2(i).y > YMinMapSize And L2(i).y < YMaxMapSize Then _
+                    InitGrh MapData(L2(i).x, L2(i).y).Graphic(2), L2(i).GrhIndex
             Next i
 
         End If
@@ -246,8 +246,8 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , L3
 
             For i = 1 To .NumeroLayers(3)
-                If L3(i).X > XMinMapSize And L3(i).X < XMaxMapSize And L3(i).Y > YMinMapSize And L3(i).Y < YMaxMapSize Then _
-                    InitGrh MapData(L3(i).X, L3(i).Y).Graphic(3), L3(i).GrhIndex
+                If L3(i).x > XMinMapSize And L3(i).x < XMaxMapSize And L3(i).y > YMinMapSize And L3(i).y < YMaxMapSize Then _
+                    InitGrh MapData(L3(i).x, L3(i).y).Graphic(3), L3(i).GrhIndex
             Next i
 
         End If
@@ -257,8 +257,8 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , L4
 
             For i = 1 To .NumeroLayers(4)
-                If L4(i).X > XMinMapSize And L4(i).X < XMaxMapSize And L4(i).Y > YMinMapSize And L4(i).Y < YMaxMapSize Then _
-                    InitGrh MapData(L4(i).X, L4(i).Y).Graphic(4), L4(i).GrhIndex
+                If L4(i).x > XMinMapSize And L4(i).x < XMaxMapSize And L4(i).y > YMinMapSize And L4(i).y < YMaxMapSize Then _
+                    InitGrh MapData(L4(i).x, L4(i).y).Graphic(4), L4(i).GrhIndex
             Next i
 
         End If
@@ -268,8 +268,8 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , Triggers
 
             For i = 1 To .NumeroTriggers
-                If Triggers(i).X > XMinMapSize And Triggers(i).X < XMaxMapSize And Triggers(i).Y > YMinMapSize And Triggers(i).Y < YMaxMapSize Then _
-                    MapData(Triggers(i).X, Triggers(i).Y).Trigger = Triggers(i).Trigger
+                If Triggers(i).x > XMinMapSize And Triggers(i).x < XMaxMapSize And Triggers(i).y > YMinMapSize And Triggers(i).y < YMaxMapSize Then _
+                    MapData(Triggers(i).x, Triggers(i).y).Trigger = Triggers(i).Trigger
             Next i
 
         End If
@@ -279,9 +279,9 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , Particulas
 
             For i = 1 To .NumeroParticulas
-                If Particulas(i).X > XMinMapSize And Particulas(i).X < XMaxMapSize And Particulas(i).Y > YMinMapSize And Particulas(i).Y < YMaxMapSize Then
-                    MapData(Particulas(i).X, Particulas(i).Y).Particle_Index = Particulas(i).Particula
-                    Call General_Particle_Create(Particulas(i).Particula, Particulas(i).X, Particulas(i).Y)
+                If Particulas(i).x > XMinMapSize And Particulas(i).x < XMaxMapSize And Particulas(i).y > YMinMapSize And Particulas(i).y < YMaxMapSize Then
+                    MapData(Particulas(i).x, Particulas(i).y).Particle_Index = Particulas(i).Particula
+                    Call General_Particle_Create(Particulas(i).Particula, Particulas(i).x, Particulas(i).y)
                 End If
             Next i
 
@@ -296,8 +296,8 @@ Sub Cargar_CSM(ByVal Map As String)
 
             For i = 1 To .NumeroLuces
 
-                If Luces(i).X > XMinMapSize And Luces(i).X < XMaxMapSize And Luces(i).Y > YMinMapSize And Luces(i).Y < YMaxMapSize Then
-                    With MapData(Luces(i).X, Luces(i).Y)
+                If Luces(i).x > XMinMapSize And Luces(i).x < XMaxMapSize And Luces(i).y > YMinMapSize And Luces(i).y < YMaxMapSize Then
+                    With MapData(Luces(i).x, Luces(i).y)
                         .Light.range = Luces(i).range
                         .Light.RGBCOLOR.A = 255
                         .Light.RGBCOLOR.R = Luces(i).R
@@ -306,7 +306,7 @@ Sub Cargar_CSM(ByVal Map As String)
 
                     End With
 
-                    Call LucesRedondas.Create_Light_To_Map(Luces(i).X, Luces(i).Y, RGBA_From_Comp(Luces(i).R, Luces(i).G, Luces(i).B), Luces(i).range)
+                    Call LucesRedondas.Create_Light_To_Map(Luces(i).x, Luces(i).y, RGBA_From_Comp(Luces(i).R, Luces(i).G, Luces(i).B), Luces(i).range)
                 End If
             Next i
 
@@ -320,8 +320,8 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , Zonas
 
             For i = 1 To .NumeroZonas
-                If Zonas(i).X > XMinMapSize And Zonas(i).X < XMaxMapSize + 1 And Zonas(i).Y > YMinMapSize And Zonas(i).Y < YMaxMapSize + 1 Then _
-                    MapData(Zonas(i).X, Zonas(i).Y).ZonaIndex = Zonas(i).Zona
+                If Zonas(i).x > XMinMapSize And Zonas(i).x < XMaxMapSize + 1 And Zonas(i).y > YMinMapSize And Zonas(i).y < YMaxMapSize + 1 Then _
+                    MapData(Zonas(i).x, Zonas(i).y).ZonaIndex = Zonas(i).Zona
             Next i
 
         End If
@@ -331,13 +331,13 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , Objetos
 
             For i = 1 To .NumeroOBJs
-                MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.ObjIndex = Objetos(i).ObjIndex
-                MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.Amount = Objetos(i).ObjAmmount
+                MapData(Objetos(i).x, Objetos(i).y).OBJInfo.ObjIndex = Objetos(i).ObjIndex
+                MapData(Objetos(i).x, Objetos(i).y).OBJInfo.Amount = Objetos(i).ObjAmmount
 
-                If MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.ObjIndex > NumObjs Then
-                    InitGrh MapData(Objetos(i).X, Objetos(i).Y).ObjGrh, 20299
+                If MapData(Objetos(i).x, Objetos(i).y).OBJInfo.ObjIndex > NumObjs Then
+                    InitGrh MapData(Objetos(i).x, Objetos(i).y).ObjGrh, 20299
                 Else
-                    InitGrh MapData(Objetos(i).X, Objetos(i).Y).ObjGrh, ObjData(MapData(Objetos(i).X, Objetos(i).Y).OBJInfo.ObjIndex).GrhIndex
+                    InitGrh MapData(Objetos(i).x, Objetos(i).y).ObjGrh, ObjData(MapData(Objetos(i).x, Objetos(i).y).OBJInfo.ObjIndex).GrhIndex
 
                 End If
 
@@ -352,9 +352,9 @@ Sub Cargar_CSM(ByVal Map As String)
             For i = 1 To .NumeroNPCs
 
                 If NPCs(i).NPCIndex > 0 Then
-                    MapData(NPCs(i).X, NPCs(i).Y).NPCIndex = NPCs(i).NPCIndex
+                    MapData(NPCs(i).x, NPCs(i).y).NPCIndex = NPCs(i).NPCIndex
                     Call Char_Make(NextOpenChar(), NpcData(NPCs(i).NPCIndex).Body, NpcData(NPCs(i).NPCIndex).Head, NpcData(NPCs(i).NPCIndex).Heading, _
-                                    NPCs(i).X, NPCs(i).Y, NpcData(NPCs(i).NPCIndex).WeaponAnim, NpcData(NPCs(i).NPCIndex).ShieldAnim, NpcData(NPCs(i).NPCIndex).CascoAnim)
+                                    NPCs(i).x, NPCs(i).y, NpcData(NPCs(i).NPCIndex).WeaponAnim, NpcData(NPCs(i).NPCIndex).ShieldAnim, NpcData(NPCs(i).NPCIndex).CascoAnim)
 
                 End If
 
@@ -367,9 +367,9 @@ Sub Cargar_CSM(ByVal Map As String)
             Get #fh, , TEs
 
             For i = 1 To .NumeroTE
-                MapData(TEs(i).X, TEs(i).Y).TileExit.Map = TEs(i).DestM
-                MapData(TEs(i).X, TEs(i).Y).TileExit.X = TEs(i).DestX
-                MapData(TEs(i).X, TEs(i).Y).TileExit.Y = TEs(i).DestY
+                MapData(TEs(i).x, TEs(i).y).TileExit.Map = TEs(i).DestM
+                MapData(TEs(i).x, TEs(i).y).TileExit.x = TEs(i).DestX
+                MapData(TEs(i).x, TEs(i).y).TileExit.y = TEs(i).DestY
             Next i
 
         End If
@@ -413,7 +413,7 @@ ErrorHandler:
 
     If fh <> 0 Then Close fh
     
-    Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Mapa " & Map & ", se ha generado un informe de errores en: " & App.Path & "\Logs.txt", 255, 0, 0)
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Mapa " & Map & ", se ha generado un informe de errores en: " & App.path & "\Logs.txt", 255, 0, 0)
     
     File = FreeFile
     
@@ -495,7 +495,7 @@ Private Sub CSMInfoCargar()
             .Restringir = MapDat(i).restrict_mode
             .BackUp = MapDat(i).backup_mode
         
-            frmZonas.LstZona.AddItem (i & "- " & .name)
+            frmZonas.LstZona.AddItem (i & " - " & .name)
         
         End With
 
@@ -575,8 +575,8 @@ Public Function Save_CSM(ByVal MapRoute As String) As Boolean
                     If .bLocked Then
                         MH.NumeroBloqueados = MH.NumeroBloqueados + 1
                         ReDim Preserve Blqs(1 To MH.NumeroBloqueados)
-                        Blqs(MH.NumeroBloqueados).X = i
-                        Blqs(MH.NumeroBloqueados).Y = j
+                        Blqs(MH.NumeroBloqueados).x = i
+                        Blqs(MH.NumeroBloqueados).y = j
 
                     End If
                     
@@ -585,8 +585,8 @@ Public Function Save_CSM(ByVal MapRoute As String) As Boolean
                     If .Graphic(2).GrhIndex > 0 Then
                         MH.NumeroLayers(2) = MH.NumeroLayers(2) + 1
                         ReDim Preserve L2(1 To MH.NumeroLayers(2))
-                        L2(MH.NumeroLayers(2)).X = i
-                        L2(MH.NumeroLayers(2)).Y = j
+                        L2(MH.NumeroLayers(2)).x = i
+                        L2(MH.NumeroLayers(2)).y = j
                         L2(MH.NumeroLayers(2)).GrhIndex = .Graphic(2).GrhIndex
 
                     End If
@@ -594,8 +594,8 @@ Public Function Save_CSM(ByVal MapRoute As String) As Boolean
                     If .Graphic(3).GrhIndex > 0 Then
                         MH.NumeroLayers(3) = MH.NumeroLayers(3) + 1
                         ReDim Preserve L3(1 To MH.NumeroLayers(3))
-                        L3(MH.NumeroLayers(3)).X = i
-                        L3(MH.NumeroLayers(3)).Y = j
+                        L3(MH.NumeroLayers(3)).x = i
+                        L3(MH.NumeroLayers(3)).y = j
                         L3(MH.NumeroLayers(3)).GrhIndex = .Graphic(3).GrhIndex
 
                     End If
@@ -603,8 +603,8 @@ Public Function Save_CSM(ByVal MapRoute As String) As Boolean
                     If .Graphic(4).GrhIndex > 0 Then
                         MH.NumeroLayers(4) = MH.NumeroLayers(4) + 1
                         ReDim Preserve L4(1 To MH.NumeroLayers(4))
-                        L4(MH.NumeroLayers(4)).X = i
-                        L4(MH.NumeroLayers(4)).Y = j
+                        L4(MH.NumeroLayers(4)).x = i
+                        L4(MH.NumeroLayers(4)).y = j
                         L4(MH.NumeroLayers(4)).GrhIndex = .Graphic(4).GrhIndex
 
                     End If
@@ -612,8 +612,8 @@ Public Function Save_CSM(ByVal MapRoute As String) As Boolean
                     If .Trigger > 0 Then
                         MH.NumeroTriggers = MH.NumeroTriggers + 1
                         ReDim Preserve Triggers(1 To MH.NumeroTriggers)
-                        Triggers(MH.NumeroTriggers).X = i
-                        Triggers(MH.NumeroTriggers).Y = j
+                        Triggers(MH.NumeroTriggers).x = i
+                        Triggers(MH.NumeroTriggers).y = j
                         Triggers(MH.NumeroTriggers).Trigger = .Trigger
 
                     End If
@@ -621,8 +621,8 @@ Public Function Save_CSM(ByVal MapRoute As String) As Boolean
                     If .Particle_Index > 0 Then
                         MH.NumeroParticulas = MH.NumeroParticulas + 1
                         ReDim Preserve Particulas(1 To MH.NumeroParticulas)
-                        Particulas(MH.NumeroParticulas).X = i
-                        Particulas(MH.NumeroParticulas).Y = j
+                        Particulas(MH.NumeroParticulas).x = i
+                        Particulas(MH.NumeroParticulas).y = j
                         Particulas(MH.NumeroParticulas).Particula = .Particle_Index
                         Debug.Print .Particle_Index
     
@@ -637,8 +637,8 @@ Public Function Save_CSM(ByVal MapRoute As String) As Boolean
                         Luces(MH.NumeroLuces).G = .Light.RGBCOLOR.G
                         Luces(MH.NumeroLuces).B = .Light.RGBCOLOR.B
                         Luces(MH.NumeroLuces).range = .Light.range
-                        Luces(MH.NumeroLuces).X = i
-                        Luces(MH.NumeroLuces).Y = j
+                        Luces(MH.NumeroLuces).x = i
+                        Luces(MH.NumeroLuces).y = j
 
                     End If
                     
@@ -646,8 +646,8 @@ Public Function Save_CSM(ByVal MapRoute As String) As Boolean
                     
                         MH.NumeroZonas = MH.NumeroZonas + 1
                         ReDim Preserve Zonas(1 To MH.NumeroZonas)
-                        Zonas(MH.NumeroZonas).X = i
-                        Zonas(MH.NumeroZonas).Y = j
+                        Zonas(MH.NumeroZonas).x = i
+                        Zonas(MH.NumeroZonas).y = j
                         Zonas(MH.NumeroZonas).Zona = .ZonaIndex
 
                     End If
@@ -657,8 +657,8 @@ Public Function Save_CSM(ByVal MapRoute As String) As Boolean
                         ReDim Preserve Objetos(1 To MH.NumeroOBJs)
                         Objetos(MH.NumeroOBJs).ObjIndex = .OBJInfo.ObjIndex
                         Objetos(MH.NumeroOBJs).ObjAmmount = .OBJInfo.Amount
-                        Objetos(MH.NumeroOBJs).X = i
-                        Objetos(MH.NumeroOBJs).Y = j
+                        Objetos(MH.NumeroOBJs).x = i
+                        Objetos(MH.NumeroOBJs).y = j
 
                     End If
                     
@@ -666,8 +666,8 @@ Public Function Save_CSM(ByVal MapRoute As String) As Boolean
                         MH.NumeroNPCs = MH.NumeroNPCs + 1
                         ReDim Preserve NPCs(1 To MH.NumeroNPCs)
                         NPCs(MH.NumeroNPCs).NPCIndex = .NPCIndex
-                        NPCs(MH.NumeroNPCs).X = i
-                        NPCs(MH.NumeroNPCs).Y = j
+                        NPCs(MH.NumeroNPCs).x = i
+                        NPCs(MH.NumeroNPCs).y = j
 
                     End If
                     
@@ -675,10 +675,10 @@ Public Function Save_CSM(ByVal MapRoute As String) As Boolean
                         MH.NumeroTE = MH.NumeroTE + 1
                         ReDim Preserve TEs(1 To MH.NumeroTE)
                         TEs(MH.NumeroTE).DestM = .TileExit.Map
-                        TEs(MH.NumeroTE).DestX = .TileExit.X
-                        TEs(MH.NumeroTE).DestY = .TileExit.Y
-                        TEs(MH.NumeroTE).X = i
-                        TEs(MH.NumeroTE).Y = j
+                        TEs(MH.NumeroTE).DestX = .TileExit.x
+                        TEs(MH.NumeroTE).DestY = .TileExit.y
+                        TEs(MH.NumeroTE).x = i
+                        TEs(MH.NumeroTE).y = j
 
                     End If
                     
@@ -803,3 +803,179 @@ Private Sub CSMInfoSave()
     
 End Sub
 
+Public Function Exportar_Zonas(ByVal ZonRoute As String) As Boolean
+
+    '**********************************
+    'Autor: Lorwik
+    'Fecha: 18/05/2024
+    'Descripcion: Exporta las zonas a un archivo binario
+    '**********************************
+    On Error GoTo Exportar_Zonas_Err
+
+    Dim fh           As Integer
+
+    Dim MH           As tMapHeader
+
+    Dim Zonas()      As tDatosZonas
+
+    Dim i            As Integer
+
+    Dim j            As Integer
+    
+    If NoSobreescribir = False Then
+        If FileExist(ZonRoute, vbNormal) = True Then
+            If MsgBox("¿Desea sobrescribir " & ZonRoute & "?", vbCritical + vbYesNo) = vbNo Then
+                Exit Function
+                
+            Else
+                'Kill ZonRoute
+                
+            End If
+
+        End If
+
+    End If
+    
+    frmMain.MousePointer = 11
+    MapSize.XMax = XMaxMapSize
+    MapSize.XMin = XMinMapSize
+    MapSize.YMax = YMaxMapSize
+    MapSize.YMin = YMinMapSize
+    
+    For j = MapSize.YMin To MapSize.YMax
+        For i = MapSize.XMin To MapSize.XMax
+
+            With MapData(i, j)
+                    
+                If .ZonaIndex > 0 And .ZonaIndex <= CantZonas Then
+                    
+                    MH.NumeroZonas = MH.NumeroZonas + 1
+                    ReDim Preserve Zonas(1 To MH.NumeroZonas)
+                    Zonas(MH.NumeroZonas).x = i
+                    Zonas(MH.NumeroZonas).y = j
+                    Zonas(MH.NumeroZonas).Zona = .ZonaIndex
+
+                End If
+
+            End With
+
+        Next i
+    Next j
+ 
+    MH.NumeroData = CantZonas
+    
+    Call CSMInfoSave
+              
+    fh = FreeFile
+    Open ZonRoute For Binary As fh
+        
+    Put #fh, , MiCabecera
+        
+    Put #fh, , MH
+    Put #fh, , MapSize
+    Put #fh, , MapDat
+
+    If MH.NumeroZonas > 0 Then Put #fh, , Zonas
+
+    Close fh
+    
+    'Change mouse icon
+    frmMain.MousePointer = 0
+    MapInfo.Changed = 0
+    
+    NoSobreescribir = False
+    
+    Exit Function
+
+    Exportar_Zonas = True
+
+    Exit Function
+
+Exportar_Zonas_Err:
+
+    Exportar_Zonas = False
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Error al exportar las zonas.", 255, 0, 0)
+    Call RegistrarError(Err.Number, Err.Description, "modMapasWAO.Exportar_Zonas", Erl)
+
+    Resume Next
+
+End Function
+
+Public Function Importar_Zonas(ByVal path As String) As Boolean
+
+    '**********************************
+    'Autor: Lorwik
+    'Fecha: 18/05/2024
+    'Descripcion: Importa zonas desde un archivo binario
+    '**********************************
+    On Error GoTo Importar_Zonas_Err
+
+    Dim fh         As Integer
+
+    Dim File       As Integer
+
+    Dim MH         As tMapHeader
+
+    Dim Zonas()    As tDatosZonas
+    
+    Dim LaCabecera As tCabecera
+    
+    Dim i          As Long
+
+    Dim j          As Long
+
+    DoEvents
+        
+    'Change mouse icon
+    frmMain.MousePointer = 11
+        
+    fh = FreeFile
+    Open path For Binary Access Read As fh
+    
+    Get #fh, , LaCabecera
+    
+    Get #fh, , MH
+    Get #fh, , MapSize
+        
+    ReDim MapDat(MH.NumeroData) As tMapDat
+    Get #fh, , MapDat
+
+    If MH.NumeroZonas > 0 Then
+        ReDim Zonas(1 To MH.NumeroZonas)
+        Get #fh, , Zonas
+
+        For i = 1 To MH.NumeroZonas
+
+            If Zonas(i).x > XMinMapSize And Zonas(i).x < XMaxMapSize + 1 And Zonas(i).y > YMinMapSize And Zonas(i).y < YMaxMapSize + 1 Then MapData(Zonas(i).x, Zonas(i).y).ZonaIndex = Zonas(i).Zona
+        
+        Next i
+
+    End If
+              
+    Close fh
+
+    'Change mouse icon
+    frmMain.MousePointer = 0
+    
+    Call CSMInfoCargar
+    
+    'Set changed flag
+    MapInfo.Changed = 0
+    
+    Call coloresZona
+
+    Importar_Zonas = True
+    
+    Call DibujarMinimapa
+
+    Exit Function
+
+Importar_Zonas_Err:
+
+    Importar_Zonas = False
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Error en la carga del mapa " & Map, 255, 0, 0, , , True)
+    Call RegistrarError(Err.Number, Err.Description, "modMapasWAO.Importar_Zonas", Erl)
+
+    Resume Next
+
+End Function

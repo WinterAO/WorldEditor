@@ -271,6 +271,7 @@ On Error GoTo EngineHandler:
     Set SpriteBatch = Nothing
     Set Sound = Nothing
     Set LucesRedondas = Nothing
+    Set Inventario = Nothing
     
     '   Erase Data
     Erase MapData()
@@ -309,6 +310,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
     If Not prgRun Then
         
         Set LucesRedondas = New clsLucesRedondas
+        Set Inventario = New clsGraphicalInventory
         
         ' Seteamos algunos colores por adelantado y unica vez.
         Call RGBAList(COLOR_WHITE(), 255, 255, 255, 255)
@@ -319,6 +321,9 @@ Public Sub Engine_DirectX8_Aditional_Init()
         
         ' Inicializa DIB surface, un buffer usado para dejar imagenes estaticas en PictureBox
         Call PrepareDrawBuffer
+        
+        'Inicializamos el inventario grafico
+        Call Inventario.Initialize(DirectD3D8, frmQuick.picInv, MAX_INVENTORY_SLOTS, , INVENTORY_SIZE, INVENTORY_SIZE, , , , , True)
         
     End If
     

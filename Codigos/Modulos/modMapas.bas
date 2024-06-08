@@ -56,17 +56,17 @@ AbrirMapa_Err:
     Resume Next
 End Sub
 
-Public Sub abrirCargarMapa(ByVal Path As String)
+Public Sub abrirCargarMapa(ByVal path As String)
     
     Dim ind As Integer
-    ind = InStrRev(Path, "\") + 5
-    UserMap = mid$(Path, ind, Len(Path) - ind - 3)
+    ind = InStrRev(path, "\") + 5
+    UserMap = mid$(path, ind, Len(path) - ind - 3)
     
     Call modMapasWAO.Cargar_CSM(frmMain.Dialog.filename)
 
 End Sub
 
-Public Sub DeseaGuardarMapa(Optional Path As String)
+Public Sub DeseaGuardarMapa(Optional path As String)
     '*************************************************
     'Author: ^[GS]^
     'Last modified: 20/05/06
@@ -75,7 +75,7 @@ Public Sub DeseaGuardarMapa(Optional Path As String)
 
     If MapInfo.Changed = 1 Then
         If MsgBox(MSGMod, vbExclamation + vbYesNo) = vbYes Then
-            GuardarMapa Path
+            GuardarMapa path
 
         End If
 
@@ -83,7 +83,7 @@ Public Sub DeseaGuardarMapa(Optional Path As String)
 
 End Sub
 
-Public Sub GuardarMapa(Optional Path As String)
+Public Sub GuardarMapa(Optional path As String)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -94,15 +94,17 @@ Public Sub GuardarMapa(Optional Path As String)
 
     On Error GoTo errhandler
     
-    If LenB(Path) = 0 Then
+    If LenB(path) = 0 Then
         frmMain.ObtenerNombreArchivo True
-        Path = frmMain.Dialog.filename
+        path = frmMain.Dialog.filename
 
-        If LenB(Path) = 0 Then Exit Sub
+        If LenB(path) = 0 Then Exit Sub
 
     End If
     
-    Call Save_CSM(Path)
+    Call Save_CSM(path)
+    
+    Call ShowMessageScreen("Mapa guardado.")
                 
 errhandler:
 
@@ -121,14 +123,14 @@ Public Sub NuevoMapa()
 
     Dim i     As Byte
 
-    Dim LoopC As Integer
+    Dim loopc As Integer
     
     frmMain.mnuReAbrirMapa.Enabled = False
     
     MapaCargado = False
     
-    For LoopC = 0 To frmMain.MapPest.Count - 1
-        frmMain.MapPest(LoopC).Enabled = False
+    For loopc = 0 To frmMain.MapPest.Count - 1
+        frmMain.MapPest(loopc).Enabled = False
     Next
     
     frmMain.MousePointer = 11
@@ -156,7 +158,7 @@ Public Sub NuevoMapa()
                 .CharIndex = 0
                 .NPCIndex = 0
         
-                ' Translados
+                ' Traslados
                 .TileExit.Map = 0
                 .TileExit.x = 0
                 .TileExit.y = 0
@@ -197,16 +199,7 @@ Public Sub NuevoMapa()
     'Borramos todas las luces
     Call LucesRedondas.LightRemoveAll(False)
     
-    CantZonas = 0
-    ReDim MapZonas(CantZonas) As tMapInfo
-    
-    frmZonas.LstZona.Clear
-    
-    Call NuevaZona(CantZonas)
-        
-    frmZonas.LstZona.ListIndex = 0
-        
-    Call MapZona_Actualizar(frmZonas.LstZona.ListIndex + 1)
+    Call ResetearZonas
     
     Call DibujarMinimapa
     
@@ -267,13 +260,13 @@ Public Sub NuevaZona(ByVal id As Integer)
     
     ReDim Preserve MapZonas(CantZonas) As tMapInfo
 
-    Call ResetearZona(id)
+    If id <= CantZonas Then Call ResetearZona(id)
     
-    frmZonas.LstZona.AddItem (CantZonas & "- " & MapZonas(CantZonas).name)
+    frmZonas.LstZona.AddItem (CantZonas & " - " & MapZonas(CantZonas).name)
     
     ReDim Preserve colorZona(CantZonas) As RGBA
     
-    colorZona(CantZonas) = RGBA_From_Comp(Int(Rnd * 256), Int(Rnd * 256), Int(Rnd * 256), 255)
+    Call coloresZona(CantZonas)
 
 End Sub
 
@@ -316,7 +309,7 @@ Public Sub EliminarZona()
     '*****************************************
     
     If CantZonas = 1 Then
-        MsgBox "El numero de zonas llego al mnimo. No puedes eliminar mas zonas."
+        MsgBox "El numero de zonas llego al minimo. No puedes eliminar mas zonas."
         Exit Sub
 
     End If
@@ -345,7 +338,7 @@ Public Sub ActualizarZonaList(ByVal id As Integer)
     frmZonas.LstZona.Clear
         
     For i = 1 To CantZonas
-        frmZonas.LstZona.AddItem (i & "- " & MapZonas(i).name)
+        frmZonas.LstZona.AddItem (i & " - " & MapZonas(i).name)
             
     Next i
     
@@ -395,31 +388,50 @@ Public Sub MapZona_Actualizar(ByVal id As Integer)
     
 End Sub
 
-Public Sub coloresZona()
+Public Sub coloresZona(Optional ByVal zonaID As Long = -1)
+    '*****************************************
+    'Autor: Lorwik
+    'Fecha: 16/05/2024
+    'Descripción: Asigna colores aleatorios a zonas
+    '*****************************************
 
     Dim i As Long
 
     If CantZonas = 0 Then Exit Sub
     
-    i = CantZonas
-    
-    ReDim colorZona(CantZonas)
+    ' Redimensiona colorZona si es necesario
+    If UBound(colorZona) < CantZonas Then
+        ReDim Preserve colorZona(CantZonas) As RGBA
+    End If
 
-    ' Asigna colores aleatorios a cada número en el array MapData(X, Y).ZonaIndex
-    For i = 1 To CantZonas
-        ' Genera valores aleatorios para Red, Green y Blue
-        Dim RedValue As Integer
-        Dim GreenValue As Integer
-        Dim BlueValue As Integer
-    
-        RedValue = Int(Rnd * 256) ' Valor aleatorio entre 0 y 255
-        GreenValue = Int(Rnd * 256)
-        BlueValue = Int(Rnd * 256)
-    
-        colorZona(i) = RGBA_From_Comp(RedValue, GreenValue, BlueValue, 255)
-    Next i
-    
+    ' Asigna colores aleatorios
+    If zonaID = -1 Then
+        ' Asignar colores a todas las zonas
+        For i = 1 To CantZonas
+            colorZona(i) = GenerarColorAleatorio()
+        Next i
+    Else
+        ' Asignar color a una zona específica
+        colorZona(zonaID) = GenerarColorAleatorio()
+    End If
 End Sub
+
+Private Function GenerarColorAleatorio() As RGBA
+    '*****************************************
+    'Autor: Lorwik
+    'Fecha: 16/05/2024
+    '*****************************************
+    ' Genera un color aleatorio en formato RGBA
+    Dim RedValue As Byte
+    Dim GreenValue As Byte
+    Dim BlueValue As Byte
+    
+    RedValue = Int(Rnd * 256) ' Valor aleatorio entre 0 y 255
+    GreenValue = Int(Rnd * 256)
+    BlueValue = Int(Rnd * 256)
+    
+    GenerarColorAleatorio = RGBA_From_Comp(RedValue, GreenValue, BlueValue, 255)
+End Function
 
 Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".map")
 
@@ -430,12 +442,12 @@ Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".
     '*************************************************
     On Error Resume Next
 
-    Dim LoopC As Integer
+    Dim loopc As Integer
     
-    For LoopC = Len(Map) To 1 Step -1
+    For loopc = Len(Map) To 1 Step -1
 
-        If mid(Map, LoopC, 1) = "\" Then
-            PATH_Save = Left(Map, LoopC)
+        If mid(Map, loopc, 1) = "\" Then
+            PATH_Save = Left(Map, loopc)
             Exit For
 
         End If
@@ -449,28 +461,47 @@ Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".
     nMapaActual = ReadField(1, Right(Map, Len(Map) - 4), Asc("."))
     'If frmCopiarBordes.Visible Then Call frmCopiarBordes.Inicializar
     
-    For LoopC = Len(Left(Map, Len(Map) - 4)) To 1 Step -1
+    For loopc = Len(Left(Map, Len(Map) - 4)) To 1 Step -1
 
-        If IsNumeric(mid(Left(Map, Len(Map) - 4), LoopC, 1)) = False Then
-            NumMap_Save = Right(Left(Map, Len(Map) - 4), Len(Left(Map, Len(Map) - 4)) - LoopC)
-            NameMap_Save = Left(Map, LoopC)
+        If IsNumeric(mid(Left(Map, Len(Map) - 4), loopc, 1)) = False Then
+            NumMap_Save = Right(Left(Map, Len(Map) - 4), Len(Left(Map, Len(Map) - 4)) - loopc)
+            NameMap_Save = Left(Map, loopc)
             Exit For
 
         End If
 
     Next
     
-    For LoopC = (NumMap_Save - 4) To (NumMap_Save + 6)
+    For loopc = (NumMap_Save - 4) To (NumMap_Save + 6)
 
-        If FileExist(PATH_Save & NameMap_Save & LoopC & MapFormat, vbArchive) = True Then
-            frmMain.MapPest(LoopC - NumMap_Save + 4).Visible = True
-            frmMain.MapPest(LoopC - NumMap_Save + 4).Enabled = True
-            frmMain.MapPest(LoopC - NumMap_Save + 4).Caption = NameMap_Save & LoopC
+        If FileExist(PATH_Save & NameMap_Save & loopc & MapFormat, vbArchive) = True Then
+            frmMain.MapPest(loopc - NumMap_Save + 4).Visible = True
+            frmMain.MapPest(loopc - NumMap_Save + 4).Enabled = True
+            frmMain.MapPest(loopc - NumMap_Save + 4).Caption = NameMap_Save & loopc
         Else
-            frmMain.MapPest(LoopC - NumMap_Save + 4).Visible = False
+            frmMain.MapPest(loopc - NumMap_Save + 4).Visible = False
 
         End If
 
     Next
+    
+End Sub
+
+Public Sub ResetearZonas()
+'***************************************
+'Autor: Lorwik
+'Fecha: 08/06/2024
+'***************************************
+
+    CantZonas = 0
+    ReDim MapZonas(CantZonas) As tMapInfo
+    
+    frmZonas.LstZona.Clear
+    
+    Call NuevaZona(CantZonas)
+        
+    frmZonas.LstZona.ListIndex = 0
+        
+    Call MapZona_Actualizar(frmZonas.LstZona.ListIndex + 1)
     
 End Sub

@@ -58,12 +58,16 @@ Begin VB.Form frmAcercade
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
       cGradient       =   0
+      Gradient        =   3
       Mode            =   0
       Value           =   0   'False
       ImgAlign        =   4
       ImgSize         =   32
-      cBack           =   16777215
+      cBack           =   8388736
    End
    Begin VB.Label lblHowellNeoSefirot 
       BackStyle       =   0  'Transparent
@@ -162,5 +166,5 @@ Private Sub LvBRepositorioOficial_Click(Index As Integer)
 'Fecha: 31/03/2024
 '***************************************************
 
-    Call ShellExecute(0, "Open", "https://github.com/WinterAO/WorldEditor", "", App.Path, SW_SHOWNORMAL)
+    Call ShellExecute(0, "Open", "https://github.com/WinterAO/WorldEditor", "", App.path, SW_SHOWNORMAL)
 End Sub

@@ -5,8 +5,8 @@ Public Sub Char_Make(ByVal CharIndex As Integer, _
                      ByVal Body As Integer, _
                      ByVal Head As Integer, _
                      ByVal Heading As Byte, _
-                     ByVal X As Integer, _
-                     ByVal Y As Integer, _
+                     ByVal x As Integer, _
+                     ByVal y As Integer, _
                      ByVal Arma As Integer, _
                      ByVal Escudo As Integer, _
                      ByVal Casco As Integer)
@@ -33,12 +33,12 @@ Public Sub Char_Make(ByVal CharIndex As Integer, _
     
         'Reset moving stats
         .Moving = 0
-        .MoveOffset.X = 0
-        .MoveOffset.Y = 0
+        .MoveOffset.x = 0
+        .MoveOffset.y = 0
     
         'Update position
-        .Pos.X = X
-        .Pos.Y = Y
+        .Pos.x = x
+        .Pos.y = y
     
         'Make active
         .active = 1
@@ -46,7 +46,7 @@ Public Sub Char_Make(ByVal CharIndex As Integer, _
     End With
     
     'Plot on map
-    MapData(X, Y).CharIndex = CharIndex
+    MapData(x, y).CharIndex = CharIndex
        
 End Sub
 
@@ -60,8 +60,8 @@ Public Sub Char_Erase(ByVal CharIndex As Integer)
         If (CharIndex = 0) Then Exit Sub
         If (CharIndex > LastChar) Then Exit Sub
                 
-        If Map_InBounds(.Pos.X, .Pos.Y) Then  '// Posicion valida
-            MapData(.Pos.X, .Pos.Y).CharIndex = 0  '// Borramos el user
+        If Map_InBounds(.Pos.x, .Pos.y) Then  '// Posicion valida
+            MapData(.Pos.x, .Pos.y).CharIndex = 0  '// Borramos el user
         End If
        
         'Update lastchar
@@ -105,8 +105,8 @@ Private Sub Char_ResetInfo(ByVal CharIndex As Integer)
     With CharList(CharIndex)
             
         .Moving = 0
-        .Pos.X = 0
-        .Pos.Y = 0
+        .Pos.x = 0
+        .Pos.y = 0
             
     End With
  
@@ -121,6 +121,7 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
     ' 12/08/2007: Tavo    - Si el usuario esta paralizado no se puede mover.
     ' 06/28/2008: NicoNZ - Saque lo que impedia que si el usuario estaba paralizado se ejecute el sub.
     '***************************************************
+    On Error GoTo Map_MoveTo_Err
 
     Dim LegalOk         As Boolean
 
@@ -129,16 +130,16 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
     Select Case Direccion
 
         Case E_Heading.NORTH
-            LegalOk = Map_LegalPos(UserPos.X, UserPos.Y - 1)
+            LegalOk = Map_LegalPos(UserPos.x, UserPos.y - 1)
 
         Case E_Heading.EAST
-            LegalOk = Map_LegalPos(UserPos.X + 1, UserPos.Y)
+            LegalOk = Map_LegalPos(UserPos.x + 1, UserPos.y)
 
         Case E_Heading.SOUTH
-            LegalOk = Map_LegalPos(UserPos.X, UserPos.Y + 1)
+            LegalOk = Map_LegalPos(UserPos.x, UserPos.y + 1)
 
         Case E_Heading.WEST
-            LegalOk = Map_LegalPos(UserPos.X - 1, UserPos.Y)
+            LegalOk = Map_LegalPos(UserPos.x - 1, UserPos.y)
                         
     End Select
 
@@ -160,6 +161,12 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
 
     End If
         
+    Exit Sub
+
+Map_MoveTo_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "mPooMap.Map_MoveTo", Erl)
+    Resume Next
 End Sub
 
 Sub Char_MovebyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
@@ -170,8 +177,8 @@ Sub Char_MovebyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
     Dim addx As Integer
     Dim addy As Integer
         
-    Dim X    As Integer
-    Dim Y    As Integer
+    Dim x    As Integer
+    Dim y    As Integer
         
     Dim nX   As Integer
     Dim nY   As Integer
@@ -180,8 +187,8 @@ Sub Char_MovebyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
     
     With CharList(CharIndex)
         
-        X = .Pos.X
-        Y = .Pos.Y
+        x = .Pos.x
+        y = .Pos.y
         
         'Figure out which way to move
 
@@ -201,17 +208,17 @@ Sub Char_MovebyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
                                 
         End Select
         
-        nX = X + addx
-        nY = Y + addy
+        nX = x + addx
+        nY = y + addy
                 
         '// Miqueas : Agrego este parchesito para evitar un run time
         If Not (Map_InBounds(nX, nY)) Then Exit Sub
 
         MapData(nX, nY).CharIndex = CharIndex
-        .Pos.X = nX
-        .Pos.Y = nY
+        .Pos.x = nX
+        .Pos.y = nY
         
-        MapData(X, Y).CharIndex = 0
+        MapData(x, y).CharIndex = 0
          
         .MoveOffsetX = -1 * (TilePixelWidth * addx)
         .MoveOffsetY = -1 * (TilePixelHeight * addy)
@@ -232,7 +239,7 @@ Sub Char_MovebyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
 
 End Sub
 
-Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
+Function Map_LegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
     '*****************************************************************
     'Author: ZaMa
     'Last Modification: 06/04/2020
@@ -242,15 +249,15 @@ Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
     Dim CharIndex As Integer
     
     'Limites del mapa
-    If X < MinXBorder Or X > MaxXBorder Or Y < MinYBorder Or Y > MaxYBorder Then Exit Function
+    If x < MinXBorder Or x > MaxXBorder Or y < MinYBorder Or y > MaxYBorder Then Exit Function
     
     If WalkMode Then
     
         'Tile Bloqueado?
-        If (Map_GetBlocked(X, Y)) Then Exit Function
+        If (Map_GetBlocked(x, y)) Then Exit Function
             
         'Hay un personaje?
-        If (MapData(X, Y).CharIndex > 0) Then
+        If (MapData(x, y).CharIndex > 0) Then
      
             Exit Function
                 
@@ -262,12 +269,12 @@ Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
       
 End Function
 
-Function Map_InBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean
+Function Map_InBounds(ByVal x As Integer, ByVal y As Integer) As Boolean
       '*****************************************************************
       'Checks to see if a tile position is in the maps bounds
       '*****************************************************************
 
-      If (X < XMinMapSize) Or (X > XMaxMapSize) Or (Y < YMinMapSize) Or (Y > YMaxMapSize) Then
+      If (x < XMinMapSize) Or (x > XMaxMapSize) Or (y < YMinMapSize) Or (y > YMaxMapSize) Then
             Map_InBounds = False
 
             Exit Function
@@ -277,15 +284,15 @@ Function Map_InBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean
       Map_InBounds = True
 End Function
 
-Public Function Map_GetBlocked(ByVal X As Integer, ByVal Y As Integer) As Boolean
+Public Function Map_GetBlocked(ByVal x As Integer, ByVal y As Integer) As Boolean
       '*****************************************************************
       'Author: Aaron Perkins - Modified by Juan Martin Sotuyo Dodero
       'Last Modify Date: 10/07/2002
       'Checks to see if a tile position is blocked
       '*****************************************************************
 
-      If (Map_InBounds(X, Y)) Then
-            Map_GetBlocked = (MapData(X, Y).bLocked)
+      If (Map_InBounds(x, y)) Then
+            Map_GetBlocked = (MapData(x, y).bLocked)
       End If
 
 End Function
@@ -295,8 +302,8 @@ Sub Char_MoveScreen(ByVal nHeading As E_Heading)
     'Starts the screen moving in a direction
     '******************************************
 
-    Dim X  As Integer
-    Dim Y  As Integer
+    Dim x  As Integer
+    Dim y  As Integer
     Dim tX As Integer
     Dim tY As Integer
     
@@ -305,22 +312,22 @@ Sub Char_MoveScreen(ByVal nHeading As E_Heading)
     Select Case nHeading
 
         Case E_Heading.NORTH
-            Y = -1
+            y = -1
         
         Case E_Heading.EAST
-            X = 1
+            x = 1
         
         Case E_Heading.SOUTH
-            Y = 1
+            y = 1
         
         Case E_Heading.WEST
-            X = -1
+            x = -1
 
     End Select
     
     'Fill temp pos
-    tX = UserPos.X + X
-    tY = UserPos.Y + Y
+    tX = UserPos.x + x
+    tY = UserPos.y + y
 
     'Check to see if its out of bounds
     If (tX < MinXBorder) Or (tX > MaxXBorder) Or (tY < MinYBorder) Or (tY > MaxYBorder) Then
@@ -330,10 +337,10 @@ Sub Char_MoveScreen(ByVal nHeading As E_Heading)
     Else
         
         'Start moving... MainLoop does the rest
-        AddtoUserPos.X = X
-        UserPos.X = tX
-        AddtoUserPos.Y = Y
-        UserPos.Y = tY
+        AddtoUserPos.x = x
+        UserPos.x = tX
+        AddtoUserPos.y = y
+        UserPos.y = tY
         UserMoving = 1
                 
         'bTecho = Char_Techo
@@ -383,14 +390,14 @@ End Function
 
 Public Sub Char_UserPos()
  
-    Dim X As Integer
+    Dim x As Integer
 
-    Dim Y As Integer
+    Dim y As Integer
      
     If Char_Check(UserCharIndex) Then
         
         '// Damos valor a las variables asi sacamos la pos del usuario.
-        Call Char_MapPosGet(UserCharIndex, X, Y)
+        Call Char_MapPosGet(UserCharIndex, x, y)
                
         'Call frmMain.ActualizarCoordenadas(X, Y)
 
@@ -402,7 +409,7 @@ Public Sub Char_UserPos()
 
 End Sub
 
-Private Sub Char_MapPosGet(ByVal CharIndex As Long, ByRef X As Integer, ByRef Y As Integer)
+Private Sub Char_MapPosGet(ByVal CharIndex As Long, ByRef x As Integer, ByRef y As Integer)
                                 
     '*****************************************************************
     'Author: Aaron Perkins
@@ -416,8 +423,8 @@ Private Sub Char_MapPosGet(ByVal CharIndex As Long, ByRef X As Integer, ByRef Y 
     With CharList(CharIndex)
                   
         'Get map pos
-        X = .Pos.X
-        Y = .Pos.Y
+        x = .Pos.x
+        y = .Pos.y
         
     End With
  

@@ -32,22 +32,14 @@ Begin VB.Form frmLuces
       TabIndex        =   15
       Top             =   240
       Width           =   495
-      _ExtentX        =   873
-      _ExtentY        =   609
-      CapAlign        =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   0
-      Value           =   0   'False
-      cBack           =   255
+      _extentx        =   873
+      _extenty        =   609
+      capalign        =   2
+      cgradient       =   0
+      font            =   "frmLuces.frx":0000
+      mode            =   0
+      value           =   0
+      cback           =   255
    End
    Begin WinterMapEditor.lvButtons_H cInsertarLuz 
       Height          =   360
@@ -55,25 +47,17 @@ Begin VB.Form frmLuces
       TabIndex        =   9
       Top             =   1680
       Width           =   1665
-      _ExtentX        =   2937
-      _ExtentY        =   635
-      Caption         =   "Insertar Luz"
-      CapAlign        =   2
-      BackStyle       =   2
-      Shape           =   1
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   1
-      Value           =   0   'False
-      cBack           =   -2147483633
+      _extentx        =   2937
+      _extenty        =   635
+      caption         =   "Insertar Luz"
+      capalign        =   2
+      backstyle       =   2
+      shape           =   1
+      cgradient       =   0
+      font            =   "frmLuces.frx":0028
+      mode            =   1
+      value           =   0
+      cback           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H cQuitarLuz 
       Height          =   360
@@ -81,25 +65,17 @@ Begin VB.Form frmLuces
       TabIndex        =   8
       Top             =   1680
       Width           =   1665
-      _ExtentX        =   2937
-      _ExtentY        =   635
-      Caption         =   "Quitar Luz"
-      CapAlign        =   2
-      BackStyle       =   2
-      Shape           =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   1
-      Value           =   0   'False
-      cBack           =   -2147483633
+      _extentx        =   2937
+      _extenty        =   635
+      caption         =   "Quitar Luz"
+      capalign        =   2
+      backstyle       =   2
+      shape           =   2
+      cgradient       =   0
+      font            =   "frmLuces.frx":0050
+      mode            =   1
+      value           =   0
+      cback           =   -2147483633
    End
    Begin VB.Frame FraLuzAmbiental 
       Appearance      =   0  'Flat
@@ -127,24 +103,16 @@ Begin VB.Form frmLuces
          TabIndex        =   10
          Top             =   360
          Width           =   1545
-         _ExtentX        =   2725
-         _ExtentY        =   635
-         Caption         =   "Mañana"
-         CapAlign        =   2
-         BackStyle       =   2
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cGradient       =   0
-         Mode            =   2
-         Value           =   0   'False
-         cBack           =   8438015
+         _extentx        =   2725
+         _extenty        =   635
+         caption         =   "Mañana"
+         capalign        =   2
+         backstyle       =   2
+         cgradient       =   0
+         font            =   "frmLuces.frx":0078
+         mode            =   2
+         value           =   0
+         cback           =   8438015
       End
       Begin WinterMapEditor.lvButtons_H lvButtons_H1 
          Height          =   360
@@ -153,24 +121,16 @@ Begin VB.Form frmLuces
          TabIndex        =   12
          Top             =   360
          Width           =   1545
-         _ExtentX        =   2725
-         _ExtentY        =   635
-         Caption         =   "Dia"
-         CapAlign        =   2
-         BackStyle       =   2
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cGradient       =   0
-         Mode            =   2
-         Value           =   0   'False
-         cBack           =   16777088
+         _extentx        =   2725
+         _extenty        =   635
+         caption         =   "Dia"
+         capalign        =   2
+         backstyle       =   2
+         cgradient       =   0
+         font            =   "frmLuces.frx":00A0
+         mode            =   2
+         value           =   0
+         cback           =   16777088
       End
       Begin WinterMapEditor.lvButtons_H lvButtons_H1 
          Height          =   360
@@ -179,24 +139,16 @@ Begin VB.Form frmLuces
          TabIndex        =   13
          Top             =   840
          Width           =   1545
-         _ExtentX        =   2725
-         _ExtentY        =   635
-         Caption         =   "Tarde"
-         CapAlign        =   2
-         BackStyle       =   2
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cGradient       =   0
-         Mode            =   2
-         Value           =   0   'False
-         cBack           =   8421504
+         _extentx        =   2725
+         _extenty        =   635
+         caption         =   "Tarde"
+         capalign        =   2
+         backstyle       =   2
+         cgradient       =   0
+         font            =   "frmLuces.frx":00C8
+         mode            =   2
+         value           =   0
+         cback           =   8421504
       End
       Begin WinterMapEditor.lvButtons_H lvButtons_H1 
          Height          =   360
@@ -205,24 +157,16 @@ Begin VB.Form frmLuces
          TabIndex        =   14
          Top             =   840
          Width           =   1545
-         _ExtentX        =   2725
-         _ExtentY        =   635
-         Caption         =   "Noche"
-         CapAlign        =   2
-         BackStyle       =   2
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cGradient       =   0
-         Mode            =   2
-         Value           =   0   'False
-         cBack           =   4210752
+         _extentx        =   2725
+         _extenty        =   635
+         caption         =   "Noche"
+         capalign        =   2
+         backstyle       =   2
+         cgradient       =   0
+         font            =   "frmLuces.frx":00F0
+         mode            =   2
+         value           =   0
+         cback           =   4210752
       End
    End
    Begin VB.Frame Frame2 
@@ -329,22 +273,14 @@ Begin VB.Form frmLuces
       TabIndex        =   16
       Top             =   240
       Width           =   495
-      _ExtentX        =   873
-      _ExtentY        =   609
-      CapAlign        =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   0
-      Value           =   0   'False
-      cBack           =   65535
+      _extentx        =   873
+      _extenty        =   609
+      capalign        =   2
+      cgradient       =   0
+      font            =   "frmLuces.frx":0118
+      mode            =   0
+      value           =   0
+      cback           =   65535
    End
    Begin WinterMapEditor.lvButtons_H lvButtons_H5 
       Height          =   345
@@ -353,22 +289,14 @@ Begin VB.Form frmLuces
       TabIndex        =   17
       Top             =   1110
       Width           =   495
-      _ExtentX        =   873
-      _ExtentY        =   609
-      CapAlign        =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   0
-      Value           =   0   'False
-      cBack           =   12632256
+      _extentx        =   873
+      _extenty        =   609
+      capalign        =   2
+      cgradient       =   0
+      font            =   "frmLuces.frx":0140
+      mode            =   0
+      value           =   0
+      cback           =   12632256
    End
    Begin WinterMapEditor.lvButtons_H lvButtons_H5 
       Height          =   345
@@ -377,22 +305,14 @@ Begin VB.Form frmLuces
       TabIndex        =   18
       Top             =   1110
       Width           =   495
-      _ExtentX        =   873
-      _ExtentY        =   609
-      CapAlign        =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   0
-      Value           =   0   'False
-      cBack           =   16711935
+      _extentx        =   873
+      _extenty        =   609
+      capalign        =   2
+      cgradient       =   0
+      font            =   "frmLuces.frx":0168
+      mode            =   0
+      value           =   0
+      cback           =   16711935
    End
    Begin WinterMapEditor.lvButtons_H lvButtons_H5 
       Height          =   345
@@ -401,22 +321,14 @@ Begin VB.Form frmLuces
       TabIndex        =   19
       Top             =   660
       Width           =   495
-      _ExtentX        =   873
-      _ExtentY        =   609
-      CapAlign        =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   0
-      Value           =   0   'False
-      cBack           =   16777215
+      _extentx        =   873
+      _extenty        =   609
+      capalign        =   2
+      cgradient       =   0
+      font            =   "frmLuces.frx":0190
+      mode            =   0
+      value           =   0
+      cback           =   16777215
    End
    Begin WinterMapEditor.lvButtons_H lvButtons_H5 
       Height          =   345
@@ -425,22 +337,14 @@ Begin VB.Form frmLuces
       TabIndex        =   11
       Top             =   660
       Width           =   495
-      _ExtentX        =   873
-      _ExtentY        =   609
-      CapAlign        =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   0
-      Value           =   0   'False
-      cBack           =   16776960
+      _extentx        =   873
+      _extenty        =   609
+      capalign        =   2
+      cgradient       =   0
+      font            =   "frmLuces.frx":01B8
+      mode            =   0
+      value           =   0
+      cback           =   16776960
    End
 End
 Attribute VB_Name = "frmLuces"

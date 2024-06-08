@@ -13,7 +13,7 @@ Public MMiniMap_cuadrantes As Boolean
 Public MMiniMap_Nombre     As Boolean
 Public MMiniMap_Zonas      As Boolean
 
-Private Declare Function SetPixel Lib "gdi32" (ByVal hDC As Long, ByVal X As Long, ByVal Y As Long, ByVal crColor As Long) As Long
+Private Declare Function SetPixel Lib "gdi32" (ByVal hDC As Long, ByVal x As Long, ByVal y As Long, ByVal crColor As Long) As Long
 
 Public Sub DibujarMinimapa(Optional ByVal Refrescar = False)
 
@@ -119,11 +119,11 @@ Public Sub DibujarMinimapa(Optional ByVal Refrescar = False)
                 
                 If MMiniMap_Zonas Then
                     If MapData(map_x, map_y).ZonaIndex > 0 Then
-                        Dim zonaRGB As Long
                         
-                        zonaRGB = RGBA_2_Long(colorZona(MapData(map_x, map_y).ZonaIndex))
-                        
-                        SetPixel picMapahDC, map_x - 1, map_y - 1, vbColor_2_Long(zonaRGB)
+                        ' Convierte RGBA a RGB antes de pasar a SetPixel
+                        Dim zonaRGB As RGBA
+                        zonaRGB = colorZona(MapData(map_x, map_y).ZonaIndex)
+                        SetPixel picMapahDC, map_x - 1, map_y - 1, RGB(zonaRGB.R, zonaRGB.G, zonaRGB.B)
                     End If
                 End If
                 
@@ -134,8 +134,8 @@ Public Sub DibujarMinimapa(Optional ByVal Refrescar = False)
     
     'frmMain.UserM.Left = (UserPos.X * 2) - 2
     'frmMain.UserM.Top = (UserPos.Y * 2) - 2
-    frmMapa.ApuntadorRadar.Left = (UserPos.X) - HalfWindowTileWidth
-    frmMapa.ApuntadorRadar.Top = (UserPos.Y) - HalfWindowTileHeight
+    frmMapa.ApuntadorRadar.Left = (UserPos.x) - HalfWindowTileWidth
+    frmMapa.ApuntadorRadar.Top = (UserPos.y) - HalfWindowTileHeight
     
     'Refrescamos
     'frmMain.Minimap.Refresh
@@ -164,10 +164,10 @@ Public Sub RenderizarCuadrantes()
     Dim XMax As Long
     Dim YMin As Long
     Dim YMax As Long
-    Dim LoopC As Byte
+    Dim loopc As Byte
     
-    Dim X As Integer
-    Dim Y As Integer
+    Dim x As Integer
+    Dim y As Integer
     
     Dim AnchoCuadrante As Byte
     
@@ -187,25 +187,25 @@ Public Sub RenderizarCuadrantes()
     YMin = 1
     YMax = 100
     
-    For LoopC = 0 To 99
-        X = 0
+    For loopc = 0 To 99
+        x = 0
         For map_x = XMin To XMax
         
-            X = X + 1
+            x = x + 1
         
             For map_y = YMin To YMax
             
-                Y = Y + 1
+                y = y + 1
             
                 If MapData(map_x, map_y).Graphic(1).GrhIndex > 0 Then _
-                    SetPixel picMapahDC, X - 1, Y - 1, GrhData(MapData(map_x, map_y).Graphic(1).GrhIndex).mini_map_color
+                    SetPixel picMapahDC, x - 1, y - 1, GrhData(MapData(map_x, map_y).Graphic(1).GrhIndex).mini_map_color
                     
                 If MapData(map_x, map_y).Graphic(2).GrhIndex > 0 Then _
-                    SetPixel picMapahDC, X - 1, Y - 1, GrhData(MapData(map_x, map_y).Graphic(2).GrhIndex).mini_map_color
+                    SetPixel picMapahDC, x - 1, y - 1, GrhData(MapData(map_x, map_y).Graphic(2).GrhIndex).mini_map_color
 
             Next map_y
             
-            Y = 0
+            y = 0
             
         Next map_x
         
@@ -222,13 +222,13 @@ Public Sub RenderizarCuadrantes()
         End If
         
         Call frmMapa.Capturar_Imagen(frmMinimapa.minimapa, frmMinimapa.minimapa)
-        Call SavePicture(frmMinimapa.minimapa, App.Path & "\Render\Minimapa\" & MapaActual & "-" & LoopC & ".bmp")
+        Call SavePicture(frmMinimapa.minimapa, App.Path & "\Render\Minimapa\" & MapaActual & "-" & loopc & ".bmp")
         
         frmMinimapa.minimapa.BackColor = vbBlack
         frmMinimapa.minimapa.Refresh
         DoEvents
         
-    Next LoopC
+    Next loopc
     
     Unload frmMinimapa
     
