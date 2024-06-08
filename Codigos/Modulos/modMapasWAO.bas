@@ -803,7 +803,7 @@ Private Sub CSMInfoSave()
     
 End Sub
 
-Public Function Exportar_Zonas(ByVal MapRoute As String) As Boolean
+Public Function Exportar_Zonas(ByVal ZonRoute As String) As Boolean
 
     '**********************************
     'Autor: Lorwik
@@ -823,12 +823,12 @@ Public Function Exportar_Zonas(ByVal MapRoute As String) As Boolean
     Dim j            As Integer
     
     If NoSobreescribir = False Then
-        If FileExist(MapRoute, vbNormal) = True Then
-            If MsgBox("¿Desea sobrescribir " & MapRoute & "?", vbCritical + vbYesNo) = vbNo Then
+        If FileExist(ZonRoute, vbNormal) = True Then
+            If MsgBox("¿Desea sobrescribir " & ZonRoute & "?", vbCritical + vbYesNo) = vbNo Then
                 Exit Function
                 
             Else
-                'Kill MapRoute
+                'Kill ZonRoute
                 
             End If
 
@@ -867,7 +867,7 @@ Public Function Exportar_Zonas(ByVal MapRoute As String) As Boolean
     Call CSMInfoSave
               
     fh = FreeFile
-    Open MapRoute For Binary As fh
+    Open ZonRoute For Binary As fh
         
     Put #fh, , MiCabecera
         
@@ -878,8 +878,6 @@ Public Function Exportar_Zonas(ByVal MapRoute As String) As Boolean
     If MH.NumeroZonas > 0 Then Put #fh, , Zonas
 
     Close fh
-    
-    Call Pestanas(MapRoute, ".csm")
     
     'Change mouse icon
     frmMain.MousePointer = 0

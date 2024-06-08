@@ -348,6 +348,8 @@ Public Sub Zonas_Bordes()
     
     'Set changed flag
     MapInfo.Changed = 1
+    
+    If MMiniMap_Zonas Then Call DibujarMinimapa
 
 End Sub
 
@@ -437,6 +439,143 @@ Quitar_NPCs_Err:
     Call RegistrarError(Err.Number, Err.Description, "modEdicion.Quitar_NPCs", Erl)
     Resume Next
     
+End Sub
+
+Public Sub EliminarUnaZona()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 08/06/2024
+    '*************************************************
+
+    On Error GoTo EliminarUnaZona_Err
+
+    Dim zonaDel As Integer
+    Dim x, y As Integer
+    zonaDel = InputBox("Por favor, ingrese el número de la zona a borrar:")
+    
+    For x = XMinMapSize To XMaxMapSize
+    
+        For y = YMinMapSize To YMaxMapSize
+        
+            If MapData(x, y).ZonaIndex = zonaDel Then MapData(x, y).ZonaIndex = 0
+        
+        Next y
+        
+    Next x
+    
+    If MMiniMap_Zonas Then Call DibujarMinimapa
+
+    Exit Sub
+
+    Exit Sub
+
+EliminarUnaZona_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "modEdicion.EliminarUnaZona", Erl)
+    Resume Next
+End Sub
+
+Public Sub EliminarZonas()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 08/06/2024
+    '*************************************************
+    On Error GoTo EliminarZonas_Err
+    
+        Dim x As Integer
+    Dim y As Integer
+    
+    If EditWarning Then Exit Sub
+    
+    'Seteamos todas las zonas del mapa en 0
+    For x = XMinMapSize To XMaxMapSize
+        For y = YMinMapSize To YMaxMapSize
+        
+            MapData(x, y).ZonaIndex = 0
+        
+        Next y
+    Next x
+    
+    'Eliminamos todas las zonas de la lista
+    Call ResetearZonas
+    
+    'Actualizamos el minimapa de ser necesario
+    If MMiniMap_Zonas Then Call DibujarMinimapa
+    
+    Exit Sub
+
+EliminarZonas_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "modEdicion.EliminarZonas", Erl)
+    Resume Next
+End Sub
+
+Public Sub Insertar_ZonasxCuadrantes()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 08/06/2024
+    '*************************************************
+    
+    On Error GoTo Insertar_ZonasxCuadrantes_Err
+
+    Dim x As Integer
+    Dim y As Integer
+    Dim i As Integer
+    Dim Zona As Integer
+    
+    ' Calcular el número de cuadrantes
+    Dim CuadrantesHorizontal As Integer
+    Dim CuadrantesVertical As Integer
+
+    If MsgBox("¡ATENCIÓN! ¿Está seguro que quieres establecer zonas por cuadrantes? ¡Todas las zonas actuales se prederan!", vbExclamation + vbYesNo) = vbYes Then
+    
+        Call AddtoRichTextBox(frmConsola.StatTxt, "Comenzando a establecer zonas...", 0, 255, 0)
+        
+        'Calculamos cuantas zonas vamos a necesitar para el mapa actual
+        CuadrantesHorizontal = XMaxMapSize \ 100
+        CuadrantesVertical = YMaxMapSize \ 100
+        CantZonas = CuadrantesHorizontal * CuadrantesVertical
+        
+        'Redimensionamos el array de zonas
+        ReDim MapZonas(CantZonas) As tMapInfo
+        
+        frmZonas.LstZona.Clear
+        
+        'Seteamos la data de cada zona por defecto y la añadimos a la lista
+        For i = 1 To CantZonas
+            Call ResetearZona(i)
+            frmZonas.LstZona.AddItem (i & " - " & MapZonas(CantZonas).name)
+        Next i
+        
+        'Pintamos las zonas en el mapa
+        For x = XMinMapSize To XMaxMapSize - 1
+            For y = YMinMapSize To YMaxMapSize - 1
+                
+                'Calculamos la zona correspondiente en base a las coordenadas actuales
+                Zona = CalcularCuadrante(x, y)
+                MapData(x, y).ZonaIndex = Zona
+            
+            Next y
+        Next x
+        
+        'Asignamos un color a cada zona
+        Call coloresZona
+        
+        MapInfo.Changed = 1
+        
+        If MMiniMap_Zonas Then Call DibujarMinimapa
+        
+        Call AddtoRichTextBox(frmConsola.StatTxt, "Zonas por cuadrantes establecidas.", 0, 255, 0)
+    
+    End If
+
+    Exit Sub
+
+Insertar_ZonasxCuadrantes_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "modEdicion.Insertar_ZonasxCuadrantes", Erl)
+    Resume Next
+
 End Sub
 
 ''

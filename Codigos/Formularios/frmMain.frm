@@ -945,7 +945,10 @@ Begin VB.Form frmMain
             Caption         =   "Elim. Bloqueos en todo el mapa"
          End
          Begin VB.Menu mnuEliminarZona 
-            Caption         =   "Elim. una zona del mapa"
+            Caption         =   "Elim. Una zona del mapa"
+         End
+         Begin VB.Menu mnuEliminarZonas 
+            Caption         =   "Elim. Zonas en todo el mapa"
          End
          Begin VB.Menu mnuEliminarNPCs 
             Caption         =   "Elim. NPCs de todo el mapa"
@@ -1590,26 +1593,43 @@ mnuQuitarNPCs_Click_Err:
 End Sub
 
 Private Sub mnuEliminarZona_Click()
-    Dim zonaDel As Integer
-    Dim x, y As Integer
-    zonaDel = InputBox("Por favor, ingrese el número de la zona a borrar:")
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: ???
+    '*************************************************
+    On Error GoTo mnuEliminarZona_Click_Err
     
-    For x = XMinMapSize To XMaxMapSize
-    
-        For y = YMinMapSize To YMaxMapSize
-        
-            If MapData(x, y).ZonaIndex = zonaDel Then MapData(x, y).ZonaIndex = 0
-        
-        Next y
-        
-    Next x
+    Call EliminarUnaZona
 
+    Exit Sub
+
+mnuEliminarZona_Click_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "frmMain.mnuEliminarZona_Click", Erl)
+    Resume Next
+End Sub
+
+Private Sub mnuEliminarZonas_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 08/06/2024
+    '*************************************************
+    On Error GoTo mnuEliminarZonas_Click_Err
+    
+    Call EliminarZonas
+    
+    Exit Sub
+
+mnuEliminarZonas_Click_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "frmMain.mnuEliminarZonas_Click", Erl)
+    Resume Next
 End Sub
 
 Private Sub mnuImportarZonas_Click()
     '*************************************************
     'Author: Lorwik
-    'Last modified: 18/05/2024
+    'Last modified: 08/06/2024
     '*************************************************
     On Error GoTo mnuImportarZonas_Click_Err
     
@@ -1624,6 +1644,8 @@ Private Sub mnuImportarZonas_Click()
     If LenB(path) = 0 Then Exit Sub
     
     If modMapasWAO.Importar_Zonas(path) Then Call ShowMessageScreen("Zonas importadas.")
+    
+    If MMiniMap_Zonas Then Call DibujarMinimapa
 
     Exit Sub
 
@@ -1823,12 +1845,12 @@ Private Sub mnuNuevoMapa_Click()
     'Last modified: 29/04/2021
     '*************************************************
     On Error Resume Next
-    Dim LoopC As Integer
+    Dim loopc As Integer
     
     DeseaGuardarMapa Dialog.filename
     
-    For LoopC = 0 To frmMain.MapPest.Count - 1
-        frmMain.MapPest(LoopC).Visible = False
+    For loopc = 0 To frmMain.MapPest.Count - 1
+        frmMain.MapPest(loopc).Visible = False
     Next
     
     frmMain.Dialog.filename = Empty
@@ -2478,54 +2500,7 @@ Private Sub mnuZonasxCuadrantes_Click()
 
     On Error GoTo mnuZonasxCuadrantes_Click_Err
 
-    Dim x As Integer
-    Dim y As Integer
-    Dim i As Integer
-    Dim Zona As Integer
-    
-    ' Calcular el número de cuadrantes
-    Dim CuadrantesHorizontal As Integer
-    Dim CuadrantesVertical As Integer
-
-    If MsgBox("¡ATENCIÓN! ¿Está seguro que quieres establecer zonas por cuadrantes? ¡Todas las zonas actuales se prederan!", vbExclamation + vbYesNo) = vbYes Then
-    
-        Call AddtoRichTextBox(frmConsola.StatTxt, "Comenzando a establecer zonas...", 0, 255, 0)
-        
-        'Calculamos cuantas zonas vamos a necesitar para el mapa actual
-        CuadrantesHorizontal = XMaxMapSize \ 100
-        CuadrantesVertical = YMaxMapSize \ 100
-        CantZonas = CuadrantesHorizontal * CuadrantesVertical
-        
-        'Redimensionamos el array de zonas
-        ReDim MapZonas(CantZonas) As tMapInfo
-        
-        frmZonas.LstZona.Clear
-        
-        'Seteamos la data de cada zona por defecto y la añadimos a la lista
-        For i = 1 To CantZonas
-            Call ResetearZona(i)
-            frmZonas.LstZona.AddItem (i & " - " & MapZonas(CantZonas).name)
-        Next i
-        
-        'Pintamos las zonas en el mapa
-        For x = XMinMapSize To XMaxMapSize - 1
-            For y = YMinMapSize To YMaxMapSize - 1
-                
-                'Calculamos la zona correspondiente en base a las coordenadas actuales
-                Zona = CalcularCuadrante(x, y)
-                MapData(x, y).ZonaIndex = Zona
-            
-            Next y
-        Next x
-        
-        'Asignamos un color a cada zona
-        Call coloresZona
-        
-        MapInfo.Changed = 1
-        
-        Call AddtoRichTextBox(frmConsola.StatTxt, "Zonas por cuadrantes establecidas.", 0, 255, 0)
-    
-    End If
+    Call modEdicion.Insertar_ZonasxCuadrantes
     
     Exit Sub
 

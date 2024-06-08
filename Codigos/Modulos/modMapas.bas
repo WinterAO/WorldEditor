@@ -56,17 +56,17 @@ AbrirMapa_Err:
     Resume Next
 End Sub
 
-Public Sub abrirCargarMapa(ByVal Path As String)
+Public Sub abrirCargarMapa(ByVal path As String)
     
     Dim ind As Integer
-    ind = InStrRev(Path, "\") + 5
-    UserMap = mid$(Path, ind, Len(Path) - ind - 3)
+    ind = InStrRev(path, "\") + 5
+    UserMap = mid$(path, ind, Len(path) - ind - 3)
     
     Call modMapasWAO.Cargar_CSM(frmMain.Dialog.filename)
 
 End Sub
 
-Public Sub DeseaGuardarMapa(Optional Path As String)
+Public Sub DeseaGuardarMapa(Optional path As String)
     '*************************************************
     'Author: ^[GS]^
     'Last modified: 20/05/06
@@ -75,7 +75,7 @@ Public Sub DeseaGuardarMapa(Optional Path As String)
 
     If MapInfo.Changed = 1 Then
         If MsgBox(MSGMod, vbExclamation + vbYesNo) = vbYes Then
-            GuardarMapa Path
+            GuardarMapa path
 
         End If
 
@@ -83,7 +83,7 @@ Public Sub DeseaGuardarMapa(Optional Path As String)
 
 End Sub
 
-Public Sub GuardarMapa(Optional Path As String)
+Public Sub GuardarMapa(Optional path As String)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -94,15 +94,15 @@ Public Sub GuardarMapa(Optional Path As String)
 
     On Error GoTo errhandler
     
-    If LenB(Path) = 0 Then
+    If LenB(path) = 0 Then
         frmMain.ObtenerNombreArchivo True
-        Path = frmMain.Dialog.filename
+        path = frmMain.Dialog.filename
 
-        If LenB(Path) = 0 Then Exit Sub
+        If LenB(path) = 0 Then Exit Sub
 
     End If
     
-    Call Save_CSM(Path)
+    Call Save_CSM(path)
     
     Call ShowMessageScreen("Mapa guardado.")
                 
@@ -199,16 +199,7 @@ Public Sub NuevoMapa()
     'Borramos todas las luces
     Call LucesRedondas.LightRemoveAll(False)
     
-    CantZonas = 0
-    ReDim MapZonas(CantZonas) As tMapInfo
-    
-    frmZonas.LstZona.Clear
-    
-    Call NuevaZona(CantZonas)
-        
-    frmZonas.LstZona.ListIndex = 0
-        
-    Call MapZona_Actualizar(frmZonas.LstZona.ListIndex + 1)
+    Call ResetearZonas
     
     Call DibujarMinimapa
     
@@ -493,5 +484,24 @@ Public Sub Pestanas(ByVal Map As String, Optional ByVal MapFormat As String = ".
         End If
 
     Next
+    
+End Sub
+
+Public Sub ResetearZonas()
+'***************************************
+'Autor: Lorwik
+'Fecha: 08/06/2024
+'***************************************
+
+    CantZonas = 0
+    ReDim MapZonas(CantZonas) As tMapInfo
+    
+    frmZonas.LstZona.Clear
+    
+    Call NuevaZona(CantZonas)
+        
+    frmZonas.LstZona.ListIndex = 0
+        
+    Call MapZona_Actualizar(frmZonas.LstZona.ListIndex + 1)
     
 End Sub
