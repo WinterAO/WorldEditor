@@ -180,8 +180,8 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
                                                                      D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
                 
                 Else
-                    Call MsgBox("No se ha podido cargar el grafico con indice: " & Graphic)
-                    Call CloseMapEditor
+                    Call AddtoRichTextBox(frmConsola.StatTxt, "No se ha podido cargar el grafico con indice: " & Graphic, 255, 0, 0, True, , , , True)
+                    'Call CloseMapEditor
                 
                 End If
                 

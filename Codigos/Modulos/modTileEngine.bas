@@ -246,9 +246,9 @@ Sub ShowNextFrame()
 
     If EngineRun Then
     
-        Dim cX        As Integer
+        Dim cx        As Integer
 
-        Dim cY        As Integer
+        Dim cy        As Integer
         
         Dim Cuadrante As Integer
         
@@ -293,8 +293,8 @@ Sub ShowNextFrame()
         Call Engine_Update_FPS
         Call DrawText(10, 5, "FPS: " & modTileEngine.FPS, COLOR_WHITE, False)
         Call DrawText(10, 20, "Coords: X:" & UserPos.x & " Y: " & UserPos.y, COLOR_WHITE, False)
-        Call ObtenerCuadranteCompleto(Cuadrante, cX, cY)
-        Call DrawText(10, 35, "Cuadrante: " & Cuadrante & " X:" & cX & " Y: " & cY, COLOR_WHITE, False)
+        Call ObtenerCuadranteCompleto(Cuadrante, cx, cy)
+        Call DrawText(10, 35, "Cuadrante: " & Cuadrante & " X:" & cx & " Y: " & cy, COLOR_WHITE, False)
         
         Call DrawText(10, 50, "Mouse: " & MousePos, COLOR_WHITE, False)
         
@@ -499,8 +499,8 @@ Error:
         Resume
     Else
         'Call Log_Engine("Error in Draw_Grh, " & Err.Description & ", (" & Err.number & ")")
-        MsgBox "Error en el Engine Grafico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log.", vbCritical
-        Call CloseMapEditor
+        Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Engine Grafico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log.", 255, 0, 0, True, , , , True)
+        'Call CloseMapEditor
     End If
 End Sub
 
@@ -812,7 +812,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
             If Seleccionando Then
                 If x >= SeleccionIX And y >= SeleccionIY Then
                     If x <= SeleccionFX And y <= SeleccionFY Then
-                        Grh.GrhIndex = 2
+                        Grh.GrhIndex = 22511
                         Grh.FrameCounter = 1
                         Grh.Started = 0
                                 
@@ -1334,21 +1334,21 @@ Public Sub MapCapture(ByRef Format As Boolean, _
     Call frmRenderer.Capturar_Imagen(frmRenderer.picMap, frmRenderer.picMap)
      
     'Si no existe la carpeta de MiniMapas, la hacemos.
-    If Not FileExist(App.Path & "\Render\", vbDirectory) Then
-        Call MkDir(App.Path & "\Render\")
+    If Not FileExist(App.path & "\Render\", vbDirectory) Then
+        Call MkDir(App.path & "\Render\")
     End If
     
-    If Not FileExist(App.Path & "\Resources\", vbDirectory) Then
-        Call MkDir(App.Path & "\Resources\")
+    If Not FileExist(App.path & "\Resources\", vbDirectory) Then
+        Call MkDir(App.path & "\Resources\")
     End If
     
-    If Not FileExist(App.Path & "\Resources\Minimapas\", vbDirectory) Then
-        Call MkDir(App.Path & "\Resources\Minimapas\")
+    If Not FileExist(App.path & "\Resources\Minimapas\", vbDirectory) Then
+        Call MkDir(App.path & "\Resources\Minimapas\")
     End If
     
     'SaveImageAs App.Path & "\Render\" & MapName & ".png", FrmRender.picMap.hdc, FrmRender.picMap.ScaleWidth, FrmRender.picMap.ScaleHeight, CLng(100)
     
-    SavePicture frmRenderer.picMap.Image, App.Path & "\Render\Partials\Mapa" & UserMap & "-" & MinX & "-" & MinY & "-" & XMaxMapSize & "-" & YMaxMapSize & ".bmp"
+    SavePicture frmRenderer.picMap.Image, App.path & "\Render\Partials\Mapa" & UserMap & "-" & MinX & "-" & MinY & "-" & XMaxMapSize & "-" & YMaxMapSize & ".bmp"
     'FrmRender.PicGrande.PaintPicture FrmRender.picMap.Image, ((minX - 1) \ 200) * 800, ((minY - 1) \ 200) * 800, 800, 800
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     DoEvents
