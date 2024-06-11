@@ -296,7 +296,7 @@ Begin VB.Form frmMain
       Index           =   8
       Left            =   4620
       TabIndex        =   20
-      ToolTipText     =   "Información de la zona"
+      ToolTipText     =   "Preview"
       Top             =   75
       Width           =   480
       _ExtentX        =   847
@@ -323,37 +323,8 @@ Begin VB.Form frmMain
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
       Index           =   9
-      Left            =   5130
-      TabIndex        =   21
-      ToolTipText     =   "Preview"
-      Top             =   75
-      Width           =   480
-      _ExtentX        =   847
-      _ExtentY        =   847
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cGradient       =   0
-      Mode            =   1
-      Value           =   0   'False
-      ImgAlign        =   4
-      Image           =   "frmMain.frx":68B2
-      ImgSize         =   32
-      cBack           =   -2147483633
-   End
-   Begin WinterMapEditor.lvButtons_H LvBEdit 
-      Height          =   480
-      Index           =   10
       Left            =   4110
-      TabIndex        =   22
+      TabIndex        =   21
       ToolTipText     =   "Editor de zonas"
       Top             =   75
       Width           =   480
@@ -374,15 +345,15 @@ Begin VB.Form frmMain
       Mode            =   1
       Value           =   0   'False
       ImgAlign        =   4
-      Image           =   "frmMain.frx":C6904
+      Image           =   "frmMain.frx":C662C
       ImgSize         =   32
       cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
-      Index           =   11
-      Left            =   5640
-      TabIndex        =   23
+      Index           =   10
+      Left            =   5130
+      TabIndex        =   22
       ToolTipText     =   "Consola"
       Top             =   75
       Width           =   480
@@ -403,15 +374,15 @@ Begin VB.Form frmMain
       Mode            =   1
       Value           =   0   'False
       ImgAlign        =   4
-      Image           =   "frmMain.frx":F6956
+      Image           =   "frmMain.frx":F667E
       ImgSize         =   32
       cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
-      Index           =   12
-      Left            =   6150
-      TabIndex        =   24
+      Index           =   11
+      Left            =   5640
+      TabIndex        =   23
       ToolTipText     =   "Rellenar Area"
       Top             =   90
       Width           =   480
@@ -432,15 +403,15 @@ Begin VB.Form frmMain
       Mode            =   1
       Value           =   0   'False
       ImgAlign        =   4
-      Image           =   "frmMain.frx":1B69A8
+      Image           =   "frmMain.frx":1B66D0
       ImgSize         =   32
       cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
-      Index           =   13
-      Left            =   6660
-      TabIndex        =   25
+      Index           =   12
+      Left            =   6150
+      TabIndex        =   24
       ToolTipText     =   "Mapa"
       Top             =   90
       Width           =   480
@@ -461,15 +432,15 @@ Begin VB.Form frmMain
       Mode            =   1
       Value           =   0   'False
       ImgAlign        =   4
-      Image           =   "frmMain.frx":1DBC1E
+      Image           =   "frmMain.frx":1DB946
       ImgSize         =   32
       cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
-      Index           =   14
-      Left            =   7170
-      TabIndex        =   26
+      Index           =   13
+      Left            =   6660
+      TabIndex        =   25
       ToolTipText     =   "Velocidad"
       Top             =   90
       Width           =   480
@@ -490,15 +461,15 @@ Begin VB.Form frmMain
       Mode            =   1
       Value           =   0   'False
       ImgAlign        =   4
-      Image           =   "frmMain.frx":2D7930
+      Image           =   "frmMain.frx":2D7658
       ImgSize         =   32
       cBack           =   -2147483633
    End
    Begin WinterMapEditor.lvButtons_H LvBEdit 
       Height          =   480
-      Index           =   15
-      Left            =   7680
-      TabIndex        =   27
+      Index           =   14
+      Left            =   7170
+      TabIndex        =   26
       ToolTipText     =   "Inventario"
       Top             =   90
       Width           =   480
@@ -519,7 +490,7 @@ Begin VB.Form frmMain
       Mode            =   1
       Value           =   0   'False
       ImgAlign        =   4
-      Image           =   "frmMain.frx":2D7C36
+      Image           =   "frmMain.frx":2D795E
       ImgSize         =   32
       cBack           =   -2147483633
    End
@@ -1269,18 +1240,8 @@ Private Sub LvBEdit_Click(Index As Integer)
                 frmLuces.Visible = False
                 
             End If
-        
-        Case 8 ' Informacion
-
-            If LvBEdit(Index).value Then
-                frmMapInfo.Show , frmMain
             
-            Else
-                frmMapInfo.Visible = False
-                
-            End If
-            
-        Case 9 ' Preview
+        Case 8 ' Preview
 
             If LvBEdit(Index).value Then
                 frmPreview.Show , frmMain
@@ -1289,7 +1250,7 @@ Private Sub LvBEdit_Click(Index As Integer)
                 frmPreview.Visible = False
             End If
             
-        Case 10 ' Zonas
+        Case 9 ' Zonas
             If LvBEdit(Index).value Then
                 frmZonas.Show , frmMain
                 
@@ -1297,7 +1258,7 @@ Private Sub LvBEdit_Click(Index As Integer)
                 frmZonas.Visible = False
             End If
             
-        Case 11 ' Consola
+        Case 10 ' Consola
             If LvBEdit(Index).value Then
                 frmConsola.Show , frmMain
                 
@@ -1305,7 +1266,7 @@ Private Sub LvBEdit_Click(Index As Integer)
                 frmConsola.Visible = False
             End If
             
-        Case 12 ' Rellenar Area
+        Case 11 ' Rellenar Area
             If LvBEdit(Index).value Then
                 frmRellenar.Show , frmMain
                 
@@ -1313,7 +1274,7 @@ Private Sub LvBEdit_Click(Index As Integer)
                 frmRellenar.Visible = False
             End If
             
-        Case 13 ' Mapa
+        Case 12 ' Mapa
             If LvBEdit(Index).value Then
                 frmMapa.Show , frmMain
                 
@@ -1321,7 +1282,7 @@ Private Sub LvBEdit_Click(Index As Integer)
                 frmMapa.Visible = False
             End If
             
-        Case 14 ' Velocidad
+        Case 13 ' Velocidad
             If LvBEdit(Index).value Then
                 frmWalkerSpeed.Show , frmMain
                 
@@ -1329,7 +1290,7 @@ Private Sub LvBEdit_Click(Index As Integer)
                 frmWalkerSpeed.Visible = False
             End If
             
-        Case 15 'Quick Superficies
+        Case 14 'Quick Superficies
             If LvBEdit(Index).value Then
                 frmQuick.Show , frmMain
                 
