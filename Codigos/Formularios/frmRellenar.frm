@@ -3,7 +3,7 @@ Begin VB.Form frmRellenar
    BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Rellenar en area"
-   ClientHeight    =   4020
+   ClientHeight    =   4320
    ClientLeft      =   16905
    ClientTop       =   9480
    ClientWidth     =   4185
@@ -20,10 +20,21 @@ Begin VB.Form frmRellenar
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   268
+   ScaleHeight     =   288
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   279
    ShowInTaskbar   =   0   'False
+   Begin VB.CheckBox chkPedirConfirmación 
+      BackColor       =   &H00424242&
+      Caption         =   "Pedir confirmación"
+      ForeColor       =   &H8000000B&
+      Height          =   225
+      Left            =   150
+      TabIndex        =   21
+      Top             =   4020
+      Value           =   1  'Checked
+      Width           =   3975
+   End
    Begin VB.Frame FraZonas 
       BackColor       =   &H00535353&
       Caption         =   "Zonas"
@@ -538,36 +549,38 @@ Public Sub Superficie_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long,
 'Last modified: 07/12/2018
 '*************************************************
 
-    If EditWarning Then Exit Sub
+    If chkPedirConfirmación.value Then
+        If EditWarning Then Exit Sub
+    End If
     
-    Dim Y As Long
-    Dim X As Long
+    Dim y As Long
+    Dim x As Long
     
     If Not MapaCargado Then
         Exit Sub
     End If
 
-    For Y = y1 To y2
-        For X = x1 To x2
+    For y = y1 To y2
+        For x = x1 To x2
             If Poner = True Then
                 If frmConfigSup.MOSAICO.value = vbChecked Then
                     Dim aux As Long
                     aux = Val(frmSuperficies.cGrh.Text) + _
-                    ((Y Mod frmConfigSup.mLargo) * frmConfigSup.mAncho) + (X Mod frmConfigSup.mAncho)
-                     MapData(X, Y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = aux
+                    ((y Mod frmConfigSup.mLargo) * frmConfigSup.mAncho) + (x Mod frmConfigSup.mAncho)
+                     MapData(x, y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = aux
                     'Setup GRH
-                    InitGrh MapData(X, Y).Graphic(Val(frmSuperficies.cCapas.Text)), aux
+                    InitGrh MapData(x, y).Graphic(Val(frmSuperficies.cCapas.Text)), aux
                 Else
                     'Else Place graphic
-                    MapData(X, Y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = Val(frmSuperficies.cGrh.Text)
+                    MapData(x, y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = Val(frmSuperficies.cGrh.Text)
                     'Setup GRH
-                    InitGrh MapData(X, Y).Graphic(Val(frmSuperficies.cCapas.Text)), Val(frmSuperficies.cGrh.Text)
+                    InitGrh MapData(x, y).Graphic(Val(frmSuperficies.cCapas.Text)), Val(frmSuperficies.cGrh.Text)
                 End If
             Else
-                MapData(X, Y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = 0
+                MapData(x, y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = 0
             End If
-        Next X
-    Next Y
+        Next x
+    Next y
     
     'Set changed flag
     MapInfo.Changed = 1
@@ -580,33 +593,35 @@ Public Sub Bloqueos_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long, B
 'Last modified: 07/12/2018
 '*************************************************
 
-    If EditWarning Then Exit Sub
+    If chkPedirConfirmación.value Then
+        If EditWarning Then Exit Sub
+    End If
     
-    Dim Y As Long
-    Dim X As Long
+    Dim y As Long
+    Dim x As Long
     
     If Not MapaCargado Then
         Exit Sub
     End If
 
-    For Y = y1 To y2
-        For X = x1 To x2
+    For y = y1 To y2
+        For x = x1 To x2
     
-            If Y > YMinMapSize Or Y < YMaxMapSize Then
-                If X > XMinMapSize Or X < XMaxMapSize Then
+            If y > YMinMapSize Or y < YMaxMapSize Then
+                If x > XMinMapSize Or x < XMaxMapSize Then
     
                     If Inserta = True Then
-                        MapData(X, Y).bLocked = 1
+                        MapData(x, y).bLocked = 1
                     Else
-                        MapData(X, Y).bLocked = 0
+                        MapData(x, y).bLocked = 0
                     End If
                     
                 End If
             End If
             
     
-        Next X
-    Next Y
+        Next x
+    Next y
     
     'Set changed flag
     MapInfo.Changed = 1
@@ -619,34 +634,36 @@ Public Sub Triggers_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long, B
 'Last modified: 25/03/2021
 '*************************************************
 
-    If EditWarning Then Exit Sub
+    If chkPedirConfirmación.value Then
+        If EditWarning Then Exit Sub
+    End If
     
-    Dim Y As Long
-    Dim X As Long
+    Dim y As Long
+    Dim x As Long
     
     If Not MapaCargado Then
         Exit Sub
     End If
 
-    For Y = y1 To y2
-        For X = x1 To x2
+    For y = y1 To y2
+        For x = x1 To x2
             If Poner = True Then
                 If frmConfigSup.MOSAICO.value = vbChecked Then
                     MapInfo.Changed = 1 'Set changed flag
-                    MapData(X, Y).Trigger = frmTriggers.LynxTriggers.CellText(, 0)
+                    MapData(x, y).Trigger = frmTriggers.LynxTriggers.CellText(, 0)
                 Else
                     MapInfo.Changed = 1
                     'Else Place trigger
-                    MapData(X, Y).Trigger = 0
+                    MapData(x, y).Trigger = 0
 
                 End If
             Else
                 MapInfo.Changed = 1
-                MapData(X, Y).Trigger = 0
+                MapData(x, y).Trigger = 0
                 
             End If
-        Next X
-    Next Y
+        Next x
+    Next y
     
     'Set changed flag
     MapInfo.Changed = 1
@@ -659,36 +676,38 @@ Public Sub Zonas_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long, ByVa
 'Last modified: 01/04/2021
 '*************************************************
 
-    If EditWarning Then Exit Sub
+    If chkPedirConfirmación.value Then
+        If EditWarning Then Exit Sub
+    End If
     
-    Dim Y As Long
-    Dim X As Long
+    Dim y As Long
+    Dim x As Long
     
     If Not MapaCargado Then
         Exit Sub
     End If
 
-    For Y = y1 To y2
-        For X = x1 To x2
+    For y = y1 To y2
+        For x = x1 To x2
             If Poner = True Then
                 If frmConfigSup.MOSAICO.value = vbChecked Then
                     MapInfo.Changed = 1 'Set changed flag
-                    MapData(X, Y).ZonaIndex = frmZonas.LstZona.ListIndex + 1
+                    MapData(x, y).ZonaIndex = frmZonas.LstZona.ListIndex + 1
                     Debug.Print "Inserto"
                 Else
                     MapInfo.Changed = 1
                     'Else Place Zona
-                    MapData(X, Y).ZonaIndex = 0
+                    MapData(x, y).ZonaIndex = 0
                     Debug.Print "Quito"
                 End If
             Else
                 MapInfo.Changed = 1
-                MapData(X, Y).ZonaIndex = 0
+                MapData(x, y).ZonaIndex = 0
                 Debug.Print "Quito 2"
                 
             End If
-        Next X
-    Next Y
+        Next x
+    Next y
     
     'Set changed flag
     MapInfo.Changed = 1
