@@ -3,7 +3,7 @@ Begin VB.Form frmRellenar
    BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Rellenar en area"
-   ClientHeight    =   4320
+   ClientHeight    =   5160
    ClientLeft      =   16905
    ClientTop       =   9480
    ClientWidth     =   4185
@@ -20,18 +20,67 @@ Begin VB.Form frmRellenar
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   288
+   ScaleHeight     =   344
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   279
    ShowInTaskbar   =   0   'False
+   Begin VB.Frame FraParticulas 
+      BackColor       =   &H00535353&
+      Caption         =   "Particulas"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   765
+      Left            =   60
+      TabIndex        =   22
+      Top             =   3960
+      Width           =   4035
+      Begin WinterMapEditor.lvButtons_H LvBAreas 
+         Height          =   405
+         Index           =   8
+         Left            =   120
+         TabIndex        =   23
+         Top             =   240
+         Width           =   3825
+         _ExtentX        =   6747
+         _ExtentY        =   714
+         Caption         =   "Eliminar"
+         CapAlign        =   2
+         BackStyle       =   2
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         cFore           =   16777215
+         cFHover         =   16777215
+         cBhover         =   0
+         cGradient       =   0
+         Gradient        =   3
+         Mode            =   0
+         Value           =   0   'False
+         cBack           =   255
+      End
+   End
    Begin VB.CheckBox chkPedirConfirmación 
       BackColor       =   &H00424242&
       Caption         =   "Pedir confirmación"
       ForeColor       =   &H8000000B&
       Height          =   225
-      Left            =   150
+      Left            =   90
       TabIndex        =   21
-      Top             =   4020
+      Top             =   4830
       Value           =   1  'Checked
       Width           =   3975
    End
@@ -540,6 +589,9 @@ Private Sub LvBAreas_Click(Index As Integer)
         Case 7
             Call Zonas_Area(DX1.Text, DX2.Text, DY1.Text, DY2.Text, False)
             
+        Case 8
+            Call Particulas_Area(DX1.Text, DX2.Text, DY1.Text, DY2.Text, False)
+            
     End Select
 End Sub
 
@@ -556,9 +608,7 @@ Public Sub Superficie_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long,
     Dim y As Long
     Dim x As Long
     
-    If Not MapaCargado Then
-        Exit Sub
-    End If
+    If Not MapaCargado Then Exit Sub
 
     For y = y1 To y2
         For x = x1 To x2
@@ -600,9 +650,7 @@ Public Sub Bloqueos_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long, B
     Dim y As Long
     Dim x As Long
     
-    If Not MapaCargado Then
-        Exit Sub
-    End If
+    If Not MapaCargado Then Exit Sub
 
     For y = y1 To y2
         For x = x1 To x2
@@ -628,40 +676,40 @@ Public Sub Bloqueos_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long, B
 
 End Sub
 
-Public Sub Triggers_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long, ByVal y2 As Long, ByVal Poner As Boolean)
-'*************************************************
-'Author: Lorwik
-'Last modified: 25/03/2021
-'*************************************************
+Public Sub Triggers_Area(ByVal x1 As Long, _
+                         ByVal x2 As Long, _
+                         ByVal y1 As Long, _
+                         ByVal y2 As Long, _
+                         ByVal Poner As Boolean)
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 25/03/2021
+    '*************************************************
 
     If chkPedirConfirmación.value Then
         If EditWarning Then Exit Sub
+
     End If
     
     Dim y As Long
+
     Dim x As Long
     
-    If Not MapaCargado Then
-        Exit Sub
-    End If
+    If Not MapaCargado Then Exit Sub
 
     For y = y1 To y2
         For x = x1 To x2
-            If Poner = True Then
-                If frmConfigSup.MOSAICO.value = vbChecked Then
-                    MapInfo.Changed = 1 'Set changed flag
-                    MapData(x, y).Trigger = frmTriggers.LynxTriggers.CellText(, 0)
-                Else
-                    MapInfo.Changed = 1
-                    'Else Place trigger
-                    MapData(x, y).Trigger = 0
 
-                End If
+            If Poner = True Then
+                MapInfo.Changed = 1 'Set changed flag
+                MapData(x, y).Trigger = frmTriggers.LynxTriggers.CellText(, 0)
+
             Else
                 MapInfo.Changed = 1
                 MapData(x, y).Trigger = 0
                 
             End If
+
         Next x
     Next y
     
@@ -670,42 +718,39 @@ Public Sub Triggers_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long, B
 
 End Sub
 
-Public Sub Zonas_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long, ByVal y2 As Long, ByVal Poner As Boolean)
-'*************************************************
-'Author: Lorwik
-'Last modified: 01/04/2021
-'*************************************************
+Public Sub Zonas_Area(ByVal x1 As Long, _
+                      ByVal x2 As Long, _
+                      ByVal y1 As Long, _
+                      ByVal y2 As Long, _
+                      ByVal Poner As Boolean)
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 01/04/2021
+    '*************************************************
 
     If chkPedirConfirmación.value Then
         If EditWarning Then Exit Sub
+
     End If
     
     Dim y As Long
+
     Dim x As Long
     
-    If Not MapaCargado Then
-        Exit Sub
-    End If
+    If Not MapaCargado Then Exit Sub
 
     For y = y1 To y2
         For x = x1 To x2
+
             If Poner = True Then
-                If frmConfigSup.MOSAICO.value = vbChecked Then
-                    MapInfo.Changed = 1 'Set changed flag
-                    MapData(x, y).ZonaIndex = frmZonas.LstZona.ListIndex + 1
-                    Debug.Print "Inserto"
-                Else
-                    MapInfo.Changed = 1
-                    'Else Place Zona
-                    MapData(x, y).ZonaIndex = 0
-                    Debug.Print "Quito"
-                End If
+                MapInfo.Changed = 1 'Set changed flag
+                MapData(x, y).ZonaIndex = frmZonas.LstZona.ListIndex + 1
             Else
                 MapInfo.Changed = 1
                 MapData(x, y).ZonaIndex = 0
-                Debug.Print "Quito 2"
                 
             End If
+
         Next x
     Next y
     
@@ -714,4 +759,44 @@ Public Sub Zonas_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long, ByVa
 
 End Sub
 
+Public Sub Particulas_Area(ByVal x1 As Long, _
+                           ByVal x2 As Long, _
+                           ByVal y1 As Long, _
+                           ByVal y2 As Long, _
+                           ByVal Poner As Boolean)
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 13/06/2024
+    '*************************************************
 
+    If chkPedirConfirmación.value Then
+        If EditWarning Then Exit Sub
+
+    End If
+    
+    Dim y As Long
+
+    Dim x As Long
+    
+    If Not MapaCargado Then Exit Sub
+
+    For y = y1 To y2
+        For x = x1 To x2
+
+            If Poner Then
+                General_Particle_Create CLng(frmParticulas.LynxParticulas.CellText(, 0)), x, y, CLng(-1)
+                MapData(x, y).Particle_Index = CLng(frmParticulas.LynxParticulas.CellText(, 0))
+            Else
+                MapInfo.Changed = 1
+                MapData(x, y).Particle_Index = 0
+                MapData(x, y).Particle_Group_Index = 0
+            End If
+                
+
+        Next x
+    Next y
+    
+    'Set changed flag
+    MapInfo.Changed = 1
+
+End Sub
