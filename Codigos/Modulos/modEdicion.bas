@@ -482,7 +482,7 @@ Public Sub EliminarZonas()
     '*************************************************
     On Error GoTo EliminarZonas_Err
     
-        Dim x As Integer
+    Dim x As Integer
     Dim y As Integer
     
     If EditWarning Then Exit Sub
@@ -501,6 +501,8 @@ Public Sub EliminarZonas()
     
     'Actualizamos el minimapa de ser necesario
     If MMiniMap_Zonas Then Call DibujarMinimapa
+    
+    MapInfo.Changed = 1
     
     Exit Sub
 
