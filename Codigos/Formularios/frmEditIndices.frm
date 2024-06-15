@@ -3,7 +3,7 @@ Begin VB.Form frmEditIndices
    BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Editor de Indices"
-   ClientHeight    =   3720
+   ClientHeight    =   3750
    ClientLeft      =   45
    ClientTop       =   390
    ClientWidth     =   2775
@@ -19,7 +19,7 @@ Begin VB.Form frmEditIndices
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   248
+   ScaleHeight     =   250
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   185
    ShowInTaskbar   =   0   'False
@@ -65,28 +65,20 @@ Begin VB.Form frmEditIndices
       TabIndex        =   2
       Top             =   2670
       Width           =   1245
-      _ExtentX        =   2196
-      _ExtentY        =   820
-      Caption         =   "Guardar"
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cFore           =   16777215
-      cFHover         =   16777215
-      cBhover         =   0
-      cGradient       =   0
-      Gradient        =   3
-      Mode            =   0
-      Value           =   0   'False
-      cBack           =   65280
+      _extentx        =   2196
+      _extenty        =   820
+      caption         =   "Guardar"
+      capalign        =   2
+      backstyle       =   2
+      font            =   "frmEditIndices.frx":0000
+      cfore           =   16777215
+      cfhover         =   16777215
+      cbhover         =   0
+      cgradient       =   0
+      gradient        =   3
+      mode            =   0
+      value           =   0   'False
+      cback           =   65280
    End
    Begin WinterMapEditor.lvButtons_H LvBSalir 
       Height          =   465
@@ -94,57 +86,41 @@ Begin VB.Form frmEditIndices
       TabIndex        =   3
       Top             =   2700
       Width           =   1155
-      _ExtentX        =   2037
-      _ExtentY        =   820
-      Caption         =   "Salir"
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cFore           =   16777215
-      cFHover         =   16777215
-      cBhover         =   0
-      cGradient       =   0
-      Gradient        =   3
-      Mode            =   0
-      Value           =   0   'False
-      cBack           =   255
+      _extentx        =   2037
+      _extenty        =   820
+      caption         =   "Salir"
+      capalign        =   2
+      backstyle       =   2
+      font            =   "frmEditIndices.frx":0028
+      cfore           =   16777215
+      cfhover         =   16777215
+      cbhover         =   0
+      cgradient       =   0
+      gradient        =   3
+      mode            =   0
+      value           =   0   'False
+      cback           =   255
    End
    Begin WinterMapEditor.lvButtons_H LvBRecargarIndices 
-      Height          =   435
-      Left            =   540
+      Height          =   405
+      Left            =   210
       TabIndex        =   4
-      Top             =   3180
-      Width           =   1905
-      _ExtentX        =   3360
-      _ExtentY        =   767
-      Caption         =   "Recargar Indices"
-      CapAlign        =   2
-      BackStyle       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cFore           =   16777215
-      cFHover         =   16777215
-      cBhover         =   0
-      cGradient       =   0
-      Gradient        =   3
-      Mode            =   0
-      Value           =   0   'False
-      cBack           =   12632064
+      Top             =   3210
+      Width           =   2445
+      _extentx        =   4313
+      _extenty        =   714
+      caption         =   "Recargar Indices"
+      capalign        =   2
+      backstyle       =   2
+      font            =   "frmEditIndices.frx":0050
+      cfore           =   16777215
+      cfhover         =   16777215
+      cbhover         =   0
+      cgradient       =   0
+      gradient        =   3
+      mode            =   0
+      value           =   0   'False
+      cback           =   12632064
    End
    Begin VB.Label Label3 
       AutoSize        =   -1  'True
@@ -208,50 +184,76 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private RecargarIndices As Boolean
-
 Private Sub Form_Load()
+'***********************************
+'Autor: Lorwik
+'Fecha: ???
+'***********************************
+
+    Call CargarData
+    
+End Sub
+
+Public Sub CargarData()
+'***********************************
+'Autor: Lorwik
+'Fecha: ???
+'***********************************
+    On Error GoTo CargarData_Err
+
     txtNombre.Text = SupData(frmSuperficies.LynxSuperficies.CellText(, 0)).name
     TxtGrhIndex.Text = SupData(frmSuperficies.LynxSuperficies.CellText(, 0)).Grh
     txtAncho.Text = SupData(frmSuperficies.LynxSuperficies.CellText(, 0)).Width
     txtAlto.Text = SupData(frmSuperficies.LynxSuperficies.CellText(, 0)).Height
     txtCapa.Text = SupData(frmSuperficies.LynxSuperficies.CellText(, 0)).Capa
+    
+    Exit Sub
+
+CargarData_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "frmEditIndices.CargarData", Erl)
+    Resume Next
+
 End Sub
 
 Private Sub LvBGuardar_Click()
+'***********************************
+'Autor: Lorwik
+'Fecha: ???
+'***********************************
+    On Error GoTo LvBGuardar_Click_Err
+
     Call WriteVar(IniPath & INITDIR & "indices.ini", "REFERENCIA" & frmSuperficies.LynxSuperficies.CellText(, 0), "Nombre", txtNombre.Text)
     Call WriteVar(IniPath & INITDIR & "indices.ini", "REFERENCIA" & frmSuperficies.LynxSuperficies.CellText(, 0), "GrhIndex", TxtGrhIndex.Text)
     Call WriteVar(IniPath & INITDIR & "indices.ini", "REFERENCIA" & frmSuperficies.LynxSuperficies.CellText(, 0), "Ancho", txtAncho.Text)
     Call WriteVar(IniPath & INITDIR & "indices.ini", "REFERENCIA" & frmSuperficies.LynxSuperficies.CellText(, 0), "Alto", txtAlto.Text)
     Call WriteVar(IniPath & INITDIR & "indices.ini", "REFERENCIA" & frmSuperficies.LynxSuperficies.CellText(, 0), "Capa", txtCapa.Text)
-    
-    RecargarIndices = True
-    
+
+    Exit Sub
+
+LvBGuardar_Click_Err:
+
+    Call RegistrarError(Err.Number, Err.Description, "frmEditIndices.LvBGuardar_Click", Erl)
+    Resume Next
+
 End Sub
 
 Private Sub LvBRecargarIndices_Click()
+'***********************************
+'Autor: Lorwik
+'Fecha: ???
+'***********************************
 
     Call CargarIndicesSuperficie
-    RecargarIndices = False
+    
 End Sub
 
 Private Sub LvBSalir_Click()
+'***********************************
+'Autor: Lorwik
+'Fecha: ???
+'***********************************
 
-    If RecargarIndices Then
-        Select Case MsgBox("¡ATENCION! No has recargado los indices, no veras los cambios hasta que no los recarges ¿Deseas recargar?", vbYesNo Or vbExclamation, "¡ATENCION!")
-
-            Case vbYes
-                Call CargarIndicesSuperficie
-                RecargarIndices = False
-                
-            Case vbNo
-                Unload Me
-
-        End Select
-        
-    Else
-        Unload Me
-        
-    End If
+    Unload Me
 
 End Sub

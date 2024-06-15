@@ -35,7 +35,7 @@ Begin VB.Form frmMapInfo
       TabIndex        =   0
       Top             =   90
       Width           =   4695
-      Begin VB.TextBox txtNivelMaximo 
+      Begin VB.TextBox TxtAmbient 
          Appearance      =   0  'Flat
          BeginProperty Font 
             Name            =   "Tahoma"
@@ -50,13 +50,31 @@ Begin VB.Form frmMapInfo
          Left            =   1680
          TabIndex        =   31
          Text            =   "0"
-         Top             =   2160
+         Top             =   1050
+         Width           =   2655
+      End
+      Begin VB.TextBox txtNivelMaximo 
+         Appearance      =   0  'Flat
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Left            =   1680
+         TabIndex        =   29
+         Text            =   "0"
+         Top             =   2490
          Width           =   2655
       End
       Begin WinterMapEditor.lvButtons_H cmdCerrar 
          Height          =   525
          Left            =   180
-         TabIndex        =   30
+         TabIndex        =   28
          Top             =   5400
          Width           =   1845
          _ExtentX        =   3254
@@ -85,7 +103,7 @@ Begin VB.Form frmMapInfo
       Begin WinterMapEditor.lvButtons_H LvBGuardar 
          Height          =   525
          Left            =   2400
-         TabIndex        =   29
+         TabIndex        =   27
          Top             =   5400
          Width           =   2055
          _ExtentX        =   3625
@@ -114,7 +132,7 @@ Begin VB.Form frmMapInfo
       Begin WinterMapEditor.lvButtons_H cmdMusica 
          Height          =   345
          Left            =   3630
-         TabIndex        =   27
+         TabIndex        =   25
          Top             =   690
          Width           =   645
          _ExtentX        =   1138
@@ -151,9 +169,9 @@ Begin VB.Form frmMapInfo
          ItemData        =   "frmMapInfo.frx":628A
          Left            =   1680
          List            =   "frmMapInfo.frx":6297
-         TabIndex        =   26
+         TabIndex        =   24
          Text            =   "txtMapZona"
-         Top             =   1080
+         Top             =   1380
          Width           =   2655
       End
       Begin VB.Frame FraLuzBase 
@@ -171,13 +189,13 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   975
          Left            =   150
-         TabIndex        =   22
+         TabIndex        =   20
          Top             =   4350
          Width           =   2175
          Begin WinterMapEditor.lvButtons_H LvBActualizarLuces 
             Height          =   375
             Left            =   1440
-            TabIndex        =   28
+            TabIndex        =   26
             Top             =   150
             Width           =   435
             _ExtentX        =   767
@@ -213,7 +231,7 @@ Begin VB.Form frmMapInfo
             EndProperty
             Height          =   285
             Left            =   600
-            TabIndex        =   25
+            TabIndex        =   23
             Top             =   580
             Width           =   1335
          End
@@ -232,7 +250,7 @@ Begin VB.Form frmMapInfo
             Left            =   120
             ScaleHeight     =   315
             ScaleWidth      =   315
-            TabIndex        =   24
+            TabIndex        =   22
             TabStop         =   0   'False
             Top             =   480
             Width           =   375
@@ -253,7 +271,7 @@ Begin VB.Form frmMapInfo
             Height          =   195
             Left            =   120
             MaskColor       =   &H00404040&
-            TabIndex        =   23
+            TabIndex        =   21
             Top             =   240
             Width           =   1455
          End
@@ -273,7 +291,7 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   150
-         TabIndex        =   14
+         TabIndex        =   13
          Top             =   3510
          Width           =   1575
       End
@@ -292,7 +310,7 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   2430
-         TabIndex        =   13
+         TabIndex        =   12
          Top             =   3510
          Value           =   2  'Grayed
          Width           =   1575
@@ -310,7 +328,7 @@ Begin VB.Form frmMapInfo
          EndProperty
          Height          =   285
          Left            =   1680
-         TabIndex        =   12
+         TabIndex        =   11
          Text            =   "Mapa Desconocido"
          Top             =   360
          Width           =   2655
@@ -328,7 +346,7 @@ Begin VB.Form frmMapInfo
          EndProperty
          Height          =   285
          Left            =   1680
-         TabIndex        =   11
+         TabIndex        =   10
          Text            =   "0"
          Top             =   720
          Width           =   1815
@@ -348,9 +366,9 @@ Begin VB.Form frmMapInfo
          ItemData        =   "frmMapInfo.frx":1CBF5
          Left            =   1680
          List            =   "frmMapInfo.frx":1CC02
-         TabIndex        =   10
+         TabIndex        =   9
          Text            =   "txtMapTerreno"
-         Top             =   1440
+         Top             =   1770
          Width           =   2655
       End
       Begin VB.CheckBox chkMapPK 
@@ -377,7 +395,7 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   150
-         TabIndex        =   9
+         TabIndex        =   8
          Top             =   3750
          Width           =   1575
       End
@@ -396,9 +414,9 @@ Begin VB.Form frmMapInfo
          ItemData        =   "frmMapInfo.frx":1CC1F
          Left            =   1680
          List            =   "frmMapInfo.frx":1CC3B
-         TabIndex        =   8
+         TabIndex        =   7
          Text            =   "txtMapRestringir"
-         Top             =   1800
+         Top             =   2130
          Width           =   2655
       End
       Begin VB.CheckBox chkMapInviSinEfecto 
@@ -416,7 +434,7 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   150
-         TabIndex        =   7
+         TabIndex        =   6
          Top             =   3270
          Width           =   2055
       End
@@ -435,7 +453,7 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   2430
-         TabIndex        =   6
+         TabIndex        =   5
          Top             =   3270
          Width           =   1815
       End
@@ -463,7 +481,7 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   150
-         TabIndex        =   5
+         TabIndex        =   4
          Top             =   3990
          Width           =   2055
       End
@@ -480,27 +498,9 @@ Begin VB.Form frmMapInfo
          EndProperty
          Height          =   285
          Left            =   1680
-         TabIndex        =   4
-         Text            =   "0"
-         Top             =   2520
-         Width           =   2655
-      End
-      Begin VB.TextBox TxtAmbient 
-         Appearance      =   0  'Flat
-         BeginProperty Font 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   285
-         Left            =   1680
          TabIndex        =   3
          Text            =   "0"
-         Top             =   2880
+         Top             =   2850
          Width           =   2655
       End
       Begin VB.CheckBox chkInvocarSin 
@@ -559,6 +559,26 @@ Begin VB.Form frmMapInfo
          Top             =   3990
          Width           =   1935
       End
+      Begin VB.Label Label8 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Sonido Ambiental:"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   -1  'True
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   195
+         Left            =   120
+         TabIndex        =   32
+         Top             =   1050
+         Width           =   1290
+      End
       Begin VB.Label lblNivelMaximo 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
@@ -575,8 +595,8 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Left            =   120
-         TabIndex        =   32
-         Top             =   2160
+         TabIndex        =   30
+         Top             =   2490
          Width           =   930
       End
       Begin VB.Line Line1 
@@ -604,7 +624,7 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Left            =   120
-         TabIndex        =   21
+         TabIndex        =   19
          Top             =   360
          Width           =   1410
       End
@@ -624,7 +644,7 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Left            =   120
-         TabIndex        =   20
+         TabIndex        =   18
          Top             =   720
          Width           =   540
       End
@@ -644,8 +664,8 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Left            =   120
-         TabIndex        =   19
-         Top             =   1080
+         TabIndex        =   17
+         Top             =   1380
          Width           =   420
       End
       Begin VB.Label Label4 
@@ -664,8 +684,8 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Left            =   120
-         TabIndex        =   18
-         Top             =   1440
+         TabIndex        =   16
+         Top             =   1770
          Width           =   630
       End
       Begin VB.Label Label5 
@@ -684,8 +704,8 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Left            =   120
-         TabIndex        =   17
-         Top             =   1800
+         TabIndex        =   15
+         Top             =   2130
          Width           =   750
       End
       Begin VB.Label Label7 
@@ -704,29 +724,9 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Left            =   120
-         TabIndex        =   16
-         Top             =   2520
+         TabIndex        =   14
+         Top             =   2850
          Width           =   930
-      End
-      Begin VB.Label Label8 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Sonido Ambiental:"
-         BeginProperty Font 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   -1  'True
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   195
-         Left            =   120
-         TabIndex        =   15
-         Top             =   2880
-         Width           =   1290
       End
    End
 End
