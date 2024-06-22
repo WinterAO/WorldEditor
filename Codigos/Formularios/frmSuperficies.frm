@@ -50,20 +50,28 @@ Begin VB.Form frmSuperficies
       TabIndex        =   8
       Top             =   5760
       Width           =   2175
-      _extentx        =   3836
-      _extenty        =   661
-      caption         =   "Quitar en Capas 2 y 3"
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmSuperficies.frx":0000
-      cfore           =   16777215
-      cfhover         =   16777215
-      cbhover         =   0
-      cgradient       =   0
-      gradient        =   3
-      mode            =   1
-      value           =   0   'False
-      cback           =   8421631
+      _ExtentX        =   3836
+      _ExtentY        =   661
+      Caption         =   "Quitar en Capas 2 y 3"
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
+      cGradient       =   0
+      Gradient        =   3
+      Mode            =   1
+      Value           =   0   'False
+      cBack           =   8421631
    End
    Begin WinterMapEditor.lvButtons_H cQuitarEnEstaCapa 
       Height          =   405
@@ -71,20 +79,28 @@ Begin VB.Form frmSuperficies
       TabIndex        =   7
       Top             =   5340
       Width           =   2175
-      _extentx        =   3836
-      _extenty        =   714
-      caption         =   "Quitar en esta Capa"
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmSuperficies.frx":0028
-      cfore           =   16777215
-      cfhover         =   16777215
-      cbhover         =   0
-      cgradient       =   0
-      gradient        =   3
-      mode            =   1
-      value           =   0   'False
-      cback           =   255
+      _ExtentX        =   3836
+      _ExtentY        =   714
+      Caption         =   "Quitar en esta Capa"
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
+      cGradient       =   0
+      Gradient        =   3
+      Mode            =   1
+      Value           =   0   'False
+      cBack           =   255
    End
    Begin WinterMapEditor.lvButtons_H cSeleccionarSuperficie 
       Height          =   795
@@ -92,29 +108,37 @@ Begin VB.Form frmSuperficies
       TabIndex        =   6
       Top             =   5340
       Width           =   1875
-      _extentx        =   3307
-      _extenty        =   1402
-      caption         =   "Insertar Superficie"
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmSuperficies.frx":0050
-      cfore           =   16777215
-      cfhover         =   16777215
-      cbhover         =   0
-      cgradient       =   0
-      gradient        =   3
-      mode            =   1
-      value           =   0   'False
-      cback           =   65280
+      _ExtentX        =   3307
+      _ExtentY        =   1402
+      Caption         =   "Insertar Superficie"
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
+      cGradient       =   0
+      Gradient        =   3
+      Mode            =   1
+      Value           =   0   'False
+      cBack           =   65280
    End
    Begin VB.ComboBox cCapas 
       Appearance      =   0  'Flat
       BackColor       =   &H80000012&
       ForeColor       =   &H80000014&
       Height          =   315
-      ItemData        =   "frmSuperficies.frx":0078
+      ItemData        =   "frmSuperficies.frx":0000
       Left            =   1080
-      List            =   "frmSuperficies.frx":007A
+      List            =   "frmSuperficies.frx":0002
       TabIndex        =   5
       TabStop         =   0   'False
       Text            =   "1"
@@ -147,20 +171,28 @@ Begin VB.Form frmSuperficies
       TabIndex        =   9
       Top             =   6180
       Width           =   4095
-      _extentx        =   7223
-      _extenty        =   661
-      caption         =   "Editar Indice"
-      capalign        =   2
-      backstyle       =   2
-      font            =   "frmSuperficies.frx":007C
-      cfore           =   16777215
-      cfhover         =   16777215
-      cbhover         =   0
-      cgradient       =   0
-      gradient        =   3
-      mode            =   0
-      value           =   0   'False
-      cback           =   16744576
+      _ExtentX        =   7223
+      _ExtentY        =   661
+      Caption         =   "Editar Indice"
+      CapAlign        =   2
+      BackStyle       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
+      cGradient       =   0
+      Gradient        =   3
+      Mode            =   0
+      Value           =   0   'False
+      cBack           =   16744576
    End
    Begin WinterMapEditor.LynxGrid LynxSuperficies 
       Height          =   3975
@@ -168,31 +200,47 @@ Begin VB.Form frmSuperficies
       TabIndex        =   10
       Top             =   90
       Width           =   4305
-      _extentx        =   7594
-      _extenty        =   7011
-      font            =   "frmSuperficies.frx":00A4
-      fontheader      =   "frmSuperficies.frx":00CC
-      backcolor       =   5460819
-      backcolorbkg    =   5460819
-      backcoloredit   =   14737632
-      backcolorsel    =   12937777
-      forecolor       =   12632256
-      forecolorsel    =   8438015
-      backcolorevenrows=   3158064
-      customcolorfrom =   4210752
-      customcolorto   =   8421504
-      gridcolor       =   14737632
-      focusrectcolor  =   9895934
-      gridlines       =   2
-      themecolor      =   5
-      scrollbars      =   1
-      appearance      =   0
-      columnheadersmall=   0   'False
-      totalslineshow  =   0   'False
-      focusrowhighlightkeeptextforecolor=   0   'False
-      showrownumbers  =   0   'False
-      showrownumbersvary=   0   'False
-      hotheadertracking=   0   'False
+      _ExtentX        =   7594
+      _ExtentY        =   7011
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BeginProperty FontHeader {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BackColor       =   5460819
+      BackColorBkg    =   5460819
+      BackColorEdit   =   14737632
+      BackColorSel    =   12937777
+      ForeColor       =   12632256
+      ForeColorSel    =   8438015
+      BackColorEvenRows=   3158064
+      CustomColorFrom =   4210752
+      CustomColorTo   =   8421504
+      GridColor       =   14737632
+      FocusRectColor  =   9895934
+      GridLines       =   2
+      ThemeColor      =   5
+      ScrollBars      =   1
+      Appearance      =   0
+      ColumnHeaderSmall=   0   'False
+      TotalsLineShow  =   0   'False
+      FocusRowHighlightKeepTextForecolor=   0   'False
+      ShowRowNumbers  =   0   'False
+      ShowRowNumbersVary=   0   'False
+      HotHeaderTracking=   0   'False
    End
    Begin VB.Label lbGrh 
       AutoSize        =   -1  'True
