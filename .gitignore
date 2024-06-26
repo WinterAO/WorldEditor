@@ -1,5 +1,5 @@
 # Client Files.
-Errores.log
+Logs/*.log
 Codigo/*.log
 Conversor/
 Render/
