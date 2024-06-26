@@ -32,7 +32,9 @@ End Function
 Sub Main()
 
     'Ruta principal
-    IniPath = App.Path & "\"
+    IniPath = App.path & "\"
+    
+    Call Application.DeleteFile(Application.GetErrorLogFilename())
 
     'Call modCarga.pre_leerConfiguracion 'Leemos la config basica para elegir un modo
     
@@ -550,7 +552,7 @@ Function Buscar_Carpeta(Optional Titulo As String, _
     Set o_Carpeta = objFolder.Self
       
     ' Devuelve la ruta completa seleccionada en el diálogo
-    Buscar_Carpeta = o_Carpeta.Path
+    Buscar_Carpeta = o_Carpeta.path
   
     Exit Function
     'Error
@@ -615,10 +617,10 @@ Public Function Client_Screenshot(ByVal hDC As Long, ByVal Width As Long, ByVal 
     'Sample the cImage by hDC
     m_Jpeg.SampleHDC hDC, Width, Height
     
-    m_FileName = App.Path & "\Render\Fotos\WinterME_Foto"
+    m_FileName = App.path & "\Render\Fotos\WinterME_Foto"
     
-    If Dir$(App.Path & "\Render\Fotos", vbDirectory) = vbNullString Then
-        MkDir (App.Path & "\Render\Fotos")
+    If Dir$(App.path & "\Render\Fotos", vbDirectory) = vbNullString Then
+        MkDir (App.path & "\Render\Fotos")
 
     End If
     

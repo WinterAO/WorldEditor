@@ -40,7 +40,7 @@ Public Sub RegistrarError(ByVal Numero As Long, ByVal Descripcion As String, ByV
     'Registramos el error en Errores.log
     Dim File As Integer: File = FreeFile
         
-    Open App.Path & "\Errores.log" For Append As #File
+    Open App.path & "\Logs\Errores.log" For Append As #File
     
         Print #File, "Error: " & Numero
         Print #File, "Descripcion: " & Descripcion
@@ -65,17 +65,17 @@ End Sub
 
 Public Sub SimpleLogError(Desc As String)
 
-    On Error GoTo ErrHandler
+    On Error GoTo errhandler
 
     Dim nfile As Integer
     nfile = FreeFile ' obtenemos un canal
-    Open App.Path & "\Errores.log" For Append Shared As #nfile
+    Open App.path & "\Logs\Errores.log" For Append Shared As #nfile
     Print #nfile, Date & " " & Time & " " & Desc
     Close #nfile
 
     Exit Sub
 
-ErrHandler:
+errhandler:
 
 End Sub
 

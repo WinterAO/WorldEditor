@@ -21,3 +21,14 @@ Public Function IsAppActive() As Boolean
 '***************************************************
     IsAppActive = (GetActiveWindow <> 0)
 End Function
+
+Public Sub DeleteFile(ByVal filename As String)
+On Error Resume Next
+    If Len(Dir$(filename)) > 0 Then
+        Kill filename
+    End If
+End Sub
+
+Public Function GetErrorLogFilename() As String
+   GetErrorLogFilename = App.path & "\logs\Errores.log"
+End Function
