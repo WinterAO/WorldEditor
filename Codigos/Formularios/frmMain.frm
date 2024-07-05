@@ -1135,6 +1135,39 @@ Begin VB.Form frmMain
          Caption         =   "PNG -> Grh"
       End
    End
+   Begin VB.Menu mnuRecargar 
+      Caption         =   "Recargar"
+      Begin VB.Menu mnuRecargarGraficos 
+         Caption         =   "Indice de Graficos"
+      End
+      Begin VB.Menu mnuRecargarCuerpos 
+         Caption         =   "Indice de Cuerpos"
+      End
+      Begin VB.Menu mnuRecargarCabezas 
+         Caption         =   "Indice de Cabezas"
+      End
+      Begin VB.Menu mnuRecargarCascos 
+         Caption         =   "Indice de Cascos"
+      End
+      Begin VB.Menu mnuRecargarEscudos 
+         Caption         =   "Indice de Escudos"
+      End
+      Begin VB.Menu mnuRecargarParticulas 
+         Caption         =   "Indice de Particulas"
+      End
+      Begin VB.Menu mnuRecargarObj 
+         Caption         =   "Obj.dat"
+      End
+      Begin VB.Menu mnuRecargarNPCS 
+         Caption         =   "Npcs.dat"
+      End
+      Begin VB.Menu mnuRecargarIndices 
+         Caption         =   "Indices de Superficies"
+      End
+      Begin VB.Menu mnuRecargarTriggers 
+         Caption         =   "Indices de Triggers"
+      End
+   End
    Begin VB.Menu mnusobre 
       Caption         =   "Sobre..."
       Begin VB.Menu mnuFormatos 
@@ -1898,6 +1931,151 @@ Private Sub mnuReAbrirMapa_Click()
 mnuReAbrirMapa_Click_Err:
     Call RegistrarError(Err.Number, Err.Description, "FrmMain.mnuReAbrirMapa_Click", Erl)
     Resume Next
+End Sub
+
+Private Sub mnuRecargarGraficos_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 05/07/2024
+    '*************************************************
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Recargando Indices.ini...", 0, 0, 255, , , , , True)
+    
+    Call CargarIndicesSuperficie
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Indices.ini recargado!", 0, 255, 0, , , , , True)
+End Sub
+
+Private Sub mnuRecargarCuerpos_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 05/07/2024
+    '*************************************************
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Recargando Personajes.ind...", 0, 0, 255, , , , , True)
+    
+    Call CargarCuerpos
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Personajes.ind recargado!", 0, 255, 0, , , , , True)
+End Sub
+
+Private Sub mnuRecargarCabezas_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 05/07/2024
+    '*************************************************
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Recargando Head.ind...", 0, 0, 255, , , , , True)
+    
+    Call CargarCabezas
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Head.ind recargado!", 0, 255, 0, , , , , True)
+End Sub
+
+Private Sub mnuRecargarCascos_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 05/07/2024
+    '*************************************************
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Recargando Helmet.ind...", 0, 0, 255, , , , , True)
+    
+    Call CargarCascos
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Helmet.ind recargado!", 0, 255, 0, , , , , True)
+End Sub
+
+Private Sub mnuRecargarEscudos_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 05/07/2024
+    '*************************************************
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Recargando Shield.ind...", 0, 0, 255, , , , , True)
+    
+    Call CargarAnimEscudos
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Helmet.ind recargado!", 0, 255, 0, , , , , True)
+End Sub
+
+Private Sub mnuRecargarArmas_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 05/07/2024
+    '*************************************************
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Recargando Weapon.ind...", 0, 0, 255, , , , , True)
+    
+    Call CargarAnimArmas
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Weapon.ind recargado!", 0, 255, 0, , , , , True)
+End Sub
+
+Private Sub mnuRecargarParticulas_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 05/07/2024
+    '*************************************************
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Recargando Particulas.ind...", 0, 0, 255, , , , , True)
+    
+    Call CargarParticulas
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Particulas.ind recargado!", 0, 255, 0, , , , , True)
+End Sub
+
+Private Sub mnuRecargarTriggers_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 05/07/2024
+    '*************************************************
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Recargando Triggers.ini...", 0, 0, 255, , , , , True)
+    
+    Call CargarIndicesTriggers
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Triggers.ini recargado!", 0, 255, 0, , , , , True)
+End Sub
+
+Private Sub mnuRecargarIndices_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 05/07/2024
+    '*************************************************
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Recargando Graficos.ind...", 0, 0, 255, , , , , True)
+    
+    Call LoadGrhData
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Graficos.ind recargado!", 0, 255, 0, , , , , True)
+    
+End Sub
+
+Private Sub mnuRecargarNPCS_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 05/07/2024
+    '*************************************************
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Recargando NPCs.dat...", 0, 0, 255, , , , , True)
+    
+    Call CargarIndicesNPC
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "NPCs.dat recargado!", 0, 255, 0, , , , , True)
+    
+End Sub
+
+Private Sub mnuRecargarObj_Click()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 05/07/2024
+    '*************************************************
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Recargando Obj.dat...", 0, 0, 255, , , , , True)
+    
+    Call CargarIndicesOBJ
+    
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Obj.dat recargado!", 0, 255, 0, , , , , True)
 End Sub
 
 Private Sub mnuRender_Click()

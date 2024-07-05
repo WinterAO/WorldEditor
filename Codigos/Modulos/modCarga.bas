@@ -89,24 +89,24 @@ Public Function profileFile(ByVal tag As String) As String
     profileFile = IniPath & INITDIR & "profile-" & tag & ".ini"
 End Function
 
-Private Function autoCompletaPath(ByVal Path As String) As String
+Private Function autoCompletaPath(ByVal path As String) As String
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 22/05/06
 'Descripcion: Completa y corrije un path
 '*************************************************
 
-    Path = Replace(Path, "/", "\")
+    path = Replace(path, "/", "\")
     
-    If Left(Path, 1) = "\" Then
+    If Left(path, 1) = "\" Then
         ' agrego app.path & path
-        Path = App.Path & Path
+        path = App.path & path
     End If
-    If Right(Path, 1) <> "\" Then
+    If Right(path, 1) <> "\" Then
         ' me aseguro que el final sea con "\"
-        Path = Path & "\"
+        path = path & "\"
     End If
-    autoCompletaPath = Path
+    autoCompletaPath = path
     
 End Function
 
@@ -1658,9 +1658,9 @@ On Error Resume Next
             
             .Body = Val(Leer.GetValue("NPC" & NPC, "Body"))
             .Head = Val(Leer.GetValue("NPC" & NPC, "Head"))
-            .WeaponAnim = Val(Leer.GetValue("NPC" & NPC, "WeaponAnim"))
-            .CascoAnim = Val(Leer.GetValue("NPC" & NPC, "CascoAnim"))
-            .ShieldAnim = Val(Leer.GetValue("NPC" & NPC, "ShieldAnim"))
+            .WeaponAnim = Val(Leer.GetValue("NPC" & NPC, "Weapon"))
+            .CascoAnim = Val(Leer.GetValue("NPC" & NPC, "Helmet"))
+            .ShieldAnim = Val(Leer.GetValue("NPC" & NPC, "Shield"))
             .Heading = Val(Leer.GetValue("NPC" & NPC, "Heading"))
             
             frmNPCs.LynxNPCs.AddItem NPC
