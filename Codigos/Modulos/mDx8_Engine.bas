@@ -426,42 +426,6 @@ Engine_PixelPosY_Err:
     Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_PixelPosY", Erl)
 End Function
 
-Public Function Engine_TPtoSPX(ByVal x As Integer) As Long
-'************************************************************
-'Tile Position to Screen Position
-'Takes the tile position and returns the pixel location on the screen
-'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_TPtoSPX
-'************************************************************
-On Error GoTo Engine_TPtoSPX_Err
-
-    Engine_TPtoSPX = Engine_PixelPosX(x - ((UserPos.x - HalfWindowTileWidth) - TileBufferSize)) + OffsetCounterX - 272 + ((10 - TileBufferSize) * 32)
-    
-    Exit Function
-    
-Engine_TPtoSPX_Err:
-    
-    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_TPtoSPX", Erl)
-
-End Function
-
-Public Function Engine_TPtoSPY(ByVal y As Integer) As Long
-'************************************************************
-'Tile Position to Screen Position
-'Takes the tile position and returns the pixel location on the screen
-'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_TPtoSPY
-'************************************************************
-On Error GoTo Engine_TPtoSPY_Err
-
-    Engine_TPtoSPY = Engine_PixelPosY(y - ((UserPos.y - HalfWindowTileHeight) - TileBufferSize)) + OffsetCounterY - 272 + ((10 - TileBufferSize) * 32)
-    
-    Exit Function
-    
-Engine_TPtoSPY_Err:
-
-    Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_TPtoSPY", Erl)
-
-End Function
-
 Public Sub Engine_Draw_Box(ByVal x As Integer, ByVal y As Integer, ByVal Width As Integer, ByVal Height As Integer, color As Long)
 '***************************************************
 'Author: Ezequiel Juarez (Standelf)

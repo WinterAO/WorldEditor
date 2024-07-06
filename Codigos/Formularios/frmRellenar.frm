@@ -627,7 +627,14 @@ Public Sub Superficie_Area(ByVal x1 As Long, ByVal x2 As Long, ByVal y1 As Long,
                     InitGrh MapData(x, y).Graphic(Val(frmSuperficies.cCapas.Text)), Val(frmSuperficies.cGrh.Text)
                 End If
             Else
-                MapData(x, y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = 0
+                
+                If Val(frmSuperficies.cCapas.Text) = 1 Then
+                    MapData(x, y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = 1
+                    
+                Else
+                    MapData(x, y).Graphic(Val(frmSuperficies.cCapas.Text)).GrhIndex = 0
+                    
+                End If
             End If
         Next x
     Next y

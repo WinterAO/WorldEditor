@@ -50,7 +50,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
+Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
       
 ' Recupera la imagen del área del control
 Private Declare Function GetWindowDC Lib "user32" (ByVal hWnd As Long) As Long
@@ -58,7 +58,7 @@ Private Declare Function GetWindowDC Lib "user32" (ByVal hWnd As Long) As Long
     Dim handle As Integer
 Public Sub Capturar_Imagen(Control As Control, Destino As Object)
           
-    Dim hdc             As Long
+    Dim hDC             As Long
     Dim Escala_Anterior As Integer
     Dim Ancho           As Long
     Dim Alto            As Long
@@ -88,14 +88,14 @@ Public Sub Capturar_Imagen(Control As Control, Destino As Object)
     On Error GoTo 0
 
     ' Captura el área de pantalla correspondiente al control
-    hdc = GetWindowDC(Control.hWnd)
+    hDC = GetWindowDC(Control.hWnd)
     
     ' Copia esa área al picturebox
     If ToWorldMap2 Then
         'Call BitBlt(Destino.hdc, 0 - 50, 0 - 50, Ancho - 50, Alto - 50, hdc, 0, 0, vbSrcCopy) '
-        Call BitBlt(Destino.hdc, 0, 0, Ancho, Alto, hdc, 0, 0, vbSrcCopy)
+        Call BitBlt(Destino.hDC, 0, 0, Ancho, Alto, hDC, 0, 0, vbSrcCopy)
     Else
-        Call BitBlt(Destino.hdc, 0, 0, 3000, 3000, hdc, 0, 0, vbSrcCopy)
+        Call BitBlt(Destino.hDC, 0, 0, 3000, 3000, hDC, 0, 0, vbSrcCopy)
         
 
     End If

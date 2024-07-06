@@ -526,11 +526,11 @@ Public Sub DrawHead(ByVal Head As Integer, ByVal x As Integer, ByVal y As Intege
     textureY2 = 32
  
     If EsCabeza Then
-        textureX1 = heads(Head).startX - textureX2
-        textureY1 = ((Heading - 2) * textureY2) + heads(Head).startY
+        textureX1 = heads(Head).StartX - textureX2
+        textureY1 = ((Heading - 2) * textureY2) + heads(Head).StartY
     Else
-        textureX1 = Cascos(Head).startX - textureX2 + 1
-        textureY1 = ((Heading - 2) * textureY2) + Cascos(Head).startY + 2
+        textureX1 = Cascos(Head).StartX - textureX2 + 1
+        textureY1 = ((Heading - 2) * textureY2) + Cascos(Head).StartY + 2
     End If
     
     Device_Textured_Render x - OffsetX + 3, y - OffsetY + 4, textureX2, textureY2, (textureX2 + textureX1), (textureY2 + textureY1), Texture, Light, Alpha, angle, ScaleX, ScaleY
@@ -586,35 +586,27 @@ Sub RenderScreen(ByVal tilex As Integer, _
     On Error GoTo RenderScreen_Err
     
     Dim y                As Long     'Keeps track of where on map we are
-
     Dim x                As Long     'Keeps track of where on map we are
     
     Dim screenminY       As Integer  'Start Y pos on current screen
-
     Dim screenmaxY       As Integer  'End Y pos on current screen
 
     Dim screenminX       As Integer  'Start X pos on current screen
-
     Dim screenmaxX       As Integer  'End X pos on current screen
     
     Dim MinY             As Long     'Start Y pos on current map
-
     Dim MaxY             As Long     'End Y pos on current map
 
     Dim MinX             As Long     'Start X pos on current map
-
     Dim MaxX             As Long     'End X pos on current map
     
     Dim ScreenX          As Integer  'Keeps track of where to place tile on screen
-
     Dim ScreenY          As Integer  'Keeps track of where to place tile on screen
     
     Dim minXOffset       As Integer
-
     Dim minYOffset       As Integer
     
     Dim PixelOffsetXTemp As Integer 'For centering grhs
-
     Dim PixelOffsetYTemp As Integer 'For centering grhs
     
     Dim ElapsedTime      As Single
@@ -690,10 +682,6 @@ Sub RenderScreen(ByVal tilex As Integer, _
     For y = screenminY To screenmaxY
         For x = screenminX To screenmaxX
 
-            '###################
-            'CAPAS
-            '###################
-
             If InMapBounds(x, y) Then
     
                 PixelOffsetXTemp = (ScreenX - 1) * TilePixelWidth + PixelOffsetX
@@ -701,9 +689,6 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 
                 'Layer 1 **********************************
                 If MapData(x, y).Graphic(1).GrhIndex <> 0 And ClientSetup.VerCapa1 Then Call Draw_Grh(MapData(x, y).Graphic(1), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 1)
-    
-                'Layer 2 **********************************
-                If MapData(x, y).Graphic(2).GrhIndex <> 0 And ClientSetup.VerCapa2 Then Call Draw_Grh(MapData(x, y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 1)
             
             End If
         
@@ -714,6 +699,34 @@ Sub RenderScreen(ByVal tilex As Integer, _
         ScreenX = ScreenX - x + screenminX
         ScreenY = ScreenY + 1
     Next
+    
+    ' *********************************
+    ' Layer 2 & small objects loop
+    ScreenY = minYOffset - TileBufferSize
+
+    For y = MinY To MaxY
+        
+        ScreenX = minXOffset - TileBufferSize
+
+        For x = MinX To MaxX
+
+            If InMapBounds(x, y) Then
+            
+                PixelOffsetXTemp = ScreenX * TilePixelWidth + PixelOffsetX
+                PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
+    
+                'Layer 2 **********************************
+                If MapData(x, y).Graphic(2).GrhIndex <> 0 And ClientSetup.VerCapa2 Then _
+                    Call Draw_Grh(MapData(x, y).Graphic(2), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 1)
+    
+            End If
+            
+            ScreenX = ScreenX + 1
+        Next x
+
+        ScreenY = ScreenY + 1
+    Next y
+    
     
     '<----- Layer Obj, Char, 3 ----->
     ScreenY = minYOffset - TileBufferSize
@@ -732,16 +745,20 @@ Sub RenderScreen(ByVal tilex As Integer, _
                 With MapData(x, y)
                 
                     'Object Layer ***********************************
-                    If .ObjGrh.GrhIndex <> 0 And ClientSetup.VerObjetos Then Call Draw_Grh(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Light_Value(), 1)
+                    If .ObjGrh.GrhIndex <> 0 And ClientSetup.VerObjetos Then _
+                        Call Draw_Grh(.ObjGrh, PixelOffsetXTemp, PixelOffsetYTemp, 1, .Light_Value(), 1)
 
                     'Char layer**************************************
-                    If .CharIndex <> 0 And ClientSetup.VerNpcs Then Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
+                    If .CharIndex <> 0 And ClientSetup.VerNpcs Then _
+                        Call CharRender(.CharIndex, PixelOffsetXTemp, PixelOffsetYTemp)
 
                     'Layer 3 *****************************************
-                    If .Graphic(3).GrhIndex <> 0 And ClientSetup.VerCapa3 Then Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Light_Value(), 1)
+                    If .Graphic(3).GrhIndex <> 0 And ClientSetup.VerCapa3 Then _
+                        Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Light_Value(), 1)
 
                     'Particulas **************************************
-                    If .Particle_Group_Index And ClientSetup.VerParticulas Then Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
+                    If .Particle_Group_Index And ClientSetup.VerParticulas Then _
+                        Call mDx8_Particulas.Particle_Group_Render(.Particle_Group_Index, PixelOffsetXTemp + 16, PixelOffsetYTemp + 16)
                     
                 End With
                 
@@ -766,7 +783,8 @@ Sub RenderScreen(ByVal tilex As Integer, _
             PixelOffsetYTemp = ScreenY * TilePixelHeight + PixelOffsetY
             
             'Layer 4
-            If ClientSetup.VerCapa4 Then If MapData(x, y).Graphic(4).GrhIndex Then Call Draw_Grh(MapData(x, y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 1)
+            If ClientSetup.VerCapa4 Then If MapData(x, y).Graphic(4).GrhIndex Then _
+                Call Draw_Grh(MapData(x, y).Graphic(4), PixelOffsetXTemp, PixelOffsetYTemp, 1, MapData(x, y).Light_Value(), 1)
             
             If MapData(x, y).TileExit.Map <> 0 And ClientSetup.VerTraslados Then
                 Grh.GrhIndex = 3
@@ -1172,10 +1190,10 @@ Public Sub MapCapture(ByRef Format As Boolean, _
     Dim MinX             As Integer
     Dim MinY             As Integer
     
-    MinX = mx + 1 - 8
-    MinY = my + 1 - 8
-    MaxX = MinX + 100 + 8
-    MaxY = MinY + 100 + 8
+    MinX = mx + XMinMapSize - 8
+    MinY = my + YMinMapSize - 8
+    MaxX = MinX + XMaxMapSize + 8
+    MaxY = MinY + YMaxMapSize + 8
     
     If MinX < 1 Then MinX = 1
     If MinY < 1 Then MinY = 1
