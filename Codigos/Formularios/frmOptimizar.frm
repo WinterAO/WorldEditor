@@ -3,7 +3,7 @@ Begin VB.Form frmOptimizar
    BackColor       =   &H00424242&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Optimizar el Mapa"
-   ClientHeight    =   3660
+   ClientHeight    =   3960
    ClientLeft      =   45
    ClientTop       =   390
    ClientWidth     =   3765
@@ -19,16 +19,16 @@ Begin VB.Form frmOptimizar
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   244
+   ScaleHeight     =   264
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   251
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
    Begin WinterMapEditor.lvButtons_H cOptimizar 
       Height          =   525
-      Left            =   1650
+      Left            =   1620
       TabIndex        =   7
-      Top             =   3120
+      Top             =   3360
       Width           =   2085
       _ExtentX        =   3678
       _ExtentY        =   926
@@ -67,11 +67,31 @@ Begin VB.Form frmOptimizar
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00FFFFFF&
-      Height          =   2985
+      Height          =   3195
       Left            =   90
       TabIndex        =   0
       Top             =   90
       Width           =   3615
+      Begin VB.CheckBox chkLimpiarGrh 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00535353&
+         Caption         =   "Limpiar Grh nulos"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   375
+         Left            =   120
+         TabIndex        =   9
+         Top             =   2760
+         Width           =   3375
+      End
       Begin VB.CheckBox chkQuitarTrans 
          Appearance      =   0  'Flat
          BackColor       =   &H00535353&
@@ -198,9 +218,9 @@ Begin VB.Form frmOptimizar
    End
    Begin WinterMapEditor.lvButtons_H cCancelar 
       Height          =   525
-      Left            =   90
+      Left            =   60
       TabIndex        =   8
-      Top             =   3120
+      Top             =   3360
       Width           =   2055
       _ExtentX        =   3625
       _ExtentY        =   926
@@ -261,14 +281,14 @@ Private Sub cOptimizar_Click()
 End Sub
 
 Public Sub Optimizar()
-
     '*************************************************
     'Author: Lorwik
     'Last modified: 01/05/2021
     '*************************************************
+    
     Dim y As Integer
-
     Dim x As Integer
+    Dim i As Byte
     
     If Not MapaCargado Then
         Exit Sub
@@ -280,73 +300,104 @@ Public Sub Optimizar()
     ' Quita Trigger's en Traslados
     ' Quita NPCs, Objetos y Traslados en los Bordes Exteriores
     ' Mapea Arboles, Carteles, Foros y Yacimientos que no esten en la 3ra Capa
+    ' Eliminar Grh inexistentes
     
     For y = YMinMapSize To YMaxMapSize
         For x = XMinMapSize To XMaxMapSize
-
-            ' ** Quitar NPCs, Objetos y Traslados en los Bordes Exteriores
-            If (x < MinXBorder Or x > MaxXBorder Or y < MinYBorder Or y > MaxYBorder) And chkQuitarTodoBordes.value = 1 Then
-
-                'Quitar NPCs
-                If MapData(x, y).NPCIndex > 0 Then
-                    Char_Erase MapData(x, y).CharIndex
-                    MapData(x, y).NPCIndex = 0
-
-                End If
-
-                ' Quitar Objetos
-                MapData(x, y).OBJInfo.ObjIndex = 0
-                MapData(x, y).OBJInfo.Amount = 0
-                MapData(x, y).ObjGrh.GrhIndex = 0
-                ' Quitar Traslados
-                MapData(x, y).TileExit.Map = 0
-                MapData(x, y).TileExit.x = 0
-                MapData(x, y).TileExit.y = 0
-                ' Quitar Triggers
-                MapData(x, y).Trigger = 0
-
-            End If
-
-            ' ** Quitar Traslados y Triggers en Bloqueo
-            If MapData(x, y).bLocked = 1 Then
-                If MapData(x, y).TileExit.Map > 0 And chkQuitarTrans.value = 1 Then ' Quita Translado Bloqueado
+    
+            With MapData(x, y)
+    
+                ' ** Quitar NPCs, Objetos y Traslados en los Bordes Exteriores
+                If (x < MinXBorder Or x > MaxXBorder Or y < MinYBorder Or y > MaxYBorder) And chkQuitarTodoBordes.value = 1 Then
+    
+                    'Quitar NPCs
+                    If MapData(x, y).NPCIndex > 0 Then
+                        Char_Erase MapData(x, y).CharIndex
+                        MapData(x, y).NPCIndex = 0
+    
+                    End If
+    
+                    ' Quitar Objetos
+                    MapData(x, y).OBJInfo.ObjIndex = 0
+                    MapData(x, y).OBJInfo.Amount = 0
+                    MapData(x, y).ObjGrh.GrhIndex = 0
+                    ' Quitar Traslados
                     MapData(x, y).TileExit.Map = 0
-                    MapData(x, y).TileExit.y = 0
                     MapData(x, y).TileExit.x = 0
-                ElseIf MapData(x, y).Trigger > 0 And chkQuitarTrigBloq.value = 1 Then ' Quita Trigger Bloqueado
+                    MapData(x, y).TileExit.y = 0
+                    ' Quitar Triggers
                     MapData(x, y).Trigger = 0
-
+    
                 End If
-
-            End If
-
-            ' ** Quitar Triggers en Translado
-            If MapData(x, y).TileExit.Map > 0 And chkQuitarTrigTrans.value = 1 Then
-                If MapData(x, y).Trigger > 0 Then ' Quita Trigger en Translado
-                    MapData(x, y).Trigger = 0
-
+    
+                ' ** Quitar Traslados y Triggers en Bloqueo
+                If MapData(x, y).bLocked = 1 Then
+                    If MapData(x, y).TileExit.Map > 0 And chkQuitarTrans.value = 1 Then ' Quita Translado Bloqueado
+                        MapData(x, y).TileExit.Map = 0
+                        MapData(x, y).TileExit.y = 0
+                        MapData(x, y).TileExit.x = 0
+                    ElseIf MapData(x, y).Trigger > 0 And chkQuitarTrigBloq.value = 1 Then ' Quita Trigger Bloqueado
+                        MapData(x, y).Trigger = 0
+    
+                    End If
+    
                 End If
+    
+                ' ** Quitar Triggers en Translado
+                If MapData(x, y).TileExit.Map > 0 And chkQuitarTrigTrans.value = 1 Then
+                    If MapData(x, y).Trigger > 0 Then ' Quita Trigger en Translado
+                        MapData(x, y).Trigger = 0
+    
+                    End If
+    
+                End If
+    
+                ' ** Mapea Arboles, Carteles, Foros y Yacimientos que no esten en la 3ra Capa
+                If MapData(x, y).OBJInfo.ObjIndex > 0 And (chkMapearArbolesEtc.value = 1 Or chkBloquearArbolesEtc.value = 1) Then
+    
+                    Select Case ObjData(MapData(x, y).OBJInfo.ObjIndex).OBJType
+    
+                        Case 4, 8, 10, 22 ' Arboles, Carteles, Foros, Yacimientos
+    
+                            If MapData(x, y).Graphic(3).GrhIndex <> MapData(x, y).ObjGrh.GrhIndex And chkMapearArbolesEtc.value = 1 Then MapData(x, y).Graphic(3) = MapData(x, y).ObjGrh
+                            If chkBloquearArbolesEtc.value = 1 And MapData(x, y).bLocked = 0 Then MapData(x, y).bLocked = 1
+    
+                    End Select
+    
+                End If
+                
+                ' ** Eliminar GRH inexistentes
+                If chkLimpiarGrh.value = 1 Then
+                
+                    ' Capa 1
+                    If .Graphic(1).GrhIndex = 0 Then
+                        .Graphic(1).GrhIndex = 1
+                        Call AddtoRichTextBox(frmConsola.StatTxt, "Grh inexistente en la capa 1, en las coordenadas " & x & " - " & y, 255, 201, 14)
+                
+                    ElseIf GrhData(.Graphic(1).GrhIndex).NumFrames < 2 And GrhData(.Graphic(1).GrhIndex).FileNum = 0 Then
+                        .Graphic(1).GrhIndex = 1
+                        Call AddtoRichTextBox(frmConsola.StatTxt, "Se ha eliminado el Grh: " & .Graphic(1).GrhIndex & " en la capa 1, en las coordenadas " & x & " - " & y, 255, 201, 14)
 
-            End If
+                    End If
+                        
+                    ' Capa 2, 3 y 4
+                    For i = 2 To 4
+                        If .Graphic(i).GrhIndex > 0 Then
+                            If GrhData(.Graphic(i).GrhIndex).NumFrames < 2 And GrhData(.Graphic(i).GrhIndex).FileNum = 0 Then
+                                .Graphic(i).GrhIndex = 0
+                                Call AddtoRichTextBox(frmConsola.StatTxt, "Se ha eliminado el Grh: " & .Graphic(i).GrhIndex & ", en la capa " & i & " en las coordenadas " & x & " - " & y, 255, 201, 14)
+    
+                            End If
+                        End If
+                    Next i
+                
+                End If
+                
+            End With
 
-            ' ** Mapea Arboles, Carteles, Foros y Yacimientos que no esten en la 3ra Capa
-            If MapData(x, y).OBJInfo.ObjIndex > 0 And (chkMapearArbolesEtc.value = 1 Or chkBloquearArbolesEtc.value = 1) Then
-
-                Select Case ObjData(MapData(x, y).OBJInfo.ObjIndex).OBJType
-
-                    Case 4, 8, 10, 22 ' Arboles, Carteles, Foros, Yacimientos
-
-                        If MapData(x, y).Graphic(3).GrhIndex <> MapData(x, y).ObjGrh.GrhIndex And chkMapearArbolesEtc.value = 1 Then MapData(x, y).Graphic(3) = MapData(x, y).ObjGrh
-                        If chkBloquearArbolesEtc.value = 1 And MapData(x, y).bLocked = 0 Then MapData(x, y).bLocked = 1
-
-                End Select
-
-            End If
-
-            ' ** Mapea Arboles, Carteles, Foros y Yacimientos que no esten en la 3ra Capa
         Next x
     Next y
-    
+
     'Set changed flag
     MapInfo.Changed = 1
 

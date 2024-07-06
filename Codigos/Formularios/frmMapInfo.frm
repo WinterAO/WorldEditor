@@ -908,6 +908,8 @@ Public Sub guardarInfoZona(ByVal id As Integer)
         .Restringir = txtMapRestringir.Text
         .NoEncriptarMP = 0
         .LuzBase = .LuzBase
+        .lvlMinimo = Val(TxtlvlMinimo.Text)
+        .lvlMaximo = Val(txtNivelMaximo.Text)
         
     End With
     

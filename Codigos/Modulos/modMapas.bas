@@ -236,8 +236,8 @@ Public Sub MapInfo_Actualizar()
         '   .chkMapBackup.value = MapInfo.BackUp
         .chkMapPK.value = IIf(MapInfo.PK = True, 1, 0)
         .TxtAmbient.Text = MapInfo.Ambient
-        .TxtlvlMinimo = MapInfo.lvlMinimo
-        .txtNivelMaximo = MapInfo.lvlMaximo
+        .TxtlvlMinimo = Val(MapInfo.lvlMinimo)
+        .txtNivelMaximo = Val(MapInfo.lvlMaximo)
         .chkMapMagiaSinEfecto.value = MapInfo.MagiaSinEfecto
         .chkMapInviSinEfecto.value = IIf(MapInfo.InviSinEfecto, vbChecked, vbUnchecked)
         .chkInvocarSin.value = MapInfo.InvocarSinEfecto
