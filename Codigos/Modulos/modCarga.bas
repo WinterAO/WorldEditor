@@ -464,8 +464,8 @@ On Error GoTo ErrorHandler:
 
     Dim Grh         As Long
     Dim k           As Long
-    Dim frame       As Long
-    Dim fileVersion As Long
+    Dim Frame       As Long
+    Dim FileVersion As Long
     Dim fileBuff    As clsByteBuffer
     Dim InfoHead    As INFOHEADER
     Dim buffer()    As Byte
@@ -490,7 +490,7 @@ On Error GoTo ErrorHandler:
         
         fileBuff.initializeReader buffer
     
-        fileVersion = fileBuff.getLong
+        FileVersion = fileBuff.getLong
         
         grhCount = fileBuff.getLong
         
@@ -516,10 +516,10 @@ On Error GoTo ErrorHandler:
                 
                     frmGrh.LynxGrh.CellText(k, 1) = "ANIMACION"
                 
-                    For frame = 1 To .NumFrames
-                        .Frames(frame) = fileBuff.getLong
-                        If .Frames(frame) <= 0 Or .Frames(frame) > grhCount Then GoTo ErrorHandler
-                    Next frame
+                    For Frame = 1 To .NumFrames
+                        .Frames(Frame) = fileBuff.getLong
+                        If .Frames(Frame) <= 0 Or .Frames(Frame) > grhCount Then GoTo ErrorHandler
+                    Next Frame
                     
                     .speed = fileBuff.getSingle
                     If .speed <= 0 Then GoTo ErrorHandler
@@ -605,130 +605,81 @@ ErrorHandler:
 End Function
 
 Public Function LoadGrhData_Uncompressed() As Boolean
-'*************************************
-'Autor: Lorwik
-'Fecha: ???
-'Descripción: Carga el index de Graficos
-'*************************************
+    '*************************************
+    'Autor: Lorwik
+    'Fecha: ???
+    'Descripción: Carga el index de Graficos
+    '*************************************
 
-    On Error GoTo ErrorHandler
+    Dim k    As Long
+
+    Dim File As Memory_Chunk
+    Set File = Aurora_Content.Find("Resources://init/graficos.ind")
     
-    Dim k           As Long
-
-    Dim Grh         As Long
-
-    Dim fileVersion As Long
-
-    Dim frame       As Long
-
-    Dim handle      As Integer
+    Dim Reader As BinaryReader
+    Set Reader = File.GetReader()
     
-    If Not FileExist(dirRecursos_Uncompressed & "\Scripts\graficos.ind", vbArchive) Then
-        MsgBox "No se ha encontrado el archivo Graficos.ind."
-        LoadGrhData_Uncompressed = False
-        Exit Function
-
-    End If
+    If (Reader.GetAvailable() > 0) Then
     
-    'Open files
-    handle = FreeFile()
-    Open dirRecursos_Uncompressed & "\Scripts\Graficos.ind" For Binary Access Read As handle
-    
-    With frmGrh.LynxGrh
+        With frmGrh.LynxGrh
         
-        .Clear
-        .Redraw = False
-        .Visible = False
-        .AddColumn "Grh", 0
-        .AddColumn "Tipo", 0
+            .Clear
+            .Redraw = False
+            .Visible = False
+            .AddColumn "Grh", 0
+            .AddColumn "Tipo", 0
         
-    End With
+        End With
     
-    Get handle, , fileVersion
+        Dim FileVersion As Long
+    
+        FileVersion = Reader.ReadInt32()
+        grhCount = Reader.ReadInt32()
+
+        'Resize arrays
+        ReDim GrhData(1 To grhCount) As GrhData
+
+        While (Reader.GetAvailable() > 0)
+    
+            Dim Grh As Long
+    
+            Grh = Reader.ReadInt32()
         
-    Get handle, , grhCount
-
-    'Resize arrays
-    ReDim GrhData(1 To grhCount) As GrhData
-
-    While Grh <> grhCount
+            frmGrh.LynxGrh.AddItem Grh
+            k = frmGrh.LynxGrh.Rows - 1
+            frmGrh.LynxGrh.CellText(k, 1) = Grh
     
-        Get handle, , Grh
-        
-        frmGrh.LynxGrh.AddItem Grh
-        k = frmGrh.LynxGrh.Rows - 1
-        frmGrh.LynxGrh.CellText(k, 1) = Grh
-    
-        With GrhData(Grh)
-
-            If Grh <> 0 Then
-            
-                Grh = Grh
+            With GrhData(Grh)
                
                 'Get number of frames
-                Get handle, , .NumFrames
-
-                If .NumFrames <= 0 Then GoTo ErrorHandler
+                .NumFrames = Reader.ReadInt16()
             
                 ReDim .Frames(1 To .NumFrames)
             
-                If .NumFrames > 1 Then
+                If (.NumFrames > 1) Then
 
                     frmGrh.LynxGrh.CellText(k, 1) = "ANIMACION"
 
-                    For frame = 1 To .NumFrames
-                        Get handle, , .Frames(frame)
-
-                        If .Frames(frame) <= 0 Or .Frames(frame) > grhCount Then GoTo ErrorHandler
-                    Next frame
+                    Dim Frame As Long
+                    For Frame = 1 To .NumFrames
+                        .Frames(Frame) = Reader.ReadInt32()
+                    Next Frame
                 
-                    Get handle, , .speed
-
-                    If .speed <= 0 Then GoTo ErrorHandler
-                    
+                    .speed = Reader.ReadReal32()
                     .pixelHeight = GrhData(.Frames(1)).pixelHeight
-
-                    If .pixelHeight <= 0 Then GoTo ErrorHandler
-                    
                     .pixelWidth = GrhData(.Frames(1)).pixelWidth
-
-                    If .pixelWidth <= 0 Then GoTo ErrorHandler
-                    
                     .TileWidth = GrhData(.Frames(1)).TileWidth
-
-                    If .TileWidth <= 0 Then GoTo ErrorHandler
-                    
                     .TileHeight = GrhData(.Frames(1)).TileHeight
-
-                    If .TileHeight <= 0 Then GoTo ErrorHandler
-                
                 Else
                 
                     frmGrh.LynxGrh.CellText(k, 1) = ""
                     
-                    'Read in normal GRH data
-                    Get handle, , .FileNum
+                    .FileNum = Reader.ReadInt32()
+                    .sX = Reader.ReadInt16()
+                    .sY = Reader.ReadInt16()
+                    .pixelWidth = Reader.ReadInt16()
+                    .pixelHeight = Reader.ReadInt16()
 
-                    If .FileNum <= 0 Then GoTo ErrorHandler
-                    
-                    Get handle, , GrhData(Grh).sX
-
-                    If .sX < 0 Then GoTo ErrorHandler
-                    
-                    Get handle, , .sY
-
-                    If .sY < 0 Then GoTo ErrorHandler
-                    
-                    Get handle, , .pixelWidth
-
-                    If .pixelWidth <= 0 Then GoTo ErrorHandler
-                    
-                    Get handle, , .pixelHeight
-
-                    If .pixelHeight <= 0 Then GoTo ErrorHandler
-                
-                
-                    'Compute width and height
                     .TileWidth = .pixelWidth / 32
                     .TileHeight = .pixelHeight / 32
                 
@@ -736,38 +687,13 @@ Public Function LoadGrhData_Uncompressed() As Boolean
 
                 End If
 
-            End If
-
-        End With
+            End With
         
-    Wend
+        Wend
     
-    Close handle
-    
-    With frmGrh.LynxGrh
-        .Visible = True
-        .Redraw = True
-        .ColForceFit
-
-    End With
-    
-    DoEvents
-    
-    LoadGrhData_Uncompressed = True
-    
-    Exit Function
-
-ErrorHandler:
-    Close handle
-    
-    If Err.Number <> 0 Then
-        
-        If Err.Number = 53 Then
-            Call MsgBox("El archivo Graficos.ind no existe. Por favor, reinstale el juego.", , Form_Caption)
-            Call CloseMapEditor
-
-        End If
-        
+        LoadGrhData_Uncompressed = True
+    Else
+        LoadGrhData_Uncompressed = False
     End If
     
     With frmGrh.LynxGrh
@@ -776,8 +702,6 @@ ErrorHandler:
         .ColForceFit
 
     End With
-    
-    LoadGrhData_Uncompressed = False
 
 End Function
 
@@ -844,41 +768,30 @@ Private Function CargarMinimapa_Uncompressed() As Boolean
     'Autor: Lorwik
     'Fecha: ????
     '*************************************
+    
+    Dim i    As Long
+    
+    Dim N    As Integer
+    
+    Dim File As Memory_Chunk
+    Set File = Aurora_Content.Find("Resources://Init/minimap.bin")
+    
+    Dim Reader As BinaryReader
+    Set Reader = File.GetReader()
 
-    On Error GoTo ErrorHandler
+    If (Reader.GetAvailable() > 0) Then
+        
+        For i = 1 To grhCount
+            If Grh_Check(i) Then
+                GrhData(i).mini_map_color = Reader.ReadInt32
+
+            End If
+        Next i
     
-    Dim i As Long
-    
-    Dim N As Integer
-    
-    If Not FileExist(dirRecursos_Uncompressed & "\Scripts\minimap.bin", vbArchive) Then
-        MsgBox "No se ha encontrado el archivo minimap.bin."
+        CargarMinimapa_Uncompressed = True
+    Else
         CargarMinimapa_Uncompressed = False
-        Exit Function
-
     End If
-    
-    N = FreeFile
-    Open dirRecursos_Uncompressed & "\Scripts\minimap.bin" For Binary Access Read As #N
-        
-    For i = 1 To grhCount
-
-        If Grh_Check(i) Then
-            Get #N, , GrhData(i).mini_map_color
-
-        End If
-        
-    Next i
-
-    Close #N
-    
-    CargarMinimapa_Uncompressed = True
-    
-    Exit Function
-    
-ErrorHandler:
-
-    CargarMinimapa_Uncompressed = False
     
 End Function
 
@@ -952,48 +865,36 @@ errhandler:
 End Function
 
 Private Function CargarCabezas_Uncompressed() As Boolean
-    On Error GoTo ErrorHandler:
-    
-    Dim N            As Integer
 
-    Dim i            As Integer
+    Dim File As Memory_Chunk
+    Set File = Aurora_Content.Find("Resources://Init/Head.ind")
     
-    Dim NumHeads     As Integer
+    Dim Reader As BinaryReader
+    Set Reader = File.GetReader()
     
-    If Not FileExist(dirRecursos_Uncompressed & "\Scripts\head.ind", vbArchive) Then
-        MsgBox "No se ha encontrado el archivo head.ind."
-        CargarCabezas_Uncompressed = False
-        Exit Function
-    End If
-
-    N = FreeFile
-    Open dirRecursos_Uncompressed & "\Scripts\head.ind" For Binary Access Read As #N
-
+    Dim NumHeads As Integer
+    Dim i        As Integer
+    
     'num de cabezas
-    Get #N, , NumHeads
+    NumHeads = Reader.ReadInt16
 
-    'Resize array
-    ReDim heads(0 To NumHeads) As tHead
+    If (Reader.GetAvailable() > 0) Then
+
+        'Resize array
+        ReDim heads(0 To NumHeads) As tHead
             
         For i = 1 To NumHeads
-            Get #N, , heads(i).Std
-            Get #N, , heads(i).Texture
-            Get #N, , heads(i).startX
-            Get #N, , heads(i).startY
+            heads(i).Std = Reader.ReadInt8
+            heads(i).Texture = Reader.ReadInt16
+            heads(i).startX = Reader.ReadInt16
+            heads(i).startY = Reader.ReadInt16
             
         Next i
 
-    Close #N
-
-    CargarCabezas_Uncompressed = True
-
-    Exit Function
-
-ErrorHandler:
-    Close #N
-    'MsgBox "Error " & Err.Number & " durante la carga de Head.ind!"
-    CargarCabezas_Uncompressed = False
-    Resume
+        CargarCabezas_Uncompressed = True
+    Else
+        CargarCabezas_Uncompressed = False
+    End If
     
 End Function
 
@@ -1068,48 +969,36 @@ errhandler:
 End Function
 
 Public Function CargarCascos_Uncompressed() As Boolean
-    On Error GoTo ErrorHandler:
+
+    Dim File As Memory_Chunk
+    Set File = Aurora_Content.Find("Resources://Init/Helmet.ind")
     
-    Dim N          As Integer
-
-    Dim i          As Integer
+    Dim Reader As BinaryReader
+    Set Reader = File.GetReader()
     
-    Dim NumCascos  As Integer
-
-    If Not FileExist(dirRecursos_Uncompressed & "\Scripts\helmet.ind", vbArchive) Then
-        MsgBox "No se ha encontrado el archivo helmet.ind."
-        CargarCascos_Uncompressed = False
-        Exit Function
-    End If
-
-    N = FreeFile
-    Open dirRecursos_Uncompressed & "\Scripts\helmet.ind" For Binary Access Read As #N
+    Dim i         As Integer
+    Dim NumCascos As Integer
 
     'num de cascos
-    Get #N, , NumCascos
-
-    'Resize array
-    ReDim Cascos(0 To NumCascos) As tHead
+    NumCascos = Reader.ReadInt16
     
-    For i = 1 To NumCascos
-        Get #N, , Cascos(i).Std
-        Get #N, , Cascos(i).Texture
-        Get #N, , Cascos(i).startX
-        Get #N, , Cascos(i).startY
+    If (Reader.GetAvailable() > 0) Then
+    
+        'Resize array
+        ReDim Cascos(0 To NumCascos) As tHead
+    
+        For i = 1 To NumCascos
+            Cascos(i).Std = Reader.ReadInt8
+            Cascos(i).Texture = Reader.ReadInt16
+            Cascos(i).startX = Reader.ReadInt16
+            Cascos(i).startY = Reader.ReadInt16
             
-    Next i
-         
-    Close #N
+        Next i
 
-    CargarCascos_Uncompressed = True
-
-    Exit Function
-
-ErrorHandler:
-    Close #N
-    'MsgBox "Error " & Err.Number & " durante la carga de Helmet.ind!"
-    CargarCascos_Uncompressed = False
-    Resume
+        CargarCascos_Uncompressed = True
+    Else
+        CargarCascos_Uncompressed = False
+    End If
     
 End Function
 
@@ -1201,60 +1090,35 @@ End Function
 
 Public Function CargarCuerpos_Uncompressed() As Boolean
 
-    On Error GoTo ErrorHandler
-
-    Dim N            As Integer
-
-    Dim i            As Long
+    Dim File As Memory_Chunk
+    Set File = Aurora_Content.Find("Resources://Init/personajes.ind")
     
-    Dim NumCuerpos   As Integer
+    Dim Reader As BinaryReader
+    Set Reader = File.GetReader()
 
-    Dim MisCuerpos() As tIndiceCuerpo
-    
-    If Not FileExist(dirRecursos_Uncompressed & "\Scripts\personajes.ind", vbArchive) Then
-        MsgBox "No se ha encontrado el archivo Personajes.ind."
-        CargarCuerpos_Uncompressed = False
-        Exit Function
-    End If
-
-    N = FreeFile()
-    Open dirRecursos_Uncompressed & "\Scripts\Personajes.ind" For Binary Access Read As #N
-
-    'num de cabezas
-    Get #N, , NumCuerpos
-
-    'Resize array
-    ReDim BodyData(0 To NumCuerpos) As BodyData
-    ReDim MisCuerpos(0 To NumCuerpos) As tIndiceCuerpo
-
-    For i = 1 To NumCuerpos
-
-        Get #N, , MisCuerpos(i)
+    If (Reader.GetAvailable() > 0) Then
         
-        If MisCuerpos(i).Body(1) Then
-            Call InitGrh(BodyData(i).Walk(1), MisCuerpos(i).Body(1), 0)
-            Call InitGrh(BodyData(i).Walk(2), MisCuerpos(i).Body(2), 0)
-            Call InitGrh(BodyData(i).Walk(3), MisCuerpos(i).Body(3), 0)
-            Call InitGrh(BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0)
+        Dim NumCuerpos As Integer
+        NumCuerpos = Reader.ReadInt16()
+    
+        ReDim BodyData(0 To NumCuerpos) As BodyData
+
+        Dim i As Long
+        
+        For i = 1 To NumCuerpos
+            Call InitGrh(BodyData(i).Walk(1), Reader.ReadInt32(), 0)
+            Call InitGrh(BodyData(i).Walk(2), Reader.ReadInt32(), 0)
+            Call InitGrh(BodyData(i).Walk(3), Reader.ReadInt32(), 0)
+            Call InitGrh(BodyData(i).Walk(4), Reader.ReadInt32(), 0)
                 
-            BodyData(i).HeadOffset.x = MisCuerpos(i).HeadOffsetX
-            BodyData(i).HeadOffset.y = MisCuerpos(i).HeadOffsetY
-
-        End If
-        
-    Next i
-
-    Close #N
+            BodyData(i).HeadOffset.x = Reader.ReadInt16()
+            BodyData(i).HeadOffset.y = Reader.ReadInt16()
+        Next i
     
-    CargarCuerpos_Uncompressed = True
-    
-    Exit Function
-
-ErrorHandler:
-    Close #N
-    'MsgBox "Error " & Err.Number & " durante la carga de Personajes.ind!"
-    CargarCuerpos_Uncompressed = False
-    Resume
+        CargarCuerpos_Uncompressed = True
+    Else
+        CargarCuerpos_Uncompressed = False
+    End If
     
 End Function
 
@@ -1343,62 +1207,34 @@ errhandler:
 End Function
 
 Private Function CargarAnimArmas_Uncompressed() As Boolean
-    '*************************************
-    'Autor: Lorwik
-    'Fecha: ???
-    'Descripción: Carga el index de Armas
-    '*************************************
+
+    Dim File As Memory_Chunk
+    Set File = Aurora_Content.Find("Resources://Init/armas.ind")
     
-    On Error GoTo errhandler:
+    Dim Reader As BinaryReader
+    Set Reader = File.GetReader()
 
-    Dim N              As Integer
+    If (Reader.GetAvailable() > 0) Then
+        
+        Dim NumWeaponAnims As Integer
 
-    Dim i              As Long
+        NumWeaponAnims = Reader.ReadInt16()
 
-    Dim NumWeaponAnims As Integer
-    
-    If Not FileExist(dirRecursos_Uncompressed & "\Scripts\armas.ind", vbArchive) Then
-        MsgBox "No se ha encontrado el archivo Armas.ind."
+        ReDim WeaponAnimData(0 To NumWeaponAnims) As WeaponAnimData
+
+        Dim i As Long
+        
+        For i = 1 To NumWeaponAnims
+            Call InitGrh(WeaponAnimData(i).WeaponWalk(1), Reader.ReadInt32(), 0)
+            Call InitGrh(WeaponAnimData(i).WeaponWalk(2), Reader.ReadInt32(), 0)
+            Call InitGrh(WeaponAnimData(i).WeaponWalk(3), Reader.ReadInt32(), 0)
+            Call InitGrh(WeaponAnimData(i).WeaponWalk(4), Reader.ReadInt32(), 0)
+        Next i
+
+        CargarAnimArmas_Uncompressed = True
+    Else
         CargarAnimArmas_Uncompressed = False
-        Exit Function
-
     End If
-    
-    N = FreeFile
-    Open dirRecursos_Uncompressed & "\Scripts\Armas.ind" For Binary Access Read As #N
-    
-    'num de armas
-    Get #N, , NumWeaponAnims
-        
-    'Resize array
-    ReDim WeaponAnimData(1 To NumWeaponAnims) As WeaponAnimData
-    ReDim Weapons(1 To NumWeaponAnims) As tIndiceArmas
-        
-    For i = 1 To NumWeaponAnims
-        Get #N, , Weapons(i)
-            
-        If Weapons(i).weapon(1) Then
-            
-            Call InitGrh(WeaponAnimData(i).WeaponWalk(1), Weapons(i).weapon(1), 0)
-            Call InitGrh(WeaponAnimData(i).WeaponWalk(2), Weapons(i).weapon(2), 0)
-            Call InitGrh(WeaponAnimData(i).WeaponWalk(3), Weapons(i).weapon(3), 0)
-            Call InitGrh(WeaponAnimData(i).WeaponWalk(4), Weapons(i).weapon(4), 0)
-
-        End If
-
-    Next i
-    
-    Close #N
-    
-    CargarAnimArmas_Uncompressed = True
-    
-    Exit Function
-
-errhandler:
-    Close #N
-    'MsgBox "Error " & Err.Number & " durante la carga de Armas.ind!"
-    CargarAnimArmas_Uncompressed = False
-    Resume
     
 End Function
 
@@ -1491,56 +1327,31 @@ Public Function CargarAnimEscudos_Uncompressed() As Boolean
     'Descripción: Carga el index de Escudos
     '*************************************
     
-    On Error GoTo errhandler:
+    Dim File As Memory_Chunk
+    Set File = Aurora_Content.Find("Resources://Init/armas.ind")
+    
+    Dim Reader As BinaryReader
+    Set Reader = File.GetReader()
 
-    Dim N               As Integer
+    If (Reader.GetAvailable() > 0) Then
 
-    Dim i               As Long
+        Dim NumEscudosAnims As Integer
+        NumEscudosAnims = Reader.ReadInt16()
 
-    Dim NumEscudosAnims As Integer
+        ReDim ShieldAnimData(0 To NumEscudosAnims) As ShieldAnimData
 
-    If Not FileExist(dirRecursos_Uncompressed & "\Scripts\escudos.ind", vbArchive) Then
-        MsgBox "No se ha encontrado el archivo Escudos.ind."
+        Dim i As Long
+        For i = 1 To NumEscudosAnims
+            Call InitGrh(ShieldAnimData(i).ShieldWalk(1), Reader.ReadInt32(), 0)
+            Call InitGrh(ShieldAnimData(i).ShieldWalk(2), Reader.ReadInt32(), 0)
+            Call InitGrh(ShieldAnimData(i).ShieldWalk(3), Reader.ReadInt32(), 0)
+            Call InitGrh(ShieldAnimData(i).ShieldWalk(4), Reader.ReadInt32(), 0)
+        Next i
+
+        CargarAnimEscudos_Uncompressed = True
+    Else
         CargarAnimEscudos_Uncompressed = False
-        Exit Function
-
     End If
-
-    N = FreeFile
-    Open dirRecursos_Uncompressed & "\Scripts\escudos.ind" For Binary Access Read As #N
-
-    'num de escudos
-    Get #N, , NumEscudosAnims
-        
-    'Resize array
-    ReDim ShieldAnimData(1 To NumEscudosAnims) As ShieldAnimData
-    ReDim Shields(1 To NumEscudosAnims) As tIndiceEscudos
-        
-    For i = 1 To NumEscudosAnims
-        Get #N, , Shields(i)
-            
-        If Shields(i).shield(1) Then
-            
-            Call InitGrh(ShieldAnimData(i).ShieldWalk(1), Shields(i).shield(1), 0)
-            Call InitGrh(ShieldAnimData(i).ShieldWalk(2), Shields(i).shield(2), 0)
-            Call InitGrh(ShieldAnimData(i).ShieldWalk(3), Shields(i).shield(3), 0)
-            Call InitGrh(ShieldAnimData(i).ShieldWalk(4), Shields(i).shield(4), 0)
-            
-        End If
-            
-    Next i
-    
-    Close #N
-    
-    CargarAnimEscudos_Uncompressed = True
-    
-    Exit Function
-
-errhandler:
-    Close #N
-    'MsgBox "Error " & Err.Number & " durante la carga de Escudos.ind!"
-    CargarAnimEscudos_Uncompressed = False
-    Resume
     
 End Function
 
@@ -1737,6 +1548,9 @@ On Error GoTo Fallo
             frmOBJs.LynxOBJs.AddItem Obj
             k = frmOBJs.LynxOBJs.Rows - 1
             frmOBJs.LynxOBJs.CellText(k, 1) = .name
+            
+            'If ObjData(Obj).name = vbNullString Then _
+                Call RegistrarError("1", Obj, "Falta Indice de Objeto.")
         
         End With
     Next Obj

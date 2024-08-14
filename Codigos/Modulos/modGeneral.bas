@@ -34,6 +34,9 @@ Sub Main()
     'Ruta principal
     IniPath = App.path & "\"
     
+    ' Initialize Aurora Engine
+    Call modEngine.Initialize
+    
     Call Application.DeleteFile(Application.GetErrorLogFilename())
 
     'Call modCarga.pre_leerConfiguracion 'Leemos la config basica para elegir un modo
