@@ -113,6 +113,7 @@ Private Type tMapDat
     terrain As String
     Ambient As String
     lvlMinimo As String
+    lvlMaximo As String
     RoboNpcsPermitido As Boolean
     InvocarSinEfecto As Boolean
     OcultarSinEfecto As Boolean
@@ -126,15 +127,8 @@ Private Type tMapDat
 End Type
 
 Public MapSize   As tMapSize
-
 Private MapDat() As tMapDat
-'*************************
-'Fin formato carga Winter
-'*************************
 
-'#######################################
-'CARGAR DE MAPAS FORMATO WINTER ACTUAL
-'#######################################
 
 Sub Cargar_ConverCSM(ByVal Map As String)
     '***************************************************
@@ -491,3 +485,4 @@ Private Sub CSMInfoCargar()
     Call MapInfo_Actualizar
 
 End Sub
+

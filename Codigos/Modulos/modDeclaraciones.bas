@@ -352,26 +352,25 @@ End Type
 'Hold info about each map
 Public Type tMapInfo
 
-    Music As String
+    Music As Integer
     name As String
     PK As Boolean
-    MagiaSinEfecto As Byte
-    InviSinEfecto As Byte
-    ResuSinEfecto As Byte
+    MagiaSinEfecto As Boolean
+    InviSinEfecto As Boolean
+    ResuSinEfecto As Boolean
     LuzBase As Long
     Terreno As String
     Zona As String
     Restringir As String
-    BackUp As Byte
+    BackUp As Boolean
+    RoboNpcsPermitido As Boolean
+    InvocarSinEfecto As Boolean
+    OcultarSinEfecto As Boolean
+    lvlMinimo As Integer
+    lvlMaximo As Integer
+    Ambient As Integer
+    
     Changed As Byte ' flag for WorldEditor
-    RoboNpcsPermitido As Byte
-    InvocarSinEfecto As Byte
-    OcultarSinEfecto As Byte
-    lvlMinimo As Byte
-    lvlMaximo As Byte
-    Ambient As String
-    NoEncriptarMP As Byte
-
 End Type
 
 'Hold info about a character

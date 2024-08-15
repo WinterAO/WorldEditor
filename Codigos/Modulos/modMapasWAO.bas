@@ -4,9 +4,6 @@ Option Explicit
 'Lectura, guardado y otras features del formato de mapas WinterAO
 '/////////////////////////////////////////////////////////////////////
 
-'**********************
-'Formato WinterAO
-'**********************
 Private Type tMapHeader
 
     NumeroBloqueados As Long
@@ -114,12 +111,12 @@ Private Type tMapDat
     battle_mode As Boolean
     backup_mode As Boolean
     restrict_mode As String
-    music_number As String
+    music_number As Integer
     zone As String
     terrain As String
-    Ambient As String
-    lvlMinimo As String
-    lvlMaximo As String
+    Ambient As Integer
+    lvlMinimo As Integer
+    lvlMaximo As Integer
     RoboNpcsPermitido As Boolean
     InvocarSinEfecto As Boolean
     OcultarSinEfecto As Boolean
@@ -133,16 +130,11 @@ Private Type tMapDat
 End Type
 
 Public MapSize   As tMapSize
-
 Private MapDat() As tMapDat
-'*************************
-'Fin formato carga Winter
-'*************************
 
-'#######################################
-'CARGAR DE MAPAS FORMATO WINTER ACTUAL
-'#######################################
-
+' -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+' [Carga de mapas formato Winter]
+' -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Sub Cargar_CSM(ByVal Map As String)
     '***************************************************
     'Author: Lorwik
@@ -501,10 +493,9 @@ Private Sub CSMInfoCargar()
 
 End Sub
 
-'#######################################
-'GUARDADO DE MAPAS FORMATO WINTER ACTUAL
-'#######################################
-
+' -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+' [Guardado de mapas Winter]
+' -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Public Function Save_CSM(ByVal MapRoute As String) As Boolean
 
     On Error GoTo ErrorHandler

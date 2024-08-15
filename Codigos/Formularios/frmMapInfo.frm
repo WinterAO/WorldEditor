@@ -906,7 +906,6 @@ Public Sub guardarInfoZona(ByVal id As Integer)
         .Terreno = txtMapTerreno.Text
         .Zona = txtMapZona.Text
         .Restringir = txtMapRestringir.Text
-        .NoEncriptarMP = 0
         .LuzBase = .LuzBase
         .lvlMinimo = Val(TxtlvlMinimo.Text)
         .lvlMaximo = Val(txtNivelMaximo.Text)
