@@ -5,8 +5,8 @@ Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" _
     (destination As Any, source As Any, ByVal length As Long)
     
 Private Type CharVA
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
     W As Integer
     h As Integer
     
@@ -17,8 +17,8 @@ Private Type CharVA
 End Type
 
 Private Type POINTAPI
-    X As Long
-    Y As Long
+    x As Long
+    y As Long
 End Type
 
 Private Type VFH
@@ -81,8 +81,8 @@ End Function ' GSZAO
 Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
                                 ByRef UseFont As CustomFont, _
                                 ByVal Text As String, _
-                                ByVal X As Long, _
-                                ByVal Y As Long, _
+                                ByVal x As Long, _
+                                ByVal y As Long, _
                                 ByRef color() As RGBA, _
                                 Optional ByVal Center As Boolean = False, _
                                 Optional ByVal Alpha As Byte = 255, _
@@ -141,7 +141,7 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
     Call Batch.SetTexture(UseFont.Texture)
     
     If Center Then
-        X = X - CInt(Engine_GetTextWidth(cfonts(Font), Text) * 0.5)
+        x = x - CInt(Engine_GetTextWidth(cfonts(Font), Text) * 0.5)
     End If
     
     'Loop through each line if there are line breaks (vbCrLf)
@@ -158,8 +158,8 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
 
                 Call CopyMemory(TempVA, UseFont.HeaderInfo.CharVA(ascii(j - 1)), 24) 'this number represents the size of "CharVA" struct
                 
-                TempVA.X = X + Count
-                TempVA.Y = Y + yOffset
+                TempVA.x = x + Count
+                TempVA.y = y + yOffset
                 
                 'Set the colors
                 If Es_Emoticon(ascii(j - 1)) Then ' GSZAO los colores no afectan a los emoticones!
@@ -170,7 +170,7 @@ Private Sub Engine_Render_Text(ByRef Batch As clsBatch, _
                     
                 End If
                 Call Batch.SetAlpha(False)
-                Call Batch.Draw(TempVA.X, TempVA.Y, TempVA.W, TempVA.h, color, TempVA.Tx1, TempVA.Ty1, TempVA.Tx2, TempVA.Ty2)
+                Call Batch.Draw(TempVA.x, TempVA.y, TempVA.W, TempVA.h, color, TempVA.Tx1, TempVA.Ty1, TempVA.Tx2, TempVA.Ty2)
 
                 'Shift over the the position to render the next character
                 Count = Count + UseFont.HeaderInfo.CharWidth(ascii(j - 1))
@@ -241,7 +241,7 @@ Sub Engine_Init_FontTextures()
 
         If ClientSetup.useCompression Then
 
-            InfoHead = File_Find(dirRecursos_Compressed & "Fuentes" & modCompression.Formato, "font" & CStr(i) & ".png")
+            InfoHead = File_Find(dirResources_Compressed & "Fuentes" & modCompression.Formato, "font" & CStr(i) & ".png")
         
             If InfoHead.lngFileSize <> 0 Then
 
@@ -270,7 +270,7 @@ Sub Engine_Init_FontTextures()
         
             'Set the texture
             Set cfonts(i).Texture = DirectD3D8.CreateTextureFromFileEx(DirectDevice, _
-               dirRecursos_Uncompressed & "\Fuentes\font" & i & ".png", _
+               dirResources_Uncompressed & "\Fuentes\font" & i & ".png", _
                D3DX_DEFAULT, _
                D3DX_DEFAULT, _
                0, _
@@ -286,8 +286,8 @@ Sub Engine_Init_FontTextures()
         End If
         
         'Store the size of the texture
-        cfonts(i).TextureSize.X = TexInfo.Width
-        cfonts(i).TextureSize.Y = TexInfo.Height
+        cfonts(i).TextureSize.x = TexInfo.Width
+        cfonts(i).TextureSize.y = TexInfo.Height
     Next
     
     Exit Sub
@@ -295,7 +295,7 @@ Sub Engine_Init_FontTextures()
 eDebug:
 
     If Err.Number = "-2005529767" Then
-        MsgBox "Error en la textura de fuente utilizada " & dirRecursos_Compressed & "Font.png.", vbCritical
+        MsgBox "Error en la textura de fuente utilizada " & dirResources_Compressed & "Font.png.", vbCritical
         End
 
     End If
@@ -337,7 +337,7 @@ Sub Engine_Init_FontSettings()
         If ClientSetup.useCompression Then
     
             'Load the header information
-            InfoHead = File_Find(dirRecursos_Compressed & "\Fuentes" & modCompression.Formato, LCase$("font" & i & ".dat"))
+            InfoHead = File_Find(dirResources_Compressed & "\Fuentes" & modCompression.Formato, LCase$("font" & i & ".dat"))
     
             If InfoHead.lngFileSize <> 0 Then
         
@@ -369,7 +369,7 @@ Sub Engine_Init_FontSettings()
         Else
 
             N = FreeFile
-            Open dirRecursos_Uncompressed & "Fuentes\font" & i & ".dat" For Binary As #N
+            Open dirResources_Uncompressed & "Fuentes\font" & i & ".dat" For Binary As #N
                 Get #N, , cfonts(i).HeaderInfo
             Close #N
         
@@ -391,8 +391,8 @@ Sub Engine_Init_FontSettings()
         
                 'Set the verticies
                 With cfonts(i).HeaderInfo.CharVA(LoopChar)
-                    .X = 0
-                    .Y = 0
+                    .x = 0
+                    .y = 0
                     .W = cfonts(i).HeaderInfo.CellWidth
                     .h = cfonts(i).HeaderInfo.CellHeight
                     .Tx1 = u
@@ -406,14 +406,14 @@ Sub Engine_Init_FontSettings()
         Next i
 End Sub
 
-Public Sub DrawText(ByVal X As Integer, _
-                    ByVal Y As Integer, _
+Public Sub DrawText(ByVal x As Integer, _
+                    ByVal y As Integer, _
                     ByVal Text As String, _
                     ByRef color() As RGBA, _
                     Optional Center As Boolean = False, _
                     Optional Font As Integer = 1)
 
-    Call Engine_Render_Text(SpriteBatch, cfonts(Font), Text, X, Y, color(), Center, , , Font)
+    Call Engine_Render_Text(SpriteBatch, cfonts(Font), Text, x, y, color(), Center, , , Font)
 
 End Sub
 

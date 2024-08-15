@@ -32,14 +32,9 @@ End Function
 Sub Main()
 
     'Ruta principal
-    IniPath = App.path & "\"
-    
-    ' Initialize Aurora Engine
-    Call modEngine.Initialize
+    IniPath = App.Path & "\"
     
     Call Application.DeleteFile(Application.GetErrorLogFilename())
-
-    'Call modCarga.pre_leerConfiguracion 'Leemos la config basica para elegir un modo
     
     frmPerfil.Show
     
@@ -51,7 +46,9 @@ Sub Main()
     
     Call GenerateContra
     Call modCarga.leerPerfil 'Leemos el resto de la config
-    Call modCarga.IniciarCabecera
+    
+    ' Initialize Aurora Engine
+    Call modEngine.Initialize
     
     frmCarga.lblStatus.Caption = "Iniciando motor grafico (1/3)."
     DoEvents
@@ -69,7 +66,7 @@ Sub Main()
     DoEvents
     Set Sound = New clsSoundEngine
 
-    If Not Sound.Initialize_Engine(frmMain.hWnd, dirRecursos_Compressed, False, True, True, ClientSetup.SoundVolume, ClientSetup.MusicVolume, ClientSetup.Invertido) Then
+    If Not Sound.Initialize_Engine(frmMain.hWnd, dirResources_Compressed, False, True, True, ClientSetup.SoundVolume, ClientSetup.MusicVolume, ClientSetup.Invertido) Then
         MsgBox "¡No se ha logrado iniciar el engine de DirectSound! Reinstale los últimos controladores de DirectX. No habrá soporte de audio en el editor.", vbCritical, "Advertencia"
         
     End If
@@ -555,7 +552,7 @@ Function Buscar_Carpeta(Optional Titulo As String, _
     Set o_Carpeta = objFolder.Self
       
     ' Devuelve la ruta completa seleccionada en el diálogo
-    Buscar_Carpeta = o_Carpeta.path
+    Buscar_Carpeta = o_Carpeta.Path
   
     Exit Function
     'Error
@@ -620,10 +617,10 @@ Public Function Client_Screenshot(ByVal hDC As Long, ByVal Width As Long, ByVal 
     'Sample the cImage by hDC
     m_Jpeg.SampleHDC hDC, Width, Height
     
-    m_FileName = App.path & "\Render\Fotos\WinterME_Foto"
+    m_FileName = App.Path & "\Render\Fotos\WinterME_Foto"
     
-    If Dir$(App.path & "\Render\Fotos", vbDirectory) = vbNullString Then
-        MkDir (App.path & "\Render\Fotos")
+    If Dir$(App.Path & "\Render\Fotos", vbDirectory) = vbNullString Then
+        MkDir (App.Path & "\Render\Fotos")
 
     End If
     

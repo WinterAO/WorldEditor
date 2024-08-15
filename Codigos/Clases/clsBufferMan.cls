@@ -370,10 +370,10 @@ On Error GoTo ErrorHandler
     
     If Tipo = srcFileType.Ambient Then
         file_name = file_name & ".wav"
-        InfoHead = File_Find(dirRecursos_Compressed & "Sounds" & Formato, file_name)
+        InfoHead = File_Find(dirResources_Compressed & "Sounds" & Formato, file_name)
     Else
         file_name = file_name & ".wav"
-        InfoHead = File_Find(dirRecursos_Compressed & "Sounds" & Formato, file_name)
+        InfoHead = File_Find(dirResources_Compressed & "Sounds" & Formato, file_name)
     End If
     
     If InfoHead.lngFileSize = 0 Then Exit Function
@@ -509,30 +509,30 @@ Public Sub BorraTimerProc()
 '**************************************************************
     On Error Resume Next
     
-    Dim LoopC As Long
+    Dim loopc As Long
     Dim offset As Integer
     Dim TiempoActual As Long
     
     TiempoActual = GetTickCount
     
-    For LoopC = 1 To mCantidadBuffers
+    For loopc = 1 To mCantidadBuffers
         'Revisar cuales usamos
-        If mBuffers(LoopC).UltimoAcceso > TiempoActual - 60000 Then
+        If mBuffers(loopc).UltimoAcceso > TiempoActual - 60000 Then
             'Si el offset está seteado, movemos para atrás la lista
             If offset Then
-                mBuffers(LoopC - offset) = mBuffers(LoopC)
+                mBuffers(loopc - offset) = mBuffers(loopc)
             End If
         Else
             'Eliminar de memoria
-            Set mBuffers(LoopC).buffer = Nothing
+            Set mBuffers(loopc).buffer = Nothing
             
             'Clear variables
-            mBuffers(LoopC).filename = 0
-            mBuffers(LoopC).UltimoAcceso = 0
+            mBuffers(loopc).filename = 0
+            mBuffers(loopc).UltimoAcceso = 0
             
             offset = offset + 1
         End If
-    Next LoopC
+    Next loopc
     
     'Actualizar el número de sonidos
     mCantidadBuffers = mCantidadBuffers - offset

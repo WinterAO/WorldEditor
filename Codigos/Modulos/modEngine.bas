@@ -37,6 +37,6 @@ Public Sub Initialize()
     Call Kernel.Initialize(eKernelModeClient, Configuration)
 
     Set Aurora_Content = Kernel.Content
-    Call Aurora_Content.AddSystemLocator("Resources", "Resources")
+    Call Aurora_Content.AddSystemLocator("Resources", dirResources_Uncompressed)
     
 End Sub

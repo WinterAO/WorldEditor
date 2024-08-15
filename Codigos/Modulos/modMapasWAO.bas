@@ -182,8 +182,6 @@ Sub Cargar_CSM(ByVal Map As String)
 
     Dim TEs()        As tDatosTE
     
-    Dim LaCabecera   As tCabecera
-    
     Dim i            As Long
 
     Dim j            As Long
@@ -195,8 +193,6 @@ Sub Cargar_CSM(ByVal Map As String)
         
     fh = FreeFile
     Open Map For Binary Access Read As fh
-    
-    Get #fh, , LaCabecera
     
     Get #fh, , MH
     Get #fh, , MapSize
@@ -413,7 +409,7 @@ ErrorHandler:
 
     If fh <> 0 Then Close fh
     
-    Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Mapa " & Map & ", se ha generado un informe de errores en: " & App.path & "\Logs.txt", 255, 0, 0)
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Mapa " & Map & ", se ha generado un informe de errores en: " & App.Path & "\Logs.txt", 255, 0, 0)
     
     File = FreeFile
     
@@ -693,9 +689,7 @@ Public Function Save_CSM(ByVal MapRoute As String) As Boolean
               
     fh = FreeFile
     Open MapRoute For Binary As fh
-        
-    Put #fh, , MiCabecera
-        
+    
     Put #fh, , MH
     Put #fh, , MapSize
     Put #fh, , MapDat
@@ -869,8 +863,6 @@ Public Function Exportar_Zonas(ByVal ZonRoute As String) As Boolean
     fh = FreeFile
     Open ZonRoute For Binary As fh
         
-    Put #fh, , MiCabecera
-        
     Put #fh, , MH
     Put #fh, , MapSize
     Put #fh, , MapDat
@@ -901,7 +893,7 @@ Exportar_Zonas_Err:
 
 End Function
 
-Public Function Importar_Zonas(ByVal path As String) As Boolean
+Public Function Importar_Zonas(ByVal Path As String) As Boolean
 
     '**********************************
     'Autor: Lorwik
@@ -918,8 +910,6 @@ Public Function Importar_Zonas(ByVal path As String) As Boolean
 
     Dim Zonas()    As tDatosZonas
     
-    Dim LaCabecera As tCabecera
-    
     Dim i          As Long
 
     Dim j          As Long
@@ -930,9 +920,7 @@ Public Function Importar_Zonas(ByVal path As String) As Boolean
     frmMain.MousePointer = 11
         
     fh = FreeFile
-    Open path For Binary Access Read As fh
-    
-    Get #fh, , LaCabecera
+    Open Path For Binary Access Read As fh
     
     Get #fh, , MH
     Get #fh, , MapSize

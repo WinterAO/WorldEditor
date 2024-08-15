@@ -1,14 +1,6 @@
 Attribute VB_Name = "modCarga"
 Option Explicit
 
-Public Type tCabecera 'Cabecera de los con
-    Desc As String * 255
-    CRC As Long
-    MagicWord As Long
-End Type
-
-Public MiCabecera As tCabecera
-
 Public Enum E_SISTEMA_MUSICA
     CONST_DESHABILITADA = 0
     CONST_MP3 = 1
@@ -66,8 +58,8 @@ Public ClientSetup As tSetupMods
 
 'Path
 Public IniPath As String
-Public dirRecursos_Compressed As String
-Public dirRecursos_Uncompressed As String
+Public dirResources_Compressed As String
+Public dirResources_Uncompressed As String
 Public dirDats As String
 
 'Recuento de indices
@@ -89,36 +81,26 @@ Public Function profileFile(ByVal tag As String) As String
     profileFile = IniPath & INITDIR & "profile-" & tag & ".ini"
 End Function
 
-Private Function autoCompletaPath(ByVal path As String) As String
+Private Function autoCompletaPath(ByVal Path As String) As String
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 22/05/06
 'Descripcion: Completa y corrije un path
 '*************************************************
 
-    path = Replace(path, "/", "\")
+    Path = Replace(Path, "/", "\")
     
-    If Left(path, 1) = "\" Then
+    If Left(Path, 1) = "\" Then
         ' agrego app.path & path
-        path = App.path & path
+        Path = App.Path & Path
     End If
-    If Right(path, 1) <> "\" Then
+    If Right(Path, 1) <> "\" Then
         ' me aseguro que el final sea con "\"
-        path = path & "\"
+        Path = Path & "\"
     End If
-    autoCompletaPath = path
+    autoCompletaPath = Path
     
 End Function
-
-Public Sub IniciarCabecera()
-
-    With MiCabecera
-        .Desc = "WinterAO Resurrection mod Argentum Online by Noland Studios. http://winterao.com.ar"
-        .CRC = Rnd * 245
-        .MagicWord = Rnd * 92
-    End With
-    
-End Sub
 
 Public Function guardarPerfil() As Boolean
 
@@ -275,53 +257,53 @@ On Local Error GoTo fileErr:
         '-------------------
         'Recursos
         If ClientSetup.useCompression Then
-            dirRecursos_Compressed = autoCompletaPath(Profile.GetValue("PATH-" & .MeMode, "dirRecursos_Compressed"))
+            dirResources_Compressed = autoCompletaPath(Profile.GetValue("PATH-" & .MeMode, "dirResources_Compressed"))
             
-            If FileExist(dirRecursos_Compressed, vbDirectory) = False Or dirRecursos_Compressed = "\" Then
+            If FileExist(dirResources_Compressed, vbDirectory) = False Or dirResources_Compressed = "\" Then
                 MsgBox "El directorio de recursos comprimidos es incorrecto", vbCritical + vbOKOnly
                 
                 NewPath = Buscar_Carpeta("Seleccione el directorio donde se encuentran los recursos comprimidos de gráficos, scripts y fuentes", "")
-                Call WriteVar(profileFile(ProfileTag), "PATH-" & .MeMode, "dirRecursos_Compressed", NewPath)
-                dirRecursos_Compressed = NewPath & "\"
+                Call WriteVar(profileFile(ProfileTag), "PATH-" & .MeMode, "dirResources_Compressed", NewPath)
+                dirResources_Compressed = NewPath & "\"
             End If
             
-            If FileExist(dirRecursos_Compressed & "Graficos" & Formato, vbArchive) = False Then
-                MsgBox "No se encontro el recurso de graficos en " & dirRecursos_Compressed & "Graficos" & Formato & "."
+            If FileExist(dirResources_Compressed & "Graficos" & Formato, vbArchive) = False Then
+                MsgBox "No se encontro el recurso de graficos en " & dirResources_Compressed & "Graficos" & Formato & "."
                 End
             End If
             
-            If FileExist(dirRecursos_Compressed & "Scripts" & Formato, vbArchive) = False Then
+            If FileExist(dirResources_Compressed & "Scripts" & Formato, vbArchive) = False Then
                 MsgBox "No se encontro el recurso de Scripts."
                 End
             End If
             
-            If FileExist(dirRecursos_Compressed & "Fuentes" & Formato, vbArchive) = False Then
+            If FileExist(dirResources_Compressed & "Fuentes" & Formato, vbArchive) = False Then
                 MsgBox "No se encontro el recurso de Fuentes."
                 End
             End If
             
         Else
-            dirRecursos_Uncompressed = autoCompletaPath(Profile.GetValue("PATH-" & .MeMode, "dirRecursos_Uncompressed"))
+            dirResources_Uncompressed = autoCompletaPath(Profile.GetValue("PATH-" & .MeMode, "dirResources_Uncompressed"))
             
-            If FileExist(dirRecursos_Uncompressed, vbDirectory) = False Or dirRecursos_Uncompressed = "\" Then
-                MsgBox "El directorio de recursos libres es incorrecto", vbCritical + vbOKOnly
+            If FileExist(dirResources_Uncompressed, vbDirectory) = False Or dirResources_Uncompressed = "\" Then
+                MsgBox "El directorio de recursos descomprimidos es incorrecto", vbCritical + vbOKOnly
                 
                 NewPath = Buscar_Carpeta("Seleccione el directorio donde se encuentran las carpetas de los recursos libres de gráficos, scripts y fuentes", "")
-                Call WriteVar(profileFile(ProfileTag), "PATH-" & .MeMode, "dirRecursos_Uncompressed", NewPath)
-                dirRecursos_Uncompressed = NewPath & "\"
+                Call WriteVar(profileFile(ProfileTag), "PATH-" & .MeMode, "dirResources_Uncompressed", NewPath)
+                dirResources_Uncompressed = NewPath & "\"
             End If
             
-            If FileExist(dirRecursos_Uncompressed & "\Graficos", vbDirectory) = False Then
-                MsgBox "No se encontro el directorio de graficos en " & dirRecursos_Uncompressed & "Graficos" & Formato & "."
+            If FileExist(dirResources_Uncompressed & "\Graficos", vbDirectory) = False Then
+                MsgBox "No se encontro el directorio de graficos en " & dirResources_Uncompressed & "Graficos" & Formato & "."
                 End
             End If
             
-            If FileExist(dirRecursos_Uncompressed & "\Scripts", vbDirectory) = False Then
+            If FileExist(dirResources_Uncompressed & "\Scripts", vbDirectory) = False Then
                 MsgBox "No se encontro el directorio de Scripts."
                 End
             End If
             
-            If FileExist(dirRecursos_Uncompressed & "\Fuentes", vbDirectory) = False Then
+            If FileExist(dirResources_Uncompressed & "\Fuentes", vbDirectory) = False Then
                 MsgBox "NNo se encontro el directorio de Fuentes."
                 End
             End If
@@ -470,7 +452,7 @@ On Error GoTo ErrorHandler:
     Dim InfoHead    As INFOHEADER
     Dim buffer()    As Byte
 
-    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & Formato, LCase$("graficos.ind"))
+    InfoHead = File_Find(dirResources_Compressed & "Scripts" & Formato, LCase$("graficos.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -614,7 +596,7 @@ Public Function LoadGrhData_Uncompressed() As Boolean
     Dim k    As Long
 
     Dim File As Memory_Chunk
-    Set File = Aurora_Content.Find("Resources://init/graficos.ind")
+    Set File = Aurora_Content.Find("Resources://scripts/graficos.ind")
     
     Dim Reader As BinaryReader
     Set Reader = File.GetReader()
@@ -732,7 +714,7 @@ Private Function CargarMinimapa_Compressed() As Boolean
     Dim buffer()    As Byte
     Dim i           As Long
     
-    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & Formato, LCase$("minimap.bin"))
+    InfoHead = File_Find(dirResources_Compressed & "Scripts" & Formato, LCase$("minimap.bin"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -774,7 +756,7 @@ Private Function CargarMinimapa_Uncompressed() As Boolean
     Dim N    As Integer
     
     Dim File As Memory_Chunk
-    Set File = Aurora_Content.Find("Resources://Init/minimap.bin")
+    Set File = Aurora_Content.Find("Resources://scripts/minimap.bin")
     
     Dim Reader As BinaryReader
     Set Reader = File.GetReader()
@@ -822,7 +804,7 @@ On Error GoTo errhandler:
     Dim NumHeads    As Integer
     Dim fileBuff    As clsByteBuffer
     
-    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & modCompression.Formato, LCase$("Head.ind"))
+    InfoHead = File_Find(dirResources_Compressed & "Scripts" & modCompression.Formato, LCase$("Head.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -867,7 +849,7 @@ End Function
 Private Function CargarCabezas_Uncompressed() As Boolean
 
     Dim File As Memory_Chunk
-    Set File = Aurora_Content.Find("Resources://Init/Head.ind")
+    Set File = Aurora_Content.Find("Resources://scripts/Head.ind")
     
     Dim Reader As BinaryReader
     Set Reader = File.GetReader()
@@ -926,7 +908,7 @@ On Error GoTo errhandler:
     Dim NumCascos As Integer
     Dim fileBuff  As clsByteBuffer
     
-    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & modCompression.Formato, LCase$("Helmet.ind"))
+    InfoHead = File_Find(dirResources_Compressed & "Scripts" & modCompression.Formato, LCase$("Helmet.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -971,7 +953,7 @@ End Function
 Public Function CargarCascos_Uncompressed() As Boolean
 
     Dim File As Memory_Chunk
-    Set File = Aurora_Content.Find("Resources://Init/Helmet.ind")
+    Set File = Aurora_Content.Find("Resources://scripts/Helmet.ind")
     
     Dim Reader As BinaryReader
     Set Reader = File.GetReader()
@@ -1031,7 +1013,7 @@ On Error GoTo errhandler:
     Dim MisCuerpos() As tIndiceCuerpo
     Dim fileBuff  As clsByteBuffer
     
-    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & modCompression.Formato, LCase$("Personajes.ind"))
+    InfoHead = File_Find(dirResources_Compressed & "Scripts" & modCompression.Formato, LCase$("Personajes.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -1091,7 +1073,7 @@ End Function
 Public Function CargarCuerpos_Uncompressed() As Boolean
 
     Dim File As Memory_Chunk
-    Set File = Aurora_Content.Find("Resources://Init/personajes.ind")
+    Set File = Aurora_Content.Find("Resources://scripts/personajes.ind")
     
     Dim Reader As BinaryReader
     Set Reader = File.GetReader()
@@ -1151,7 +1133,7 @@ On Error GoTo errhandler:
     Dim NumWeaponAnims As Integer
     Dim fileBuff  As clsByteBuffer
     
-    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & modCompression.Formato, LCase$("Armas.ind"))
+    InfoHead = File_Find(dirResources_Compressed & "Scripts" & modCompression.Formato, LCase$("Armas.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -1209,7 +1191,7 @@ End Function
 Private Function CargarAnimArmas_Uncompressed() As Boolean
 
     Dim File As Memory_Chunk
-    Set File = Aurora_Content.Find("Resources://Init/armas.ind")
+    Set File = Aurora_Content.Find("Resources://scripts/armas.ind")
     
     Dim Reader As BinaryReader
     Set Reader = File.GetReader()
@@ -1266,7 +1248,7 @@ On Error GoTo errhandler:
     Dim NumEscudosAnims As Integer
     Dim fileBuff  As clsByteBuffer
     
-    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & modCompression.Formato, LCase$("Escudos.ind"))
+    InfoHead = File_Find(dirResources_Compressed & "Scripts" & modCompression.Formato, LCase$("Escudos.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -1328,7 +1310,7 @@ Public Function CargarAnimEscudos_Uncompressed() As Boolean
     '*************************************
     
     Dim File As Memory_Chunk
-    Set File = Aurora_Content.Find("Resources://Init/armas.ind")
+    Set File = Aurora_Content.Find("Resources://scripts/armas.ind")
     
     Dim Reader As BinaryReader
     Set Reader = File.GetReader()

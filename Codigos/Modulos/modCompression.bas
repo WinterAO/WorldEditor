@@ -37,8 +37,8 @@ Public Windows_Temp_Dir As String
 Private Declare Function GetDiskFreeSpace Lib "kernel32" Alias "GetDiskFreeSpaceExA" (ByVal lpRootPathName As String, FreeBytesToCaller As Currency, bytesTotal As Currency, FreeBytesTotal As Currency) As Long
 Private Declare Function GetTempPath Lib "kernel32" Alias "GetTempPathA" (ByVal nBufferLength As Long, ByVal lpBuffer As String) As Long
 
-Private Declare Function Compress Lib "zlib.dll" Alias "compress" (dest As Any, destLen As Any, src As Any, ByVal srcLen As Long) As Long
-Private Declare Function UnCompress Lib "zlib.dll" Alias "uncompress" (dest As Any, destLen As Any, src As Any, ByVal srcLen As Long) As Long
+Private Declare Function Compress Lib "zlib.dll" Alias "compress" (Dest As Any, destLen As Any, src As Any, ByVal srcLen As Long) As Long
+Private Declare Function UnCompress Lib "zlib.dll" Alias "uncompress" (Dest As Any, destLen As Any, src As Any, ByVal srcLen As Long) As Long
 
 Public Function Formato() As String
 
@@ -55,7 +55,7 @@ Public Sub GenerateContra()
 
 'on error resume next
     Dim Contra As String
-    Dim LoopC As Byte
+    Dim loopc As Byte
     
     Contra = PasswordResources
     
@@ -63,9 +63,9 @@ Public Sub GenerateContra()
     
     If LenB(Contra) <> 0 Then
         ReDim PkContra(Len(Contra) - 1)
-        For LoopC = 0 To UBound(PkContra)
-            PkContra(LoopC) = Asc(mid(Contra, LoopC + 1, 1))
-        Next LoopC
+        For loopc = 0 To UBound(PkContra)
+            PkContra(loopc) = Asc(mid(Contra, loopc + 1, 1))
+        Next loopc
     End If
     
 End Sub
@@ -78,15 +78,15 @@ Public Sub Decompress_Data(ByRef Data() As Byte, ByVal OrigSize As Long)
 '*****************************************************************
 
     Dim BufTemp() As Byte
-    Dim LoopC As Integer
+    Dim loopc As Integer
     
     ReDim BufTemp(OrigSize - 1)
     
     'Des-encrypt the first byte of the compressed data
     If UBound(PkContra) <= UBound(Data) And UBound(PkContra) <> 0 Then
-        For LoopC = 0 To UBound(PkContra)
-            Data(LoopC) = Data(LoopC) Xor PkContra(LoopC)
-        Next LoopC
+        For loopc = 0 To UBound(PkContra)
+            Data(loopc) = Data(loopc) Xor PkContra(loopc)
+        Next loopc
     End If
     
     UnCompress BufTemp(0), OrigSize, Data(0), UBound(Data) + 1
@@ -111,15 +111,15 @@ End Sub
 
 Private Sub encryptHeaderInfo(ByRef InfoHead As INFOHEADER)
     Dim EncryptedFileName As String
-    Dim LoopC As Long
+    Dim loopc As Long
     
-    For LoopC = 1 To Len(InfoHead.strFileName)
-        If LoopC Mod 2 = 0 Then
-            EncryptedFileName = EncryptedFileName & Chr(Asc(mid(InfoHead.strFileName, LoopC, 1)) Xor 12)
+    For loopc = 1 To Len(InfoHead.strFileName)
+        If loopc Mod 2 = 0 Then
+            EncryptedFileName = EncryptedFileName & Chr(Asc(mid(InfoHead.strFileName, loopc, 1)) Xor 12)
         Else
-            EncryptedFileName = EncryptedFileName & Chr(Asc(mid(InfoHead.strFileName, LoopC, 1)) Xor 23)
+            EncryptedFileName = EncryptedFileName & Chr(Asc(mid(InfoHead.strFileName, loopc, 1)) Xor 23)
         End If
-    Next LoopC
+    Next loopc
     
     'Each different variable is encrypted with a different key for extra security
     With InfoHead
@@ -175,7 +175,7 @@ Public Function extractMusic(ByVal file_name As String, Optional ByVal Midi As B
 'Extracts all files from a resource file
 '*****************************************************************
 
-    Dim LoopC As Long
+    Dim loopc As Long
     
     Dim SourceFilePath As String
     Dim OutputFilePath As String
@@ -192,11 +192,11 @@ On Local Error GoTo errhandler
     
     If Midi = False Then
         'Find the Info Head of the desired file
-        SourceFilePath = dirRecursos_Compressed & "Musica" & Formato
+        SourceFilePath = dirResources_Compressed & "Musica" & Formato
         InfoHead = File_Find(SourceFilePath, file_name & ".mp3")
     Else
         'Find the Info Head of the desired file
-        SourceFilePath = dirRecursos_Compressed & "Midi" & Formato
+        SourceFilePath = dirResources_Compressed & "Midi" & Formato
         InfoHead = File_Find(SourceFilePath, file_name & ".mid")
     End If
     
@@ -272,7 +272,7 @@ Public Function Extract_File_Memory(ByVal File_Type As srcFileType, ByVal file_n
 'Extra archivos en memoria
 '*********************************************
 
-    Dim LoopC As Long
+    Dim loopc As Long
     Dim SourceFilePath As String
     Dim InfoHead As INFOHEADER
     Dim handle As Integer
@@ -282,31 +282,31 @@ On Local Error GoTo errhandler
     Select Case File_Type
     
         Case Graphics
-                SourceFilePath = dirRecursos_Compressed & "Graficos" & Formato
+                SourceFilePath = dirResources_Compressed & "Graficos" & Formato
             
         Case Music
-                SourceFilePath = dirRecursos_Compressed & "Musica" & Formato
+                SourceFilePath = dirResources_Compressed & "Musica" & Formato
                 
         Case Midi
-                SourceFilePath = dirRecursos_Compressed & "Midi" & Formato
+                SourceFilePath = dirResources_Compressed & "Midi" & Formato
         
         Case Wav
-                SourceFilePath = dirRecursos_Compressed & "Sounds" & Formato
+                SourceFilePath = dirResources_Compressed & "Sounds" & Formato
 
         Case Scripts
-                SourceFilePath = dirRecursos_Compressed & "Scripts" & Formato
+                SourceFilePath = dirResources_Compressed & "Scripts" & Formato
 
         Case Map
-                SourceFilePath = dirRecursos_Compressed & "Mapas" & Formato
+                SourceFilePath = dirResources_Compressed & "Mapas" & Formato
 
         Case Ambient
-                SourceFilePath = dirRecursos_Compressed & "Ambient" & Formato
+                SourceFilePath = dirResources_Compressed & "Ambient" & Formato
                 
         Case Fuentes
-                SourceFilePath = dirRecursos_Compressed & "Fuentes" & Formato
+                SourceFilePath = dirResources_Compressed & "Fuentes" & Formato
                 
         Case Minimap
-                SourceFilePath = dirRecursos_Compressed & "Minimap" & Formato
+                SourceFilePath = dirResources_Compressed & "Minimap" & Formato
                 
         Case Else
             Exit Function

@@ -50,8 +50,8 @@ End Type
 
 Private Type Particle
     friction As Single
-    X As Single
-    Y As Single
+    x As Single
+    y As Single
     vector_x As Single
     vector_y As Single
     angle As Single
@@ -180,7 +180,7 @@ On Error GoTo errhandler:
     Dim ColorSet As Long
     Dim fileBuff  As clsByteBuffer
     
-    InfoHead = File_Find(dirRecursos_Compressed & "Scripts" & modCompression.Formato, LCase$("Particulas.ind"))
+    InfoHead = File_Find(dirResources_Compressed & "Scripts" & modCompression.Formato, LCase$("Particulas.ind"))
     
     If InfoHead.lngFileSize <> 0 Then
     
@@ -294,8 +294,8 @@ Private Function CargarParticulas_Uncompressed() As Boolean
 
     Dim ColorSet   As Long
     
-    If Not FileExist(dirRecursos_Uncompressed & "Scripts\Particulas.ind", vbArchive) Then
-        MsgBox ("No se ha encontrado el archivo Particulas.ini en el directorio: " & dirRecursos_Uncompressed & "Scripts\Particulas.ind")
+    If Not FileExist(dirResources_Uncompressed & "Scripts\Particulas.ind", vbArchive) Then
+        MsgBox ("No se ha encontrado el archivo Particulas.ini en el directorio: " & dirResources_Uncompressed & "Scripts\Particulas.ind")
         CargarParticulas_Uncompressed = False
         Exit Function
 
@@ -310,7 +310,7 @@ Private Function CargarParticulas_Uncompressed() As Boolean
     '****************************************
 
     N = FreeFile
-    Open dirRecursos_Uncompressed & "Scripts\Particulas.ind" For Binary Access Read As #N
+    Open dirResources_Uncompressed & "Scripts\Particulas.ind" For Binary Access Read As #N
     
     'Numero de particulas
     Get #N, , TotalStreams
@@ -393,8 +393,8 @@ errhandler:
 End Function
 
 Public Function General_Particle_Create(ByVal ParticulaInd As Long, _
-                                        ByVal X As Integer, _
-                                        ByVal Y As Integer, _
+                                        ByVal x As Integer, _
+                                        ByVal y As Integer, _
                                         Optional ByVal particle_life As Long = 0) As Long
 
     Dim rgb_list(0 To 3) As RGBA
@@ -407,7 +407,7 @@ Public Function General_Particle_Create(ByVal ParticulaInd As Long, _
         Call SetRGBA(rgb_list(2), .colortint(2).B, .colortint(2).G, .colortint(2).R)
         Call SetRGBA(rgb_list(3), .colortint(3).B, .colortint(3).G, .colortint(3).R)
     
-        General_Particle_Create = Particle_Group_Create(X, Y, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, .alphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .speed, , .x1, .y1, .angle, .vecx1, .vecx2, .vecy1, .vecy2, .life1, .life2, .friction, .spin_speedL, .gravity, .grav_strength, .bounce_strength, .x2, .y2, .XMove, .move_x1, .move_x2, .move_y1, .move_y2, .YMove, .spin_speedH, .spin)
+        General_Particle_Create = Particle_Group_Create(x, y, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, .alphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .speed, , .x1, .y1, .angle, .vecx1, .vecx2, .vecy1, .vecy2, .life1, .life2, .friction, .spin_speedL, .gravity, .grav_strength, .bounce_strength, .x2, .y2, .XMove, .move_x1, .move_x2, .move_y1, .move_y2, .YMove, .spin_speedH, .spin)
 
     End With
 
@@ -537,8 +537,8 @@ Private Sub Particle_Render(ByRef temp_particle As Particle, ByVal screen_x As I
             
                 'Start new particle
                 Call InitGrh(.Grh, grh_index)
-                .X = RandomNumber(x1, x2) - 16
-                .Y = RandomNumber(y1, y2) - 16
+                .x = RandomNumber(x1, x2) - 16
+                .y = RandomNumber(y1, y2) - 16
                 .vector_x = RandomNumber(vecx1, vecx2)
                 .vector_y = RandomNumber(vecy1, vecy2)
                 .alive_counter = RandomNumber(life1, life2)
@@ -552,7 +552,7 @@ Private Sub Particle_Render(ByRef temp_particle As Particle, ByVal screen_x As I
                     
                     .vector_y = .vector_y + grav_strength
                     
-                    If .Y > 0 Then
+                    If .y > 0 Then
                         'bounce
                         .vector_y = bounce_strength
                     End If
@@ -570,8 +570,8 @@ Private Sub Particle_Render(ByRef temp_particle As Particle, ByVal screen_x As I
             End If
             
             'Add in vector
-            .X = .X + (.vector_x \ .friction)
-            .Y = .Y + (.vector_y \ .friction)
+            .x = .x + (.vector_x \ .friction)
+            .y = .y + (.vector_y \ .friction)
         
             'decrement counter
              .alive_counter = .alive_counter - 1
@@ -579,7 +579,7 @@ Private Sub Particle_Render(ByRef temp_particle As Particle, ByVal screen_x As I
         
         'Draw it
         If .Grh.GrhIndex Then
-            Call Draw_Grh(.Grh, .X + screen_x, .Y + screen_y, 1, rgb_list(), 1, True, .angle)
+            Call Draw_Grh(.Grh, .x + screen_x, .y + screen_y, 1, rgb_list(), 1, True, .angle)
         End If
         
     End With

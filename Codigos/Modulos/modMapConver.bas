@@ -175,8 +175,6 @@ Sub Cargar_ConverCSM(ByVal Map As String)
 
     Dim TEs()        As tDatosTE
     
-    Dim LaCabecera   As tCabecera
-    
     Dim i            As Long
 
     Dim j            As Long
@@ -188,8 +186,6 @@ Sub Cargar_ConverCSM(ByVal Map As String)
         
     fh = FreeFile
     Open Map For Binary Access Read As fh
-    
-    Get #fh, , LaCabecera
     
     Get #fh, , MH
     Get #fh, , MapSize
