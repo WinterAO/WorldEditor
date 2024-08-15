@@ -258,7 +258,7 @@ Public Sub NuevaZona(ByVal id As Integer)
 
     CantZonas = CantZonas + 1
     
-    ReDim Preserve MapZonas(CantZonas) As tMapInfo
+    ReDim Preserve MapZonas(CantZonas) As tZonaInfo
 
     If id <= CantZonas Then Call ResetearZona(id)
     
@@ -284,6 +284,7 @@ Public Sub ResetearZona(ByVal id As Integer)
     End If
 
     With MapZonas(CantZonas)
+    
         .name = "Zona Desconocida"
         .Music = 0
         .Ambient = 0
@@ -320,7 +321,7 @@ Public Sub EliminarZona()
     
     CantZonas = CantZonas - 1
     
-    ReDim Preserve MapZonas(CantZonas) As tMapInfo
+    ReDim Preserve MapZonas(CantZonas) As tZonaInfo
     ReDim Preserve colorZona(CantZonas) As RGBA
     
 End Sub
@@ -493,7 +494,7 @@ Public Sub ResetearZonas()
 '***************************************
 
     CantZonas = 0
-    ReDim MapZonas(CantZonas) As tMapInfo
+    ReDim MapZonas(CantZonas) As tZonaInfo
     
     frmZonas.LstZona.Clear
     

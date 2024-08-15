@@ -132,9 +132,6 @@ End Type
 Public MapSize   As tMapSize
 Private MapDat() As tMapDat
 
-' -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-' [Carga de mapas formato Winter]
-' -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Sub Cargar_CSM(ByVal Map As String)
     '***************************************************
     'Author: Lorwik
@@ -409,93 +406,6 @@ ErrorHandler:
 
 End Sub
 
-Private Sub CSMInfoCargar()
-    '**********************************
-    'Autor: Lorwik
-    'Fecha: 14/03/2021
-    'Descripcion: Cargar la informacion de los mapas de WinterAO.
-    '**********************************
-
-    Dim i  As Integer
-
-    Dim tR As Byte
-
-    Dim tG As Byte
-
-    Dim tB As Byte
-
-    CantZonas = UBound(MapDat)
-    
-    If CantZonas < 1 Then Exit Sub
-    
-    ReDim MapZonas(CantZonas) As tMapInfo
-    
-    frmZonas.LstZona.Clear
-
-    For i = 1 To CantZonas
-
-        With MapZonas(i)
-        
-            .name = MapDat(i).map_name
-            .Music = MapDat(i).music_number
-        
-            .MagiaSinEfecto = MapDat(i).MagiaSinEfecto
-            .InviSinEfecto = MapDat(i).InviSinEfecto
-            .ResuSinEfecto = MapDat(i).ResuSinEfecto
-            .RoboNpcsPermitido = MapDat(i).RoboNpcsPermitido
-            .InvocarSinEfecto = MapDat(i).InvocarSinEfecto
-            .OcultarSinEfecto = MapDat(i).OcultarSinEfecto
-            
-            .lvlMinimo = Val(MapDat(i).lvlMinimo)
-            .lvlMaximo = Val(MapDat(i).lvlMaximo)
-            .LuzBase = MapDat(i).LuzBase
-            
-            If MapDat(i).LuzBase <> 0 Then
-                frmMapInfo.chkLuzClimatica = Checked
-                Call ConvertLongToRGB(MapDat(i).LuzBase, tR, tG, tB)
-                
-                Estado_Custom.A = 255
-                Estado_Custom.R = tR
-                Estado_Custom.G = tG
-                Estado_Custom.B = tB
-                
-                Call Actualizar_Estado
-                
-                frmMapInfo.LuzMapa.Text = tR & "-" & tG & "-" & tB
-                frmMapInfo.PicColorMap.BackColor = .LuzBase
-                
-            Else
-                frmMapInfo.chkLuzClimatica = Unchecked
-                
-            End If
-            
-            If MapDat(i).battle_mode = True Then
-                .PK = True
-            Else
-                .PK = False
-
-            End If
-            
-            .Ambient = MapDat(i).Ambient
-            
-            .Terreno = MapDat(i).terrain
-            .Zona = MapDat(i).zone
-            .Restringir = MapDat(i).restrict_mode
-            .BackUp = MapDat(i).backup_mode
-        
-            frmZonas.LstZona.AddItem (i & " - " & .name)
-        
-        End With
-
-    Next i
-    
-    Call MapInfo_Actualizar
-
-End Sub
-
-' -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-' [Guardado de mapas Winter]
-' -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Public Function Save_CSM(ByVal MapRoute As String) As Boolean
 
     On Error GoTo ErrorHandler
@@ -732,6 +642,90 @@ ErrorHandler:
     If fh <> 0 Then Close fh
 
 End Function
+
+Private Sub CSMInfoCargar()
+    '**********************************
+    'Autor: Lorwik
+    'Fecha: 14/03/2021
+    'Descripcion: Cargar la informacion de los mapas de WinterAO.
+    '**********************************
+
+    Dim i  As Integer
+
+    Dim tR As Byte
+
+    Dim tG As Byte
+
+    Dim tB As Byte
+
+    CantZonas = UBound(MapDat)
+    
+    If CantZonas < 1 Then Exit Sub
+    
+    ReDim MapZonas(CantZonas) As tZonaInfo
+    
+    frmZonas.LstZona.Clear
+
+    For i = 1 To CantZonas
+
+        With MapZonas(i)
+        
+            .name = MapDat(i).map_name
+            .Music = MapDat(i).music_number
+        
+            .MagiaSinEfecto = MapDat(i).MagiaSinEfecto
+            .InviSinEfecto = MapDat(i).InviSinEfecto
+            .ResuSinEfecto = MapDat(i).ResuSinEfecto
+            .RoboNpcsPermitido = MapDat(i).RoboNpcsPermitido
+            .InvocarSinEfecto = MapDat(i).InvocarSinEfecto
+            .OcultarSinEfecto = MapDat(i).OcultarSinEfecto
+            
+            .lvlMinimo = Val(MapDat(i).lvlMinimo)
+            .lvlMaximo = Val(MapDat(i).lvlMaximo)
+            .LuzBase = MapDat(i).LuzBase
+            
+            If MapDat(i).LuzBase <> 0 Then
+                frmMapInfo.chkLuzClimatica = Checked
+                Call ConvertLongToRGB(MapDat(i).LuzBase, tR, tG, tB)
+                
+                Estado_Custom.A = 255
+                Estado_Custom.R = tR
+                Estado_Custom.G = tG
+                Estado_Custom.B = tB
+                
+                Call Actualizar_Estado
+                
+                frmMapInfo.LuzMapa.Text = tR & "-" & tG & "-" & tB
+                frmMapInfo.PicColorMap.BackColor = .LuzBase
+                
+            Else
+                frmMapInfo.chkLuzClimatica = Unchecked
+                
+            End If
+            
+            If MapDat(i).battle_mode = True Then
+                .PK = True
+            Else
+                .PK = False
+
+            End If
+            
+            .Ambient = MapDat(i).Ambient
+            
+            .Terreno = MapDat(i).terrain
+            .Zona = MapDat(i).zone
+            .Restringir = MapDat(i).restrict_mode
+            .BackUp = MapDat(i).backup_mode
+        
+            frmZonas.LstZona.AddItem (i & " - " & .name)
+        
+        End With
+
+    Next i
+    
+    Call MapInfo_Actualizar
+
+End Sub
 
 Private Sub CSMInfoSave()
     '**********************************

@@ -539,7 +539,7 @@ Public Sub Insertar_ZonasxCuadrantes()
         CantZonas = CuadrantesHorizontal * CuadrantesVertical
         
         'Redimensionamos el array de zonas
-        ReDim MapZonas(CantZonas) As tMapInfo
+        ReDim MapZonas(CantZonas) As tZonaInfo
         
         frmZonas.LstZona.Clear
         

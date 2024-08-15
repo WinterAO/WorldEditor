@@ -422,7 +422,7 @@ Private Sub CSMInfoCargar()
     
     If CantZonas < 1 Then Exit Sub
     
-    ReDim MapZonas(CantZonas) As tMapInfo
+    ReDim MapZonas(CantZonas) As tZonaInfo
     
     frmZonas.LstZona.Clear
 

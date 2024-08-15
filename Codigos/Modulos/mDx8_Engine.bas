@@ -50,8 +50,8 @@ Public ScreenHeight As Long
 Public MainScreenRect As RECT
 
 Public Type TLVERTEX
-    x As Single
-    y As Single
+    X As Single
+    Y As Single
     Z As Single
     rhw As Single
     color As Long
@@ -269,7 +269,6 @@ On Error GoTo EngineHandler:
     Set DirectX = Nothing
     Set DirectDevice = Nothing
     Set SpriteBatch = Nothing
-    Set Sound = Nothing
     Set LucesRedondas = Nothing
     Set Inventario = Nothing
     
@@ -393,14 +392,14 @@ Engine_ElapsedTime_Err:
     Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_ElapsedTime", Erl)
 End Function
 
-Public Function Engine_PixelPosX(ByVal x As Long) As Long
+Public Function Engine_PixelPosX(ByVal X As Long) As Long
 '*****************************************************************
 'Converts a tile position to a screen position
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosX
 '*****************************************************************
     On Error GoTo Engine_PixelPosX_Err
 
-    Engine_PixelPosX = (x - 1) * 32
+    Engine_PixelPosX = (X - 1) * 32
     
     Exit Function
     
@@ -410,14 +409,14 @@ Engine_PixelPosX_Err:
 
 End Function
 
-Public Function Engine_PixelPosY(ByVal y As Long) As Long
+Public Function Engine_PixelPosY(ByVal Y As Long) As Long
 '*****************************************************************
 'Converts a tile position to a screen position
 'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosY
 '*****************************************************************
     On Error GoTo Engine_PixelPosY_Err
 
-    Engine_PixelPosY = (y - 1) * 32
+    Engine_PixelPosY = (Y - 1) * 32
     
     Exit Function
     
@@ -426,7 +425,7 @@ Engine_PixelPosY_Err:
     Call RegistrarError(Err.Number, Err.Description, "mDx8_Engine.Engine_PixelPosY", Erl)
 End Function
 
-Public Sub Engine_Draw_Box(ByVal x As Integer, ByVal y As Integer, ByVal Width As Integer, ByVal Height As Integer, color As Long)
+Public Sub Engine_Draw_Box(ByVal X As Integer, ByVal Y As Integer, ByVal Width As Integer, ByVal Height As Integer, color As Long)
 '***************************************************
 'Author: Ezequiel Juarez (Standelf)
 'Last Modification: 29/12/10
@@ -437,7 +436,7 @@ Public Sub Engine_Draw_Box(ByVal x As Integer, ByVal y As Integer, ByVal Width A
     Call Long_2_RGBAList(temp_rgb(), color)
 
     Call SpriteBatch.SetTexture(Nothing)
-    Call SpriteBatch.Draw(x, y, Width, ByVal Height, temp_rgb())
+    Call SpriteBatch.Draw(X, Y, Width, ByVal Height, temp_rgb())
     
     Exit Sub
     

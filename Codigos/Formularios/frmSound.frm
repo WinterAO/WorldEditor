@@ -42,23 +42,23 @@ Begin VB.Form frmSound
       TabIndex        =   7
       Top             =   60
       Width           =   3075
-      Begin VB.HScrollBar scrAmbient 
+      Begin VB.HScrollBar Slider1 
          Height          =   405
+         Index           =   1
          LargeChange     =   15
          Left            =   60
-         Max             =   0
-         Min             =   -4000
+         Max             =   100
          SmallChange     =   2
          TabIndex        =   10
          Top             =   1260
          Width           =   2895
       End
-      Begin VB.HScrollBar scrMusic 
+      Begin VB.HScrollBar Slider1 
          Height          =   405
+         Index           =   0
          LargeChange     =   15
          Left            =   60
-         Max             =   0
-         Min             =   -4000
+         Max             =   100
          SmallChange     =   2
          TabIndex        =   8
          Top             =   450
@@ -113,21 +113,29 @@ Begin VB.Form frmSound
       TabIndex        =   5
       Top             =   1410
       Width           =   1665
-      _extentx        =   2937
-      _extenty        =   820
-      caption         =   "Reproducir"
-      capalign        =   2
-      backstyle       =   2
-      shape           =   1
-      gradient        =   3
-      cgradient       =   0
-      cfore           =   16777215
-      font            =   "frmSound.frx":0000
-      mode            =   0
-      value           =   0   'False
-      cfhover         =   16777215
-      cback           =   65280
-      cbhover         =   0
+      _ExtentX        =   2937
+      _ExtentY        =   820
+      Caption         =   "Reproducir"
+      CapAlign        =   2
+      BackStyle       =   2
+      Shape           =   1
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
+      cGradient       =   0
+      Gradient        =   3
+      Mode            =   0
+      Value           =   0   'False
+      cBack           =   65280
    End
    Begin VB.Frame FraSonido 
       BackColor       =   &H00535353&
@@ -240,21 +248,29 @@ Begin VB.Form frmSound
       TabIndex        =   6
       Top             =   1410
       Width           =   1665
-      _extentx        =   2937
-      _extenty        =   820
-      caption         =   "Detener"
-      capalign        =   2
-      backstyle       =   2
-      shape           =   2
-      gradient        =   3
-      cgradient       =   0
-      cfore           =   16777215
-      font            =   "frmSound.frx":0028
-      mode            =   0
-      value           =   0   'False
-      cfhover         =   16777215
-      cback           =   255
-      cbhover         =   0
+      _ExtentX        =   2937
+      _ExtentY        =   820
+      Caption         =   "Detener"
+      CapAlign        =   2
+      BackStyle       =   2
+      Shape           =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      cFore           =   16777215
+      cFHover         =   16777215
+      cBhover         =   0
+      cGradient       =   0
+      Gradient        =   3
+      Mode            =   0
+      Value           =   0   'False
+      cBack           =   255
    End
 End
 Attribute VB_Name = "frmSound"
@@ -264,14 +280,33 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Sub Form_Load()
+
+    If modEngine_Audio.MusicEnabled Then
+        Slider1(0).Enabled = True
+        Slider1(0).value = modEngine_Audio.MusicVolume
+    Else
+        Slider1(0).Enabled = False
+    End If
+    
+    If modEngine_Audio.AmbientEnabled Then
+        Slider1(1).Enabled = True
+        Slider1(1).value = modEngine_Audio.AmbientVolume
+    Else
+        Slider1(1).Enabled = False
+    End If
+    
+End Sub
+
 Private Sub LvBDetener_Click()
 '***********************************
 'Autor: Lorwik
 'Fecha: 01/05/2021
 '***********************************
 
-    Sound.Music_Stop
-    Sound.Ambient_Stop
+    Call modEngine_Audio.StopMusic
+    Call modEngine_Audio.StopAmbient
+
 End Sub
 
 Private Sub LvBReproducir_Click()
@@ -292,20 +327,10 @@ Private Sub LvBReproducir_Click()
     End If
     
     If OptSound(0).value Then 'Musica
-    
-        ClientSetup.bMusic = CONST_MP3
-    
-        'Reproducimos la música del mapa
-        If ClientSetup.bMusic <> CONST_DESHABILITADA Then
-            If ClientSetup.bMusic <> CONST_DESHABILITADA Then
-                Sound.NextMusic = Val(txtPista.Text)
-                Sound.Fading = 250
-            End If
-
-        End If
+        Call modEngine_Audio.PlayMusic(Val(txtPista.Text) & ".mp3")
     
     Else 'Ambient
-        MapInfo.Ambient = Val(txtPista.Text)
+        Call modEngine_Audio.PlayAmbient(Val(txtPista.Text) & ".wav")
     
     End If
     
@@ -319,3 +344,22 @@ Private Sub OptSound_Click(Index As Integer)
 
     Call LvBDetener_Click
 End Sub
+
+Private Sub Slider1_Change(Index As Integer)
+    Select Case Index
+        Case 0
+            modEngine_Audio.MusicVolume = Slider1(0).value
+        Case 1
+            modEngine_Audio.EffectVolume = Slider1(1).value
+    End Select
+End Sub
+
+Private Sub Slider1_Scroll(Index As Integer)
+    Select Case Index
+        Case 0
+            modEngine_Audio.MusicVolume = Slider1(0).value
+        Case 1
+            modEngine_Audio.EffectVolume = Slider1(1).value
+    End Select
+End Sub
+

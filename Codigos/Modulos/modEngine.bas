@@ -19,13 +19,12 @@ Option Explicit
 ' [Engine::Services]
 ' -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+Public Aurora_Audio    As Audio_Service
 Public Aurora_Content  As Content_Service
 
 ' -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ' [Engine::Main]
 ' -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
-
 Public Sub Initialize()
 
     Dim Configuration As Kernel_Properties
@@ -35,8 +34,16 @@ Public Sub Initialize()
     Configuration.WindowTitle = "WinterMapEditor"
     
     Call Kernel.Initialize(eKernelModeClient, Configuration)
+    
+    Set Aurora_Audio = Kernel.Audio
 
     Set Aurora_Content = Kernel.Content
     Call Aurora_Content.AddSystemLocator("Resources", dirResources_Uncompressed)
+    
+End Sub
+
+Public Sub Tick()
+
+    Call Kernel.Tick
     
 End Sub

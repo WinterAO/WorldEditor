@@ -1,9 +1,9 @@
-08/15/24 13:53:19.071 [3264] - I - Kernel: Creating platform service
-08/15/24 13:53:19.080 [3264] - I - Kernel: Creating input service
-08/15/24 13:53:19.080 [3264] - I - Kernel: Creating graphics service
-08/15/24 13:53:19.280 [3264] - I - Graphics: Detected shader model 5
-08/15/24 13:53:19.280 [3264] - I - Graphics: Found GPU 'NVIDIA GeForce RTX 3070'
-08/15/24 13:53:19.280 [3264] - I - Graphics:     Memory 3072 (video), 0 (system), 1023 (shared)
-08/15/24 13:53:19.280 [3264] - I - Kernel: Creating audio service
-08/15/24 13:53:19.323 [3264] - I - Kernel: Creating content service
-08/15/24 13:53:19.323 [3264] - I - Kernel: Creating network service
+08/15/24 20:51:43.103 [16236] - I - Kernel: Creating platform service
+08/15/24 20:51:43.108 [16236] - I - Kernel: Creating input service
+08/15/24 20:51:43.108 [16236] - I - Kernel: Creating graphics service
+08/15/24 20:51:43.217 [16236] - I - Graphics: Detected shader model 5
+08/15/24 20:51:43.217 [16236] - I - Graphics: Found GPU 'NVIDIA GeForce RTX 3070'
+08/15/24 20:51:43.217 [16236] - I - Graphics:     Memory 3072 (video), 0 (system), 1023 (shared)
+08/15/24 20:51:43.217 [16236] - I - Kernel: Creating audio service
+08/15/24 20:51:43.398 [16236] - I - Kernel: Creating content service
+08/15/24 20:51:43.398 [16236] - I - Kernel: Creating network service

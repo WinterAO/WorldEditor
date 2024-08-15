@@ -894,8 +894,8 @@ Public Sub guardarInfoZona(ByVal id As Integer)
     
     With MapZonas(id)
         .name = txtMapNombre.Text
-        .Music = txtMapMusica.Text
-        .Ambient = TxtAmbient.Text
+        .Music = Val(txtMapMusica.Text)
+        .Ambient = Val(TxtAmbient.Text)
         .PK = chkMapPK.value
         .MagiaSinEfecto = chkMapMagiaSinEfecto.value
         .InviSinEfecto = chkMapInviSinEfecto.value

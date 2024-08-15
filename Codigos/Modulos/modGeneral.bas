@@ -62,14 +62,13 @@ Sub Main()
     DoEvents
     Call mDx8_Engine.Engine_DirectX8_Aditional_Init
     
-    frmCarga.lblStatus.Caption = "Iniciando motor de Sonido."
-    DoEvents
-    Set Sound = New clsSoundEngine
-
-    If Not Sound.Initialize_Engine(frmMain.hWnd, dirResources_Compressed, False, True, True, ClientSetup.SoundVolume, ClientSetup.MusicVolume, ClientSetup.Invertido) Then
-        MsgBox "¡No se ha logrado iniciar el engine de DirectSound! Reinstale los últimos controladores de DirectX. No habrá soporte de audio en el editor.", vbCritical, "Advertencia"
-        
-    End If
+    'Enable / Disable audio
+    modEngine_Audio.MusicEnabled = ClientSetup.Audio_MusicEnabled
+    modEngine_Audio.MusicVolume = ClientSetup.Audio_MusicVolume
+    modEngine_Audio.EffectEnabled = ClientSetup.Audio_EffectEnabled
+    modEngine_Audio.EffectVolume = ClientSetup.Audio_EffectVolume
+    modEngine_Audio.AmbientEnabled = ClientSetup.Audio_AmbientEnabled
+    modEngine_Audio.AmbientVolume = ClientSetup.Audio_AmbientVolume
     
     'Carga de indices
     '------------------------
@@ -146,8 +145,6 @@ Sub Main()
             
             If frmParticulas.Visible Then Call RenderParticlePreview
             
-            Call Sound.Sound_Render
-            
             Call CheckKeys
             
             If CurrentGrh.GrhIndex = 0 Then InitGrh CurrentGrh, 1
@@ -155,6 +152,9 @@ Sub Main()
         End If
     
         DoEvents
+        
+        Call modEngine.Tick
+        Call modEngine_Audio.Update(&H0, UserPos.X, UserPos.Y)
         
     Loop
     
@@ -297,14 +297,14 @@ Public Sub ToggleWalkMode()
     If Not WalkMode Then
         'Erase character
         Call Char_Erase(UserCharIndex)
-        MapData(UserPos.x, UserPos.y).CharIndex = 0
+        MapData(UserPos.X, UserPos.Y).CharIndex = 0
         
     Else
 
         'MakeCharacter
-        If LegalPos(UserPos.x, UserPos.y) Then
-            Call Char_Make(NextOpenChar(), 107, 1, SOUTH, UserPos.x, UserPos.y, 1, 11, 81)
-            UserCharIndex = MapData(UserPos.x, UserPos.y).CharIndex
+        If LegalPos(UserPos.X, UserPos.Y) Then
+            Call Char_Make(NextOpenChar(), 107, 1, SOUTH, UserPos.X, UserPos.Y, 1, 11, 81)
+            UserCharIndex = MapData(UserPos.X, UserPos.Y).CharIndex
             frmMain.mnuModoCaminata.Checked = True
             
         Else
@@ -337,11 +337,11 @@ Public Sub ObtenerCuadranteCompleto(ByRef Cuadrante As Integer, _
 
     Dim cy As Integer
     
-    cx = Fix((UserPos.x / 100))
-    cy = Fix((UserPos.y / 100))
+    cx = Fix((UserPos.X / 100))
+    cy = Fix((UserPos.Y / 100))
     
-    tX = UserPos.x - (cx * 100)
-    tY = UserPos.y - (cy * 100)
+    tX = UserPos.X - (cx * 100)
+    tY = UserPos.Y - (cy * 100)
     
     Cuadrante = cx * cy
 

@@ -1,12 +1,6 @@
 Attribute VB_Name = "modCarga"
 Option Explicit
 
-Public Enum E_SISTEMA_MUSICA
-    CONST_DESHABILITADA = 0
-    CONST_MP3 = 1
-    CONST_MIDI = 2
-End Enum
-
 Public Type tSetupMods
 
     ' VIDEO
@@ -16,13 +10,12 @@ Public Type tSetupMods
     TilesBuffer As Byte
     
     ' AUDIO
-    bMusic    As E_SISTEMA_MUSICA
-    bSound    As Byte
-    bAmbient As Byte
-    Invertido As Byte
-    MusicVolume As Long
-    SoundVolume As Long
-    AmbientVol As Long
+    Audio_MusicEnabled     As Boolean
+    Audio_MusicVolume      As Long
+    Audio_EffectEnabled    As Boolean
+    Audio_EffectVolume     As Long
+    Audio_AmbientEnabled As Boolean
+    Audio_AmbientVolume  As Long
     
     'MOSTRAR
     Preview As Boolean
@@ -383,12 +376,12 @@ On Local Error GoTo fileErr:
         MMiniMap_Zonas = frmMain.Minimap(10).Checked
         
         ' AUDIO
-        .bMusic = CByte(Val(Profile.GetValue("AUDIO", "MUSICA")))
-        .bSound = CByte(Val(Profile.GetValue("AUDIO", "SONIDO")))
-        .bAmbient = CByte(Val(Profile.GetValue("AUDIO", "AMBIENT")))
-        .MusicVolume = CLng(Val(Profile.GetValue("AUDIO", "VOLMUSICA")))
-        .SoundVolume = CLng(Val(Profile.GetValue("AUDIO", "VOLAUDIO")))
-        .AmbientVol = CLng(Val(Profile.GetValue("AUDIO", "VOLAMBIENT")))
+        .Audio_MusicEnabled = CBool(Val(Profile.GetValue("AUDIO", "MusicEnabled")))
+        .Audio_MusicVolume = Val(Profile.GetValue("AUDIO", "MusicVolume"))
+        .Audio_EffectEnabled = CBool(Val(Profile.GetValue("AUDIO", "EffectEnabled")))
+        .Audio_EffectVolume = Val(Profile.GetValue("AUDIO", "EffectVolume"))
+        .Audio_AmbientEnabled = CBool(Val(Profile.GetValue("AUDIO", "AmbientEnabled")))
+        .Audio_AmbientVolume = Val(Profile.GetValue("AUDIO", "AmbientVolume"))
         
         ' AUTO-CAPTURA
         .AutoCapturarSuperficies = CBool(Val(Profile.GetValue("AUTO-CAPTURAR", "Superficies")))
@@ -1044,8 +1037,8 @@ On Error GoTo errhandler:
                 Call InitGrh(BodyData(i).Walk(3), MisCuerpos(i).Body(3), 0)
                 Call InitGrh(BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0)
                 
-                BodyData(i).HeadOffset.x = MisCuerpos(i).HeadOffsetX
-                BodyData(i).HeadOffset.y = MisCuerpos(i).HeadOffsetY
+                BodyData(i).HeadOffset.X = MisCuerpos(i).HeadOffsetX
+                BodyData(i).HeadOffset.Y = MisCuerpos(i).HeadOffsetY
             End If
         Next i
     
@@ -1093,8 +1086,8 @@ Public Function CargarCuerpos_Uncompressed() As Boolean
             Call InitGrh(BodyData(i).Walk(3), Reader.ReadInt32(), 0)
             Call InitGrh(BodyData(i).Walk(4), Reader.ReadInt32(), 0)
                 
-            BodyData(i).HeadOffset.x = Reader.ReadInt16()
-            BodyData(i).HeadOffset.y = Reader.ReadInt16()
+            BodyData(i).HeadOffset.X = Reader.ReadInt16()
+            BodyData(i).HeadOffset.Y = Reader.ReadInt16()
         Next i
     
         CargarCuerpos_Uncompressed = True

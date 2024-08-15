@@ -16,7 +16,6 @@ Public ProfileTag        As String ' Perfil seleccionado
 '#######################
 'Objetos publicos
 '#######################
-Public Sound             As clsSoundEngine
 
 Public LucesRedondas     As clsLucesRedondas
 
@@ -210,8 +209,8 @@ End Type
 'Posicion en un mapa
 Public Type Position
 
-    x As Integer
-    y As Integer
+    X As Integer
+    Y As Integer
 
 End Type
 
@@ -249,8 +248,8 @@ End Type
 Public Type WorldPos
 
     Map As Integer
-    x As Integer
-    y As Integer
+    X As Integer
+    Y As Integer
 
 End Type
 
@@ -350,7 +349,7 @@ Public Type MapBlock
 End Type
 
 'Hold info about each map
-Public Type tMapInfo
+Public Type tZonaInfo
 
     Music As Integer
     name As String
@@ -462,7 +461,7 @@ Public MapData()            As MapBlock 'Holds map data for current map
 
 Public CharList(1 To 10000) As Char 'Holds info about all characters on map
 
-Public MapZonas()           As tMapInfo
+Public MapZonas()           As tZonaInfo
 
 Public SupData()            As SupData
 
@@ -477,7 +476,7 @@ Public UserMoving           As Byte
 
 Public UserPos              As Position 'Posicion
 
-Public MapInfo              As tMapInfo 'Holds map info for current map
+Public MapInfo              As tZonaInfo 'Holds map info for current map
 
 Public CurrentGrh           As Grh
 
