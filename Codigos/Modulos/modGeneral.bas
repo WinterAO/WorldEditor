@@ -48,7 +48,6 @@ Sub Main()
     
     Call GenerateContra
     Call modCarga.leerPerfil 'Leemos el resto de la config
-    Call modCarga.IniciarCabecera
     
     frmCarga.lblStatus.Caption = "Iniciando motor grafico (1/3)."
     DoEvents

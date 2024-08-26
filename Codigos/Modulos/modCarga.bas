@@ -1,14 +1,6 @@
 Attribute VB_Name = "modCarga"
 Option Explicit
 
-Public Type tCabecera 'Cabecera de los con
-    Desc As String * 255
-    CRC As Long
-    MagicWord As Long
-End Type
-
-Public MiCabecera As tCabecera
-
 Public Enum E_SISTEMA_MUSICA
     CONST_DESHABILITADA = 0
     CONST_MP3 = 1
@@ -109,16 +101,6 @@ Private Function autoCompletaPath(ByVal path As String) As String
     autoCompletaPath = path
     
 End Function
-
-Public Sub IniciarCabecera()
-
-    With MiCabecera
-        .Desc = "WinterAO Resurrection mod Argentum Online by Noland Studios. http://winterao.com.ar"
-        .CRC = Rnd * 245
-        .MagicWord = Rnd * 92
-    End With
-    
-End Sub
 
 Public Function guardarPerfil() As Boolean
 

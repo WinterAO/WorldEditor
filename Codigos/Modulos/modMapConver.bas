@@ -175,8 +175,6 @@ Sub Cargar_ConverCSM(ByVal Map As String)
 
     Dim TEs()        As tDatosTE
     
-    Dim LaCabecera   As tCabecera
-    
     Dim i            As Long
 
     Dim j            As Long
@@ -188,8 +186,6 @@ Sub Cargar_ConverCSM(ByVal Map As String)
         
     fh = FreeFile
     Open Map For Binary Access Read As fh
-    
-    Get #fh, , LaCabecera
     
     Get #fh, , MH
     Get #fh, , MapSize
@@ -405,7 +401,7 @@ ErrorHandler:
 
     If fh <> 0 Then Close fh
     
-    Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Mapa " & Map & ", se ha generado un informe de errores en: " & App.Path & "\Logs.txt", 255, 0, 0)
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Mapa " & Map & ", se ha generado un informe de errores en: " & App.path & "\Logs.txt", 255, 0, 0)
     
     File = FreeFile
     
