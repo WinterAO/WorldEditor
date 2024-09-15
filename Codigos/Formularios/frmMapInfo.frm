@@ -35,6 +35,24 @@ Begin VB.Form frmMapInfo
       TabIndex        =   0
       Top             =   90
       Width           =   4695
+      Begin VB.TextBox txtAmbientNight 
+         Appearance      =   0  'Flat
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Left            =   3570
+         TabIndex        =   34
+         Text            =   "0"
+         Top             =   1050
+         Width           =   735
+      End
       Begin VB.TextBox TxtAmbient 
          Appearance      =   0  'Flat
          BeginProperty Font 
@@ -51,7 +69,7 @@ Begin VB.Form frmMapInfo
          TabIndex        =   31
          Text            =   "0"
          Top             =   1050
-         Width           =   2655
+         Width           =   735
       End
       Begin VB.TextBox txtNivelMaximo 
          Appearance      =   0  'Flat
@@ -559,7 +577,28 @@ Begin VB.Form frmMapInfo
          Top             =   3990
          Width           =   1935
       End
-      Begin VB.Label Label8 
+      Begin VB.Label lblNoche 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Sonido Noche:"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   -1  'True
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   195
+         Index           =   1
+         Left            =   2460
+         TabIndex        =   33
+         Top             =   1080
+         Width           =   1035
+      End
+      Begin VB.Label lblNoche 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
          Caption         =   "Sonido Ambiental:"
@@ -574,6 +613,7 @@ Begin VB.Form frmMapInfo
          EndProperty
          ForeColor       =   &H00FFFFFF&
          Height          =   195
+         Index           =   0
          Left            =   120
          TabIndex        =   32
          Top             =   1050
@@ -603,10 +643,10 @@ Begin VB.Form frmMapInfo
          BorderColor     =   &H00FFFFFF&
          BorderWidth     =   2
          Index           =   0
-         X1              =   180
-         X2              =   4620
-         Y1              =   3990
-         Y2              =   3990
+         X1              =   90
+         X2              =   4530
+         Y1              =   4350
+         Y2              =   4350
       End
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
@@ -896,6 +936,7 @@ Public Sub guardarInfoZona(ByVal id As Integer)
         .name = txtMapNombre.Text
         .Music = txtMapMusica.Text
         .Ambient = TxtAmbient.Text
+        .AmbientNight = txtAmbientNight.Text
         .PK = chkMapPK.value
         .MagiaSinEfecto = chkMapMagiaSinEfecto.value
         .InviSinEfecto = chkMapInviSinEfecto.value
@@ -927,9 +968,19 @@ End Sub
 Private Sub txtAmbient_Change()
     '*************************************************
     'Author: Lorwik
-    'Last modified: 10/08/14
+    'Last modified: 10/08/2014
     '*************************************************
     MapInfo.Ambient = TxtAmbient.Text
+    MapInfo.Changed = 1
+    
+End Sub
+
+Private Sub txtAmbientNight_Change()
+    '*************************************************
+    'Author: Lorwik
+    'Last modified: 15/09/2024
+    '*************************************************
+    MapInfo.AmbientNight = txtAmbientNight.Text
     MapInfo.Changed = 1
     
 End Sub

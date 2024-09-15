@@ -115,6 +115,7 @@ Private Type tMapDat
     zone As String
     terrain As String
     Ambient As Integer
+    AmbientNight As Integer
     lvlMinimo As Integer
     lvlMaximo As Integer
     RoboNpcsPermitido As Boolean
@@ -711,6 +712,7 @@ Private Sub CSMInfoCargar()
             End If
             
             .Ambient = MapDat(i).Ambient
+            .AmbientNight = MapDat(i).AmbientNight
             
             .Terreno = MapDat(i).terrain
             .Zona = MapDat(i).zone
@@ -771,6 +773,7 @@ Private Sub CSMInfoSave()
             End If
             
             MapDat(i).Ambient = .Ambient
+            MapDat(i).AmbientNight = .AmbientNight
             MapDat(i).terrain = .Terreno
             MapDat(i).zone = .Zona
             MapDat(i).restrict_mode = .Restringir

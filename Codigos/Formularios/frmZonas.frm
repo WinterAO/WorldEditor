@@ -39,29 +39,21 @@ Begin VB.Form frmZonas
          TabIndex        =   5
          Top             =   4920
          Width           =   1875
-         _ExtentX        =   3307
-         _ExtentY        =   714
-         Caption         =   "Quitar"
-         CapAlign        =   2
-         BackStyle       =   2
-         Shape           =   2
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cFore           =   16777215
-         cFHover         =   16777215
-         cBhover         =   0
-         cGradient       =   0
-         Gradient        =   3
-         Mode            =   1
-         Value           =   0   'False
-         cBack           =   255
+         _extentx        =   3307
+         _extenty        =   714
+         caption         =   "Quitar"
+         capalign        =   2
+         backstyle       =   2
+         shape           =   2
+         gradient        =   3
+         cgradient       =   0
+         cfore           =   16777215
+         font            =   "frmZonas.frx":0000
+         mode            =   1
+         value           =   0   'False
+         cfhover         =   16777215
+         cback           =   255
+         cbhover         =   0
       End
       Begin WinterMapEditor.lvButtons_H LvBPintar 
          Height          =   405
@@ -69,29 +61,21 @@ Begin VB.Form frmZonas
          TabIndex        =   4
          Top             =   4890
          Width           =   1905
-         _ExtentX        =   3360
-         _ExtentY        =   714
-         Caption         =   "Insertar"
-         CapAlign        =   2
-         BackStyle       =   2
-         Shape           =   1
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cFore           =   16777215
-         cFHover         =   16777215
-         cBhover         =   0
-         cGradient       =   0
-         Gradient        =   3
-         Mode            =   1
-         Value           =   0   'False
-         cBack           =   65280
+         _extentx        =   3360
+         _extenty        =   714
+         caption         =   "Insertar"
+         capalign        =   2
+         backstyle       =   2
+         shape           =   1
+         gradient        =   3
+         cgradient       =   0
+         cfore           =   16777215
+         font            =   "frmZonas.frx":0028
+         mode            =   1
+         value           =   0   'False
+         cfhover         =   16777215
+         cback           =   65280
+         cbhover         =   0
       End
       Begin WinterMapEditor.lvButtons_H LvBZona 
          Height          =   405
@@ -100,29 +84,21 @@ Begin VB.Form frmZonas
          TabIndex        =   3
          Top             =   3720
          Width           =   1785
-         _ExtentX        =   3149
-         _ExtentY        =   714
-         Caption         =   "Eliminar Zona"
-         CapAlign        =   2
-         BackStyle       =   2
-         Shape           =   2
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cFore           =   16777215
-         cFHover         =   16777215
-         cBhover         =   0
-         cGradient       =   0
-         Gradient        =   3
-         Mode            =   0
-         Value           =   0   'False
-         cBack           =   255
+         _extentx        =   3149
+         _extenty        =   714
+         caption         =   "Eliminar Zona"
+         capalign        =   2
+         backstyle       =   2
+         shape           =   2
+         gradient        =   3
+         cgradient       =   0
+         cfore           =   16777215
+         font            =   "frmZonas.frx":0050
+         mode            =   0
+         value           =   0   'False
+         cfhover         =   16777215
+         cback           =   255
+         cbhover         =   0
       End
       Begin WinterMapEditor.lvButtons_H LvBZona 
          Height          =   405
@@ -131,29 +107,21 @@ Begin VB.Form frmZonas
          TabIndex        =   2
          Top             =   3720
          Width           =   1875
-         _ExtentX        =   3307
-         _ExtentY        =   714
-         Caption         =   "Nueva Zona"
-         CapAlign        =   2
-         BackStyle       =   2
-         Shape           =   1
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cFore           =   16777215
-         cFHover         =   16777215
-         cBhover         =   0
-         cGradient       =   0
-         Gradient        =   3
-         Mode            =   0
-         Value           =   0   'False
-         cBack           =   65280
+         _extentx        =   3307
+         _extenty        =   714
+         caption         =   "Nueva Zona"
+         capalign        =   2
+         backstyle       =   2
+         shape           =   1
+         gradient        =   3
+         cgradient       =   0
+         cfore           =   16777215
+         font            =   "frmZonas.frx":0078
+         mode            =   0
+         value           =   0   'False
+         cfhover         =   16777215
+         cback           =   65280
+         cbhover         =   0
       End
       Begin VB.ListBox LstZona 
          Appearance      =   0  'Flat
@@ -171,26 +139,18 @@ Begin VB.Form frmZonas
          ToolTipText     =   "Información de la zona"
          Top             =   4260
          Width           =   480
-         _ExtentX        =   847
-         _ExtentY        =   847
-         CapAlign        =   2
-         BackStyle       =   2
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cGradient       =   0
-         Mode            =   0
-         Value           =   0   'False
-         ImgAlign        =   4
-         Image           =   "frmZonas.frx":0000
-         ImgSize         =   32
-         cBack           =   -2147483633
+         _extentx        =   847
+         _extenty        =   847
+         capalign        =   2
+         backstyle       =   2
+         cgradient       =   0
+         font            =   "frmZonas.frx":00A0
+         mode            =   0
+         value           =   0   'False
+         image           =   "frmZonas.frx":00C8
+         imgsize         =   32
+         imgalign        =   4
+         cback           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H LvBRecolorear 
          Height          =   480
@@ -199,26 +159,18 @@ Begin VB.Form frmZonas
          ToolTipText     =   "Información de la zona"
          Top             =   4260
          Width           =   480
-         _ExtentX        =   847
-         _ExtentY        =   847
-         CapAlign        =   2
-         BackStyle       =   2
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cGradient       =   0
-         Mode            =   0
-         Value           =   0   'False
-         ImgAlign        =   4
-         Image           =   "frmZonas.frx":02D8
-         ImgSize         =   32
-         cBack           =   -2147483633
+         _extentx        =   847
+         _extenty        =   847
+         capalign        =   2
+         backstyle       =   2
+         cgradient       =   0
+         font            =   "frmZonas.frx":03A2
+         mode            =   0
+         value           =   0   'False
+         image           =   "frmZonas.frx":03CA
+         imgsize         =   32
+         imgalign        =   4
+         cback           =   -2147483633
       End
       Begin WinterMapEditor.lvButtons_H lvBResetear 
          Height          =   480
@@ -227,26 +179,18 @@ Begin VB.Form frmZonas
          ToolTipText     =   "Información de la zona"
          Top             =   4260
          Width           =   480
-         _ExtentX        =   847
-         _ExtentY        =   847
-         CapAlign        =   2
-         BackStyle       =   2
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Tahoma"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         cGradient       =   0
-         Mode            =   0
-         Value           =   0   'False
-         ImgAlign        =   4
-         Image           =   "frmZonas.frx":09C8
-         ImgSize         =   32
-         cBack           =   -2147483633
+         _extentx        =   847
+         _extenty        =   847
+         capalign        =   2
+         backstyle       =   2
+         cgradient       =   0
+         font            =   "frmZonas.frx":0ABC
+         mode            =   0
+         value           =   0   'False
+         image           =   "frmZonas.frx":0AE4
+         imgsize         =   32
+         imgalign        =   4
+         cback           =   -2147483633
       End
    End
 End

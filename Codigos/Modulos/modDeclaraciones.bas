@@ -352,7 +352,7 @@ End Type
 'Hold info about each map
 Public Type tMapInfo
 
-    Music As String
+    Music As Integer
     name As String
     PK As Boolean
     MagiaSinEfecto As Byte
@@ -369,7 +369,8 @@ Public Type tMapInfo
     OcultarSinEfecto As Byte
     lvlMinimo As Byte
     lvlMaximo As Byte
-    Ambient As String
+    Ambient As Integer
+    AmbientNight As Integer
     NoEncriptarMP As Byte
 
 End Type

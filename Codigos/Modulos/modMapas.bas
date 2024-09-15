@@ -56,17 +56,17 @@ AbrirMapa_Err:
     Resume Next
 End Sub
 
-Public Sub abrirCargarMapa(ByVal path As String)
+Public Sub abrirCargarMapa(ByVal Path As String)
     
     Dim ind As Integer
-    ind = InStrRev(path, "\") + 5
-    UserMap = mid$(path, ind, Len(path) - ind - 3)
+    ind = InStrRev(Path, "\") + 5
+    UserMap = mid$(Path, ind, Len(Path) - ind - 3)
     
     Call modMapasWAO.Cargar_CSM(frmMain.Dialog.filename)
 
 End Sub
 
-Public Sub DeseaGuardarMapa(Optional path As String)
+Public Sub DeseaGuardarMapa(Optional Path As String)
     '*************************************************
     'Author: ^[GS]^
     'Last modified: 20/05/06
@@ -75,7 +75,7 @@ Public Sub DeseaGuardarMapa(Optional path As String)
 
     If MapInfo.Changed = 1 Then
         If MsgBox(MSGMod, vbExclamation + vbYesNo) = vbYes Then
-            GuardarMapa path
+            GuardarMapa Path
 
         End If
 
@@ -83,7 +83,7 @@ Public Sub DeseaGuardarMapa(Optional path As String)
 
 End Sub
 
-Public Sub GuardarMapa(Optional path As String)
+Public Sub GuardarMapa(Optional Path As String)
     '*************************************************
     'Author: Lorwik
     'Last modified: 26/04/2021
@@ -94,15 +94,15 @@ Public Sub GuardarMapa(Optional path As String)
 
     On Error GoTo errhandler
     
-    If LenB(path) = 0 Then
+    If LenB(Path) = 0 Then
         frmMain.ObtenerNombreArchivo True
-        path = frmMain.Dialog.filename
+        Path = frmMain.Dialog.filename
 
-        If LenB(path) = 0 Then Exit Sub
+        If LenB(Path) = 0 Then Exit Sub
 
     End If
     
-    Call Save_CSM(path)
+    Call Save_CSM(Path)
     
     Call ShowMessageScreen("Mapa guardado.")
                 
@@ -365,6 +365,7 @@ Public Sub MapZona_Actualizar(ByVal id As Integer)
         '   .chkMapBackup.value = MapZonas(ID).BackUp
         .chkMapPK.value = IIf(MapZonas(id).PK = True, 1, 0)
         .TxtAmbient.Text = MapZonas(id).Ambient
+        .txtAmbientNight.Text = MapZonas(id).AmbientNight
         .TxtlvlMinimo = MapZonas(id).lvlMinimo
         .txtNivelMaximo = MapZonas(id).lvlMaximo
         .chkMapMagiaSinEfecto.value = IIf(MapZonas(id).MagiaSinEfecto, vbChecked, vbUnchecked)

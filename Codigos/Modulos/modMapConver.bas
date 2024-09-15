@@ -108,11 +108,12 @@ Private Type tMapDat
     battle_mode As Boolean
     backup_mode As Boolean
     restrict_mode As String
-    music_number As String
+    music_number As Integer
     zone As String
     terrain As String
-    Ambient As String
-    lvlMinimo As String
+    Ambient As Integer
+    lvlMinimo As Integer
+    lvlMaximo As Integer
     RoboNpcsPermitido As Boolean
     InvocarSinEfecto As Boolean
     OcultarSinEfecto As Boolean
@@ -126,7 +127,6 @@ Private Type tMapDat
 End Type
 
 Public MapSize   As tMapSize
-
 Private MapDat() As tMapDat
 '*************************
 'Fin formato carga Winter
@@ -401,7 +401,7 @@ ErrorHandler:
 
     If fh <> 0 Then Close fh
     
-    Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Mapa " & Map & ", se ha generado un informe de errores en: " & App.path & "\Logs.txt", 255, 0, 0)
+    Call AddtoRichTextBox(frmConsola.StatTxt, "Error en el Mapa " & Map & ", se ha generado un informe de errores en: " & App.Path & "\Logs.txt", 255, 0, 0)
     
     File = FreeFile
     
