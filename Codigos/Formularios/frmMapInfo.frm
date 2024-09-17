@@ -31,9 +31,9 @@ Begin VB.Form frmMapInfo
       Caption         =   "Informacion"
       ForeColor       =   &H00FFFFFF&
       Height          =   6105
-      Left            =   90
+      Left            =   60
       TabIndex        =   0
-      Top             =   90
+      Top             =   30
       Width           =   4695
       Begin VB.TextBox txtAmbientNight 
          Appearance      =   0  'Flat
@@ -47,7 +47,7 @@ Begin VB.Form frmMapInfo
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   3570
+         Left            =   3840
          TabIndex        =   34
          Text            =   "0"
          Top             =   1050
@@ -83,17 +83,17 @@ Begin VB.Form frmMapInfo
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   1680
+         Left            =   3840
          TabIndex        =   29
          Text            =   "0"
-         Top             =   2490
-         Width           =   2655
+         Top             =   2550
+         Width           =   735
       End
       Begin WinterMapEditor.lvButtons_H cmdCerrar 
          Height          =   525
          Left            =   180
          TabIndex        =   28
-         Top             =   5400
+         Top             =   5550
          Width           =   1845
          _ExtentX        =   3254
          _ExtentY        =   714
@@ -122,7 +122,7 @@ Begin VB.Form frmMapInfo
          Height          =   525
          Left            =   2400
          TabIndex        =   27
-         Top             =   5400
+         Top             =   5520
          Width           =   2055
          _ExtentX        =   3625
          _ExtentY        =   714
@@ -149,11 +149,11 @@ Begin VB.Form frmMapInfo
       End
       Begin WinterMapEditor.lvButtons_H cmdMusica 
          Height          =   345
-         Left            =   3630
+         Left            =   3240
          TabIndex        =   25
          Top             =   690
-         Width           =   645
-         _ExtentX        =   1138
+         Width           =   1335
+         _ExtentX        =   2355
          _ExtentY        =   609
          Caption         =   "&Más"
          CapAlign        =   2
@@ -190,7 +190,7 @@ Begin VB.Form frmMapInfo
          TabIndex        =   24
          Text            =   "txtMapZona"
          Top             =   1380
-         Width           =   2655
+         Width           =   2865
       End
       Begin VB.Frame FraLuzBase 
          BackColor       =   &H00535353&
@@ -208,7 +208,7 @@ Begin VB.Form frmMapInfo
          Height          =   975
          Left            =   150
          TabIndex        =   20
-         Top             =   4350
+         Top             =   4380
          Width           =   2175
          Begin WinterMapEditor.lvButtons_H LvBActualizarLuces 
             Height          =   375
@@ -310,7 +310,7 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   150
          TabIndex        =   13
-         Top             =   3510
+         Top             =   3360
          Width           =   1575
       End
       Begin VB.CheckBox chkMapBackup 
@@ -329,7 +329,7 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   2430
          TabIndex        =   12
-         Top             =   3510
+         Top             =   3360
          Value           =   2  'Grayed
          Width           =   1575
       End
@@ -349,7 +349,7 @@ Begin VB.Form frmMapInfo
          TabIndex        =   11
          Text            =   "Mapa Desconocido"
          Top             =   360
-         Width           =   2655
+         Width           =   2895
       End
       Begin VB.TextBox txtMapMusica 
          Appearance      =   0  'Flat
@@ -367,7 +367,7 @@ Begin VB.Form frmMapInfo
          TabIndex        =   10
          Text            =   "0"
          Top             =   720
-         Width           =   1815
+         Width           =   1455
       End
       Begin VB.ComboBox txtMapTerreno 
          Appearance      =   0  'Flat
@@ -387,7 +387,7 @@ Begin VB.Form frmMapInfo
          TabIndex        =   9
          Text            =   "txtMapTerreno"
          Top             =   1770
-         Width           =   2655
+         Width           =   2865
       End
       Begin VB.CheckBox chkMapPK 
          BackColor       =   &H00535353&
@@ -414,7 +414,7 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   150
          TabIndex        =   8
-         Top             =   3750
+         Top             =   3660
          Width           =   1575
       End
       Begin VB.ComboBox txtMapRestringir 
@@ -435,7 +435,7 @@ Begin VB.Form frmMapInfo
          TabIndex        =   7
          Text            =   "txtMapRestringir"
          Top             =   2130
-         Width           =   2655
+         Width           =   2865
       End
       Begin VB.CheckBox chkMapInviSinEfecto 
          BackColor       =   &H00535353&
@@ -453,7 +453,7 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   150
          TabIndex        =   6
-         Top             =   3270
+         Top             =   3060
          Width           =   2055
       End
       Begin VB.CheckBox chkMapResuSinEfecto 
@@ -472,7 +472,7 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   2430
          TabIndex        =   5
-         Top             =   3270
+         Top             =   3060
          Width           =   1815
       End
       Begin VB.CheckBox ChkMapNpc 
@@ -500,7 +500,7 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   150
          TabIndex        =   4
-         Top             =   3990
+         Top             =   3960
          Width           =   2055
       End
       Begin VB.TextBox TxtlvlMinimo 
@@ -515,11 +515,11 @@ Begin VB.Form frmMapInfo
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   1680
+         Left            =   1650
          TabIndex        =   3
          Text            =   "0"
-         Top             =   2850
-         Width           =   2655
+         Top             =   2550
+         Width           =   735
       End
       Begin VB.CheckBox chkInvocarSin 
          BackColor       =   &H00535353&
@@ -546,7 +546,7 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   2430
          TabIndex        =   2
-         Top             =   3750
+         Top             =   3660
          Width           =   1935
       End
       Begin VB.CheckBox chkOcultarSin 
@@ -574,7 +574,7 @@ Begin VB.Form frmMapInfo
          Height          =   255
          Left            =   2430
          TabIndex        =   1
-         Top             =   3990
+         Top             =   3960
          Width           =   1935
       End
       Begin VB.Label lblNoche 
@@ -593,7 +593,7 @@ Begin VB.Form frmMapInfo
          ForeColor       =   &H00FFFFFF&
          Height          =   195
          Index           =   1
-         Left            =   2460
+         Left            =   2700
          TabIndex        =   33
          Top             =   1080
          Width           =   1035
@@ -634,9 +634,9 @@ Begin VB.Form frmMapInfo
          EndProperty
          ForeColor       =   &H00FFFFFF&
          Height          =   195
-         Left            =   120
+         Left            =   2820
          TabIndex        =   30
-         Top             =   2490
+         Top             =   2580
          Width           =   930
       End
       Begin VB.Line Line1 
@@ -763,9 +763,9 @@ Begin VB.Form frmMapInfo
          EndProperty
          ForeColor       =   &H00FFFFFF&
          Height          =   195
-         Left            =   120
+         Left            =   150
          TabIndex        =   14
-         Top             =   2850
+         Top             =   2550
          Width           =   930
       End
    End
