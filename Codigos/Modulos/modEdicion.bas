@@ -1074,7 +1074,7 @@ Public Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                             
                             Select Case ObjData(ObjIndex).OBJType
 
-                                Case 4, 8, 10, 22 ' Arboles, Carteles, Foros, Yacimientos
+                                Case 8, 10  ' Carteles, Foros
                                     .Graphic(3) = .ObjGrh
 
                             End Select

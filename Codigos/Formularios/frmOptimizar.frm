@@ -357,7 +357,7 @@ Public Sub Optimizar()
     
                     Select Case ObjData(MapData(x, y).OBJInfo.ObjIndex).OBJType
     
-                        Case 4, 8, 10, 22 ' Arboles, Carteles, Foros, Yacimientos
+                        Case 8, 10 ' Carteles, Foros
     
                             If MapData(x, y).Graphic(3).GrhIndex <> MapData(x, y).ObjGrh.GrhIndex And chkMapearArbolesEtc.value = 1 Then MapData(x, y).Graphic(3) = MapData(x, y).ObjGrh
                             If chkBloquearArbolesEtc.value = 1 And MapData(x, y).bLocked = 0 Then MapData(x, y).bLocked = 1
