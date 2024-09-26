@@ -176,7 +176,7 @@ Begin VB.Form frmOptimizar
       Begin VB.CheckBox chkMapearArbolesEtc 
          Appearance      =   0  'Flat
          BackColor       =   &H00535353&
-         Caption         =   "Mapear Arboles, Carteles, Foros y Yacimientos que no esten en la 3ra Capa"
+         Caption         =   "Mapear Carteles y Foros que no esten en la 3ra Capa"
          BeginProperty Font 
             Name            =   "Tahoma"
             Size            =   8.25
@@ -197,7 +197,7 @@ Begin VB.Form frmOptimizar
       Begin VB.CheckBox chkBloquearArbolesEtc 
          Appearance      =   0  'Flat
          BackColor       =   &H00535353&
-         Caption         =   "Bloquear Arboles, Carteles, Foros y Yacimientos"
+         Caption         =   "Bloquear Carteles y Foros"
          BeginProperty Font 
             Name            =   "Tahoma"
             Size            =   8.25
