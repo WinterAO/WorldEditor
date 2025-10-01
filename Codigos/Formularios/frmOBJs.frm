@@ -412,18 +412,20 @@ Private Sub Filtrar()
 '*************************************************
 'Author: Lorwik
 'Last modified: 27/04/2021
+'Optimized: 27/09/2025
 '*************************************************
 
     Dim vDatos As String
     Dim NumI As Integer
     Dim i As Integer
-    Dim j As Integer
-    Dim K As Long
+    Dim k As Long
     
+    ' Mantener solo los últimos 5 elementos en el filtro
     If cFiltro.ListCount > 5 Then _
         cFiltro.RemoveItem 0
     
     cFiltro.AddItem cFiltro.Text
+    
     LynxOBJs.Clear
     LynxOBJs.Redraw = False
     LynxOBJs.Visible = False
@@ -432,15 +434,12 @@ Private Sub Filtrar()
         vDatos = ObjData(i).name
         NumI = i
         
-        For j = 1 To Len(vDatos)
-            If UCase$(mid$(vDatos & str(i), j, Len(cFiltro.Text))) = UCase$(cFiltro.Text) Or LenB(cFiltro.Text) = 0 Then
-                LynxOBJs.AddItem NumI
-                K = LynxOBJs.Rows - 1
-                LynxOBJs.CellText(K, 1) = vDatos
-                Exit For
-            End If
-        Next
-        
+        ' Usamos InStr en lugar de recorrer cada carácter
+        If InStr(1, vDatos & CStr(i), cFiltro.Text, vbTextCompare) > 0 Or LenB(cFiltro.Text) = 0 Then
+            LynxOBJs.AddItem NumI
+            k = LynxOBJs.Rows - 1
+            LynxOBJs.CellText(k, 1) = vDatos
+        End If
     Next i
     
     LynxOBJs.Visible = True
@@ -450,6 +449,4 @@ Private Sub Filtrar()
     DoEvents
 
 End Sub
-
-
 

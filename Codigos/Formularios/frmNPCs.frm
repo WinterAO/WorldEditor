@@ -406,13 +406,14 @@ Private Sub Filtrar()
 '*************************************************
 'Author: Lorwik
 'Last modified: 27/04/2021
+'Optimized: 27/09/2025
 '*************************************************
 
     Dim vDatos As String
     Dim NumI As Integer
     Dim i As Integer
     Dim j As Integer
-    Dim K As Long
+    Dim k As Long
     
     If cFiltro.ListCount > 5 Then _
         cFiltro.RemoveItem 0
@@ -429,10 +430,10 @@ Private Sub Filtrar()
         For j = 1 To Len(vDatos)
             If UCase$(mid$(vDatos & str(i), j, Len(cFiltro.Text))) = UCase$(cFiltro.Text) Or LenB(cFiltro.Text) = 0 Then
                 LynxNPCs.AddItem NumI
-                K = LynxNPCs.Rows - 1
-                LynxNPCs.CellText(K, 1) = vDatos
-                LynxNPCs.CellText(K, 2) = NpcData(NumI).ELV
-                LynxNPCs.CellText(K, 3) = IIf(NpcData(NumI).Hostile = 1, "SI", "NO")
+                k = LynxNPCs.Rows - 1
+                LynxNPCs.CellText(k, 1) = vDatos
+                LynxNPCs.CellText(k, 2) = NpcData(NumI).ELV
+                LynxNPCs.CellText(k, 3) = IIf(NpcData(NumI).Hostile = 1, "SI", "NO")
                 Exit For
             End If
         Next

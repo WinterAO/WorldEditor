@@ -466,39 +466,40 @@ Private Sub Filtrar()
 '*************************************************
 'Author: Lorwik
 'Last modified: 27/04/2021
+'Optimized: 27/09/2025
 '*************************************************
 
     Dim vDatos As String
-    Dim i As Integer
-    Dim j As Integer
+    Dim i As Long
     Dim k As Long
+    Dim filtroUpper As String
     
+    ' Mantener historial en cFiltro
     If cFiltro.ListCount > 5 Then _
         cFiltro.RemoveItem 0
-    
     cFiltro.AddItem cFiltro.Text
+    
+    ' Preparar búsqueda
+    filtroUpper = UCase$(cFiltro.Text)
     
     LynxSuperficies.Clear
     LynxSuperficies.Redraw = False
     LynxSuperficies.Visible = False
     
+    ' Recorrer superficies
     For i = 0 To MaxSup
         vDatos = SupData(i).name
         
-        For j = 1 To Len(vDatos)
-        
-            If UCase$(mid$(vDatos & str(i), j, Len(cFiltro.Text))) = UCase$(cFiltro.Text) Or LenB(cFiltro.Text) = 0 Then
-                LynxSuperficies.AddItem i
-                k = LynxSuperficies.Rows - 1
-                LynxSuperficies.CellText(k, 1) = SupData(i).Grh
-                LynxSuperficies.CellText(k, 2) = vDatos
-                Exit For
-            End If
-            
-        Next
-        
+        ' Comprobar coincidencia
+        If LenB(filtroUpper) = 0 Or InStr(1, UCase$(vDatos & str(i)), filtroUpper) > 0 Then
+            LynxSuperficies.AddItem i
+            k = LynxSuperficies.Rows - 1
+            LynxSuperficies.CellText(k, 1) = SupData(i).Grh
+            LynxSuperficies.CellText(k, 2) = vDatos
+        End If
     Next i
     
+    ' Finalizar actualización
     LynxSuperficies.Visible = True
     LynxSuperficies.Redraw = True
     LynxSuperficies.ColForceFit

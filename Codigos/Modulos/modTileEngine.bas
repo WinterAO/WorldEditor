@@ -526,11 +526,11 @@ Public Sub DrawHead(ByVal Head As Integer, ByVal x As Integer, ByVal y As Intege
     textureY2 = 32
  
     If EsCabeza Then
-        textureX1 = heads(Head).StartX - textureX2
-        textureY1 = ((Heading - 2) * textureY2) + heads(Head).StartY
+        textureX1 = heads(Head).startX - textureX2
+        textureY1 = ((Heading - 2) * textureY2) + heads(Head).startY
     Else
-        textureX1 = Cascos(Head).StartX - textureX2 + 1
-        textureY1 = ((Heading - 2) * textureY2) + Cascos(Head).StartY + 2
+        textureX1 = Cascos(Head).startX - textureX2 + 1
+        textureY1 = ((Heading - 2) * textureY2) + Cascos(Head).startY + 2
     End If
     
     Device_Textured_Render x - OffsetX + 3, y - OffsetY + 4, textureX2, textureY2, (textureX2 + textureX1), (textureY2 + textureY1), Texture, Light, Alpha, angle, ScaleX, ScaleY
@@ -1352,21 +1352,21 @@ Public Sub MapCapture(ByRef Format As Boolean, _
     Call frmRenderer.Capturar_Imagen(frmRenderer.picMap, frmRenderer.picMap)
      
     'Si no existe la carpeta de MiniMapas, la hacemos.
-    If Not FileExist(App.path & "\Render\", vbDirectory) Then
-        Call MkDir(App.path & "\Render\")
+    If Not FileExist(App.Path & "\Render\", vbDirectory) Then
+        Call MkDir(App.Path & "\Render\")
     End If
     
-    If Not FileExist(App.path & "\Resources\", vbDirectory) Then
-        Call MkDir(App.path & "\Resources\")
+    If Not FileExist(App.Path & "\Resources\", vbDirectory) Then
+        Call MkDir(App.Path & "\Resources\")
     End If
     
-    If Not FileExist(App.path & "\Resources\Minimapas\", vbDirectory) Then
-        Call MkDir(App.path & "\Resources\Minimapas\")
+    If Not FileExist(App.Path & "\Resources\Minimapas\", vbDirectory) Then
+        Call MkDir(App.Path & "\Resources\Minimapas\")
     End If
     
     'SaveImageAs App.Path & "\Render\" & MapName & ".png", FrmRender.picMap.hdc, FrmRender.picMap.ScaleWidth, FrmRender.picMap.ScaleHeight, CLng(100)
     
-    SavePicture frmRenderer.picMap.Image, App.path & "\Render\Partials\Mapa" & UserMap & "-" & MinX & "-" & MinY & "-" & XMaxMapSize & "-" & YMaxMapSize & ".bmp"
+    SavePicture frmRenderer.picMap.Image, App.Path & "\Render\Partials\Mapa" & UserMap & "-" & MinX & "-" & MinY & "-" & XMaxMapSize & "-" & YMaxMapSize & ".bmp"
     'FrmRender.PicGrande.PaintPicture FrmRender.picMap.Image, ((minX - 1) \ 200) * 800, ((minY - 1) \ 200) * 800, 800, 800
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     DoEvents

@@ -137,7 +137,7 @@ Sub Cargar_CSM(ByVal Map As String)
     '***************************************************
     'Author: Lorwik
     'Last Modification: 14/03/2021
-    'Descripcion: Carga los mapas de WinterAO
+    'Descripcion: Carga los mapas
     '***************************************************
     
     On Error GoTo ErrorHandler
